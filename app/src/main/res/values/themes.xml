@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Base application theme. -->
+    <style name="Theme.ReturnPals" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+    </style>
 
-    <style name="Theme.ReturnPals" parent="android:Theme.Material.Light.NoActionBar" />
+    <!-- Variant of the base theme without an action bar. -->
+    <style name="Theme.ReturnPals.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Overlay for App Bar. -->
+    <style name="Theme.ReturnPals.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+
+    <!-- Overlay for pop-up elements. -->
+    <style name="Theme.ReturnPals.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 </resources>
