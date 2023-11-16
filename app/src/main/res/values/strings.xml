@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ReturnPals</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="title_activity_login_screen">LoginScreen</string>
+    <string name="title_activity_guest_screen">GuestScreen</string>
+    <string name="title_activity_member_screen">MemberScreen</string>
 </resources>
