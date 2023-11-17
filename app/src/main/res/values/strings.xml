@@ -15,5 +15,6 @@
     <string name="menu_home">Dashboard</string>
     <string name="menu_gallery">Profile</string>
     <string name="menu_slideshow">Inbox</string>
-    <string name="menu_settings">Setting</string>
+    <string name="menu_settings">Security</string>
+    <string name="sign_out">Sign Out</string>
 </resources>
