@@ -12,31 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ReturnPals"
         tools:targetApi="31">
-        <activity
-            android:name=".DashBoardScreen"
-            android:exported="true"
-            android:label="@string/title_activity_dash_board_screen"
-            android:theme="@style/Theme.ReturnPals.NoActionBar" />
-        <activity
-            android:name=".MemberScreen"
-            android:exported="true"
-            android:label="@string/title_activity_member_screen"
-            android:theme="@style/Theme.ReturnPals" />
-        <activity
-            android:name=".GuestScreen"
-            android:exported="true"
-            android:label="@string/title_activity_guest_screen"
-            android:theme="@style/Theme.ReturnPals" />
-        <activity
-            android:name=".LoginScreen"
-            android:exported="true"
-            android:label="@string/title_activity_login_screen"
-            android:theme="@style/Theme.ReturnPals" />
-        <activity
-            android:name=".SplashScreen"
-            android:exported="true"
-            android:label="@string/title_activity_splash_screen"
-            android:theme="@style/Theme.ReturnPals" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
