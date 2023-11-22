@@ -1,0 +1,879 @@
+{
+  "name": "create_account",
+  "version": 32,
+  "source-key": {
+    "type": "figma",
+    "file": "5CLGcKnas0I545VDpxUew6",
+    "node": "453:489",
+    "version": "4659480459",
+    "component-id": "036943f291cf6ce8a401cd3664f0b4c49fe2f2f9"
+  },
+  "default": "Create Account",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "group",
+        "id": "Infromation"
+      },
+      {
+        "type": "group",
+        "id": "Info Nav"
+      },
+      {
+        "type": "text",
+        "id": "Please enter information"
+      },
+      {
+        "type": "image",
+        "id": "returnpalfinal logos_WMK_BlackBlue_transparent 2"
+      },
+      {
+        "type": "text",
+        "id": "Email"
+      },
+      {
+        "type": "text",
+        "id": "Name"
+      },
+      {
+        "type": "text",
+        "id": "john.doe@email.com"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 44"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 60"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 42"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 59"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 58"
+      },
+      {
+        "type": "text",
+        "id": "Jimmy"
+      },
+      {
+        "type": "text",
+        "id": "Neutron"
+      },
+      {
+        "type": "group",
+        "id": "Adress"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 61"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 45"
+      },
+      {
+        "type": "text",
+        "id": "123 Bellevue Way"
+      },
+      {
+        "type": "text",
+        "id": "Address"
+      },
+      {
+        "type": "group",
+        "id": "Back button blue"
+      },
+      {
+        "type": "group",
+        "id": "button 9"
+      },
+      {
+        "type": "text",
+        "id": "Back"
+      },
+      {
+        "type": "group",
+        "id": "Frame 45"
+      },
+      {
+        "type": "text",
+        "id": "Install"
+      }
+    ],
+    "modes": {
+      "Create Account": {
+        "rules": [
+          {
+            "id": "top_level",
+            "is-structured": "false",
+            "children": [
+              "Infromation",
+              "Info Nav",
+              "Please enter information",
+              "returnpalfinal logos_WMK_BlackBlue_transparent 2"
+            ],
+            "background-color": {
+              "alpha": "1.0",
+              "hue": "198.0",
+              "saturation": "0.11764705882352944",
+              "value": "1.0"
+            }
+          },
+          {
+            "id": "Infromation",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "18.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "273.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "324.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "225.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "Email",
+              "Name",
+              "john.doe@email.com",
+              "Rectangle 44",
+              "Rectangle 60",
+              "Rectangle 42",
+              "Rectangle 59",
+              "Rectangle 58",
+              "Jimmy",
+              "Neutron",
+              "Adress"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Info Nav",
+            "border-radius": "50.0",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "40.47930908203125"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "652.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "290.52069091796875"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "34.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "Back button blue",
+              "button 9"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Please enter information",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "17.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "205.0"
+              }
+            },
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "Please enter information",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "28.0",
+            "line-height": "1.2102272851126534",
+            "typeface": "Inter"
+          },
+          {
+            "id": "returnpalfinal logos_WMK_BlackBlue_transparent 2",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "13.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "43.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "333.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "130.0"
+              }
+            },
+            "image-content": "returnpalfinal_logos_wmk_black_blue_transparent_2.png",
+            "scale": "cover"
+          },
+          {
+            "id": "Email",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "14.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "75.0"
+              }
+            },
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "Email",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "18.0",
+            "line-height": "1.2102272245619032",
+            "typeface": "Inter"
+          },
+          {
+            "id": "Name",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "12.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "0.0"
+              }
+            },
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "Name",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "18.0",
+            "line-height": "1.2102272245619032",
+            "typeface": "Inter"
+          },
+          {
+            "id": "john.doe@email.com",
+            "opacity": "0.30000001192092896",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "-16.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "103.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "240.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "28.0"
+              }
+            },
+            "font-weight": "500.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "john.doe@email.com",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "20.0",
+            "line-height": "1.2102272033691406",
+            "typeface": "Inter"
+          },
+          {
+            "id": "Rectangle 44",
+            "border-radius": "5.0",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.2",
+                "hue": "204.0",
+                "saturation": "1.0",
+                "value": "0.9019607843137255"
+              },
+              "blur": "20.0",
+              "offset-x": "0.0",
+              "offset-y": "4.0",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "-12.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "85.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "305.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "30.0"
+              }
+            },
+            "vector-content": "rectangle_44.svg"
+          },
+          {
+            "id": "Rectangle 60",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "97.0"
+              }
+            },
+            "tap-handler": "$Email",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "324.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "38.0"
+              }
+            },
+            "vector-content": "rectangle_60.svg"
+          },
+          {
+            "id": "Rectangle 42",
+            "border-radius": "5.0",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "-12.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "8.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "134.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "30.0"
+              }
+            },
+            "vector-content": "rectangle_42.svg"
+          },
+          {
+            "id": "Rectangle 59",
+            "border-radius": "5.0",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.09803921568627451",
+                "hue": "204.0",
+                "saturation": "1.0",
+                "value": "0.9019607843137255"
+              },
+              "blur": "20.0",
+              "offset-x": "0.0",
+              "offset-y": "2.0",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "159.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "8.0"
+              }
+            },
+            "tap-handler": "$First Name",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "134.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "30.0"
+              }
+            },
+            "vector-content": "rectangle_59.svg"
+          },
+          {
+            "id": "Rectangle 58",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "22.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "324.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "38.0"
+              }
+            },
+            "vector-content": "rectangle_58.svg"
+          },
+          {
+            "id": "Jimmy",
+            "opacity": "0.30000001192092896",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "-94.5"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "29.0"
+              }
+            },
+            "font-weight": "500.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "Jimmy",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "20.0",
+            "line-height": "1.2102272033691406",
+            "typeface": "Inter"
+          },
+          {
+            "id": "Neutron",
+            "opacity": "0.30000001192092896",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "78.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "29.0"
+              }
+            },
+            "font-weight": "500.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "Neutron",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "20.0",
+            "line-height": "1.2102272033691406",
+            "typeface": "Inter"
+          },
+          {
+            "id": "Adress",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "165.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "324.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "60.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "Rectangle 61",
+              "Rectangle 45",
+              "123 Bellevue Way",
+              "Address"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Rectangle 61",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "22.0"
+              }
+            },
+            "tap-handler": "$Address",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "324.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "38.0"
+              }
+            },
+            "vector-content": "rectangle_61.svg"
+          },
+          {
+            "id": "Rectangle 45",
+            "border-radius": "5.0",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.2",
+                "hue": "204.0",
+                "saturation": "1.0",
+                "value": "0.9019607843137255"
+              },
+              "blur": "20.0",
+              "offset-x": "0.0",
+              "offset-y": "4.0",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "-12.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "10.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "305.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "30.0"
+              }
+            },
+            "vector-content": "rectangle_45.svg"
+          },
+          {
+            "id": "123 Bellevue Way",
+            "opacity": "0.23000000417232513",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "-16.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "28.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "240.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "28.0"
+              }
+            },
+            "font-weight": "500.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "123 Bellevue Way",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "20.0",
+            "line-height": "1.2102272033691406",
+            "typeface": "Inter"
+          },
+          {
+            "id": "Address",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "14.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "0.0"
+              }
+            },
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "Address",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "18.0",
+            "line-height": "1.2102272245619032",
+            "typeface": "Inter"
+          },
+          {
+            "id": "Back button blue",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "9.0"
+              }
+            },
+            "tap-handler": "$Back",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "57.52069091796875"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "12.727264404296875"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "Back"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "button 9",
+            "padding": {
+              "left": "29.0",
+              "top": "16.0",
+              "right": "29.0",
+              "bottom": "16.0"
+            },
+            "border-radius": "50.0",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "158.52069091796875"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "0.0"
+              }
+            },
+            "tap-handler": "$Next",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "132.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "34.0"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Frame 45"
+            ],
+            "item-spacing": "8.0",
+            "background-color": {
+              "alpha": "1.0",
+              "hue": "204.0",
+              "saturation": "1.0",
+              "value": "0.9019607843137255"
+            },
+            "clip-content": "false"
+          },
+          {
+            "id": "Back",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "57.52069091796875"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "12.727264404296875"
+              }
+            },
+            "font-weight": "600.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "204.0",
+              "saturation": "1.0",
+              "value": "0.9019607843137255"
+            },
+            "text-content": "Back",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "30.0",
+            "line-height": "1.3660001118977865",
+            "typeface": "Avenir Next"
+          },
+          {
+            "id": "Frame 45",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Install"
+            ],
+            "item-spacing": "10.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Install",
+            "font-weight": "600.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "1.0"
+            },
+            "text-content": "Next",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "30.0",
+            "line-height": "1.3660001118977865",
+            "typeface": "Avenir Next"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "Email": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "First Name": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "Address": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "Back": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "Next": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    }
+  },
+  "previews": [
+    {
+      "design": "Create Account",
+      "size": {
+        "width": 360.0,
+        "height": 800.0
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}

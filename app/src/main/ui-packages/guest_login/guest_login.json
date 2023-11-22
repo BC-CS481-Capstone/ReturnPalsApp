@@ -1,0 +1,490 @@
+{
+  "name": "guest_login",
+  "version": 32,
+  "source-key": {
+    "type": "figma",
+    "file": "5CLGcKnas0I545VDpxUew6",
+    "node": "452:474",
+    "version": "4659017700",
+    "component-id": "d92f41d696ab20caf71fcda8901842995466e28a"
+  },
+  "default": "Guest Login",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "group",
+        "id": "Next"
+      },
+      {
+        "type": "group",
+        "id": "Input Guest Email"
+      },
+      {
+        "type": "group",
+        "id": "Guest Nav"
+      },
+      {
+        "type": "image",
+        "id": "returnpalfinal logos_WMK_BlackBlue_transparent 1"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 80"
+      },
+      {
+        "type": "text",
+        "id": "Next1"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 40"
+      },
+      {
+        "type": "text",
+        "id": "Email"
+      },
+      {
+        "type": "text",
+        "id": "Sign In | Guest"
+      },
+      {
+        "type": "text",
+        "id": "Don’t have an account yet? Sign up"
+      }
+    ],
+    "modes": {
+      "Guest Login": {
+        "rules": [
+          {
+            "id": "top_level",
+            "is-structured": "false",
+            "children": [
+              "Next",
+              "Input Guest Email",
+              "Guest Nav",
+              "returnpalfinal logos_WMK_BlackBlue_transparent 1"
+            ],
+            "background-color": {
+              "alpha": "1.0",
+              "hue": "198.0",
+              "saturation": "0.11764705882352944",
+              "value": "1.0"
+            }
+          },
+          {
+            "id": "Next",
+            "border-radius": "30.0",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "105.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "509.0"
+              }
+            },
+            "tap-handler": "$Next",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "150.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "50.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "Rectangle 80",
+              "Next1"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Input Guest Email",
+            "border-radius": "20.0",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "55.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "273.0"
+              }
+            },
+            "tap-handler": "$Email Input",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "250.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "45.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "Rectangle 40",
+              "Email"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Guest Nav",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "40.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "192.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "280.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "439.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "Sign In | Guest",
+              "Don’t have an account yet? Sign up"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "returnpalfinal logos_WMK_BlackBlue_transparent 1",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "13.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "43.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "333.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "130.0"
+              }
+            },
+            "image-content": "returnpalfinal_logos_wmk_black_blue_transparent_1.png",
+            "scale": "cover"
+          },
+          {
+            "id": "Rectangle 80",
+            "border-radius": "30.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "150.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "50.0"
+              }
+            },
+            "vector-content": "rectangle_80.svg"
+          },
+          {
+            "id": "Next1",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "41.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "5.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "97.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "40.0"
+              }
+            },
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "1.0"
+            },
+            "text-content": "Next",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "30.0",
+            "line-height": "1.2102272033691406",
+            "typeface": "Inter"
+          },
+          {
+            "id": "Rectangle 40",
+            "border-radius": "20.0",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "-2.5"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "-2.5"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "250.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "45.0"
+              }
+            },
+            "vector-content": "rectangle_40.svg"
+          },
+          {
+            "id": "Email",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "17.97039794921875"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "10.928581237792969"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "161.205078125"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "23.5465087890625"
+              }
+            },
+            "font-weight": "500.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "210.00000000000003",
+              "saturation": "0.0975609756097561",
+              "value": "0.4823529411764706"
+            },
+            "text-content": "Email",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "16.0",
+            "line-height": "1.2102272510528564",
+            "typeface": "Inter"
+          },
+          {
+            "id": "Sign In | Guest",
+            "tap-handler": "$Switch Account",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "250.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "49.0"
+              }
+            },
+            "font-weight": "600.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "203.6065573770492",
+              "saturation": "0.9242424242424243",
+              "value": "0.25882352941176473"
+            },
+            "annotated-text-content": {
+              "text": "Sign In | Guest",
+              "annotated-text-span-list": [
+                {
+                  "span-start": "0",
+                  "span-length": "7",
+                  "annotated-text-style": {
+                    "font-weight": "600.0",
+                    "text-size": "22.0",
+                    "typeface": "Inter",
+                    "color": {
+                      "alpha": "0.4980392156862745",
+                      "hue": "203.6065573770492",
+                      "saturation": "0.9242424242424243",
+                      "value": "0.25882352941176473"
+                    }
+                  }
+                },
+                {
+                  "span-start": "7",
+                  "span-length": "1",
+                  "annotated-text-style": {
+                    "font-weight": "600.0",
+                    "text-size": "22.0",
+                    "typeface": "Inter"
+                  }
+                },
+                {
+                  "span-start": "8",
+                  "span-length": "1",
+                  "annotated-text-style": {
+                    "font-weight": "600.0",
+                    "text-size": "22.0",
+                    "typeface": "Inter",
+                    "color": {
+                      "alpha": "1.0",
+                      "hue": "203.73913043478262",
+                      "saturation": "1.0",
+                      "value": "0.9019607843137255"
+                    }
+                  }
+                },
+                {
+                  "span-start": "9",
+                  "span-length": "6",
+                  "annotated-text-style": {
+                    "font-weight": "600.0",
+                    "text-size": "22.0",
+                    "typeface": "Inter"
+                  }
+                }
+              ]
+            },
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-size": "22.0",
+            "line-height": "1.3660000887784092",
+            "typeface": "Avenir Next"
+          },
+          {
+            "id": "Don’t have an account yet? Sign up",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "408.0"
+              }
+            },
+            "tap-handler": "$ Sign Up",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "280.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "31.0"
+              }
+            },
+            "font-weight": "500.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "210.00000000000003",
+              "saturation": "0.0975609756097561",
+              "value": "0.4823529411764706"
+            },
+            "annotated-text-content": {
+              "text": "Don’t have an account yet? Sign up",
+              "annotated-text-span-list": [
+                {
+                  "span-start": "0",
+                  "span-length": "27",
+                  "annotated-text-style": {
+                    "font-weight": "600.0",
+                    "text-size": "16.0",
+                    "typeface": "Inter"
+                  }
+                },
+                {
+                  "span-start": "27",
+                  "span-length": "7",
+                  "annotated-text-style": {
+                    "font-weight": "600.0",
+                    "text-size": "16.0",
+                    "typeface": "Inter",
+                    "color": {
+                      "alpha": "1.0",
+                      "hue": "204.0",
+                      "saturation": "1.0",
+                      "value": "0.9019607843137255"
+                    }
+                  }
+                }
+              ]
+            },
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-size": "16.0",
+            "line-height": "1.3660000562667847",
+            "typeface": "Avenir Next"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "Next": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "Email Input": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "Switch Account": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    " Sign Up": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    }
+  },
+  "previews": [
+    {
+      "design": "Guest Login",
+      "size": {
+        "width": 360.0,
+        "height": 800.0
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}

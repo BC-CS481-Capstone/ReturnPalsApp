@@ -1,0 +1,658 @@
+{
+  "name": "main_login",
+  "version": 32,
+  "source-key": {
+    "type": "figma",
+    "file": "5CLGcKnas0I545VDpxUew6",
+    "node": "451:458",
+    "version": "4658846976",
+    "component-id": "3e61b6357f761386cf45d416b8e8b5dab2da3644"
+  },
+  "default": "Main Login",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "group",
+        "id": "Member Nav"
+      },
+      {
+        "type": "group",
+        "id": "Input Password"
+      },
+      {
+        "type": "group",
+        "id": "Input Email"
+      },
+      {
+        "type": "group",
+        "id": "Sign In"
+      },
+      {
+        "type": "image",
+        "id": "returnpalfinal logos_WMK_BlackBlue_transparent 1"
+      },
+      {
+        "type": "text",
+        "id": "Forgot your password?"
+      },
+      {
+        "type": "text",
+        "id": "Sign In | Guest"
+      },
+      {
+        "type": "text",
+        "id": "Don’t have an account yet? Sign up"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 40"
+      },
+      {
+        "type": "text",
+        "id": "Password"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 41"
+      },
+      {
+        "type": "text",
+        "id": "Email"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 80"
+      },
+      {
+        "type": "text",
+        "id": "Sign In1"
+      }
+    ],
+    "modes": {
+      "Main Login": {
+        "rules": [
+          {
+            "id": "top_level",
+            "is-structured": "false",
+            "children": [
+              "Member Nav",
+              "Input Password",
+              "Input Email",
+              "Sign In",
+              "returnpalfinal logos_WMK_BlackBlue_transparent 1"
+            ],
+            "background-color": {
+              "alpha": "1.0",
+              "hue": "198.0",
+              "saturation": "0.11764705882352944",
+              "value": "1.0"
+            }
+          },
+          {
+            "id": "Member Nav",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "32.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "192.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "288.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "493.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "Forgot your password?",
+              "Sign In | Guest",
+              "Don’t have an account yet? Sign up"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Input Password",
+            "border-radius": "20.0",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "55.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "363.0"
+              }
+            },
+            "tap-handler": "$Input Password",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "250.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "45.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "Rectangle 40",
+              "Password"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Input Email",
+            "border-radius": "20.0",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "55.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "273.0"
+              }
+            },
+            "tap-handler": "$Input Email",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "250.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "45.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "Rectangle 41",
+              "Email"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Sign In",
+            "border-radius": "30.0",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "105.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "509.0"
+              }
+            },
+            "tap-handler": "$Sign In",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "150.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "50.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "Rectangle 80",
+              "Sign In1"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "returnpalfinal logos_WMK_BlackBlue_transparent 1",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "13.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "43.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "333.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "130.0"
+              }
+            },
+            "image-content": "returnpalfinal_logos_wmk_black_blue_transparent_1.png",
+            "scale": "cover"
+          },
+          {
+            "id": "Forgot your password?",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "261.0"
+              }
+            },
+            "tap-handler": "$Forgot",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "288.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "20.0"
+              }
+            },
+            "font-weight": "600.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "210.00000000000003",
+              "saturation": "0.0975609756097561",
+              "value": "0.4823529411764706"
+            },
+            "text-content": "Forgot your password?",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-size": "16.0",
+            "line-height": "1.2102272510528564",
+            "typeface": "Inter",
+            "underline": "true"
+          },
+          {
+            "id": "Sign In | Guest",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "8.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "0.0"
+              }
+            },
+            "tap-handler": "$Switch Accounts",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "250.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "49.0"
+              }
+            },
+            "font-weight": "600.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "203.6065573770492",
+              "saturation": "0.9242424242424243",
+              "value": "0.25882352941176473"
+            },
+            "annotated-text-content": {
+              "text": "Sign In | Guest",
+              "annotated-text-span-list": [
+                {
+                  "span-start": "0",
+                  "span-length": "8",
+                  "annotated-text-style": {
+                    "font-weight": "600.0",
+                    "text-size": "22.0",
+                    "typeface": "Inter"
+                  }
+                },
+                {
+                  "span-start": "8",
+                  "span-length": "1",
+                  "annotated-text-style": {
+                    "font-weight": "600.0",
+                    "text-size": "22.0",
+                    "typeface": "Inter",
+                    "color": {
+                      "alpha": "1.0",
+                      "hue": "203.73913043478262",
+                      "saturation": "1.0",
+                      "value": "0.9019607843137255"
+                    }
+                  }
+                },
+                {
+                  "span-start": "9",
+                  "span-length": "1",
+                  "annotated-text-style": {
+                    "font-weight": "600.0",
+                    "text-size": "22.0",
+                    "typeface": "Inter"
+                  }
+                },
+                {
+                  "span-start": "10",
+                  "span-length": "5",
+                  "annotated-text-style": {
+                    "font-weight": "600.0",
+                    "text-size": "22.0",
+                    "typeface": "Inter",
+                    "color": {
+                      "alpha": "0.4980392156862745",
+                      "hue": "203.6065573770492",
+                      "saturation": "0.9242424242424243",
+                      "value": "0.25882352941176473"
+                    }
+                  }
+                }
+              ]
+            },
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-size": "22.0",
+            "line-height": "1.3660000887784092",
+            "typeface": "Avenir Next"
+          },
+          {
+            "id": "Don’t have an account yet? Sign up",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "8.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "408.0"
+              }
+            },
+            "tap-handler": "$Sign Up",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "280.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "85.0"
+              }
+            },
+            "font-weight": "500.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "210.00000000000003",
+              "saturation": "0.0975609756097561",
+              "value": "0.4823529411764706"
+            },
+            "annotated-text-content": {
+              "text": "Don’t have an account yet? Sign up",
+              "annotated-text-span-list": [
+                {
+                  "span-start": "0",
+                  "span-length": "27",
+                  "annotated-text-style": {
+                    "font-weight": "600.0",
+                    "text-size": "16.0",
+                    "typeface": "Inter"
+                  }
+                },
+                {
+                  "span-start": "27",
+                  "span-length": "7",
+                  "annotated-text-style": {
+                    "font-weight": "600.0",
+                    "text-size": "16.0",
+                    "typeface": "Inter",
+                    "color": {
+                      "alpha": "1.0",
+                      "hue": "204.0",
+                      "saturation": "1.0",
+                      "value": "0.9019607843137255"
+                    }
+                  }
+                }
+              ]
+            },
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-size": "16.0",
+            "line-height": "1.3660000562667847",
+            "typeface": "Avenir Next"
+          },
+          {
+            "id": "Rectangle 40",
+            "border-radius": "20.0",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "-2.5"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "-2.5"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "250.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "45.0"
+              }
+            },
+            "vector-content": "rectangle_40.svg"
+          },
+          {
+            "id": "Password",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "17.97040557861328"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "10.519481658935547"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "161.20506286621094"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "23.546512603759766"
+              }
+            },
+            "color": {
+              "alpha": "1.0",
+              "hue": "210.00000000000003",
+              "saturation": "0.0975609756097561",
+              "value": "0.4823529411764706"
+            },
+            "text-content": "Password",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "16.0",
+            "line-height": "1.2102272510528564",
+            "typeface": "Inter"
+          },
+          {
+            "id": "Rectangle 41",
+            "border-radius": "20.0",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "-2.5"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "-2.5"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "250.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "45.0"
+              }
+            },
+            "vector-content": "rectangle_41.svg"
+          },
+          {
+            "id": "Email",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "17.97040557861328"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "10.928581237792969"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "161.20506286621094"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "23.5465087890625"
+              }
+            },
+            "font-weight": "500.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "210.00000000000003",
+              "saturation": "0.0975609756097561",
+              "value": "0.4823529411764706"
+            },
+            "text-content": "Email",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "16.0",
+            "line-height": "1.2102272510528564",
+            "typeface": "Inter"
+          },
+          {
+            "id": "Rectangle 80",
+            "border-radius": "30.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "150.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "50.0"
+              }
+            },
+            "vector-content": "rectangle_80.svg"
+          },
+          {
+            "id": "Sign In1",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "26.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "5.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "97.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "40.0"
+              }
+            },
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "1.0"
+            },
+            "text-content": "Sign In",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "30.0",
+            "line-height": "1.2102272033691406",
+            "typeface": "Inter"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "Input Password": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "Input Email": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "Sign In": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "Forgot": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "Switch Accounts": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "Sign Up": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    }
+  },
+  "previews": [
+    {
+      "design": "Main Login",
+      "size": {
+        "width": 360.0,
+        "height": 800.0
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}
