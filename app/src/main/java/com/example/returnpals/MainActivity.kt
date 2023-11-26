@@ -19,8 +19,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ThankYou()
+            runDemoQ1Final()
         }
     }
 }
-
+@Composable
+fun runDemoQ1Final() {
+    ThankYou()
+}
