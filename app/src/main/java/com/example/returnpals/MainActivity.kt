@@ -12,6 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.returnpals.ui.theme.ReturnPalsTheme
 import com.example.returnpals.thankyou.ThankYou
+import com.example.returnpals.guestthankyou.GuestThankYou
+import com.example.returnpals.packageinfoshowlabel.PackageInfoShowLabel
+import com.example.returnpals.packageinfo.PackageInfo
+import com.example.returnpals.guestpackageinfoshowlabel.GuestPackageInfoShowLabel
+import com.example.returnpals.guestpackageinfo.GuestPackageInfo
+import com.example.returnpals.guestconfirmpickup.GuestConfirmPickup
+import com.example.returnpals.confirmpickup.ConfirmPickup
 
 
 
@@ -25,5 +32,19 @@ class MainActivity : ComponentActivity() {
 }
 @Composable
 fun runDemoQ1Final() {
+    PackageInfo()
+    Thread.sleep(6000)
+    GuestPackageInfo()
+    Thread.sleep(6000)
+    PackageInfoShowLabel()
+    Thread.sleep(6000)
+    GuestPackageInfoShowLabel()
+    Thread.sleep(6000)
+    ConfirmPickup()
+    Thread.sleep(6000)
+    GuestConfirmPickup()
+    Thread.sleep(6000)
     ThankYou()
+    Thread.sleep(6000)
+    GuestThankYou()
 }
