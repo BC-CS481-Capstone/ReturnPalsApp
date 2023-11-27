@@ -2,4 +2,6 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_confirm_pickup">ConfirmPickup</string>
     <string name="title_activity_thank_you">ThankYou</string>
+    <string name="title_activity_package_info">PackageInfoActivity</string>
+    <string name="title_activity_package_info_show_label">PackageInfoShowLabelActivity</string>
 </resources>
