@@ -3,6 +3,11 @@
 
     <application>
         <activity
+            android:name=".ThankYouActivity"
+            android:exported="false"
+            android:label="@string/title_activity_thank_you"
+            android:theme="@style/Theme.ReturnPals" />
+        <activity
             android:name=".ThankYou"
             android:exported="false"
             android:label="@string/title_activity_thank_you"
