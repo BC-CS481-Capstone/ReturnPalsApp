@@ -1,4 +1,5 @@
 <resources>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_confirm_pickup">ConfirmPickup</string>
+    <string name="title_activity_thank_you">ThankYou</string>
 </resources>

@@ -3,14 +3,9 @@
 
     <application>
         <activity
-            android:name="com.demo.returnpal.MainActivity"
+            android:name=".ThankYou"
             android:exported="false"
-            android:label="@string/title_activity_main"
-            android:theme="@style/Theme.ReturnPals" />
-        <activity
-            android:name=".ConfirmPickup"
-            android:exported="false"
-            android:label="@string/title_activity_confirm_pickup"
+            android:label="@string/title_activity_thank_you"
             android:theme="@style/Theme.ReturnPals" />
     </application>
 
