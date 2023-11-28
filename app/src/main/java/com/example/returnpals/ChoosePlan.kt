@@ -1,22 +1,20 @@
 package com.example.returnpals
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
@@ -25,7 +23,6 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
-import com.example.returnpals.R
 import com.example.returnpals.chooseplan.avenirNext
 import com.example.returnpals.chooseplan.cairo
 import com.google.relay.compose.RelayContainer
@@ -166,36 +163,15 @@ fun ChoosePlan(
             )
         }
         BackButton(
-            onBackButtonTapped = onBackButtonTapped,
+            onClick = onBackButtonTapped,
             modifier = Modifier.boxAlign(
                 alignment = Alignment.TopStart,
                 offset = DpOffset(
-                    x = 15.0.dp,
-                    y = 728.0.dp
+                    x = 20.0.dp,
+                    y = 750.0.dp
                 )
             )
-        ) {
-            BackButtonText(
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = 22.479248046875.dp,
-                        y = 0.0.dp
-                    )
-                )
-            )
-            ArrowRight(
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = -8.881784197001252e-16.dp,
-                        y = 4.0909423828125.dp
-                    )
-                )
-            ) {
-                Vector(modifier = Modifier.rowWeight(1.0f).columnWeight(1.0f))
-            }
-        }
+        )
         ProgressBar {
             Rectangle56()
             Ellipse18(
@@ -357,7 +333,9 @@ private fun ChoosePlanPreview() {
                 onPlatinumPlanButtonTapped = {},
                 onGoldPlanButtonTapped = {},
                 onBronzePlanButtonTapped = {},
-                modifier = Modifier.rowWeight(1.0f).columnWeight(1.0f)
+                modifier = Modifier
+                    .rowWeight(1.0f)
+                    .columnWeight(1.0f)
             )
         }
     }
@@ -367,7 +345,9 @@ private fun ChoosePlanPreview() {
 fun Background(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_background),
-        modifier = modifier.requiredWidth(360.0.dp).requiredHeight(800.0.dp)
+        modifier = modifier
+            .requiredWidth(360.0.dp)
+            .requiredHeight(800.0.dp)
     )
 }
 
@@ -378,7 +358,10 @@ fun SilverPlanButton(
 ) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_silver_plan_button),
-        modifier = modifier.tappable(onTap = onSilverPlanButtonTapped).requiredWidth(200.0.dp).requiredHeight(110.0.dp)
+        modifier = modifier
+            .tappable(onTap = onSilverPlanButtonTapped)
+            .requiredWidth(200.0.dp)
+            .requiredHeight(110.0.dp)
     )
 }
 
@@ -389,23 +372,23 @@ fun SilverPlanText(modifier: Modifier = Modifier) {
             withStyle(
                 style = SpanStyle(
                     color = Color(
-                        alpha = 0,
-                        red = 0,
-                        green = 0,
-                        blue = 0
+                        alpha = 255,
+                        red = 150,
+                        green = 170,
+                        blue = 170
                     ),
                     fontFamily = cairo,
                     fontSize = 24.0.sp,
-                    fontWeight = FontWeight(800.0.toInt())
+                    fontWeight = FontWeight(800)
                 )
             ) {
-                append("Silver\n")
+                append("SILVER\n")
             }
             withStyle(
                 style = SpanStyle(
                     fontFamily = cairo,
-                    fontSize = 30.0.sp,
-                    fontWeight = FontWeight(800.0.toInt())
+                    fontSize = 20.0.sp,
+                    fontWeight = FontWeight(800)
                 )
             ) {
                 append("\$20.99\n")
@@ -414,19 +397,10 @@ fun SilverPlanText(modifier: Modifier = Modifier) {
                 style = SpanStyle(
                     fontFamily = cairo,
                     fontSize = 16.0.sp,
-                    fontWeight = FontWeight(500.0.toInt())
+                    fontWeight = FontWeight(500)
                 )
             ) {
-                append("per month\n\n")
-            }
-            withStyle(
-                style = SpanStyle(
-                    fontFamily = cairo,
-                    fontSize = 16.0.sp,
-                    fontWeight = FontWeight(300.0.toInt())
-                )
-            ) {
-                append("billed monthly")
+                append("per month\nbilled monthly")
             }
         },
         fontSize = 32.0.sp,
@@ -452,7 +426,9 @@ fun SilverPlan(
     RelayContainer(
         isStructured = false,
         content = content,
-        modifier = modifier.requiredWidth(301.0.dp).requiredHeight(110.0.dp)
+        modifier = modifier
+            .requiredWidth(301.0.dp)
+            .requiredHeight(110.0.dp)
     )
 }
 
@@ -463,7 +439,10 @@ fun PlatinumPlanButton(
 ) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_platinum_plan_button),
-        modifier = modifier.tappable(onTap = onPlatinumPlanButtonTapped).requiredWidth(200.0.dp).requiredHeight(110.0.dp)
+        modifier = modifier
+            .tappable(onTap = onPlatinumPlanButtonTapped)
+            .requiredWidth(200.0.dp)
+            .requiredHeight(110.0.dp)
     )
 }
 
@@ -474,23 +453,23 @@ fun PlatinumPlanText(modifier: Modifier = Modifier) {
             withStyle(
                 style = SpanStyle(
                     color = Color(
-                        alpha = 0,
-                        red = 0,
-                        green = 0,
-                        blue = 0
+                        alpha = 255,
+                        red = 125,
+                        green = 175,
+                        blue = 175
                     ),
                     fontFamily = cairo,
                     fontSize = 24.0.sp,
-                    fontWeight = FontWeight(800.0.toInt())
+                    fontWeight = FontWeight(800)
                 )
             ) {
-                append("Platinum\n")
+                append("PLATINUM\n")
             }
             withStyle(
                 style = SpanStyle(
                     fontFamily = cairo,
-                    fontSize = 30.0.sp,
-                    fontWeight = FontWeight(800.0.toInt())
+                    fontSize = 20.0.sp,
+                    fontWeight = FontWeight(800)
                 )
             ) {
                 append("\$14.79\n")
@@ -499,28 +478,10 @@ fun PlatinumPlanText(modifier: Modifier = Modifier) {
                 style = SpanStyle(
                     fontFamily = cairo,
                     fontSize = 16.0.sp,
-                    fontWeight = FontWeight(500.0.toInt())
+                    fontWeight = FontWeight(500)
                 )
             ) {
-                append("per month\n")
-            }
-            withStyle(
-                style = SpanStyle(
-                    fontFamily = cairo,
-                    fontSize = 16.0.sp,
-                    fontWeight = FontWeight(300.0.toInt())
-                )
-            ) {
-                append(" \n")
-            }
-            withStyle(
-                style = SpanStyle(
-                    fontFamily = cairo,
-                    fontSize = 16.0.sp,
-                    fontWeight = FontWeight(300.0.toInt())
-                )
-            ) {
-                append("billed yearly")
+                append("per month\nbilled yearly")
             }
         },
         fontSize = 32.0.sp,
@@ -534,7 +495,9 @@ fun PlatinumPlanText(modifier: Modifier = Modifier) {
         height = 0.625.em,
         fontWeight = FontWeight(700.0.toInt()),
         maxLines = -1,
-        modifier = modifier.requiredWidth(301.0.dp).requiredHeight(95.0.dp)
+        modifier = modifier
+            .requiredWidth(301.0.dp)
+            .requiredHeight(95.0.dp)
     )
 }
 
@@ -546,7 +509,9 @@ fun PlatinumPlan(
     RelayContainer(
         isStructured = false,
         content = content,
-        modifier = modifier.requiredWidth(301.0.dp).requiredHeight(129.0.dp)
+        modifier = modifier
+            .requiredWidth(301.0.dp)
+            .requiredHeight(129.0.dp)
     )
 }
 
@@ -557,7 +522,10 @@ fun GoldPlanButton(
 ) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_gold_plan_button),
-        modifier = modifier.tappable(onTap = onGoldPlanButtonTapped).requiredWidth(200.0.dp).requiredHeight(110.0.dp)
+        modifier = modifier
+            .tappable(onTap = onGoldPlanButtonTapped)
+            .requiredWidth(200.0.dp)
+            .requiredHeight(110.0.dp)
     )
 }
 
@@ -568,23 +536,23 @@ fun GoldPlanText(modifier: Modifier = Modifier) {
             withStyle(
                 style = SpanStyle(
                     color = Color(
-                        alpha = 0,
-                        red = 0,
-                        green = 0,
-                        blue = 0
+                        alpha = 255,
+                        red = 230,
+                        green = 190,
+                        blue = 100
                     ),
                     fontFamily = cairo,
                     fontSize = 24.0.sp,
-                    fontWeight = FontWeight(800.0.toInt())
+                    fontWeight = FontWeight(800)
                 )
             ) {
-                append("Gold\n")
+                append("GOLD\n")
             }
             withStyle(
                 style = SpanStyle(
                     fontFamily = cairo,
-                    fontSize = 30.0.sp,
-                    fontWeight = FontWeight(800.0.toInt())
+                    fontSize = 20.0.sp,
+                    fontWeight = FontWeight(800)
                 )
             ) {
                 append("\$18.99\n")
@@ -593,19 +561,10 @@ fun GoldPlanText(modifier: Modifier = Modifier) {
                 style = SpanStyle(
                     fontFamily = cairo,
                     fontSize = 16.0.sp,
-                    fontWeight = FontWeight(500.0.toInt())
+                    fontWeight = FontWeight(500)
                 )
             ) {
-                append("per month\n\n")
-            }
-            withStyle(
-                style = SpanStyle(
-                    fontFamily = cairo,
-                    fontSize = 16.0.sp,
-                    fontWeight = FontWeight(300.0.toInt())
-                )
-            ) {
-                append("billed quarterly")
+                append("per month\nbilled quarterly")
             }
         },
         fontSize = 32.0.sp,
@@ -619,7 +578,9 @@ fun GoldPlanText(modifier: Modifier = Modifier) {
         height = 0.625.em,
         fontWeight = FontWeight(700.0.toInt()),
         maxLines = -1,
-        modifier = modifier.requiredWidth(301.0.dp).requiredHeight(109.0.dp)
+        modifier = modifier
+            .requiredWidth(301.0.dp)
+            .requiredHeight(109.0.dp)
     )
 }
 
@@ -631,7 +592,9 @@ fun GoldPlan(
     RelayContainer(
         isStructured = false,
         content = content,
-        modifier = modifier.requiredWidth(301.0.dp).requiredHeight(120.0.dp)
+        modifier = modifier
+            .requiredWidth(301.0.dp)
+            .requiredHeight(120.0.dp)
     )
 }
 
@@ -642,7 +605,10 @@ fun BronzePlanButton(
 ) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_bronze_plan_button),
-        modifier = modifier.tappable(onTap = onBronzePlanButtonTapped).requiredWidth(200.0.dp).requiredHeight(110.0.dp)
+        modifier = modifier
+            .tappable(onTap = onBronzePlanButtonTapped)
+            .requiredWidth(200.0.dp)
+            .requiredHeight(110.0.dp)
     )
 }
 
@@ -653,23 +619,23 @@ fun BronzePlanText(modifier: Modifier = Modifier) {
             withStyle(
                 style = SpanStyle(
                     color = Color(
-                        alpha = 0,
-                        red = 0,
-                        green = 0,
-                        blue = 0
+                        alpha = 255,
+                        red = 200,
+                        green = 150,
+                        blue = 100
                     ),
                     fontFamily = cairo,
                     fontSize = 24.0.sp,
-                    fontWeight = FontWeight(800.0.toInt())
+                    fontWeight = FontWeight(800)
                 )
             ) {
-                append("Bronze\n")
+                append("BRONZE\n")
             }
             withStyle(
                 style = SpanStyle(
                     fontFamily = cairo,
-                    fontSize = 30.0.sp,
-                    fontWeight = FontWeight(800.0.toInt())
+                    fontSize = 20.0.sp,
+                    fontWeight = FontWeight(800)
                 )
             ) {
                 append("\$10.99\n")
@@ -677,38 +643,11 @@ fun BronzePlanText(modifier: Modifier = Modifier) {
             withStyle(
                 style = SpanStyle(
                     fontFamily = cairo,
-                    fontSize = 10.0.sp,
-                    fontWeight = FontWeight(500.0.toInt())
-                )
-            ) {
-                append(" \n")
-            }
-            withStyle(
-                style = SpanStyle(
-                    fontFamily = cairo,
                     fontSize = 16.0.sp,
-                    fontWeight = FontWeight(500.0.toInt())
+                    fontWeight = FontWeight(500)
                 )
             ) {
-                append("+\$3.99 per additional box\n")
-            }
-            withStyle(
-                style = SpanStyle(
-                    fontFamily = cairo,
-                    fontSize = 16.0.sp,
-                    fontWeight = FontWeight(300.0.toInt())
-                )
-            ) {
-                append(" \n")
-            }
-            withStyle(
-                style = SpanStyle(
-                    fontFamily = cairo,
-                    fontSize = 16.0.sp,
-                    fontWeight = FontWeight(300.0.toInt())
-                )
-            ) {
-                append("billed once")
+                append("+\$3.99 per additional box\nbilled once")
             }
         },
         fontSize = 32.0.sp,
@@ -739,55 +678,16 @@ fun BronzePlan(
 }
 
 @Composable
-fun BackButtonText(modifier: Modifier = Modifier) {
-    RelayText(
-        content = "Back",
-        fontSize = 30.0.sp,
-        fontFamily = avenirNext,
-        color = Color(
-            alpha = 255,
-            red = 0,
-            green = 138,
-            blue = 230
-        ),
-        height = 1.3660001118977865.em,
-        textAlign = TextAlign.Left,
-        fontWeight = FontWeight(600.0.toInt()),
-        maxLines = -1,
-        modifier = modifier.requiredWidth(57.520751953125.dp).requiredHeight(12.727294921875.dp)
-    )
-}
-
-@Composable
-fun Vector(modifier: Modifier = Modifier) {
+fun Arrow(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_vector),
-        modifier = modifier.padding(
-            paddingValues = PaddingValues(
-                start = 1.9833984375.dp,
-                top = 2.04541015625.dp,
-                end = 1.9834918975830078.dp,
-                bottom = 2.045443534851074.dp
-            )
-        ).fillMaxWidth(1.0f).fillMaxHeight(1.0f)
+        modifier = modifier
     )
 }
 
 @Composable
-fun ArrowRight(
-    modifier: Modifier = Modifier,
-    content: @Composable RelayContainerScope.() -> Unit
-) {
-    RelayContainer(
-        isStructured = false,
-        content = content,
-        modifier = modifier.graphicsLayer(rotationZ = 180.0f).requiredWidth(15.867769241333008.dp).requiredHeight(10.909090995788574.dp)
-    )
-}
-
-@Composable
-fun BackButton(
-    onBackButtonTapped: () -> Unit,
+fun Button(
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable RelayContainerScope.() -> Unit
 ) {
@@ -795,15 +695,61 @@ fun BackButton(
         isStructured = false,
         clipToParent = false,
         content = content,
-        modifier = modifier.tappable(onTap = onBackButtonTapped).requiredWidth(80.0.dp).requiredHeight(15.0.dp)
+        modifier = modifier.tappable(onTap = onClick)
     )
 }
+
+@Composable
+fun BackButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+    ) {
+        Text(
+            text = "Back",
+            modifier = Modifier.boxAlign(
+                alignment = Alignment.TopStart,
+                offset = DpOffset(
+                    x = 22.479248046875.dp,
+                    y = 0.0.dp
+                )
+            ),
+            color = Color(
+                alpha = 255,
+                red = 0,
+                green = 138,
+                blue = 230
+            ),
+            fontSize = 20.0.sp,
+            fontWeight = FontWeight(700),
+            fontFamily = cairo,
+            textAlign = TextAlign.Right,
+        )
+        Arrow(
+            modifier = Modifier
+                .boxAlign(
+                    alignment = Alignment.Center,
+                    offset = DpOffset(
+                        x = -15.dp,
+                        y = 0.dp
+                    )
+                )
+                .scale(1.5F)
+        )
+    }
+}
+
 
 @Composable
 fun Rectangle56(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_rectangle_56),
-        modifier = modifier.requiredWidth(360.0.dp).requiredHeight(73.68646240234375.dp)
+        modifier = modifier
+            .requiredWidth(360.0.dp)
+            .requiredHeight(73.68646240234375.dp)
     )
 }
 
@@ -811,7 +757,9 @@ fun Rectangle56(modifier: Modifier = Modifier) {
 fun Ellipse18(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_ellipse_18),
-        modifier = modifier.requiredWidth(25.0.dp).requiredHeight(25.0.dp)
+        modifier = modifier
+            .requiredWidth(25.0.dp)
+            .requiredHeight(25.0.dp)
     )
 }
 
@@ -819,7 +767,9 @@ fun Ellipse18(modifier: Modifier = Modifier) {
 fun Line6(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_line_6),
-        modifier = modifier.requiredWidth(50.0.dp).requiredHeight(0.0.dp)
+        modifier = modifier
+            .requiredWidth(50.0.dp)
+            .requiredHeight(0.0.dp)
     )
 }
 
@@ -827,7 +777,9 @@ fun Line6(modifier: Modifier = Modifier) {
 fun Ellipse17(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_ellipse_17),
-        modifier = modifier.requiredWidth(25.0.dp).requiredHeight(25.0.dp)
+        modifier = modifier
+            .requiredWidth(25.0.dp)
+            .requiredHeight(25.0.dp)
     )
 }
 
@@ -835,7 +787,9 @@ fun Ellipse17(modifier: Modifier = Modifier) {
 fun Line5(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_line_5),
-        modifier = modifier.requiredWidth(50.0.dp).requiredHeight(0.0.dp)
+        modifier = modifier
+            .requiredWidth(50.0.dp)
+            .requiredHeight(0.0.dp)
     )
 }
 
@@ -843,7 +797,9 @@ fun Line5(modifier: Modifier = Modifier) {
 fun Ellipse16(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_ellipse_16),
-        modifier = modifier.requiredWidth(25.0.dp).requiredHeight(25.0.dp)
+        modifier = modifier
+            .requiredWidth(25.0.dp)
+            .requiredHeight(25.0.dp)
     )
 }
 
@@ -851,7 +807,9 @@ fun Ellipse16(modifier: Modifier = Modifier) {
 fun Line4(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_line_4),
-        modifier = modifier.requiredWidth(50.0.dp).requiredHeight(0.0.dp)
+        modifier = modifier
+            .requiredWidth(50.0.dp)
+            .requiredHeight(0.0.dp)
     )
 }
 
@@ -859,7 +817,9 @@ fun Line4(modifier: Modifier = Modifier) {
 fun Line3(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_line_3),
-        modifier = modifier.requiredWidth(50.0.dp).requiredHeight(0.0.dp)
+        modifier = modifier
+            .requiredWidth(50.0.dp)
+            .requiredHeight(0.0.dp)
     )
 }
 
@@ -867,7 +827,9 @@ fun Line3(modifier: Modifier = Modifier) {
 fun Ellipse14(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_ellipse_14),
-        modifier = modifier.requiredWidth(25.0.dp).requiredHeight(25.0.dp)
+        modifier = modifier
+            .requiredWidth(25.0.dp)
+            .requiredHeight(25.0.dp)
     )
 }
 
@@ -875,7 +837,9 @@ fun Ellipse14(modifier: Modifier = Modifier) {
 fun Vector1(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_vector1),
-        modifier = modifier.requiredWidth(18.0.dp).requiredHeight(12.760009765625.dp)
+        modifier = modifier
+            .requiredWidth(18.0.dp)
+            .requiredHeight(12.760009765625.dp)
     )
 }
 
@@ -894,10 +858,13 @@ fun ChoosePlan(modifier: Modifier = Modifier) {
         height = 1.25.em,
         fontWeight = FontWeight(700.0.toInt()),
         maxLines = -1,
-        modifier = modifier.requiredWidth(55.0.dp).requiredHeight(20.31353759765625.dp).wrapContentHeight(
-            align = Alignment.CenterVertically,
-            unbounded = true
-        )
+        modifier = modifier
+            .requiredWidth(55.0.dp)
+            .requiredHeight(20.31353759765625.dp)
+            .wrapContentHeight(
+                align = Alignment.CenterVertically,
+                unbounded = true
+            )
     )
 }
 
@@ -915,10 +882,13 @@ fun PackageDetails(modifier: Modifier = Modifier) {
         ),
         height = 1.25.em,
         maxLines = -1,
-        modifier = modifier.requiredWidth(55.0.dp).requiredHeight(20.31353759765625.dp).wrapContentHeight(
-            align = Alignment.CenterVertically,
-            unbounded = true
-        )
+        modifier = modifier
+            .requiredWidth(55.0.dp)
+            .requiredHeight(20.31353759765625.dp)
+            .wrapContentHeight(
+                align = Alignment.CenterVertically,
+                unbounded = true
+            )
     )
 }
 
@@ -936,10 +906,13 @@ fun PayConfirm(modifier: Modifier = Modifier) {
         ),
         height = 1.25.em,
         maxLines = -1,
-        modifier = modifier.requiredWidth(55.0.dp).requiredHeight(20.31353759765625.dp).wrapContentHeight(
-            align = Alignment.CenterVertically,
-            unbounded = true
-        )
+        modifier = modifier
+            .requiredWidth(55.0.dp)
+            .requiredHeight(20.31353759765625.dp)
+            .wrapContentHeight(
+                align = Alignment.CenterVertically,
+                unbounded = true
+            )
     )
 }
 
@@ -947,7 +920,9 @@ fun PayConfirm(modifier: Modifier = Modifier) {
 fun Ellipse15(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_ellipse_15),
-        modifier = modifier.requiredWidth(25.0.dp).requiredHeight(25.0.dp)
+        modifier = modifier
+            .requiredWidth(25.0.dp)
+            .requiredHeight(25.0.dp)
     )
 }
 
@@ -955,7 +930,9 @@ fun Ellipse15(modifier: Modifier = Modifier) {
 fun Vector2(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_vector2),
-        modifier = modifier.requiredWidth(18.0.dp).requiredHeight(12.760009765625.dp)
+        modifier = modifier
+            .requiredWidth(18.0.dp)
+            .requiredHeight(12.760009765625.dp)
     )
 }
 
@@ -973,10 +950,13 @@ fun PickupDate(modifier: Modifier = Modifier) {
         ),
         height = 1.25.em,
         maxLines = -1,
-        modifier = modifier.requiredWidth(55.0.dp).requiredHeight(20.30999755859375.dp).wrapContentHeight(
-            align = Alignment.CenterVertically,
-            unbounded = true
-        )
+        modifier = modifier
+            .requiredWidth(55.0.dp)
+            .requiredHeight(20.30999755859375.dp)
+            .wrapContentHeight(
+                align = Alignment.CenterVertically,
+                unbounded = true
+            )
     )
 }
 
@@ -994,10 +974,13 @@ fun PickupDetails(modifier: Modifier = Modifier) {
         ),
         height = 1.25.em,
         maxLines = -1,
-        modifier = modifier.requiredWidth(55.0.dp).requiredHeight(20.30999755859375.dp).wrapContentHeight(
-            align = Alignment.CenterVertically,
-            unbounded = true
-        )
+        modifier = modifier
+            .requiredWidth(55.0.dp)
+            .requiredHeight(20.30999755859375.dp)
+            .wrapContentHeight(
+                align = Alignment.CenterVertically,
+                unbounded = true
+            )
     )
 }
 
@@ -1010,7 +993,9 @@ fun ProgressBar(
         isStructured = false,
         clipToParent = false,
         content = content,
-        modifier = modifier.requiredWidth(360.0.dp).requiredHeight(73.68646240234375.dp)
+        modifier = modifier
+            .requiredWidth(360.0.dp)
+            .requiredHeight(73.68646240234375.dp)
     )
 }
 
@@ -1023,6 +1008,8 @@ fun TopLevel(
         isStructured = false,
         clipToParent = false,
         content = content,
-        modifier = modifier.fillMaxWidth(1.0f).fillMaxHeight(1.0f)
+        modifier = modifier
+            .fillMaxWidth(1.0f)
+            .fillMaxHeight(1.0f)
     )
 }
