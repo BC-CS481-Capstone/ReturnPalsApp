@@ -13,18 +13,12 @@ class ConfirmPickupActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ConfirmPickupComponent()
-            createbuttonConfirm()
+            ConfirmPickupComponent(nextButton = {
+                var x = Intent(this,ThankYouActivity::class.java)
+                startActivity(x)
+            })
         }
     }
-    @Composable
-    fun createbuttonConfirm() {
-        Button(onClick = {
-            var x = Intent(this,ThankYouActivity::class.java)
-            startActivity(x)
-        }) {
-            Text("HERE PUSH ME")
-        }
-    }
+
 }
 
