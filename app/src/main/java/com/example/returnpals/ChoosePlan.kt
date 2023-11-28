@@ -2,11 +2,15 @@ package com.example.returnpals
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
@@ -32,164 +37,98 @@ import com.google.relay.compose.RelayContainerScope
 import com.google.relay.compose.RelayText
 import com.google.relay.compose.RelayVector
 import com.google.relay.compose.tappable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 
 @Composable
 fun ChoosePlan(
-    isSelectedBronze: Boolean = false,
-    isSelectedSilver: Boolean = false,
-    isSelectedGold: Boolean = false,
-    isSelectedPlatinum: Boolean = false,
-    modifier: Modifier = Modifier,
+    width: Dp,
+    height: Dp,
+    isBronzeSelected: Boolean = false,
+    isSilverSelected: Boolean = false,
+    isGoldSelected: Boolean = false,
+    isPlatinumSelected: Boolean = false,
     onBackButtonTapped: () -> Unit = {},
     onNextButtonTapped: () -> Unit = {},
+    onBronzePlanButtonTapped: () -> Unit = {},
     onSilverPlanButtonTapped: () -> Unit = {},
-    onPlatinumPlanButtonTapped: () -> Unit = {},
     onGoldPlanButtonTapped: () -> Unit = {},
-    onBronzePlanButtonTapped: () -> Unit = {}
+    onPlatinumPlanButtonTapped: () -> Unit = {},
+    modifier: Modifier = Modifier
 ) {
     TopLevel(modifier = modifier) {
-        Background()
+        Background(Modifier
+            .requiredWidth(width)
+            .requiredHeight(height)
+        )
         SilverPlan(
-            modifier = Modifier.boxAlign(
-                alignment = Alignment.TopStart,
-                offset = DpOffset(
-                    x = 31.0.dp,
-                    y = 411.0.dp
-                )
-            )
-        ) {
-            PlanButton(
-                onTap = onSilverPlanButtonTapped,
-                isSelected = isSelectedSilver,
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = 51.0.dp,
-                        y = 0.0.dp
-                    )
-                )
-            )
-            SilverPlanText(
-                modifier = Modifier.boxAlign(
+            onTap = onSilverPlanButtonTapped,
+            isSelected = isSilverSelected,
+            modifier = Modifier
+                .width(width)
+                .boxAlign(
                     alignment = Alignment.TopStart,
                     offset = DpOffset(
                         x = 0.0.dp,
-                        y = 4.0.dp
+                        y = 411.0.dp
                     )
                 )
-            )
-        }
+        )
         PlatinumPlan(
-            modifier = Modifier.boxAlign(
-                alignment = Alignment.TopStart,
-                offset = DpOffset(
-                    x = 29.0.dp,
-                    y = 96.0.dp
-                )
-            )
-        ) {
-            PlanButton(
-                onTap = onPlatinumPlanButtonTapped,
-                isSelected = isSelectedPlatinum,
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = 51.0.dp,
-                        y = 10.0.dp
-                    )
-                )
-            )
-            PlatinumPlanText(
-                modifier = Modifier.boxAlign(
+            onTap = onPlatinumPlanButtonTapped,
+            isSelected = isPlatinumSelected,
+            modifier = Modifier
+                .width(width)
+                .boxAlign(
                     alignment = Alignment.TopStart,
                     offset = DpOffset(
                         x = 0.0.dp,
-                        y = 15.0.dp
+                        y = 96.0.dp
                     )
                 )
-            )
-        }
+        )
         GoldPlan(
-            modifier = Modifier.boxAlign(
-                alignment = Alignment.TopStart,
-                offset = DpOffset(
-                    x = 30.0.dp,
-                    y = 248.0.dp
-                )
-            )
-        ) {
-            PlanButton(
-                onTap = onGoldPlanButtonTapped,
-                isSelected = isSelectedGold,
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = 51.0.dp,
-                        y = 9.0.dp
-                    )
-                )
-            )
-            GoldPlanText(
-                modifier = Modifier.boxAlign(
+            onTap = onGoldPlanButtonTapped,
+            isSelected = isGoldSelected,
+            modifier = Modifier
+                .width(width)
+                .boxAlign(
                     alignment = Alignment.TopStart,
                     offset = DpOffset(
                         x = 0.0.dp,
-                        y = 10.0.dp
+                        y = 248.0.dp
                     )
                 )
-            )
-        }
+        )
         BronzePlan(
-            modifier = Modifier.boxAlign(
-                alignment = Alignment.TopStart,
-                offset = DpOffset(
-                    x = 30.0.dp,
-                    y = 564.0.dp
-                )
-            )
-        ) {
-            PlanButton(
-                onTap = onBronzePlanButtonTapped,
-                isSelected = isSelectedBronze,
-                modifier = Modifier.boxAlign(
+            onTap = onBronzePlanButtonTapped,
+            isSelected = isBronzeSelected,
+            modifier = Modifier
+                .width(width)
+                .boxAlign(
                     alignment = Alignment.TopStart,
                     offset = DpOffset(
-                        x = 50.0.dp,
-                        y = 8.0.dp
+                        x = 0.0.dp,
+                        y = 564.0.dp
                     )
                 )
-            )
-            BronzePlanText(
-                modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
-                    offset = DpOffset(
-                        x = 1.0.dp,
-                        y = 10.0.dp
-                    )
-                )
-            )
-        }
+        )
         BackButton(
             onClick = onBackButtonTapped,
             modifier = Modifier.boxAlign(
                 alignment = Alignment.TopStart,
                 offset = DpOffset(
                     x = 20.0.dp,
-                    y = 750.0.dp
+                    y = height - 50.0.dp
                 )
             )
         )
         NextButton(
             onClick = onNextButtonTapped,
-            hide = isSelectedBronze or isSelectedSilver or isSelectedGold or isSelectedPlatinum,
+            hide = !(isBronzeSelected || isSilverSelected || isGoldSelected || isPlatinumSelected),
             modifier = Modifier.boxAlign(
                 alignment = Alignment.TopStart,
                 offset = DpOffset(
-                    x = 250.0.dp,
-                    y = 750.0.dp
+                    x = width - 100.0.dp,
+                    y = height - 50.0.dp
                 )
             )
         )
@@ -276,7 +215,7 @@ fun ChoosePlan(
                     )
                 )
             )
-            ChoosePlan(
+            ProgressLabelChoosePlan(
                 modifier = Modifier.boxAlign(
                     alignment = Alignment.TopStart,
                     offset = DpOffset(
@@ -343,20 +282,16 @@ fun ChoosePlan(
     }
 }
 
-@Preview(widthDp = 360, heightDp = 800)
+//@Preview(widthDp = 360, heightDp = 800)
+@Preview(widthDp = 393, heightDp = 808)
 @Composable
 private fun ChoosePlanPreview() {
     MaterialTheme {
         RelayContainer {
             ChoosePlan(
-                onBackButtonTapped = {},
-                onSilverPlanButtonTapped = {},
-                onPlatinumPlanButtonTapped = {},
-                onGoldPlanButtonTapped = {},
-                onBronzePlanButtonTapped = {},
-                modifier = Modifier
-                    .rowWeight(1.0f)
-                    .columnWeight(1.0f)
+                isSilverSelected = true,
+                width = 360.dp,
+                height = 800.dp
             )
         }
     }
@@ -367,8 +302,6 @@ fun Background(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_background),
         modifier = modifier
-            .requiredWidth(360.0.dp)
-            .requiredHeight(800.0.dp)
     )
 }
 
@@ -419,24 +352,37 @@ fun SilverPlanText(modifier: Modifier = Modifier) {
             blue = 65
         ),
         height = 0.625.em,
-        fontWeight = FontWeight(700.0.toInt()),
+        fontWeight = FontWeight(700),
         maxLines = -1,
-        modifier = modifier.requiredWidth(301.0.dp)
+        modifier = modifier
     )
 }
 
 @Composable
 fun SilverPlan(
+    onTap: () -> Unit = {},
+    isSelected: Boolean = false,
     modifier: Modifier = Modifier,
-    content: @Composable RelayContainerScope.() -> Unit
 ) {
     RelayContainer(
         isStructured = false,
-        content = content,
         modifier = modifier
-            .requiredWidth(301.0.dp)
-            .requiredHeight(110.0.dp)
-    )
+    ) {
+        PlanButton(
+            onTap = onTap,
+            isSelected = isSelected,
+            modifier = Modifier.boxAlign(
+                alignment = Alignment.Center,
+                offset = DpOffset(0.0.dp, 0.0.dp)
+            )
+        )
+        SilverPlanText(
+            modifier = Modifier.boxAlign(
+                alignment = Alignment.Center,
+                offset = DpOffset(0.0.dp, 0.0.dp)
+            )
+        )
+    }
 }
 
 @Composable
@@ -478,7 +424,7 @@ fun PlatinumPlanText(modifier: Modifier = Modifier) {
             }
         },
         fontSize = 32.0.sp,
-        fontFamily = avenirNext,
+        fontFamily = cairo,
         color = Color(
             alpha = 255,
             red = 4,
@@ -486,26 +432,37 @@ fun PlatinumPlanText(modifier: Modifier = Modifier) {
             blue = 65
         ),
         height = 0.625.em,
-        fontWeight = FontWeight(700.0.toInt()),
+        fontWeight = FontWeight(700),
         maxLines = -1,
         modifier = modifier
-            .requiredWidth(301.0.dp)
-            .requiredHeight(95.0.dp)
     )
 }
 
 @Composable
 fun PlatinumPlan(
+    onTap: () -> Unit = {},
+    isSelected: Boolean = false,
     modifier: Modifier = Modifier,
-    content: @Composable RelayContainerScope.() -> Unit
 ) {
     RelayContainer(
         isStructured = false,
-        content = content,
         modifier = modifier
-            .requiredWidth(301.0.dp)
-            .requiredHeight(129.0.dp)
-    )
+    ) {
+        PlanButton(
+            onTap = onTap,
+            isSelected = isSelected,
+            modifier = Modifier.boxAlign(
+                alignment = Alignment.Center,
+                offset = DpOffset(0.0.dp, 0.0.dp)
+            )
+        )
+        PlatinumPlanText(
+            modifier = Modifier.boxAlign(
+                alignment = Alignment.Center,
+                offset = DpOffset(0.0.dp, 0.0.dp)
+            )
+        )
+    }
 }
 
 @Composable
@@ -555,26 +512,37 @@ fun GoldPlanText(modifier: Modifier = Modifier) {
             blue = 65
         ),
         height = 0.625.em,
-        fontWeight = FontWeight(700.0.toInt()),
+        fontWeight = FontWeight(700),
         maxLines = -1,
         modifier = modifier
-            .requiredWidth(301.0.dp)
-            .requiredHeight(109.0.dp)
     )
 }
 
 @Composable
 fun GoldPlan(
+    onTap: () -> Unit = {},
+    isSelected: Boolean = false,
     modifier: Modifier = Modifier,
-    content: @Composable RelayContainerScope.() -> Unit
 ) {
     RelayContainer(
         isStructured = false,
-        content = content,
         modifier = modifier
-            .requiredWidth(301.0.dp)
-            .requiredHeight(120.0.dp)
-    )
+    ) {
+        PlanButton(
+            onTap = onTap,
+            isSelected = isSelected,
+            modifier = Modifier.boxAlign(
+                alignment = Alignment.Center,
+                offset = DpOffset(0.0.dp, 0.0.dp)
+            )
+        )
+        GoldPlanText(
+            modifier = Modifier.boxAlign(
+                alignment = Alignment.Center,
+                offset = DpOffset(0.0.dp, 0.0.dp)
+            )
+        )
+    }
 }
 
 @Composable
@@ -655,22 +623,37 @@ fun BronzePlanText(modifier: Modifier = Modifier) {
             blue = 65
         ),
         height = 0.625.em,
-        fontWeight = FontWeight(700.0.toInt()),
+        fontWeight = FontWeight(700),
         maxLines = -1,
-        modifier = modifier.requiredWidth(301.0.dp)
+        modifier = modifier
     )
 }
 
 @Composable
 fun BronzePlan(
-    modifier: Modifier = Modifier,
-    content: @Composable RelayContainerScope.() -> Unit
+    onTap: () -> Unit = {},
+    isSelected: Boolean = false,
+    modifier: Modifier = Modifier
 ) {
     RelayContainer(
         isStructured = false,
-        content = content,
-        modifier = modifier.requiredWidth(300.0.dp).requiredHeight(120.0.dp)
-    )
+        modifier = modifier
+    ) {
+        PlanButton(
+            onTap = onTap,
+            isSelected = isSelected,
+            modifier = Modifier.boxAlign(
+                alignment = Alignment.Center,
+                offset = DpOffset(0.0.dp, 0.0.dp)
+            )
+        )
+        BronzePlanText(
+            modifier = Modifier.boxAlign(
+                alignment = Alignment.Center,
+                offset = DpOffset(0.0.dp, 0.0.dp)
+            )
+        )
+    }
 }
 
 @Composable
@@ -744,6 +727,8 @@ fun NextButton(
     hide: Boolean = false,
     modifier: Modifier = Modifier
 ) {
+    if (hide)
+        return
     Button(
         onClick = onClick,
         modifier = modifier
@@ -880,7 +865,7 @@ fun Vector1(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ChoosePlan(modifier: Modifier = Modifier) {
+fun ProgressLabelChoosePlan(modifier: Modifier = Modifier) {
     RelayText(
         content = "Choose Plan",
         fontSize = 8.0.sp,

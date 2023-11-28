@@ -1,7 +1,6 @@
 package com.example.returnpals
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,14 +20,7 @@ class ChoosePlanActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ChoosePlan(
-                        modifier = Modifier,
-                        onBackButtonTapped = {},
-                        onSilverPlanButtonTapped = {},
-                        onPlatinumPlanButtonTapped = {},
-                        onGoldPlanButtonTapped = {},
-                        onBronzePlanButtonTapped = {},
-                    )
+//                    ChoosePlan()
                 }
             }
         }
