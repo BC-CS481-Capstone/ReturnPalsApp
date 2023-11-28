@@ -44,6 +44,7 @@ fun ChoosePlan(
     isSelectedPlatinum: Boolean = false,
     modifier: Modifier = Modifier,
     onBackButtonTapped: () -> Unit = {},
+    onNextButtonTapped: () -> Unit = {},
     onSilverPlanButtonTapped: () -> Unit = {},
     onPlatinumPlanButtonTapped: () -> Unit = {},
     onGoldPlanButtonTapped: () -> Unit = {},
@@ -177,6 +178,17 @@ fun ChoosePlan(
                 alignment = Alignment.TopStart,
                 offset = DpOffset(
                     x = 20.0.dp,
+                    y = 750.0.dp
+                )
+            )
+        )
+        NextButton(
+            onClick = onNextButtonTapped,
+            hide = isSelectedBronze or isSelectedSilver or isSelectedGold or isSelectedPlatinum,
+            modifier = Modifier.boxAlign(
+                alignment = Alignment.TopStart,
+                offset = DpOffset(
+                    x = 250.0.dp,
                     y = 750.0.dp
                 )
             )
@@ -593,7 +605,7 @@ fun PlanButton(
         )
     }
 
-    Box(modifier = modifier)
+    Box(modifier)
 }
 
 @Composable
@@ -690,14 +702,14 @@ fun BackButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier,
+        modifier = modifier
     ) {
         Text(
             text = "Back",
             modifier = Modifier.boxAlign(
                 alignment = Alignment.TopStart,
                 offset = DpOffset(
-                    x = 22.479248046875.dp,
+                    x = 22.5.dp,
                     y = 0.0.dp
                 )
             ),
@@ -722,6 +734,47 @@ fun BackButton(
                     )
                 )
                 .scale(1.5F)
+        )
+    }
+}
+
+@Composable
+fun NextButton(
+    onClick: () -> Unit,
+    hide: Boolean = false,
+    modifier: Modifier = Modifier
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier
+    ) {
+        Box (Modifier
+            .size(85.dp, 40.dp)
+            .background(
+                color = Color(
+                    alpha = 255,
+                    red = 0,
+                    green = 138,
+                    blue = 230
+                ),
+                shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
+            )
+            .tappable(onClick)
+        )
+        Text(
+            text = "Next",
+            modifier = Modifier.boxAlign(
+                alignment = Alignment.TopStart,
+                offset = DpOffset(
+                    x = 18.5.dp,
+                    y = 0.0.dp
+                )
+            ),
+            color = Color.White,
+            fontSize = 20.0.sp,
+            fontWeight = FontWeight(700),
+            fontFamily = cairo,
+            textAlign = TextAlign.Right,
         )
     }
 }
