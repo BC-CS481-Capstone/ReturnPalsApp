@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun createbuttonConfirm() {
         Button(onClick = {
-            var x = Intent(this,ThankYouActivity::class.java)
+            var x = Intent(this,PackageInfoAddLabelActivity::class.java)
             startActivity(x)
         }) {
             Text("HERE PUSH ME")
