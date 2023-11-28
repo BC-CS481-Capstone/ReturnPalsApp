@@ -13,17 +13,10 @@ class PackageInfoAddLabelActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            PackageInfoAddLabelComponent()
-            createbuttonConfirm()
-        }
-    }
-    @Composable
-    fun createbuttonConfirm() {
-        Button(onClick = {
-            var x = Intent(this,PackageInfoShowLabelActivity::class.java)
-            startActivity(x)
-        }) {
-            Text("HERE PUSH ME")
+            PackageInfoAddLabelComponent(addPackageButton = {
+                var x = Intent(this,PackageInfoShowLabelActivity::class.java)
+                startActivity(x)
+            })
         }
     }
 }
