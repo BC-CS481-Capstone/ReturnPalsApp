@@ -1,5 +1,7 @@
 package com.example.returnpals
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.requiredHeight
@@ -30,6 +32,9 @@ import com.google.relay.compose.RelayContainerScope
 import com.google.relay.compose.RelayText
 import com.google.relay.compose.RelayVector
 import com.google.relay.compose.tappable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 
 /**
  * This composable was generated from the UI Package 'choose_plan'.
@@ -55,8 +60,8 @@ fun ChoosePlan(
                 )
             )
         ) {
-            SilverPlanButton(
-                onSilverPlanButtonTapped = onSilverPlanButtonTapped,
+            PlanButton(
+                onTap = onSilverPlanButtonTapped,
                 modifier = Modifier.boxAlign(
                     alignment = Alignment.TopStart,
                     offset = DpOffset(
@@ -84,8 +89,8 @@ fun ChoosePlan(
                 )
             )
         ) {
-            PlatinumPlanButton(
-                onPlatinumPlanButtonTapped = onPlatinumPlanButtonTapped,
+            PlanButton(
+                onTap = onPlatinumPlanButtonTapped,
                 modifier = Modifier.boxAlign(
                     alignment = Alignment.TopStart,
                     offset = DpOffset(
@@ -113,8 +118,8 @@ fun ChoosePlan(
                 )
             )
         ) {
-            GoldPlanButton(
-                onGoldPlanButtonTapped = onGoldPlanButtonTapped,
+            PlanButton(
+                onTap = onGoldPlanButtonTapped,
                 modifier = Modifier.boxAlign(
                     alignment = Alignment.TopStart,
                     offset = DpOffset(
@@ -142,8 +147,9 @@ fun ChoosePlan(
                 )
             )
         ) {
-            BronzePlanButton(
-                onBronzePlanButtonTapped = onBronzePlanButtonTapped,
+            PlanButton(
+                onTap = onBronzePlanButtonTapped,
+                isSelected = true,
                 modifier = Modifier.boxAlign(
                     alignment = Alignment.TopStart,
                     offset = DpOffset(
@@ -352,20 +358,6 @@ fun Background(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun SilverPlanButton(
-    onSilverPlanButtonTapped: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    RelayVector(
-        vector = painterResource(R.drawable.choose_plan_silver_plan_button),
-        modifier = modifier
-            .tappable(onTap = onSilverPlanButtonTapped)
-            .requiredWidth(200.0.dp)
-            .requiredHeight(110.0.dp)
-    )
-}
-
-@Composable
 fun SilverPlanText(modifier: Modifier = Modifier) {
     RelayText(
         content = buildAnnotatedString {
@@ -428,20 +420,6 @@ fun SilverPlan(
         content = content,
         modifier = modifier
             .requiredWidth(301.0.dp)
-            .requiredHeight(110.0.dp)
-    )
-}
-
-@Composable
-fun PlatinumPlanButton(
-    onPlatinumPlanButtonTapped: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    RelayVector(
-        vector = painterResource(R.drawable.choose_plan_platinum_plan_button),
-        modifier = modifier
-            .tappable(onTap = onPlatinumPlanButtonTapped)
-            .requiredWidth(200.0.dp)
             .requiredHeight(110.0.dp)
     )
 }
@@ -516,20 +494,6 @@ fun PlatinumPlan(
 }
 
 @Composable
-fun GoldPlanButton(
-    onGoldPlanButtonTapped: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    RelayVector(
-        vector = painterResource(R.drawable.choose_plan_gold_plan_button),
-        modifier = modifier
-            .tappable(onTap = onGoldPlanButtonTapped)
-            .requiredWidth(200.0.dp)
-            .requiredHeight(110.0.dp)
-    )
-}
-
-@Composable
 fun GoldPlanText(modifier: Modifier = Modifier) {
     RelayText(
         content = buildAnnotatedString {
@@ -599,17 +563,40 @@ fun GoldPlan(
 }
 
 @Composable
-fun BronzePlanButton(
-    onBronzePlanButtonTapped: () -> Unit,
+fun PlanButton(
+    onTap: () -> Unit,
+    isSelected: Boolean = false,
     modifier: Modifier = Modifier
 ) {
-    RelayVector(
-        vector = painterResource(R.drawable.choose_plan_bronze_plan_button),
-        modifier = modifier
-            .tappable(onTap = onBronzePlanButtonTapped)
-            .requiredWidth(200.0.dp)
-            .requiredHeight(110.0.dp)
-    )
+    if (isSelected) {
+        Box(modifier=modifier
+            .size(width=200.dp, height=110.dp)
+            .background(
+                color = Color.White,
+                shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
+            )
+            .border(
+                width = 6.dp,
+                color = Color(0,180,250),
+                shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
+            )
+            .tappable(onTap)
+        )
+    } else {
+        Box(modifier=modifier
+            .size(width=200.dp, height=110.dp)
+            .background(
+                color = Color.White,
+                shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
+            )
+            .border(
+                width = 2.dp,
+                color = Color.Black,
+                shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
+            )
+            .tappable(onTap)
+        )
+    }
 }
 
 @Composable
