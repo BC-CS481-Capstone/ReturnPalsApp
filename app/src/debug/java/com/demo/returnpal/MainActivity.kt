@@ -13,17 +13,17 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            PackageInfoComponent()
-            createbuttonConfirm()
-        }
-    }
-    @Composable
-    fun createbuttonConfirm() {
-        Button(onClick = {
-            var x = Intent(this,PackageInfoAddLabelActivity::class.java)
-            startActivity(x)
-        }) {
-            Text("HERE PUSH ME")
+            PackageInfoComponent(physicalLabelButton = {
+                var x = Intent(this,PackageInfoAddLabelActivity::class.java)
+                startActivity(x)
+            },
+                digitalLabelButton = {
+                    var x = Intent(this,PackageInfoAddLabelActivity::class.java)
+                    startActivity(x)
+                }, amazonQRCode = {
+                    var x = Intent(this,PackageInfoAddLabelActivity::class.java)
+                    startActivity(x)
+                } )
         }
     }
 }
