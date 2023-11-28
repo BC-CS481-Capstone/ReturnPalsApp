@@ -36,12 +36,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 
-/**
- * This composable was generated from the UI Package 'choose_plan'.
- * Generated code; do not edit directly
- */
 @Composable
 fun ChoosePlan(
+    isSelectedBronze: Boolean = false,
+    isSelectedSilver: Boolean = false,
+    isSelectedGold: Boolean = false,
+    isSelectedPlatinum: Boolean = false,
     modifier: Modifier = Modifier,
     onBackButtonTapped: () -> Unit = {},
     onSilverPlanButtonTapped: () -> Unit = {},
@@ -62,6 +62,7 @@ fun ChoosePlan(
         ) {
             PlanButton(
                 onTap = onSilverPlanButtonTapped,
+                isSelected = isSelectedSilver,
                 modifier = Modifier.boxAlign(
                     alignment = Alignment.TopStart,
                     offset = DpOffset(
@@ -91,6 +92,7 @@ fun ChoosePlan(
         ) {
             PlanButton(
                 onTap = onPlatinumPlanButtonTapped,
+                isSelected = isSelectedPlatinum,
                 modifier = Modifier.boxAlign(
                     alignment = Alignment.TopStart,
                     offset = DpOffset(
@@ -120,6 +122,7 @@ fun ChoosePlan(
         ) {
             PlanButton(
                 onTap = onGoldPlanButtonTapped,
+                isSelected = isSelectedGold,
                 modifier = Modifier.boxAlign(
                     alignment = Alignment.TopStart,
                     offset = DpOffset(
@@ -149,7 +152,7 @@ fun ChoosePlan(
         ) {
             PlanButton(
                 onTap = onBronzePlanButtonTapped,
-                isSelected = true,
+                isSelected = isSelectedBronze,
                 modifier = Modifier.boxAlign(
                     alignment = Alignment.TopStart,
                     offset = DpOffset(
@@ -568,35 +571,29 @@ fun PlanButton(
     isSelected: Boolean = false,
     modifier: Modifier = Modifier
 ) {
+    var modifier = modifier
+        .size(200.dp, 110.dp)
+        .background(
+            color = Color.White,
+            shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
+        )
+        .tappable(onTap)
+
     if (isSelected) {
-        Box(modifier=modifier
-            .size(width=200.dp, height=110.dp)
-            .background(
-                color = Color.White,
-                shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
-            )
-            .border(
-                width = 6.dp,
-                color = Color(0,180,250),
-                shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
-            )
-            .tappable(onTap)
+        modifier = modifier.border(
+            width = 6.dp,
+            color = Color(0,180,250),
+            shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
         )
     } else {
-        Box(modifier=modifier
-            .size(width=200.dp, height=110.dp)
-            .background(
-                color = Color.White,
-                shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
-            )
-            .border(
-                width = 2.dp,
-                color = Color.Black,
-                shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
-            )
-            .tappable(onTap)
+        modifier = modifier.border(
+            width = 2.dp,
+            color = Color.Black,
+            shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
         )
     }
+
+    Box(modifier = modifier)
 }
 
 @Composable
@@ -728,7 +725,6 @@ fun BackButton(
         )
     }
 }
-
 
 @Composable
 fun Rectangle56(modifier: Modifier = Modifier) {
