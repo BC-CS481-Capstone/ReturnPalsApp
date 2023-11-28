@@ -1,4 +1,4 @@
-package com.example.returnpals.packageinfocomponent
+package com.demo.returnpal.packageinfocomponent
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
-import com.example.returnpals.R
+import com.demo.returnpal.R
 import com.google.relay.compose.BorderAlignment
 import com.google.relay.compose.CrossAxisAlignment
 import com.google.relay.compose.MainAxisAlignment
@@ -939,17 +939,16 @@ fun ProgressBar(
 fun Back(modifier: Modifier = Modifier) {
     RelayText(
         content = "Back",
-        fontSize = 30.0.sp,
-        fontFamily = avenirNext,
+        fontSize = 20.0.sp,
+        fontFamily = cairo,
         color = Color(
             alpha = 255,
             red = 0,
             green = 138,
             blue = 230
         ),
-        height = 1.3660001118977865.em,
+        height = 1.8739999771118163.em,
         textAlign = TextAlign.Left,
-        fontWeight = FontWeight(600.0.toInt()),
         maxLines = -1,
         modifier = modifier.padding(
             paddingValues = PaddingValues(
@@ -958,7 +957,10 @@ fun Back(modifier: Modifier = Modifier) {
                 end = 0.0.dp,
                 bottom = 2.272705078125.dp
             )
-        ).fillMaxWidth(1.0f).fillMaxHeight(1.0f)
+        ).fillMaxWidth(1.0f).fillMaxHeight(1.0f).wrapContentHeight(
+            align = Alignment.CenterVertically,
+            unbounded = true
+        )
     )
 }
 
@@ -968,10 +970,10 @@ fun Vector5(modifier: Modifier = Modifier) {
         vector = painterResource(R.drawable.package_info_component_vector5),
         modifier = modifier.padding(
             paddingValues = PaddingValues(
-                start = 1.9833984375.dp,
-                top = 2.04541015625.dp,
-                end = 1.9834918975830078.dp,
-                bottom = 2.045565605163574.dp
+                start = 2.75.dp,
+                top = 2.8125.dp,
+                end = 2.75.dp,
+                bottom = 2.8125.dp
             )
         ).fillMaxWidth(1.0f).fillMaxHeight(1.0f)
     )
@@ -988,8 +990,8 @@ fun ArrowRight(
         modifier = modifier.padding(
             paddingValues = PaddingValues(
                 start = 0.0.dp,
-                top = 4.0909423828125.dp,
-                end = 64.13223075866699.dp,
+                top = 0.0.dp,
+                end = 58.0.dp,
                 bottom = 0.0.dp
             )
         ).graphicsLayer(rotationZ = 180.0f).fillMaxWidth(1.0f).fillMaxHeight(1.0f)

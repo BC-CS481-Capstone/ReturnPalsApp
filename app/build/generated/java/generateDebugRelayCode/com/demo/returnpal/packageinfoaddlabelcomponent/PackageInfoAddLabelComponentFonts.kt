@@ -1,10 +1,10 @@
-package com.example.returnpals.packageinfocomponent
+package com.demo.returnpal.packageinfoaddlabelcomponent
 
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import com.example.returnpals.R
+import com.demo.returnpal.R
 
 val cairo: FontFamily = FontFamily(
     Font(R.font.relay_cairo_black, weight = FontWeight.W900, style = FontStyle.Normal),
