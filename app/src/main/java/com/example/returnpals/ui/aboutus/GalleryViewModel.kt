@@ -1,4 +1,4 @@
-package com.example.returnpals.ui.gallery
+package com.example.returnpals.ui.aboutus
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

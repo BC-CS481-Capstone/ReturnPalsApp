@@ -1,0 +1,611 @@
+{
+  "name": "contact_us",
+  "version": 32,
+  "source-key": {
+    "type": "figma",
+    "file": "5CLGcKnas0I545VDpxUew6",
+    "node": "555:882",
+    "version": "4710992385",
+    "component-id": "978712817ee446b97c373351d83a9a5c821c5cab"
+  },
+  "default": "Contact Us",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "group",
+        "id": "Group 9905"
+      },
+      {
+        "type": "group",
+        "id": "Submit Button"
+      },
+      {
+        "type": "image",
+        "id": "Screenshot_2023-09-05_at_1.53 2"
+      },
+      {
+        "type": "text",
+        "id": "Email"
+      },
+      {
+        "type": "text",
+        "id": "Name"
+      },
+      {
+        "type": "text",
+        "id": "Contact Us"
+      },
+      {
+        "type": "text",
+        "id": "john.doe@email.com"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 44"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 60"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 42"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 59"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 58"
+      },
+      {
+        "type": "text",
+        "id": "Jimmy"
+      },
+      {
+        "type": "text",
+        "id": "Neutron"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 10"
+      },
+      {
+        "type": "text",
+        "id": "Submit"
+      }
+    ],
+    "modes": {
+      "Contact Us": {
+        "rules": [
+          {
+            "id": "top_level",
+            "is-structured": "false",
+            "children": [
+              "Group 9905",
+              "Submit Button",
+              "Screenshot_2023-09-05_at_1.53 2"
+            ],
+            "background-color": {
+              "alpha": "1.0",
+              "hue": "198.0",
+              "saturation": "0.11764705882352944",
+              "value": "1.0"
+            }
+          },
+          {
+            "id": "Group 9905",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "18.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "111.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "324.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "199.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "Email",
+              "Name",
+              "Contact Us",
+              "john.doe@email.com",
+              "Rectangle 44",
+              "Rectangle 60",
+              "Rectangle 42",
+              "Rectangle 59",
+              "Rectangle 58",
+              "Jimmy",
+              "Neutron"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Submit Button",
+            "border-radius": "15.0",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.2",
+                "hue": "204.0",
+                "saturation": "1.0",
+                "value": "0.9019607843137255"
+              },
+              "blur": "20.0",
+              "offset-x": "0.0",
+              "offset-y": "9.0",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "66.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "357.0"
+              }
+            },
+            "tap-handler": "$Submit Button",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "227.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "48.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "Rectangle 10",
+              "Submit"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Screenshot_2023-09-05_at_1.53 2",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "34.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "449.0"
+              }
+            },
+            "relative-transform": [
+              [
+                "1.0",
+                "2.7755575615628914e-17",
+                "0.0"
+              ],
+              [
+                "-2.7755575615628914e-17",
+                "1.0",
+                "0.0"
+              ]
+            ],
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "291.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "289.0"
+              }
+            },
+            "image-content": "screenshot_2023_09_05_at_1_53_2.png",
+            "scale": "cover"
+          },
+          {
+            "id": "Email",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "14.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "139.0"
+              }
+            },
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "Email",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "18.0",
+            "line-height": "1.2102272245619032",
+            "typeface": "Inter"
+          },
+          {
+            "id": "Name",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "12.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "64.0"
+              }
+            },
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "Name",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "18.0",
+            "line-height": "1.2102272245619032",
+            "typeface": "Inter"
+          },
+          {
+            "id": "Contact Us",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "17.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "0.0"
+              }
+            },
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "Contact Us",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "24.0",
+            "line-height": "1.2102272510528564",
+            "typeface": "Inter"
+          },
+          {
+            "id": "john.doe@email.com",
+            "opacity": "0.30000001192092896",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "-16.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "167.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "240.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "28.0"
+              }
+            },
+            "font-weight": "500.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "john.doe@email.com",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "20.0",
+            "line-height": "1.2102272033691406",
+            "typeface": "Inter"
+          },
+          {
+            "id": "Rectangle 44",
+            "border-radius": "5.0",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.2",
+                "hue": "204.0",
+                "saturation": "1.0",
+                "value": "0.9019607843137255"
+              },
+              "blur": "20.0",
+              "offset-x": "0.0",
+              "offset-y": "4.0",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "-12.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "149.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "305.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "30.0"
+              }
+            },
+            "vector-content": "rectangle_44.svg"
+          },
+          {
+            "id": "Rectangle 60",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "161.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "324.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "38.0"
+              }
+            },
+            "vector-content": "rectangle_60.svg"
+          },
+          {
+            "id": "Rectangle 42",
+            "border-radius": "5.0",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "-12.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "72.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "134.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "30.0"
+              }
+            },
+            "vector-content": "rectangle_42.svg"
+          },
+          {
+            "id": "Rectangle 59",
+            "border-radius": "5.0",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.09803921568627451",
+                "hue": "204.0",
+                "saturation": "1.0",
+                "value": "0.9019607843137255"
+              },
+              "blur": "20.0",
+              "offset-x": "0.0",
+              "offset-y": "2.0",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "159.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "72.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "134.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "30.0"
+              }
+            },
+            "vector-content": "rectangle_59.svg"
+          },
+          {
+            "id": "Rectangle 58",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "86.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "324.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "38.0"
+              }
+            },
+            "vector-content": "rectangle_58.svg"
+          },
+          {
+            "id": "Jimmy",
+            "opacity": "0.30000001192092896",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "-94.5"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "93.0"
+              }
+            },
+            "font-weight": "500.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "Jimmy",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "20.0",
+            "line-height": "1.2102272033691406",
+            "typeface": "Inter"
+          },
+          {
+            "id": "Neutron",
+            "opacity": "0.30000001192092896",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "78.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "93.0"
+              }
+            },
+            "font-weight": "500.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "Neutron",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "20.0",
+            "line-height": "1.2102272033691406",
+            "typeface": "Inter"
+          },
+          {
+            "id": "Rectangle 10",
+            "border-radius": "15.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "227.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "37.0"
+              }
+            },
+            "vector-content": "rectangle_10.svg"
+          },
+          {
+            "id": "Submit",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "78.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "7.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "77.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "41.0"
+              }
+            },
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "1.0"
+            },
+            "text-content": "Submit",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "18.0",
+            "line-height": "1.2102272245619032",
+            "typeface": "Inter"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "Submit Button": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    }
+  },
+  "previews": [
+    {
+      "design": "Contact Us",
+      "size": {
+        "width": 360.0,
+        "height": 800.0
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}

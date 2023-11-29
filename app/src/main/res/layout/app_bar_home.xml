@@ -4,11 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:elevation="6dp"
+    android:background="@color/white"
+
     tools:context=".Home">
 
 
     <!-- Toolbar at the top -->
     <androidx.appcompat.widget.Toolbar
+        android:elevation="6dp"
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
@@ -20,6 +24,7 @@
 
 
     <ImageButton
+        android:elevation="6dp"
         android:id="@+id/imageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,6 +38,7 @@
         app:srcCompat="@drawable/about_us_menu" />
 
     <ImageView
+        android:elevation="6dp"
         android:id="@+id/imageView5"
         android:layout_width="50dp"
         android:layout_height="40dp"
@@ -47,6 +53,7 @@
         app:srcCompat="@drawable/about_us_rectangle3" />
 
     <ImageView
+        android:elevation="6dp"
         android:id="@+id/imageView6"
         android:layout_width="160dp"
         android:layout_height="45dp"
@@ -61,6 +68,8 @@
         app:srcCompat="@drawable/about_us_rectangle2" />
 
 
+
+
     <include layout="@layout/content_home" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -71,5 +80,11 @@
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
         app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/about_us_rectangle_33" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
