@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             //If Guest
-
+            // startActivity(Intent(this,PackageInfoGuestActivity::class.java))
             //Else user
             startActivity(Intent(this,PackageInfoActivity::class.java))
         }

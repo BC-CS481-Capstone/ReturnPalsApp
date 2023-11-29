@@ -3,6 +3,21 @@
 
     <application>
         <activity
+            android:name=".ConfirmPickupGuestActivity"
+            android:exported="false"
+            android:label="@string/title_activity_confirm_pickup_guest"
+            android:theme="@style/Theme.ReturnPals" />
+        <activity
+            android:name=".PackageInfoShowLabelGuestActivity"
+            android:exported="false"
+            android:label="@string/title_activity_package_info_show_label_guest"
+            android:theme="@style/Theme.ReturnPals" />
+        <activity
+            android:name=".PackageInfoAddLabelGuestActivity"
+            android:exported="false"
+            android:label="@string/title_activity_package_info_add_label_guest"
+            android:theme="@style/Theme.ReturnPals" />
+        <activity
             android:name=".PackageInfoGuestActivity"
             android:exported="false"
             android:label="@string/title_activity_package_info_guest"

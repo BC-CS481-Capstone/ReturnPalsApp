@@ -7,4 +7,9 @@
     <string name="title_activity_package_info_add_label">PackageInfoAddLabelActivity</string>
     <string name="title_activity_thank_you_guest">ThankYouGuestActivity</string>
     <string name="title_activity_package_info_guest">PackageInfoGuestActivity</string>
+    <string name="title_activity_package_info_add_label_guest">PackageInfoAddLabelGuestActivity
+    </string>
+    <string name="title_activity_package_info_show_label_guest">PackageInfoShowLabelGuestActivity
+    </string>
+    <string name="title_activity_confirm_pickup_guest">ConfirmPickupGuestActivity</string>
 </resources>
