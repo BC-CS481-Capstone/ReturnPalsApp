@@ -5,4 +5,5 @@
     <string name="title_activity_package_info">PackageInfoActivity</string>
     <string name="title_activity_package_info_show_label">PackageInfoShowLabelActivity</string>
     <string name="title_activity_package_info_add_label">PackageInfoAddLabelActivity</string>
+    <string name="title_activity_thank_you_guest">ThankYouGuestActivity</string>
 </resources>

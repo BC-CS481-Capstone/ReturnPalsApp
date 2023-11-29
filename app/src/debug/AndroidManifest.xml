@@ -3,7 +3,12 @@
 
     <application>
         <activity
-            android:name="com.demo.returnpal.PackageInfoAddLabelActivity"
+            android:name=".ThankYouGuestActivity"
+            android:exported="false"
+            android:label="@string/title_activity_thank_you_guest"
+            android:theme="@style/Theme.ReturnPals" />
+        <activity
+            android:name=".PackageInfoAddLabelActivity"
             android:exported="false"
             android:label="@string/title_activity_package_info_add_label"
             android:theme="@style/Theme.ReturnPals" />
