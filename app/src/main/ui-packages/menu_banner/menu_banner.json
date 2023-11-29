@@ -1,56 +1,20 @@
 {
-  "name": "dashboard",
+  "name": "menu_banner",
   "version": 32,
   "source-key": {
     "type": "figma",
     "file": "5CLGcKnas0I545VDpxUew6",
-    "node": "467:346",
+    "node": "510:851",
     "version": "4700328851",
-    "component-id": "437bd2a358cc083b83ee61bbea7ceaf93bbc7b8a"
+    "component-id": "0ef66d3346a3ba8940c58f6ef8784c6cd6de4ce7"
   },
-  "default": "Dashboard",
+  "default": "Menu Banner",
   "design": {
     "atoms": [
       {
         "type": "group",
         "id": "top_level",
         "root": "true"
-      },
-      {
-        "type": "group",
-        "id": "Ready"
-      },
-      {
-        "type": "text",
-        "id": "Welcome Back, John"
-      },
-      {
-        "type": "group",
-        "id": "Menu Banner"
-      },
-      {
-        "type": "vector",
-        "id": "Rectangle 53"
-      },
-      {
-        "type": "group",
-        "id": "Next"
-      },
-      {
-        "type": "vector",
-        "id": "Vector"
-      },
-      {
-        "type": "text",
-        "id": "Ready to schedule your pickup?"
-      },
-      {
-        "type": "vector",
-        "id": "Rectangle 80"
-      },
-      {
-        "type": "text",
-        "id": "Next1"
       },
       {
         "type": "vector",
@@ -62,7 +26,7 @@
       },
       {
         "type": "group",
-        "id": "Menu"
+        "id": "Menu Button"
       },
       {
         "type": "group",
@@ -78,7 +42,7 @@
       },
       {
         "type": "group",
-        "id": "573b9caeaf"
+        "id": "l573b9caeaf"
       },
       {
         "type": "group",
@@ -86,7 +50,7 @@
       },
       {
         "type": "vector",
-        "id": "Vector1"
+        "id": "Vector"
       },
       {
         "type": "group",
@@ -130,7 +94,7 @@
       },
       {
         "type": "vector",
-        "id": "Vector2"
+        "id": "Vector1"
       },
       {
         "type": "group",
@@ -146,7 +110,7 @@
       },
       {
         "type": "group",
-        "id": "695a20c734"
+        "id": "l695a20c734"
       },
       {
         "type": "group",
@@ -154,7 +118,7 @@
       },
       {
         "type": "vector",
-        "id": "Vector3"
+        "id": "Vector2"
       },
       {
         "type": "group",
@@ -166,305 +130,42 @@
       },
       {
         "type": "image",
-        "id": "Menu1"
+        "id": "Menu"
       }
     ],
     "modes": {
-      "Dashboard": {
+      "Menu Banner": {
         "rules": [
           {
             "id": "top_level",
             "is-structured": "false",
             "children": [
-              "Ready",
-              "Welcome Back, John",
-              "Menu Banner"
-            ],
-            "background-color": {
-              "alpha": "1.0",
-              "hue": "198.0",
-              "saturation": "0.11764705882352944",
-              "value": "1.0"
-            }
-          },
-          {
-            "id": "Ready",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "34.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "142.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "291.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "305.0"
-              }
-            },
-            "is-structured": "false",
-            "children": [
-              "Rectangle 53",
-              "Next",
-              "Vector",
-              "Ready to schedule your pickup?"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "Welcome Back, John",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "45.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "70.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "260.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "60.0"
-              }
-            },
-            "color": {
-              "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "0.0"
-            },
-            "text-content": "Welcome Back, John",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-align-vertical": "center",
-            "text-size": "25.0",
-            "line-height": "1.210227279663086",
-            "typeface": "Inter"
-          },
-          {
-            "id": "Menu Banner",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "360.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "38.0"
-              }
-            },
-            "is-structured": "false",
-            "children": [
               "Rectangle 33",
               "Navy logo",
-              "Menu"
+              "Menu Button"
             ],
             "clip-content": "false"
-          },
-          {
-            "id": "Rectangle 53",
-            "border-radius": "30.0",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "291.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "305.0"
-              }
-            },
-            "vector-content": "rectangle_53.svg"
-          },
-          {
-            "id": "Next",
-            "border-radius": "30.0",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "71.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "233.0"
-              }
-            },
-            "tap-handler": "$Next",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "150.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "50.0"
-              }
-            },
-            "is-structured": "false",
-            "children": [
-              "Rectangle 80",
-              "Next1"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "Vector",
-            "margin": {
-              "left": "86.070068359375",
-              "top": "123.28277587890625",
-              "right": "106.0599365234375",
-              "bottom": "92.28173828125"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "vector-content": "vector.svg"
-          },
-          {
-            "id": "Ready to schedule your pickup?",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "9.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "35.0"
-              }
-            },
-            "color": {
-              "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "1.0"
-            },
-            "annotated-text-content": {
-              "text": "Ready to schedule\n your pickup? ",
-              "annotated-text-span-list": [
-                {
-                  "span-start": "0",
-                  "span-length": "31",
-                  "annotated-text-style": {
-                    "text-size": "30.0"
-                  }
-                },
-                {
-                  "span-start": "31",
-                  "span-length": "1"
-                }
-              ]
-            },
-            "overflow": "visible",
-            "text-size": "12.0",
-            "line-height": "1.2102272510528564",
-            "typeface": "Inter"
-          },
-          {
-            "id": "Rectangle 80",
-            "border-radius": "30.0",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "150.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "50.0"
-              }
-            },
-            "vector-content": "rectangle_80.svg"
-          },
-          {
-            "id": "Next1",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "41.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "5.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "97.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "40.0"
-              }
-            },
-            "color": {
-              "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "1.0"
-            },
-            "text-content": "Next",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-align": "left",
-            "text-size": "30.0",
-            "line-height": "1.2102272033691406",
-            "typeface": "Inter"
           },
           {
             "id": "Rectangle 33",
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "360.0"
+                "sizing-mode": "proportional",
+                "value": "1.0"
               },
               "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "38.0"
+                "sizing-mode": "proportional",
+                "value": "1.0"
               }
             },
             "vector-content": "rectangle_33.svg"
           },
           {
             "id": "Navy logo",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "13.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "0.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "149.942138671875"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "37.66668701171875"
-              }
+            "margin": {
+              "left": "13.0",
+              "right": "197.057861328125",
+              "bottom": "0.333343505859375"
             },
             "is-structured": "false",
             "children": [
@@ -475,31 +176,17 @@
             "clip-content": "false"
           },
           {
-            "id": "Menu",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "318.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "5.0"
-              }
+            "id": "Menu Button",
+            "margin": {
+              "left": "318.0",
+              "top": "5.0",
+              "right": "17.0",
+              "bottom": "3.0"
             },
-            "tap-handler": "$Menu",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "25.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "30.0"
-              }
-            },
+            "tap-handler": "$Menu Button",
             "is-structured": "false",
             "children": [
-              "Menu1"
+              "Menu"
             ],
             "clip-content": "false"
           },
@@ -509,11 +196,11 @@
               "left": "25.0",
               "top": "0.02117919921875",
               "right": "0.003173828125",
-              "bottom": "2.66668701171875"
+              "bottom": "2.666656494140625"
             },
             "is-structured": "false",
             "children": [
-              "573b9caeaf",
+              "l573b9caeaf",
               "Group"
             ],
             "clip-content": "false"
@@ -522,7 +209,7 @@
             "id": "Clip path group1",
             "margin": {
               "left": "109.327392578125",
-              "bottom": "2.6878662109375"
+              "bottom": "2.687835693359375"
             },
             "is-structured": "false",
             "children": [
@@ -533,25 +220,9 @@
           },
           {
             "id": "Logo",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "0.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "6.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "25.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "31.66668701171875"
-              }
+            "margin": {
+              "top": "6.0",
+              "right": "124.942138671875"
             },
             "is-structured": "false",
             "children": [
@@ -560,10 +231,10 @@
             "clip-content": "false"
           },
           {
-            "id": "573b9caeaf",
+            "id": "l573b9caeaf",
             "is-structured": "false",
             "children": [
-              "Vector1"
+              "Vector"
             ],
             "clip-content": "false"
           },
@@ -576,7 +247,7 @@
             "clip-content": "false"
           },
           {
-            "id": "Vector1",
+            "id": "Vector",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "proportional",
@@ -587,7 +258,7 @@
                 "value": "1.0"
               }
             },
-            "vector-content": "vector1.svg"
+            "vector-content": "vector.svg"
           },
           {
             "id": "Mask group",
@@ -692,7 +363,7 @@
             "id": "b4bab9ea00",
             "is-structured": "false",
             "children": [
-              "Vector2"
+              "Vector1"
             ],
             "clip-content": "false"
           },
@@ -705,7 +376,7 @@
             "clip-content": "false"
           },
           {
-            "id": "Vector2",
+            "id": "Vector1",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "proportional",
@@ -716,7 +387,7 @@
                 "value": "1.0"
               }
             },
-            "vector-content": "vector2.svg"
+            "vector-content": "vector1.svg"
           },
           {
             "id": "Group7",
@@ -731,7 +402,7 @@
             "alignment": {
               "horizontal": {
                 "attachment": "start",
-                "offset": "84.32476806640625"
+                "offset": "84.32470703125"
               },
               "vertical": {
                 "attachment": "start",
@@ -755,16 +426,16 @@
             "id": "Clip path group2",
             "is-structured": "false",
             "children": [
-              "695a20c734",
+              "l695a20c734",
               "Group8"
             ],
             "clip-content": "false"
           },
           {
-            "id": "695a20c734",
+            "id": "l695a20c734",
             "is-structured": "false",
             "children": [
-              "Vector3"
+              "Vector2"
             ],
             "clip-content": "false"
           },
@@ -777,7 +448,7 @@
             "clip-content": "false"
           },
           {
-            "id": "Vector3",
+            "id": "Vector2",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "proportional",
@@ -788,7 +459,7 @@
                 "value": "1.0"
               }
             },
-            "vector-content": "vector3.svg"
+            "vector-content": "vector2.svg"
           },
           {
             "id": "Group9",
@@ -803,11 +474,11 @@
             "alignment": {
               "horizontal": {
                 "attachment": "start",
-                "offset": "9.32550048828125"
+                "offset": "9.325439453125"
               },
               "vertical": {
                 "attachment": "start",
-                "offset": "0.0242919921875"
+                "offset": "0.024261474609375"
               }
             },
             "size-constraints": {
@@ -824,7 +495,7 @@
             "scale": "fill"
           },
           {
-            "id": "Menu1",
+            "id": "Menu",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "proportional",
@@ -843,12 +514,7 @@
     }
   },
   "parameters": {
-    "Next": {
-      "data-type": "void-callback",
-      "required": false,
-      "description": ""
-    },
-    "Menu": {
+    "Menu Button": {
       "data-type": "void-callback",
       "required": false,
       "description": ""
@@ -856,10 +522,10 @@
   },
   "previews": [
     {
-      "design": "Dashboard",
+      "design": "Menu Banner",
       "size": {
         "width": 360.0,
-        "height": 800.0
+        "height": 38.0
       }
     }
   ],

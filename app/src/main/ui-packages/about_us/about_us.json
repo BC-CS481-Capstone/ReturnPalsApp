@@ -5,7 +5,7 @@
     "type": "figma",
     "file": "5CLGcKnas0I545VDpxUew6",
     "node": "441:364",
-    "version": "4665332071",
+    "version": "4700328851",
     "component-id": "c9e862abcd32c3d7068e8e059f452ea8fa027422"
   },
   "default": "About Us",
@@ -33,14 +33,6 @@
         "id": "Vector2"
       },
       {
-        "type": "group",
-        "id": "Our Mission"
-      },
-      {
-        "type": "group",
-        "id": "Our Founders"
-      },
-      {
         "type": "vector",
         "id": "Rectangle 77"
       },
@@ -50,99 +42,7 @@
       },
       {
         "type": "group",
-        "id": "Why choose us"
-      },
-      {
-        "type": "group",
-        "id": "Our Mission1"
-      },
-      {
-        "type": "group",
-        "id": "How"
-      },
-      {
-        "type": "group",
         "id": "Menu Banner"
-      },
-      {
-        "type": "text",
-        "id": "Our goal is to revolutionize the returns process for online shoppers by offering a hassle-free and convenient solution. We aim to alleviate the stress of the return process by managing the entire repackaging and delivery process on your behalf, allowing you to sit back and relax."
-      },
-      {
-        "type": "text",
-        "id": "Our Mission2"
-      },
-      {
-        "type": "text",
-        "id": "Our Founders1"
-      },
-      {
-        "type": "image",
-        "id": "returnpal-hasan 1"
-      },
-      {
-        "type": "image",
-        "id": "image 7"
-      },
-      {
-        "type": "text",
-        "id": "HASAN-ALI ABIDI CEO of returnpal"
-      },
-      {
-        "type": "text",
-        "id": "Mohammed Al-Salem Co-Founder of Returnpal"
-      },
-      {
-        "type": "text",
-        "id": "We value sustainability and community empowerment. Through our Corporate Social Responsibility (CSR) initiatives, we collaborate with businesses to repurpose and donate goods, directly benefiting underserved communities. If your organization is looking to fulfill its CSR goals, we invite you to reach out to us. Let's join hands and create a positive change together."
-      },
-      {
-        "type": "text",
-        "id": "Why Choose Us?"
-      },
-      {
-        "type": "text",
-        "id": "You can help us create Social Impact together"
-      },
-      {
-        "type": "group",
-        "id": "noun-toronto-5240388-008BE7 1"
-      },
-      {
-        "type": "text",
-        "id": "We are all over the greater Toronto area, operating a local facility designed to ensure that the repackaging of items can accommodate same-day return needs."
-      },
-      {
-        "type": "text",
-        "id": "Our Operation"
-      },
-      {
-        "type": "group",
-        "id": "Group"
-      },
-      {
-        "type": "vector",
-        "id": "Vector4"
-      },
-      {
-        "type": "vector",
-        "id": "Vector5"
-      },
-      {
-        "type": "vector",
-        "id": "Vector6"
-      },
-      {
-        "type": "vector",
-        "id": "Vector7"
-      },
-      {
-        "type": "text",
-        "id": "ReturnPal was born out of a simple realization: the traditional process of returning online purchases is far too complicated. Two friends after waiting in line at the post office, decided there had to be a better way. Thus, ReturnPal was created to streamline returns for both consumers and businesses, while also making a positive impact on the community."
-      },
-      {
-        "type": "text",
-        "id": "How ReturnPal Began"
       },
       {
         "type": "vector",
@@ -174,15 +74,19 @@
       },
       {
         "type": "group",
-        "id": "Group1"
+        "id": "Group"
       },
       {
         "type": "vector",
-        "id": "Vector8"
+        "id": "Vector4"
       },
       {
         "type": "group",
         "id": "Mask group"
+      },
+      {
+        "type": "group",
+        "id": "Group1"
       },
       {
         "type": "group",
@@ -197,16 +101,12 @@
         "id": "Group4"
       },
       {
-        "type": "group",
-        "id": "Group5"
-      },
-      {
         "type": "image",
         "id": "Rectangle"
       },
       {
         "type": "group",
-        "id": "Group6"
+        "id": "Group5"
       },
       {
         "type": "image",
@@ -218,15 +118,15 @@
       },
       {
         "type": "group",
-        "id": "Group7"
+        "id": "Group6"
       },
       {
         "type": "vector",
-        "id": "Vector9"
+        "id": "Vector5"
       },
       {
         "type": "group",
-        "id": "Group8"
+        "id": "Group7"
       },
       {
         "type": "image",
@@ -242,15 +142,15 @@
       },
       {
         "type": "group",
-        "id": "Group9"
+        "id": "Group8"
       },
       {
         "type": "vector",
-        "id": "Vector10"
+        "id": "Vector6"
       },
       {
         "type": "group",
-        "id": "Group10"
+        "id": "Group9"
       },
       {
         "type": "image",
@@ -272,13 +172,8 @@
               "Vector1",
               "Rectangle 76",
               "Vector2",
-              "Our Mission",
-              "Our Founders",
               "Rectangle 77",
               "Vector3",
-              "Why choose us",
-              "Our Mission1",
-              "How",
               "Menu Banner"
             ],
             "background-color": {
@@ -385,67 +280,6 @@
             "vector-content": "vector2.svg"
           },
           {
-            "id": "Our Mission",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "0.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "521.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "360.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "150.0"
-              }
-            },
-            "is-structured": "false",
-            "children": [
-              "Our goal is to revolutionize the returns process for online shoppers by offering a hassle-free and convenient solution. We aim to alleviate the stress of the return process by managing the entire repackaging and delivery process on your behalf, allowing you to sit back and relax.",
-              "Our Mission2"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "Our Founders",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "22.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "273.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "310.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "200.0"
-              }
-            },
-            "is-structured": "false",
-            "children": [
-              "Our Founders1",
-              "returnpal-hasan 1",
-              "image 7",
-              "HASAN-ALI ABIDI CEO of returnpal",
-              "Mohammed Al-Salem Co-Founder of Returnpal"
-            ],
-            "clip-content": "false"
-          },
-          {
             "id": "Rectangle 77",
             "alignment": {
               "horizontal": {
@@ -494,95 +328,6 @@
             "vector-content": "vector3.svg"
           },
           {
-            "id": "Why choose us",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "24.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "769.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "320.00006103515625"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "180.0"
-              }
-            },
-            "is-structured": "false",
-            "children": [
-              "We value sustainability and community empowerment. Through our Corporate Social Responsibility (CSR) initiatives, we collaborate with businesses to repurpose and donate goods, directly benefiting underserved communities. If your organization is looking to fulfill its CSR goals, we invite you to reach out to us. Let's join hands and create a positive change together.",
-              "Why Choose Us?",
-              "You can help us create Social Impact together"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "Our Mission1",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "30.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "1050.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "300.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "237.0"
-              }
-            },
-            "is-structured": "false",
-            "children": [
-              "noun-toronto-5240388-008BE7 1",
-              "We are all over the greater Toronto area, operating a local facility designed to ensure that the repackaging of items can accommodate same-day return needs.",
-              "Our Operation"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "How",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "30.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "55.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "300.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "194.0"
-              }
-            },
-            "is-structured": "false",
-            "children": [
-              "ReturnPal was born out of a simple realization: the traditional process of returning online purchases is far too complicated. Two friends after waiting in line at the post office, decided there had to be a better way. Thus, ReturnPal was created to streamline returns for both consumers and businesses, while also making a positive impact on the community.",
-              "How ReturnPal Began"
-            ],
-            "clip-content": "false"
-          },
-          {
             "id": "Menu Banner",
             "size-constraints": {
               "width-constraints": {
@@ -601,933 +346,6 @@
               "Menu Button"
             ],
             "clip-content": "false"
-          },
-          {
-            "id": "Our goal is to revolutionize the returns process for online shoppers by offering a hassle-free and convenient solution. We aim to alleviate the stress of the return process by managing the entire repackaging and delivery process on your behalf, allowing you to sit back and relax.",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "0.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "75.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "360.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "75.0"
-              }
-            },
-            "font-weight": "500.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "203.60655737704917",
-              "saturation": "0.9384615384615385",
-              "value": "0.2549019607843137"
-            },
-            "text-content": "Our goal is to revolutionize the returns process for online shoppers by offering a hassle-free and convenient solution. We aim to alleviate the stress of the return process by managing the entire repackaging and delivery process on your behalf, allowing you to sit back and relax.",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-size": "12.0",
-            "line-height": "1.2102272510528564",
-            "typeface": "Inter"
-          },
-          {
-            "id": "Our Mission2",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "360.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "85.710205078125"
-              }
-            },
-            "font-weight": "500.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "203.60655737704917",
-              "saturation": "0.9384615384615385",
-              "value": "0.2549019607843137"
-            },
-            "annotated-text-content": {
-              "text": "Our Mission",
-              "annotated-text-span-list": [
-                {
-                  "span-start": "0",
-                  "span-length": "4",
-                  "annotated-text-style": {
-                    "font-weight": "500.0",
-                    "text-size": "28.0",
-                    "typeface": "Inter"
-                  }
-                },
-                {
-                  "span-start": "4",
-                  "span-length": "7",
-                  "annotated-text-style": {
-                    "font-weight": "700.0",
-                    "text-size": "28.0",
-                    "typeface": "Inter",
-                    "color": {
-                      "alpha": "1.0",
-                      "hue": "204.0",
-                      "saturation": "1.0",
-                      "value": "0.9019607843137255"
-                    }
-                  }
-                }
-              ]
-            },
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-size": "28.0",
-            "line-height": "1.366000039236886",
-            "typeface": "Avenir Next"
-          },
-          {
-            "id": "Our Founders1",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "37.67291259765625"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "0.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "227.69384765625"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "49.7237548828125"
-              }
-            },
-            "font-weight": "500.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "203.60655737704917",
-              "saturation": "0.9384615384615385",
-              "value": "0.2549019607843137"
-            },
-            "annotated-text-content": {
-              "text": "Our Founders",
-              "annotated-text-span-list": [
-                {
-                  "span-start": "0",
-                  "span-length": "3",
-                  "annotated-text-style": {
-                    "font-weight": "500.0",
-                    "text-size": "24.0",
-                    "typeface": "Inter",
-                    "color": {
-                      "alpha": "1.0",
-                      "hue": "0.0",
-                      "saturation": "0.0",
-                      "value": "1.0"
-                    }
-                  }
-                },
-                {
-                  "span-start": "3",
-                  "span-length": "1",
-                  "annotated-text-style": {
-                    "font-weight": "500.0",
-                    "text-size": "24.0",
-                    "typeface": "Inter"
-                  }
-                },
-                {
-                  "span-start": "4",
-                  "span-length": "8",
-                  "annotated-text-style": {
-                    "font-weight": "700.0",
-                    "text-size": "24.0",
-                    "typeface": "Inter",
-                    "color": {
-                      "alpha": "1.0",
-                      "hue": "204.0",
-                      "saturation": "1.0",
-                      "value": "0.9019607843137255"
-                    }
-                  }
-                }
-              ]
-            },
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-size": "24.0",
-            "line-height": "1.3660000165303545",
-            "typeface": "Avenir Next"
-          },
-          {
-            "id": "returnpal-hasan 1",
-            "border-radius": "252.5",
-            "drop-shadow": {
-              "color": {
-                "alpha": "0.2",
-                "hue": "0.0",
-                "saturation": "0.0",
-                "value": "0.0"
-              },
-              "blur": "100.0",
-              "offset-x": "0.0",
-              "offset-y": "4.0",
-              "spread": "0.0",
-              "blend-mode": "normal"
-            },
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "-22.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "-48.2762451171875"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "89.24169921875"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "89.70782470703125"
-              }
-            },
-            "stroke-width": "2.0",
-            "stroke-alignment": "outside",
-            "stroke-color": {
-              "alpha": "1.0",
-              "hue": "204.0",
-              "saturation": "1.0",
-              "value": "0.9019607843137255"
-            },
-            "image-content": "returnpal_hasan_1.png",
-            "scale": "fill"
-          },
-          {
-            "id": "image 7",
-            "border-radius": "200.0",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "193.75830078125"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "47.7237548828125"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "89.24169921875"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "89.70782470703125"
-              }
-            },
-            "stroke-width": "2.0",
-            "stroke-alignment": "outside",
-            "stroke-color": {
-              "alpha": "1.0",
-              "hue": "203.8961038961039",
-              "saturation": "1.0",
-              "value": "0.9058823529411765"
-            },
-            "image-content": "image_7.png",
-            "scale": "fill"
-          },
-          {
-            "id": "HASAN-ALI ABIDI CEO of returnpal",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "0.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "162.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "132.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "38.0"
-              }
-            },
-            "color": {
-              "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "1.0"
-            },
-            "annotated-text-content": {
-              "text": "Hasan-Ali Abidi\nCEO of Returnpal\n",
-              "annotated-text-span-list": [
-                {
-                  "span-start": "0",
-                  "span-length": "16",
-                  "annotated-text-style": {
-                    "font-weight": "700.0",
-                    "text-size": "12.0",
-                    "typeface": "Inter",
-                    "color": {
-                      "alpha": "1.0",
-                      "hue": "0.0",
-                      "saturation": "0.0",
-                      "value": "1.0"
-                    }
-                  }
-                },
-                {
-                  "span-start": "16",
-                  "span-length": "17",
-                  "annotated-text-style": {
-                    "font-weight": "500.0",
-                    "text-size": "12.0",
-                    "typeface": "Inter",
-                    "color": {
-                      "alpha": "1.0",
-                      "hue": "0.0",
-                      "saturation": "0.0",
-                      "value": "1.0"
-                    }
-                  }
-                }
-              ]
-            },
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-size": "12.0",
-            "line-height": "1.2000000476837158",
-            "typeface": "Blinker"
-          },
-          {
-            "id": "Mohammed Al-Salem Co-Founder of Returnpal",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "173.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "162.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "137.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "31.0"
-              }
-            },
-            "color": {
-              "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "1.0"
-            },
-            "annotated-text-content": {
-              "text": "Mohammed Al-Salem \nCo-Founder of Returnpal ",
-              "annotated-text-span-list": [
-                {
-                  "span-start": "0",
-                  "span-length": "19",
-                  "annotated-text-style": {
-                    "font-weight": "700.0",
-                    "text-size": "10.0",
-                    "typeface": "Inter",
-                    "color": {
-                      "alpha": "1.0",
-                      "hue": "0.0",
-                      "saturation": "0.0",
-                      "value": "1.0"
-                    }
-                  }
-                },
-                {
-                  "span-start": "19",
-                  "span-length": "24",
-                  "annotated-text-style": {
-                    "font-weight": "500.0",
-                    "text-size": "10.0",
-                    "typeface": "Inter",
-                    "color": {
-                      "alpha": "1.0",
-                      "hue": "0.0",
-                      "saturation": "0.0",
-                      "value": "1.0"
-                    }
-                  }
-                }
-              ]
-            },
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-size": "10.0",
-            "line-height": "1.2102272033691406",
-            "typeface": "Inter"
-          },
-          {
-            "id": "We value sustainability and community empowerment. Through our Corporate Social Responsibility (CSR) initiatives, we collaborate with businesses to repurpose and donate goods, directly benefiting underserved communities. If your organization is looking to fulfill its CSR goals, we invite you to reach out to us. Let's join hands and create a positive change together.",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "0.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "90.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "319.284912109375"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "90.0"
-              }
-            },
-            "font-weight": "500.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "1.0"
-            },
-            "text-content": "We value sustainability and community empowerment. Through our Corporate Social Responsibility (CSR) initiatives, we collaborate with businesses to repurpose and donate goods, directly benefiting underserved communities. If your organization is looking to fulfill its CSR goals, we invite you to reach out to us. Let's join hands and create a positive change together.",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-size": "12.0",
-            "line-height": "1.2102272510528564",
-            "typeface": "Inter"
-          },
-          {
-            "id": "Why Choose Us?",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "0.715087890625"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "0.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "319.284912109375"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "69.561767578125"
-              }
-            },
-            "font-weight": "500.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "203.60655737704917",
-              "saturation": "0.9384615384615385",
-              "value": "0.2549019607843137"
-            },
-            "annotated-text-content": {
-              "text": "Why Choose Us?",
-              "annotated-text-span-list": [
-                {
-                  "span-start": "0",
-                  "span-length": "10",
-                  "annotated-text-style": {
-                    "font-weight": "500.0",
-                    "text-size": "28.0",
-                    "typeface": "Inter",
-                    "color": {
-                      "alpha": "1.0",
-                      "hue": "0.0",
-                      "saturation": "0.0",
-                      "value": "1.0"
-                    }
-                  }
-                },
-                {
-                  "span-start": "10",
-                  "span-length": "1",
-                  "annotated-text-style": {
-                    "font-weight": "500.0",
-                    "typeface": "Inter"
-                  }
-                },
-                {
-                  "span-start": "11",
-                  "span-length": "2",
-                  "annotated-text-style": {
-                    "font-weight": "700.0",
-                    "text-size": "28.0",
-                    "typeface": "Inter",
-                    "color": {
-                      "alpha": "1.0",
-                      "hue": "204.0",
-                      "saturation": "1.0",
-                      "value": "0.9019607843137255"
-                    }
-                  }
-                },
-                {
-                  "span-start": "13",
-                  "span-length": "1",
-                  "annotated-text-style": {
-                    "font-weight": "500.0",
-                    "text-size": "28.0",
-                    "typeface": "Inter",
-                    "color": {
-                      "alpha": "1.0",
-                      "hue": "0.0",
-                      "saturation": "0.0",
-                      "value": "1.0"
-                    }
-                  }
-                }
-              ]
-            },
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-size": "28.0",
-            "line-height": "1.366000039236886",
-            "typeface": "Avenir Next"
-          },
-          {
-            "id": "You can help us create Social Impact together",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "0.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "47.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "300.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "shrink"
-              }
-            },
-            "font-weight": "700.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "1.0"
-            },
-            "annotated-text-content": {
-              "text": "You can help us create Social Impact together",
-              "annotated-text-span-list": [
-                {
-                  "span-start": "0",
-                  "span-length": "3",
-                  "annotated-text-style": {
-                    "font-weight": "700.0",
-                    "text-size": "12.0",
-                    "typeface": "Inter",
-                    "color": {
-                      "alpha": "1.0",
-                      "hue": "204.0",
-                      "saturation": "1.0",
-                      "value": "0.9019607843137255"
-                    }
-                  }
-                },
-                {
-                  "span-start": "3",
-                  "span-length": "1",
-                  "annotated-text-style": {
-                    "font-weight": "700.0",
-                    "typeface": "Inter"
-                  }
-                },
-                {
-                  "span-start": "4",
-                  "span-length": "19",
-                  "annotated-text-style": {
-                    "font-weight": "600.0",
-                    "text-size": "12.0",
-                    "typeface": "Inter"
-                  }
-                },
-                {
-                  "span-start": "23",
-                  "span-length": "13",
-                  "annotated-text-style": {
-                    "font-weight": "700.0",
-                    "text-size": "12.0",
-                    "typeface": "Inter",
-                    "color": {
-                      "alpha": "1.0",
-                      "hue": "204.0",
-                      "saturation": "1.0",
-                      "value": "0.9019607843137255"
-                    }
-                  }
-                },
-                {
-                  "span-start": "36",
-                  "span-length": "1",
-                  "annotated-text-style": {
-                    "font-weight": "700.0",
-                    "typeface": "Inter"
-                  }
-                },
-                {
-                  "span-start": "37",
-                  "span-length": "8",
-                  "annotated-text-style": {
-                    "font-weight": "600.0",
-                    "text-size": "12.0",
-                    "typeface": "Inter"
-                  }
-                }
-              ]
-            },
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-size": "12.0",
-            "line-height": "1.3660000165303545",
-            "typeface": "Avenir Next"
-          },
-          {
-            "id": "noun-toronto-5240388-008BE7 1",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "91.04144287109375"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "116.310302734375"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "117.5811767578125"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "120.689697265625"
-              }
-            },
-            "is-structured": "false",
-            "children": [
-              "Group"
-            ]
-          },
-          {
-            "id": "We are all over the greater Toronto area, operating a local facility designed to ensure that the repackaging of items can accommodate same-day return needs.",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "0.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "42.862060546875"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "300.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "shrink"
-              }
-            },
-            "font-weight": "500.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "203.60655737704917",
-              "saturation": "0.9384615384615385",
-              "value": "0.2549019607843137"
-            },
-            "text-content": "We are all over the greater Toronto area, operating a local facility designed to ensure that the repackaging of items can accommodate same-day return needs.",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-size": "12.0",
-            "line-height": "1.2102272510528564",
-            "typeface": "Inter"
-          },
-          {
-            "id": "Our Operation",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "300.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "shrink"
-              }
-            },
-            "font-weight": "500.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "203.60655737704917",
-              "saturation": "0.9384615384615385",
-              "value": "0.2549019607843137"
-            },
-            "annotated-text-content": {
-              "text": "Our Operation",
-              "annotated-text-span-list": [
-                {
-                  "span-start": "0",
-                  "span-length": "4",
-                  "annotated-text-style": {
-                    "font-weight": "500.0",
-                    "text-size": "24.0",
-                    "typeface": "Inter"
-                  }
-                },
-                {
-                  "span-start": "4",
-                  "span-length": "9",
-                  "annotated-text-style": {
-                    "font-weight": "700.0",
-                    "text-size": "24.0",
-                    "typeface": "Inter",
-                    "color": {
-                      "alpha": "1.0",
-                      "hue": "204.0",
-                      "saturation": "1.0",
-                      "value": "0.9019607843137255"
-                    }
-                  }
-                }
-              ]
-            },
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-size": "24.0",
-            "line-height": "1.3660000165303545",
-            "typeface": "Avenir Next"
-          },
-          {
-            "id": "Group",
-            "margin": {
-              "left": "1.76373291015625",
-              "top": "2.8521728515625",
-              "right": "1.763671875",
-              "bottom": "2.8563232421875"
-            },
-            "is-structured": "false",
-            "children": [
-              "Vector4",
-              "Vector5",
-              "Vector6",
-              "Vector7"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "Vector4",
-            "margin": {
-              "left": "0.00030517578125",
-              "right": "0.00006103515625",
-              "bottom": "7.211181640625"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "vector-content": "vector4.svg"
-          },
-          {
-            "id": "Vector5",
-            "margin": {
-              "top": "112.5673828125"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "vector-content": "vector5.svg"
-          },
-          {
-            "id": "Vector6",
-            "margin": {
-              "left": "35.0330810546875",
-              "top": "19.5233154296875",
-              "right": "55.36431884765625",
-              "bottom": "80.8377685546875"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "vector-content": "vector6.svg"
-          },
-          {
-            "id": "Vector7",
-            "margin": {
-              "left": "64.5784912109375",
-              "top": "28.9083251953125",
-              "right": "31.2222900390625",
-              "bottom": "73.223388671875"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "vector-content": "vector7.svg"
-          },
-          {
-            "id": "ReturnPal was born out of a simple realization: the traditional process of returning online purchases is far too complicated. Two friends after waiting in line at the post office, decided there had to be a better way. Thus, ReturnPal was created to streamline returns for both consumers and businesses, while also making a positive impact on the community.",
-            "alignment": {
-              "horizontal": {
-                "attachment": "center",
-                "offset": "0.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "44.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "300.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "80.0"
-              }
-            },
-            "font-weight": "500.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "203.60655737704917",
-              "saturation": "0.9384615384615385",
-              "value": "0.2549019607843137"
-            },
-            "text-content": "ReturnPal was born out of a simple realization: the traditional process of returning online purchases is far too complicated. Two friends after waiting in line at the post office, decided there had to be a better way. Thus, ReturnPal was created to streamline returns for both consumers and businesses, while also making a positive impact on the community.",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-size": "12.0",
-            "line-height": "1.2102272510528564",
-            "typeface": "Inter"
-          },
-          {
-            "id": "How ReturnPal Began",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "300.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "194.0"
-              }
-            },
-            "font-weight": "500.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "203.60655737704917",
-              "saturation": "0.9384615384615385",
-              "value": "0.2549019607843137"
-            },
-            "annotated-text-content": {
-              "text": "How ReturnPal Began",
-              "annotated-text-span-list": [
-                {
-                  "span-start": "0",
-                  "span-length": "4",
-                  "annotated-text-style": {
-                    "font-weight": "500.0",
-                    "text-size": "28.0",
-                    "typeface": "Inter"
-                  }
-                },
-                {
-                  "span-start": "4",
-                  "span-length": "10",
-                  "annotated-text-style": {
-                    "font-weight": "700.0",
-                    "text-size": "28.0",
-                    "typeface": "Inter",
-                    "color": {
-                      "alpha": "1.0",
-                      "hue": "204.0",
-                      "saturation": "1.0",
-                      "value": "0.9019607843137255"
-                    }
-                  }
-                },
-                {
-                  "span-start": "14",
-                  "span-length": "5",
-                  "annotated-text-style": {
-                    "font-weight": "500.0",
-                    "text-size": "28.0",
-                    "typeface": "Inter"
-                  }
-                }
-              ]
-            },
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-size": "28.0",
-            "line-height": "1.366000039236886",
-            "typeface": "Avenir Next"
           },
           {
             "id": "Rectangle 33",
@@ -1613,7 +431,7 @@
             "is-structured": "false",
             "children": [
               "l573b9caeaf",
-              "Group1"
+              "Group"
             ],
             "clip-content": "false"
           },
@@ -1627,7 +445,7 @@
             "is-structured": "false",
             "children": [
               "b4bab9ea00",
-              "Group7"
+              "Group6"
             ],
             "clip-content": "false"
           },
@@ -1663,12 +481,12 @@
             "id": "l573b9caeaf",
             "is-structured": "false",
             "children": [
-              "Vector8"
+              "Vector4"
             ],
             "clip-content": "false"
           },
           {
-            "id": "Group1",
+            "id": "Group",
             "is-structured": "false",
             "children": [
               "Mask group"
@@ -1676,7 +494,7 @@
             "clip-content": "false"
           },
           {
-            "id": "Vector8",
+            "id": "Vector4",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "proportional",
@@ -1687,13 +505,21 @@
                 "value": "1.0"
               }
             },
-            "vector-content": "vector8.svg"
+            "vector-content": "vector4.svg"
           },
           {
             "id": "Mask group",
             "is-structured": "false",
             "children": [
-              "Group2",
+              "Group1",
+              "Group2"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Group1",
+            "is-structured": "false",
+            "children": [
               "Group3"
             ],
             "clip-content": "false"
@@ -1702,7 +528,7 @@
             "id": "Group2",
             "is-structured": "false",
             "children": [
-              "Group4"
+              "Group5"
             ],
             "clip-content": "false"
           },
@@ -1710,20 +536,12 @@
             "id": "Group3",
             "is-structured": "false",
             "children": [
-              "Group6"
+              "Group4"
             ],
             "clip-content": "false"
           },
           {
             "id": "Group4",
-            "is-structured": "false",
-            "children": [
-              "Group5"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "Group5",
             "is-structured": "false",
             "children": [
               "Rectangle"
@@ -1756,7 +574,7 @@
             "scale": "fill"
           },
           {
-            "id": "Group6",
+            "id": "Group5",
             "is-structured": "false",
             "children": [
               "Rectangle1"
@@ -1792,20 +610,20 @@
             "id": "b4bab9ea00",
             "is-structured": "false",
             "children": [
-              "Vector9"
+              "Vector5"
             ],
             "clip-content": "false"
           },
           {
-            "id": "Group7",
+            "id": "Group6",
             "is-structured": "false",
             "children": [
-              "Group8"
+              "Group7"
             ],
             "clip-content": "false"
           },
           {
-            "id": "Vector9",
+            "id": "Vector5",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "proportional",
@@ -1816,10 +634,10 @@
                 "value": "1.0"
               }
             },
-            "vector-content": "vector9.svg"
+            "vector-content": "vector5.svg"
           },
           {
-            "id": "Group8",
+            "id": "Group7",
             "is-structured": "false",
             "children": [
               "Rectangle2"
@@ -1856,7 +674,7 @@
             "is-structured": "false",
             "children": [
               "l695a20c734",
-              "Group9"
+              "Group8"
             ],
             "clip-content": "false"
           },
@@ -1864,20 +682,20 @@
             "id": "l695a20c734",
             "is-structured": "false",
             "children": [
-              "Vector10"
+              "Vector6"
             ],
             "clip-content": "false"
           },
           {
-            "id": "Group9",
+            "id": "Group8",
             "is-structured": "false",
             "children": [
-              "Group10"
+              "Group9"
             ],
             "clip-content": "false"
           },
           {
-            "id": "Vector10",
+            "id": "Vector6",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "proportional",
@@ -1888,10 +706,10 @@
                 "value": "1.0"
               }
             },
-            "vector-content": "vector10.svg"
+            "vector-content": "vector6.svg"
           },
           {
-            "id": "Group10",
+            "id": "Group9",
             "is-structured": "false",
             "children": [
               "Rectangle3"

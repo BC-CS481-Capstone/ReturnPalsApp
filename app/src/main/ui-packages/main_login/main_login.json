@@ -5,7 +5,7 @@
     "type": "figma",
     "file": "5CLGcKnas0I545VDpxUew6",
     "node": "451:458",
-    "version": "4658846976",
+    "version": "4700328851",
     "component-id": "3e61b6357f761386cf45d416b8e8b5dab2da3644"
   },
   "default": "Main Login",
@@ -136,7 +136,6 @@
                 "offset": "363.0"
               }
             },
-            "tap-handler": "$Input Password",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "fixed",
@@ -167,7 +166,6 @@
                 "offset": "273.0"
               }
             },
-            "tap-handler": "$Input Email",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "fixed",
@@ -198,7 +196,6 @@
                 "offset": "509.0"
               }
             },
-            "tap-handler": "$Sign In",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "fixed",
@@ -253,7 +250,6 @@
                 "offset": "261.0"
               }
             },
-            "tap-handler": "$Forgot",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "fixed",
@@ -291,7 +287,6 @@
                 "offset": "0.0"
               }
             },
-            "tap-handler": "$Switch Accounts",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "fixed",
@@ -380,7 +375,6 @@
                 "offset": "408.0"
               }
             },
-            "tap-handler": "$Sign Up",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "fixed",
@@ -609,38 +603,6 @@
           }
         ]
       }
-    }
-  },
-  "parameters": {
-    "Input Password": {
-      "data-type": "void-callback",
-      "required": false,
-      "description": ""
-    },
-    "Input Email": {
-      "data-type": "void-callback",
-      "required": false,
-      "description": ""
-    },
-    "Sign In": {
-      "data-type": "void-callback",
-      "required": false,
-      "description": ""
-    },
-    "Forgot": {
-      "data-type": "void-callback",
-      "required": false,
-      "description": ""
-    },
-    "Switch Accounts": {
-      "data-type": "void-callback",
-      "required": false,
-      "description": ""
-    },
-    "Sign Up": {
-      "data-type": "void-callback",
-      "required": false,
-      "description": ""
     }
   },
   "previews": [
