@@ -39,7 +39,223 @@ import com.google.relay.compose.RelayVector
 import com.google.relay.compose.tappable
 
 @Composable
-fun ChoosePlan(
+fun ChoosePlanGuestUI(
+    width: Dp, height: Dp,
+    isBronzeSelected: Boolean = false,
+    onBackButtonTapped: () -> Unit = {},
+    onNextButtonTapped: () -> Unit = {},
+    onBronzePlanButtonTapped: () -> Unit = {},
+    onSignUpButtonTapped: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
+    TopLevel(modifier = modifier) {
+        Background(Modifier
+            .requiredWidth(width)
+            .requiredHeight(height)
+            .scale(2.0F * width.value / 360.0F, 2.0F * height.value / 800.0F)
+        )
+        BronzePlan(
+            onTap = onBronzePlanButtonTapped,
+            isSelected = isBronzeSelected,
+            modifier = Modifier
+                .width(width)
+                .boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 0.0.dp,
+                        y = 248.0.dp
+                    )
+                )
+        )
+        GuestSignUpButton(
+            onTap = onSignUpButtonTapped,
+            modifier = Modifier
+                .width(width)
+                .boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 0.0.dp,
+                        y = 411.0.dp
+                    )
+                )
+        )
+        BackButton(
+            onClick = onBackButtonTapped,
+            modifier = Modifier.boxAlign(
+                alignment = Alignment.TopStart,
+                offset = DpOffset(
+                    x = 20.0.dp,
+                    y = height - 50.0.dp
+                )
+            )
+        )
+        NextButton(
+            onClick = onNextButtonTapped,
+            hide = !isBronzeSelected,
+            modifier = Modifier.boxAlign(
+                alignment = Alignment.TopStart,
+                offset = DpOffset(
+                    x = width - 100.0.dp,
+                    y = height - 50.0.dp
+                )
+            )
+        )
+        ProgressBar {
+            Rectangle56(
+                Modifier
+                    .requiredWidth(width)
+                    .scale(2.0F * width.value / 360.0F, 1.0F)
+            )
+            PayConfirmCircle(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.Center,
+                    offset = DpOffset(
+                        x = 130.0.dp,
+                        y = (-8.0).dp
+                    )
+                )
+            )
+            Line6(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 267.0.dp,
+                        y = 30.0.dp
+                    )
+                )
+            )
+            PackageDetailsCircle(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.Center,
+                    offset = DpOffset(
+                        x = 65.0.dp,
+                        y = (-8.0).dp
+                    )
+                )
+            )
+            Line5(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 192.0.dp,
+                        y = 30.0.dp
+                    )
+                )
+            )
+            ChoosePlanCircle(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.Center,
+                    offset = DpOffset(
+                        x = 0.0.dp,
+                        y = (-8.0).dp
+                    )
+                )
+            )
+            Line4(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 117.0.dp,
+                        y = 30.0.dp
+                    )
+                )
+            )
+            Line3(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.TopStart,
+                    offset = DpOffset(
+                        x = 42.0.dp,
+                        y = 29.0.dp
+                    )
+                )
+            )
+            PickupDateCircle(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.Center,
+                    offset = DpOffset(
+                        x = (-130.0).dp,
+                        y = (-8.0).dp
+                    )
+                )
+            )
+            PickUpDateVector(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.Center,
+                    offset = DpOffset(
+                        x = (-130.0).dp + 2.0.dp,
+                        y = (-8.0).dp + 2.0.dp
+                    )
+                )
+            )
+            ChoosePlanText(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.Center,
+                    offset = DpOffset(
+                        x = 0.0.dp,
+                        y = 20.0.dp
+                    )
+                )
+            )
+            PackageDetailsText(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.Center,
+                    offset = DpOffset(
+                        x = 65.0.dp,
+                        y = 20.0.dp
+                    )
+                )
+            )
+            PayConfirmText(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.Center,
+                    offset = DpOffset(
+                        x = 130.0.dp,
+                        y = 20.0.dp
+                    )
+                )
+            )
+            PickupDetailsCircle(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.Center,
+                    offset = DpOffset(
+                        x = (-65.0).dp,
+                        y = (-8.0).dp
+                    )
+                )
+            )
+            PickupDetailsVector(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.Center,
+                    offset = DpOffset(
+                        x = (-65.0).dp + 2.0.dp,
+                        y = (-8.0).dp + 2.0.dp
+                    )
+                )
+            )
+            PickupDateText(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.Center,
+                    offset = DpOffset(
+                        x = (-130.0).dp,
+                        y = 20.0.dp
+                    )
+                )
+            )
+            PickupDetailsText(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.Center,
+                    offset = DpOffset(
+                        x = (-65.0).dp,
+                        y = 20.0.dp
+                    )
+                )
+            )
+        }
+    }
+}
+
+@Composable
+fun ChoosePlanUI(
     width: Dp, height: Dp,
     isBronzeSelected: Boolean = false,
     isSilverSelected: Boolean = false,
@@ -286,14 +502,27 @@ fun ChoosePlan(
     }
 }
 
-//@Preview(widthDp = 360, heightDp = 800)
 @Preview(widthDp = 393, heightDp = 808)
 @Composable
 private fun ChoosePlanPreview() {
     MaterialTheme {
         RelayContainer {
-            ChoosePlan(
-                isSilverSelected = true,
+            ChoosePlanUI(
+                isGoldSelected = true,
+                width = 393.dp,
+                height = 808.dp
+            )
+        }
+    }
+}
+
+@Preview(widthDp = 360, heightDp = 800)
+@Composable
+private fun ChoosePlanGuestPreview() {
+    MaterialTheme {
+        RelayContainer {
+            ChoosePlanGuestUI(
+                isBronzeSelected = true,
                 width = 393.dp,
                 height = 808.dp
             )
@@ -652,6 +881,57 @@ fun BronzePlan(
             )
         )
         BronzePlanText(
+            modifier = Modifier.boxAlign(
+                alignment = Alignment.Center,
+                offset = DpOffset(0.0.dp, 0.0.dp)
+            )
+        )
+    }
+}
+
+@Composable
+fun GuestSignUpButton(
+    onTap: () -> Unit = {},
+    modifier: Modifier = Modifier
+) {
+    RelayContainer(
+        isStructured = false,
+        modifier = modifier
+    ) {
+        PlanButton(
+            onTap = onTap,
+            modifier = Modifier.boxAlign(
+                alignment = Alignment.Center,
+                offset = DpOffset(0.0.dp, 0.0.dp)
+            )
+        )
+        RelayText(
+            content = buildAnnotatedString {
+                withStyle(
+                    style = SpanStyle(
+                        fontFamily = cairo,
+                        fontSize = 20.0.sp,
+                        fontWeight = FontWeight(800),
+                        color = Color.Blue
+                    )
+                ) {
+                    append("Sign up\n")
+                }
+                withStyle(
+                    style = SpanStyle(
+                        fontFamily = cairo,
+                        fontSize = 18.0.sp,
+                        fontWeight = FontWeight(500)
+                    )
+                ) {
+                    append("for more plan options")
+                }
+            },
+            fontSize = 32.0.sp,
+            fontFamily = avenirNext,
+            height = 0.625.em,
+            fontWeight = FontWeight(700),
+            maxLines = -1,
             modifier = Modifier.boxAlign(
                 alignment = Alignment.Center,
                 offset = DpOffset(0.0.dp, 0.0.dp)

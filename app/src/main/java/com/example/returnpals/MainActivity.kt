@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ChoosePlan(
+                    ChoosePlanUI(
                         width, height,
                         isBronzeSelected,
                         isSilverSelected,
@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(modifier: Modifier = Modifier) {
-    ChoosePlan(
+    ChoosePlanUI(
         393.dp, 808.dp,
         isBronzeSelected = true,
         modifier = modifier
