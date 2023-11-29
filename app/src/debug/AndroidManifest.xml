@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity
+            android:name=".ConfirmPickupGuestActivity"
+            android:exported="false"
+            android:label="@string/title_activity_confirm_pickup_guest"
+            android:theme="@style/Theme.ReturnPals" />
+        <activity
+            android:name=".PackageInfoShowLabelGuestActivity"
+            android:exported="false"
+            android:label="@string/title_activity_package_info_show_label_guest"
+            android:theme="@style/Theme.ReturnPals" />
+        <activity
+            android:name=".PackageInfoAddLabelGuestActivity"
+            android:exported="false"
+            android:label="@string/title_activity_package_info_add_label_guest"
+            android:theme="@style/Theme.ReturnPals" />
+        <activity
+            android:name=".PackageInfoGuestActivity"
+            android:exported="false"
+            android:label="@string/title_activity_package_info_guest"
+            android:theme="@style/Theme.ReturnPals" />
+        <activity
+            android:name=".ThankYouGuestActivity"
+            android:exported="false"
+            android:label="@string/title_activity_thank_you_guest"
+            android:theme="@style/Theme.ReturnPals" />
+        <activity
+            android:name=".PackageInfoAddLabelActivity"
+            android:exported="false"
+            android:label="@string/title_activity_package_info_add_label"
+            android:theme="@style/Theme.ReturnPals" />
+        <activity
+            android:name=".ConfirmPickupActivity"
+            android:exported="false"
+            android:label="@string/title_activity_confirm_pickup"
+            android:theme="@style/Theme.ReturnPals" />
+        <activity
+            android:name=".PackageInfoShowLabelActivity"
+            android:exported="false"
+            android:label="@string/title_activity_package_info_show_label"
+            android:theme="@style/Theme.ReturnPals" />
+        <activity
+            android:name=".PackageInfoActivity"
+            android:exported="false"
+            android:label="@string/title_activity_package_info"
+            android:theme="@style/Theme.ReturnPals" />
+        <activity
+            android:name=".ThankYouActivity"
+            android:exported="false"
+            android:label="@string/title_activity_thank_you"
+            android:theme="@style/Theme.ReturnPals" />
+        <activity
+            android:name=".ThankYou"
+            android:exported="false"
+            android:label="@string/title_activity_thank_you"
+            android:theme="@style/Theme.ReturnPals" />
+    </application>
+
+</manifest>

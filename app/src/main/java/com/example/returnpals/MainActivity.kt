@@ -1,6 +1,5 @@
 package com.example.returnpals
 
-//import androidx.compose.material3.Text
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -92,4 +91,5 @@ fun GreetingPreview() {
             Greeting()
         }
     }
+
 }
