@@ -13,7 +13,17 @@ class PackageInfoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-           PackageInfoComponent()
+            PackageInfoComponent(physicalLabelButton = {
+                var x = Intent(this,PackageInfoAddLabelActivity::class.java)
+                startActivity(x)
+                },
+                digitalLabelButton = {
+                    var x = Intent(this,PackageInfoAddLabelActivity::class.java)
+                    startActivity(x)
+                }, amazonQRCode = {
+                    var x = Intent(this,PackageInfoAddLabelActivity::class.java)
+                    startActivity(x)
+                } )
         }
     }
 }
