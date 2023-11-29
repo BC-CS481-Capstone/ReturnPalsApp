@@ -58,6 +58,7 @@ fun ChoosePlan(
         Background(Modifier
             .requiredWidth(width)
             .requiredHeight(height)
+            .scale(2.0F * width.value / 360.0F, 2.0F * height.value / 800.0F)
         )
         SilverPlan(
             onTap = onSilverPlanButtonTapped,
@@ -133,13 +134,17 @@ fun ChoosePlan(
             )
         )
         ProgressBar {
-            Rectangle56()
-            Ellipse18(
+            Rectangle56(
+                Modifier
+                .requiredWidth(width)
+                .scale(2.0F * width.value / 360.0F, 1.0F)
+            )
+            PayConfirmCircle(
                 modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
+                    alignment = Alignment.Center,
                     offset = DpOffset(
-                        x = 316.5.dp,
-                        y = 17.5.dp
+                        x = 130.0.dp,
+                        y = (-8.0).dp
                     )
                 )
             )
@@ -152,12 +157,12 @@ fun ChoosePlan(
                     )
                 )
             )
-            Ellipse17(
+            PackageDetailsCircle(
                 modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
+                    alignment = Alignment.Center,
                     offset = DpOffset(
-                        x = 241.5.dp,
-                        y = 17.5.dp
+                        x = 65.0.dp,
+                        y = (-8.0).dp
                     )
                 )
             )
@@ -170,12 +175,12 @@ fun ChoosePlan(
                     )
                 )
             )
-            Ellipse16(
+            ChoosePlanCircle(
                 modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
+                    alignment = Alignment.Center,
                     offset = DpOffset(
-                        x = 165.5.dp,
-                        y = 16.5.dp
+                        x = 0.0.dp,
+                        y = (-8.0).dp
                     )
                 )
             )
@@ -197,84 +202,84 @@ fun ChoosePlan(
                     )
                 )
             )
-            Ellipse14(
+            PickupDateCircle(
                 modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
+                    alignment = Alignment.Center,
                     offset = DpOffset(
-                        x = 15.5.dp,
-                        y = 16.5.dp
+                        x = (-130.0).dp,
+                        y = (-8.0).dp
                     )
                 )
             )
-            Vector1(
+            PickUpDateVector(
                 modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
+                    alignment = Alignment.Center,
                     offset = DpOffset(
-                        x = 21.0.dp,
-                        y = 25.0.dp
+                        x = (-130.0).dp + 2.0.dp,
+                        y = (-8.0).dp + 2.0.dp
                     )
                 )
             )
-            ProgressLabelChoosePlan(
+            ChoosePlanText(
                 modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
+                    alignment = Alignment.Center,
                     offset = DpOffset(
-                        x = 152.0.dp,
-                        y = 48.0.dp
+                        x = 0.0.dp,
+                        y = 20.0.dp
                     )
                 )
             )
-            PackageDetails(
+            PackageDetailsText(
                 modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
+                    alignment = Alignment.Center,
                     offset = DpOffset(
-                        x = 227.0.dp,
-                        y = 48.0.dp
+                        x = 65.0.dp,
+                        y = 20.0.dp
                     )
                 )
             )
-            PayConfirm(
+            PayConfirmText(
                 modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
+                    alignment = Alignment.Center,
                     offset = DpOffset(
-                        x = 302.0.dp,
-                        y = 48.0.dp
+                        x = 130.0.dp,
+                        y = 20.0.dp
                     )
                 )
             )
-            Ellipse15(
+            PickupDetailsCircle(
                 modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
+                    alignment = Alignment.Center,
                     offset = DpOffset(
-                        x = 90.5.dp,
-                        y = 16.5.dp
+                        x = (-65.0).dp,
+                        y = (-8.0).dp
                     )
                 )
             )
-            Vector2(
+            PickupDetailsVector(
                 modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
+                    alignment = Alignment.Center,
                     offset = DpOffset(
-                        x = 96.0.dp,
-                        y = 24.0.dp
+                        x = (-65.0).dp + 2.0.dp,
+                        y = (-8.0).dp + 2.0.dp
                     )
                 )
             )
-            PickupDate(
+            PickupDateText(
                 modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
+                    alignment = Alignment.Center,
                     offset = DpOffset(
-                        x = 2.0.dp,
-                        y = 48.0.dp
+                        x = (-130.0).dp,
+                        y = 20.0.dp
                     )
                 )
             )
-            PickupDetails(
+            PickupDetailsText(
                 modifier = Modifier.boxAlign(
-                    alignment = Alignment.TopStart,
+                    alignment = Alignment.Center,
                     offset = DpOffset(
-                        x = 77.0.dp,
-                        y = 48.0.dp
+                        x = (-65.0).dp,
+                        y = 20.0.dp
                     )
                 )
             )
@@ -290,8 +295,8 @@ private fun ChoosePlanPreview() {
         RelayContainer {
             ChoosePlan(
                 isSilverSelected = true,
-                width = 360.dp,
-                height = 800.dp
+                width = 393.dp,
+                height = 808.dp
             )
         }
     }
@@ -768,14 +773,12 @@ fun NextButton(
 fun Rectangle56(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_rectangle_56),
-        modifier = modifier
-            .requiredWidth(360.0.dp)
-            .requiredHeight(73.68646240234375.dp)
+        modifier = modifier.requiredHeight(74.dp)
     )
 }
 
 @Composable
-fun Ellipse18(modifier: Modifier = Modifier) {
+fun PayConfirmCircle(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_ellipse_18),
         modifier = modifier
@@ -795,7 +798,7 @@ fun Line6(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Ellipse17(modifier: Modifier = Modifier) {
+fun PackageDetailsCircle(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_ellipse_17),
         modifier = modifier
@@ -815,7 +818,7 @@ fun Line5(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Ellipse16(modifier: Modifier = Modifier) {
+fun ChoosePlanCircle(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_ellipse_16),
         modifier = modifier
@@ -845,7 +848,7 @@ fun Line3(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Ellipse14(modifier: Modifier = Modifier) {
+fun PickupDateCircle(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_ellipse_14),
         modifier = modifier
@@ -855,7 +858,7 @@ fun Ellipse14(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Vector1(modifier: Modifier = Modifier) {
+fun PickUpDateVector(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_vector1),
         modifier = modifier
@@ -865,7 +868,7 @@ fun Vector1(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ProgressLabelChoosePlan(modifier: Modifier = Modifier) {
+fun ChoosePlanText(modifier: Modifier = Modifier) {
     RelayText(
         content = "Choose Plan",
         fontSize = 8.0.sp,
@@ -890,7 +893,7 @@ fun ProgressLabelChoosePlan(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun PackageDetails(modifier: Modifier = Modifier) {
+fun PackageDetailsText(modifier: Modifier = Modifier) {
     RelayText(
         content = "Package Details",
         fontSize = 8.0.sp,
@@ -914,7 +917,7 @@ fun PackageDetails(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun PayConfirm(modifier: Modifier = Modifier) {
+fun PayConfirmText(modifier: Modifier = Modifier) {
     RelayText(
         content = "Pay & Confirm",
         fontSize = 8.0.sp,
@@ -938,7 +941,7 @@ fun PayConfirm(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Ellipse15(modifier: Modifier = Modifier) {
+fun PickupDetailsCircle(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_ellipse_15),
         modifier = modifier
@@ -948,7 +951,7 @@ fun Ellipse15(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Vector2(modifier: Modifier = Modifier) {
+fun PickupDetailsVector(modifier: Modifier = Modifier) {
     RelayVector(
         vector = painterResource(R.drawable.choose_plan_vector2),
         modifier = modifier
@@ -958,7 +961,7 @@ fun Vector2(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun PickupDate(modifier: Modifier = Modifier) {
+fun PickupDateText(modifier: Modifier = Modifier) {
     RelayText(
         content = "Pickup Date",
         fontSize = 8.0.sp,
@@ -982,7 +985,7 @@ fun PickupDate(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun PickupDetails(modifier: Modifier = Modifier) {
+fun PickupDetailsText(modifier: Modifier = Modifier) {
     RelayText(
         content = "Pickup Details",
         fontSize = 8.0.sp,
@@ -1015,8 +1018,6 @@ fun ProgressBar(
         clipToParent = false,
         content = content,
         modifier = modifier
-            .requiredWidth(360.0.dp)
-            .requiredHeight(73.68646240234375.dp)
     )
 }
 
