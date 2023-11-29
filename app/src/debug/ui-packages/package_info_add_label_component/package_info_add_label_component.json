@@ -1,14 +1,14 @@
 {
-  "name": "confirm_pickup_component",
+  "name": "package_info_add_label_component",
   "version": 32,
   "source-key": {
     "type": "figma",
     "file": "FhgkbwnKdqKfmYVIHTswcp",
-    "node": "605:2008",
-    "version": "4693204512",
-    "component-id": "776edcd9a1eba886753171a1724e841cee79145c"
+    "node": "605:2041",
+    "version": "4710229781",
+    "component-id": "9cfadf7544419671c5643dd28aaebebb89317935"
   },
-  "default": "Confirm Pickup Component",
+  "default": "Package Info Add Label Component",
   "design": {
     "atoms": [
       {
@@ -18,15 +18,23 @@
       },
       {
         "type": "group",
-        "id": "Android Large - 2"
+        "id": "Android Large - 3"
       },
       {
         "type": "text",
-        "id": "Confirm Your Pickup"
+        "id": "Add Digital Label"
       },
       {
         "type": "group",
-        "id": "Order Summary Window"
+        "id": "X Button"
+      },
+      {
+        "type": "group",
+        "id": "Drag Label Box"
+      },
+      {
+        "type": "group",
+        "id": "Fill Description Field"
       },
       {
         "type": "vector",
@@ -34,31 +42,11 @@
       },
       {
         "type": "group",
-        "id": "Next Button"
-      },
-      {
-        "type": "group",
         "id": "Progress Bar"
       },
       {
         "type": "group",
-        "id": "Back button blue"
-      },
-      {
-        "type": "group",
-        "id": "Frame 45"
-      },
-      {
-        "type": "text",
-        "id": "Next"
-      },
-      {
-        "type": "group",
-        "id": "Arrow--right"
-      },
-      {
-        "type": "vector",
-        "id": "Vector"
+        "id": "Dashboard Button"
       },
       {
         "type": "group",
@@ -98,7 +86,7 @@
       },
       {
         "type": "vector",
-        "id": "Vector1"
+        "id": "Vector"
       },
       {
         "type": "text",
@@ -114,7 +102,7 @@
       },
       {
         "type": "vector",
-        "id": "Vector2"
+        "id": "Vector1"
       },
       {
         "type": "text",
@@ -130,7 +118,7 @@
       },
       {
         "type": "vector",
-        "id": "Vector3"
+        "id": "Vector2"
       },
       {
         "type": "text",
@@ -146,7 +134,7 @@
       },
       {
         "type": "vector",
-        "id": "Vector4"
+        "id": "Vector3"
       },
       {
         "type": "text",
@@ -158,158 +146,91 @@
       },
       {
         "type": "vector",
-        "id": "Vector5"
+        "id": "Vector4"
       },
       {
         "type": "text",
         "id": "Pay & Confirm"
       },
       {
-        "type": "text",
-        "id": "Back"
+        "type": "group",
+        "id": "button 9"
       },
       {
         "type": "group",
-        "id": "Arrow--right1"
+        "id": "Frame 45"
+      },
+      {
+        "type": "text",
+        "id": "Install"
+      },
+      {
+        "type": "vector",
+        "id": "Vector5"
       },
       {
         "type": "vector",
         "id": "Vector6"
       },
       {
-        "type": "group",
-        "id": "Order summary"
+        "type": "vector",
+        "id": "Rectangle 74"
+      },
+      {
+        "type": "text",
+        "id": "Upload Return Label"
       },
       {
         "type": "group",
-        "id": "Input promo"
+        "id": "noun-folder-6114711-008BE7 1"
       },
       {
-        "type": "group",
-        "id": "Package Summary"
+        "type": "text",
+        "id": "Drag label here or browse files"
       },
       {
         "type": "vector",
-        "id": "Rectangle 65"
-      },
-      {
-        "type": "group",
-        "id": "Payment"
-      },
-      {
-        "type": "text",
-        "id": "Order Summary"
-      },
-      {
-        "type": "text",
-        "id": "Pickup Address Full Postal Code, street #,city"
-      },
-      {
-        "type": "text",
-        "id": "Type of pickup"
-      },
-      {
-        "type": "vector",
-        "id": "Line 10"
-      },
-      {
-        "type": "text",
-        "id": "Weekday, Month, Day"
-      },
-      {
-        "type": "text",
-        "id": "$10.99 $1.00 $11.99"
-      },
-      {
-        "type": "text",
-        "id": "One-time Return Tax Total"
-      },
-      {
-        "type": "text",
-        "id": "Visa ending in: 4832"
-      },
-      {
-        "type": "vector",
-        "id": "Rectangle 40"
-      },
-      {
-        "type": "text",
-        "id": "Promo Code"
-      },
-      {
-        "type": "vector",
-        "id": "Rectangle 66"
-      },
-      {
-        "type": "text",
-        "id": "Apply"
-      },
-      {
-        "type": "group",
-        "id": "Order Summary Table Row Component"
-      },
-      {
-        "type": "group",
-        "id": "Order Summary Table Row Component1"
-      },
-      {
-        "type": "text",
-        "id": "Packages"
-      },
-      {
-        "type": "group",
-        "id": "Logo"
-      },
-      {
-        "type": "text",
-        "id": "1 package with digital label"
-      },
-      {
-        "type": "group",
-        "id": "Group"
+        "id": "Rectangle 73"
       },
       {
         "type": "vector",
         "id": "Vector7"
       },
       {
-        "type": "group",
-        "id": "Logo1"
-      },
-      {
         "type": "text",
-        "id": "1 package with digital label1"
-      },
-      {
-        "type": "group",
-        "id": "Group1"
+        "id": "Description"
       },
       {
         "type": "vector",
-        "id": "Vector8"
+        "id": "Rectangle 75"
+      },
+      {
+        "type": "text",
+        "id": "Label the item(s) inside: i.e. ‘laptop covers’"
       }
     ],
     "modes": {
-      "Confirm Pickup Component": {
+      "Package Info Add Label Component": {
         "rules": [
           {
             "id": "top_level",
             "is-structured": "false",
             "children": [
-              "Android Large - 2",
-              "Confirm Your Pickup",
-              "Order Summary Window"
+              "Android Large - 3",
+              "Add Digital Label",
+              "X Button",
+              "Drag Label Box",
+              "Fill Description Field"
             ],
             "clip-content": "false"
           },
           {
-            "id": "Android Large - 2",
+            "id": "Android Large - 3",
             "is-structured": "false",
             "children": [
               "Background",
-              "Next Button",
               "Progress Bar",
-              "Back button blue"
+              "Dashboard Button"
             ],
             "background-color": {
               "alpha": "1.0",
@@ -319,12 +240,12 @@
             }
           },
           {
-            "id": "Confirm Your Pickup",
+            "id": "Add Digital Label",
             "margin": {
-              "left": "36.0",
-              "top": "78.0",
-              "right": "36.0",
-              "bottom": "669.0"
+              "left": "29.0",
+              "top": "141.0",
+              "right": "62.0",
+              "bottom": "599.0"
             },
             "size-constraints": {
               "width-constraints": {
@@ -339,30 +260,63 @@
             "font-weight": "700.0",
             "color": {
               "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "0.0"
+              "hue": "203.60655737704917",
+              "saturation": "0.9384615384615385",
+              "value": "0.2549019607843137"
             },
-            "text-content": "Confirm Your Pickup",
+            "text-content": "Add Digital Label",
             "overflow": "visible",
             "max-lines": "-1",
-            "text-align-vertical": "center",
             "text-size": "32.0",
             "typeface": "Cairo"
           },
           {
-            "id": "Order Summary Window",
+            "id": "X Button",
             "margin": {
-              "left": "15.0",
-              "top": "141.0",
-              "right": "14.69287109375",
-              "bottom": "85.0"
+              "left": "291.0",
+              "top": "130.0",
+              "right": "24.0",
+              "bottom": "621.0"
+            },
+            "tap-handler": "$ X Button",
+            "is-structured": "false",
+            "children": [
+              "Vector5",
+              "Vector6"
+            ]
+          },
+          {
+            "id": "Drag Label Box",
+            "margin": {
+              "left": "47.0",
+              "top": "247.0",
+              "right": "46.0576171875",
+              "bottom": "338.65625"
+            },
+            "tap-handler": "$Drag Label Box Button",
+            "is-structured": "false",
+            "children": [
+              "Rectangle 74",
+              "Upload Return Label",
+              "noun-folder-6114711-008BE7 1",
+              "Drag label here or browse files",
+              "Rectangle 73"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Fill Description Field",
+            "margin": {
+              "left": "47.0",
+              "top": "529.0",
+              "right": "44.140625",
+              "bottom": "138.42431640625"
             },
             "is-structured": "false",
             "children": [
-              "Order summary",
-              "Input promo",
-              "Package Summary"
+              "Description",
+              "Rectangle 75",
+              "Label the item(s) inside: i.e. ‘laptop covers’"
             ],
             "clip-content": "false"
           },
@@ -379,49 +333,6 @@
               }
             },
             "vector-content": "background.svg"
-          },
-          {
-            "id": "Next Button",
-            "padding": {
-              "left": "29.0",
-              "top": "16.0",
-              "right": "29.0",
-              "bottom": "16.0"
-            },
-            "border-radius": "50.0",
-            "alignment": {
-              "horizontal": {
-                "attachment": "end",
-                "offset": "-23.0"
-              },
-              "vertical": {
-                "attachment": "end",
-                "offset": "-19.0"
-              }
-            },
-            "tap-handler": "$Next Button",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "150.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "55.0"
-              }
-            },
-            "arrangement": "row",
-            "children": [
-              "Frame 45"
-            ],
-            "item-spacing": "8.0",
-            "background-color": {
-              "alpha": "1.0",
-              "hue": "204.0",
-              "saturation": "1.0",
-              "value": "0.9019607843137255"
-            },
-            "clip-content": "false"
           },
           {
             "id": "Progress Bar",
@@ -455,37 +366,18 @@
             "clip-content": "false"
           },
           {
-            "id": "Back button blue",
+            "id": "Dashboard Button",
             "alignment": {
               "horizontal": {
-                "attachment": "start",
-                "offset": "34.0"
+                "attachment": "center",
+                "offset": "0.5"
               },
               "vertical": {
                 "attachment": "end",
-                "offset": "-39.0"
+                "offset": "-25.0"
               }
             },
-            "tap-handler": "$Back Button",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "80.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "15.0"
-              }
-            },
-            "is-structured": "false",
-            "children": [
-              "Back",
-              "Arrow--right1"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "Frame 45",
+            "tap-handler": "$Add Package Button",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "shrink"
@@ -496,70 +388,11 @@
             },
             "arrangement": "row",
             "main-axis-align": "start",
+            "cross-axis-align": "start",
             "children": [
-              "Next",
-              "Arrow--right"
+              "button 9"
             ],
-            "item-spacing": "10.0",
             "clip-content": "false"
-          },
-          {
-            "id": "Next",
-            "color": {
-              "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "1.0"
-            },
-            "text-content": "Next",
-            "overflow": "visible",
-            "text-align": "left",
-            "text-size": "30.0",
-            "line-height": "1.171875",
-            "typeface": "Avenir Next"
-          },
-          {
-            "id": "Arrow--right",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "24.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "24.0"
-              }
-            },
-            "is-structured": "false",
-            "children": [
-              "Vector"
-            ],
-            "background-color": {
-              "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "1.0"
-            }
-          },
-          {
-            "id": "Vector",
-            "margin": {
-              "left": "3.0",
-              "top": "4.5",
-              "right": "3.0",
-              "bottom": "4.5"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "vector-content": "vector.svg"
           },
           {
             "id": "Progress Bar_synth",
@@ -606,7 +439,7 @@
             "children": [
               "Line 3",
               "Ellipse 20",
-              "Vector1",
+              "Vector",
               "Status Field"
             ],
             "clip-content": "false"
@@ -637,7 +470,7 @@
             "children": [
               "Line 4",
               "Ellipse 21",
-              "Vector2",
+              "Vector1",
               "Status Field1"
             ],
             "clip-content": "false"
@@ -668,7 +501,7 @@
             "children": [
               "Line 5",
               "Ellipse 22",
-              "Vector3",
+              "Vector2",
               "Status Field2"
             ],
             "clip-content": "false"
@@ -699,7 +532,7 @@
             "children": [
               "Line 6",
               "Ellipse 23",
-              "Vector4",
+              "Vector3",
               "Status Field3"
             ],
             "clip-content": "false"
@@ -729,7 +562,7 @@
             "is-structured": "false",
             "children": [
               "Ellipse 24",
-              "Vector5",
+              "Vector4",
               "Pay & Confirm"
             ],
             "clip-content": "false"
@@ -807,7 +640,7 @@
             "vector-content": "ellipse_20.svg"
           },
           {
-            "id": "Vector1",
+            "id": "Vector",
             "margin": {
               "left": "19.0",
               "top": "6.0",
@@ -824,7 +657,7 @@
                 "value": "1.0"
               }
             },
-            "vector-content": "vector1.svg"
+            "vector-content": "vector.svg"
           },
           {
             "id": "Status Field",
@@ -920,7 +753,7 @@
             "vector-content": "ellipse_21.svg"
           },
           {
-            "id": "Vector2",
+            "id": "Vector1",
             "margin": {
               "left": "19.0",
               "top": "6.0",
@@ -937,7 +770,7 @@
                 "value": "1.0"
               }
             },
-            "vector-content": "vector2.svg"
+            "vector-content": "vector1.svg"
           },
           {
             "id": "Status Field1",
@@ -1033,7 +866,7 @@
             "vector-content": "ellipse_22.svg"
           },
           {
-            "id": "Vector3",
+            "id": "Vector2",
             "margin": {
               "left": "19.0",
               "top": "6.0",
@@ -1050,7 +883,7 @@
                 "value": "1.0"
               }
             },
-            "vector-content": "vector3.svg"
+            "vector-content": "vector2.svg"
           },
           {
             "id": "Status Field2",
@@ -1126,11 +959,11 @@
             "alignment": {
               "horizontal": {
                 "attachment": "start",
-                "offset": "-1.0"
+                "offset": "-2.0"
               },
               "vertical": {
                 "attachment": "start",
-                "offset": "-1.0"
+                "offset": "-2.0"
               }
             },
             "size-constraints": {
@@ -1146,7 +979,7 @@
             "vector-content": "ellipse_23.svg"
           },
           {
-            "id": "Vector4",
+            "id": "Vector3",
             "margin": {
               "left": "19.0",
               "top": "6.0",
@@ -1163,7 +996,7 @@
                 "value": "1.0"
               }
             },
-            "vector-content": "vector4.svg"
+            "vector-content": "vector3.svg"
           },
           {
             "id": "Status Field3",
@@ -1210,11 +1043,11 @@
             "alignment": {
               "horizontal": {
                 "attachment": "start",
-                "offset": "-2.0"
+                "offset": "-1.0"
               },
               "vertical": {
                 "attachment": "start",
-                "offset": "-2.0"
+                "offset": "-1.0"
               }
             },
             "size-constraints": {
@@ -1230,7 +1063,7 @@
             "vector-content": "ellipse_24.svg"
           },
           {
-            "id": "Vector5",
+            "id": "Vector4",
             "margin": {
               "left": "19.0",
               "top": "6.0",
@@ -1247,7 +1080,7 @@
                 "value": "1.0"
               }
             },
-            "vector-content": "vector5.svg"
+            "vector-content": "vector4.svg"
           },
           {
             "id": "Pay & Confirm",
@@ -1285,10 +1118,89 @@
             "typeface": "Cairo"
           },
           {
-            "id": "Back",
+            "id": "button 9",
+            "padding": {
+              "left": "29.0",
+              "top": "16.0",
+              "right": "29.0",
+              "bottom": "16.0"
+            },
+            "border-radius": "50.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "261.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "60.0"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Frame 45"
+            ],
+            "item-spacing": "8.0",
+            "background-color": {
+              "alpha": "1.0",
+              "hue": "204.0",
+              "saturation": "1.0",
+              "value": "0.9019607843137255"
+            },
+            "clip-content": "false"
+          },
+          {
+            "id": "Frame 45",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Install"
+            ],
+            "item-spacing": "10.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Install",
+            "font-weight": "700.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "1.0"
+            },
+            "text-content": "Add Package",
+            "overflow": "visible",
+            "text-align-vertical": "center",
+            "text-size": "24.0",
+            "line-height": "1.25",
+            "typeface": "Cairo"
+          },
+          {
+            "id": "Vector5",
             "margin": {
-              "left": "22.4794921875",
-              "bottom": "2.272705078125"
+              "left": "22.499999905374693",
+              "top": "10.779278811739118",
+              "right": "22.500000094625307",
+              "bottom": "10.779242459012835"
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "-1.43505859375"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "-1.5625"
+              }
             },
             "size-constraints": {
               "width-constraints": {
@@ -1300,50 +1212,25 @@
                 "value": "1.0"
               }
             },
-            "color": {
-              "alpha": "1.0",
-              "hue": "204.0",
-              "saturation": "1.0",
-              "value": "0.9019607843137255"
-            },
-            "text-content": "Back",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-align": "left",
-            "text-align-vertical": "center",
-            "text-size": "20.0",
-            "line-height": "1.8739999771118163",
-            "typeface": "Cairo"
-          },
-          {
-            "id": "Arrow--right1",
-            "margin": {
-              "right": "58.0"
-            },
-            "relative-transform": [
-              [
-                "-1.0",
-                "-1.7813045970731792e-16",
-                "0.0"
-              ],
-              [
-                "-8.419447276959152e-17",
-                "1.0",
-                "0.0"
-              ]
-            ],
-            "is-structured": "false",
-            "children": [
-              "Vector6"
-            ]
+            "vector-content": "vector5.svg"
           },
           {
             "id": "Vector6",
             "margin": {
-              "left": "2.75",
-              "top": "2.8125",
-              "right": "2.75",
-              "bottom": "2.8125"
+              "left": "8.77867403104608",
+              "top": "24.500006619169085",
+              "right": "8.779847239705873",
+              "bottom": "24.499993380830915"
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "-1.43505859375"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "-1.5625"
+              }
             },
             "size-constraints": {
               "width-constraints": {
@@ -1358,197 +1245,19 @@
             "vector-content": "vector6.svg"
           },
           {
-            "id": "Order summary",
+            "id": "Rectangle 74",
             "margin": {
-              "right": "0.30712890625"
+              "top": "38.105712890625"
             },
-            "border-radius": "25.0",
-            "is-structured": "false",
-            "children": [
-              "Rectangle 65",
-              "Payment",
-              "Order Summary",
-              "Pickup Address Full Postal Code, street #,city",
-              "Type of pickup",
-              "Line 10",
-              "Weekday, Month, Day"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "Input promo",
-            "margin": {
-              "left": "20.0",
-              "top": "505.0",
-              "right": "39.20849609375",
-              "bottom": "21.9326171875"
-            },
-            "is-structured": "false",
-            "children": [
-              "Rectangle 40",
-              "Promo Code",
-              "Rectangle 66",
-              "Apply"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "Package Summary",
-            "margin": {
-              "left": "9.0",
-              "top": "239.0",
-              "bottom": "227.415771484375"
-            },
-            "is-structured": "false",
-            "children": [
-              "Order Summary Table Row Component",
-              "Order Summary Table Row Component1",
-              "Packages"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "Rectangle 65",
-            "border-radius": "25.0",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "vector-content": "rectangle_65.svg"
-          },
-          {
-            "id": "Payment",
-            "margin": {
-              "left": "12.0",
-              "top": "377.0",
-              "right": "13.93359375",
-              "bottom": "58.0"
-            },
-            "is-structured": "false",
-            "children": [
-              "$10.99 $1.00 $11.99",
-              "One-time Return Tax Total",
-              "Visa ending in: 4832"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "Order Summary",
-            "margin": {
-              "left": "72.0",
-              "right": "70.72314453125",
-              "bottom": "523.00830078125"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "font-weight": "700.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "204.0",
-              "saturation": "1.0",
-              "value": "0.9019607843137255"
-            },
-            "text-content": "Order Summary",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-size": "32.0",
-            "line-height": "1.3660000562667847",
-            "typeface": "Avenir Next"
-          },
-          {
-            "id": "Pickup Address Full Postal Code, street #,city",
-            "margin": {
-              "left": "12.0",
-              "top": "162.0",
-              "right": "84.0",
-              "bottom": "335.0"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "color": {
-              "alpha": "0.7490196078431373",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "0.0"
-            },
-            "text-content": "Pickup Address Full Postal Code, street #,city ",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-align": "left",
-            "text-size": "18.0",
-            "line-height": "1.7777777099609375",
-            "typeface": "Cairo"
-          },
-          {
-            "id": "Type of pickup",
-            "margin": {
-              "left": "79.0",
-              "top": "109.0",
-              "right": "17.0",
-              "bottom": "424.0"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "color": {
-              "alpha": "0.7490196078431373",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "0.0"
-            },
-            "text-content": "Type of pickup",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-align": "left",
-            "text-size": "24.0",
-            "line-height": "1.3333332824707032",
-            "typeface": "Cairo"
-          },
-          {
-            "id": "Line 10",
-            "margin": {
-              "left": "54.0",
-              "top": "51.32470703125",
-              "right": "61.0",
-              "bottom": "522.67529296875"
-            },
+            "border-radius": "20.0",
             "alignment": {
               "horizontal": {
                 "attachment": "start",
-                "offset": "0.0"
+                "offset": "-0.75"
               },
               "vertical": {
                 "attachment": "start",
-                "offset": "-1.0"
+                "offset": "-0.75"
               }
             },
             "size-constraints": {
@@ -1561,93 +1270,13 @@
                 "value": "1.0"
               }
             },
-            "vector-content": "line_10.svg"
+            "vector-content": "rectangle_74.svg"
           },
           {
-            "id": "Weekday, Month, Day",
+            "id": "Upload Return Label",
             "margin": {
-              "left": "79.0",
-              "top": "63.0",
-              "right": "17.0",
-              "bottom": "465.0"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "color": {
-              "alpha": "0.7490196078431373",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "0.0"
-            },
-            "text-content": "Weekday, Month, Day",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-align": "left",
-            "text-size": "24.0",
-            "line-height": "1.3333332824707032",
-            "typeface": "Cairo"
-          },
-          {
-            "id": "$10.99 $1.00 $11.99",
-            "margin": {
-              "left": "221.0",
-              "top": "35.0",
-              "bottom": "24.0"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "font-weight": "600.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "203.60655737704917",
-              "saturation": "0.9384615384615385",
-              "value": "0.2549019607843137"
-            },
-            "annotated-text-content": {
-              "text": "\\$10.99\n$1.00\n$11.99",
-              "annotated-text-span-list": [
-                {
-                  "span-start": "0",
-                  "span-length": "13"
-                },
-                {
-                  "span-start": "13",
-                  "span-length": "6",
-                  "annotated-text-style": {
-                    "font-weight": "700.0",
-                    "typeface": "Avenir Next"
-                  }
-                }
-              ]
-            },
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-align": "right",
-            "text-size": "30.0",
-            "line-height": "1.3660001118977865",
-            "typeface": "Avenir Next"
-          },
-          {
-            "id": "One-time Return Tax Total",
-            "margin": {
-              "top": "39.0",
-              "right": "125.09619140625"
+              "right": "146.17138671875",
+              "bottom": "187.352294921875"
             },
             "size-constraints": {
               "width-constraints": {
@@ -1662,117 +1291,38 @@
             "font-weight": "500.0",
             "color": {
               "alpha": "1.0",
-              "hue": "203.60655737704917",
-              "saturation": "0.9384615384615385",
-              "value": "0.2549019607843137"
-            },
-            "annotated-text-content": {
-              "text": "One-time Return\nTax \nTotal\n",
-              "annotated-text-span-list": [
-                {
-                  "span-start": "0",
-                  "span-length": "21"
-                },
-                {
-                  "span-start": "21",
-                  "span-length": "6",
-                  "annotated-text-style": {
-                    "font-weight": "700.0",
-                    "typeface": "Avenir Next"
-                  }
-                }
-              ]
-            },
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-align": "left",
-            "text-size": "30.0",
-            "line-height": "1.3660001118977865",
-            "typeface": "Avenir Next"
-          },
-          {
-            "id": "Visa ending in: 4832",
-            "margin": {
-              "right": "22.91552734375",
-              "bottom": "99.8466796875"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "font-weight": "700.0",
-            "color": {
-              "alpha": "0.7490196078431373",
               "hue": "0.0",
               "saturation": "0.0",
               "value": "0.0"
             },
-            "annotated-text-content": {
-              "text": "Visa ending in: 4832",
-              "annotated-text-span-list": [
-                {
-                  "span-start": "0",
-                  "span-length": "16",
-                  "annotated-text-style": {
-                    "text-size": "16.0"
-                  }
-                },
-                {
-                  "span-start": "16",
-                  "span-length": "4",
-                  "annotated-text-style": {
-                    "font-weight": "400.0",
-                    "text-size": "16.0",
-                    "typeface": "Cairo"
-                  }
-                }
-              ]
-            },
+            "text-content": "Upload Return Label",
             "overflow": "visible",
             "max-lines": "-1",
             "text-align": "left",
-            "text-size": "16.0",
-            "line-height": "2.0",
-            "typeface": "Cairo"
+            "text-size": "25.0",
+            "line-height": "1.3660000610351561",
+            "typeface": "Avenir Next"
           },
           {
-            "id": "Rectangle 40",
-            "border-radius": "20.0",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "-2.5"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "-2.5"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "vector-content": "rectangle_40.svg"
-          },
-          {
-            "id": "Promo Code",
+            "id": "noun-folder-6114711-008BE7 1",
             "margin": {
-              "left": "28.251953125",
-              "top": "11.614013671875",
-              "right": "21.3515625",
-              "bottom": "11.002685546875"
+              "left": "119.33349609375",
+              "top": "79.38671875",
+              "right": "118.85400390625",
+              "bottom": "87.3251953125"
+            },
+            "is-structured": "false",
+            "children": [
+              "Vector7"
+            ]
+          },
+          {
+            "id": "Drag label here or browse files",
+            "margin": {
+              "left": "48.404296875",
+              "top": "136.544921875",
+              "right": "47.9248046875",
+              "bottom": "48.42578125"
             },
             "size-constraints": {
               "width-constraints": {
@@ -1791,192 +1341,79 @@
               "saturation": "0.0975609756097561",
               "value": "0.4823529411764706"
             },
-            "text-content": "Promo Code",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-align": "left",
-            "text-size": "30.0",
-            "line-height": "1.3660001118977865",
-            "typeface": "Avenir Next"
-          },
-          {
-            "id": "Rectangle 66",
-            "margin": {
-              "left": "177.4599609375"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "vector-content": "rectangle_66.svg"
-          },
-          {
-            "id": "Apply",
-            "margin": {
-              "left": "187.27685546875",
-              "top": "11.614013671875",
-              "right": "10.572265625",
-              "bottom": "4.89013671875"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "font-weight": "500.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "1.0"
-            },
-            "text-content": "Apply",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-size": "30.0",
-            "line-height": "1.3660001118977865",
-            "typeface": "Avenir Next"
-          },
-          {
-            "id": "Order Summary Table Row Component",
-            "margin": {
-              "top": "29.0",
-              "bottom": "45.0"
-            },
-            "is-structured": "false",
-            "children": [
-              "Logo",
-              "1 package with digital label"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "Order Summary Table Row Component1",
-            "margin": {
-              "top": "74.0"
-            },
-            "is-structured": "false",
-            "children": [
-              "Logo1",
-              "1 package with digital label1"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "Packages",
-            "margin": {
-              "left": "89.0",
-              "right": "76.599609375",
-              "bottom": "83.379638671875"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "font-weight": "500.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "0.0"
-            },
-            "text-content": "Packages",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-align": "left",
-            "text-align-vertical": "center",
-            "text-size": "20.0",
-            "line-height": "0.5",
-            "typeface": "Cairo"
-          },
-          {
-            "id": "Logo",
-            "margin": {
-              "right": "280.33837890625"
-            },
-            "is-structured": "false",
-            "children": [
-              "Group"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "1 package with digital label",
-            "margin": {
-              "left": "56.0",
-              "bottom": "0.06591796875"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "color": {
-              "alpha": "0.7490196078431373",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "0.0"
-            },
             "annotated-text-content": {
-              "text": "1 package with digital label",
+              "text": "Drag label here or browse files",
               "annotated-text-span-list": [
                 {
                   "span-start": "0",
-                  "span-length": "1",
-                  "annotated-text-style": {
-                    "font-weight": "700.0",
-                    "text-size": "18.0",
-                    "typeface": "Cairo"
-                  }
+                  "span-length": "19"
                 },
                 {
-                  "span-start": "1",
-                  "span-length": "27",
+                  "span-start": "19",
+                  "span-length": "12",
                   "annotated-text-style": {
-                    "text-size": "18.0"
+                    "color": {
+                      "alpha": "1.0",
+                      "hue": "204.0",
+                      "saturation": "1.0",
+                      "value": "0.9019607843137255"
+                    }
                   }
                 }
               ]
             },
             "overflow": "visible",
             "max-lines": "-1",
-            "text-align": "left",
-            "text-size": "18.0",
-            "line-height": "1.7777777099609375",
-            "typeface": "Cairo"
+            "text-size": "25.0",
+            "line-height": "1.3660000610351561",
+            "typeface": "Avenir Next"
           },
           {
-            "id": "Group",
-            "is-structured": "false",
-            "children": [
-              "Vector7"
-            ],
-            "clip-content": "false"
+            "id": "Rectangle 73",
+            "margin": {
+              "top": "38.105712890625"
+            },
+            "border-radius": "20.0",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "-0.75"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "-0.75"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "vector-content": "rectangle_73.svg"
           },
           {
             "id": "Vector7",
+            "margin": {
+              "left": "2.24658203125",
+              "top": "4.93115234375",
+              "right": "2.24609375",
+              "bottom": "4.929931640625"
+            },
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "-0.5"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "-0.5"
+              }
+            },
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "proportional",
@@ -1990,21 +1427,10 @@
             "vector-content": "vector7.svg"
           },
           {
-            "id": "Logo1",
+            "id": "Description",
             "margin": {
-              "right": "280.33837890625"
-            },
-            "is-structured": "false",
-            "children": [
-              "Group1"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "1 package with digital label1",
-            "margin": {
-              "left": "56.0",
-              "bottom": "0.06591796875"
+              "right": "148.08837890625",
+              "bottom": "105.584228515625"
             },
             "size-constraints": {
               "width-constraints": {
@@ -2016,56 +1442,27 @@
                 "value": "1.0"
               }
             },
+            "font-weight": "500.0",
             "color": {
-              "alpha": "0.7490196078431373",
+              "alpha": "1.0",
               "hue": "0.0",
               "saturation": "0.0",
               "value": "0.0"
             },
-            "annotated-text-content": {
-              "text": "0 package with physical label",
-              "annotated-text-span-list": [
-                {
-                  "span-start": "0",
-                  "span-length": "1"
-                },
-                {
-                  "span-start": "1",
-                  "span-length": "14",
-                  "annotated-text-style": {
-                    "text-size": "18.0"
-                  }
-                },
-                {
-                  "span-start": "15",
-                  "span-length": "8"
-                },
-                {
-                  "span-start": "23",
-                  "span-length": "6",
-                  "annotated-text-style": {
-                    "text-size": "18.0"
-                  }
-                }
-              ]
-            },
+            "text-content": "Description",
             "overflow": "visible",
             "max-lines": "-1",
             "text-align": "left",
-            "text-size": "18.0",
-            "line-height": "1.7777777099609375",
-            "typeface": "Cairo"
+            "text-size": "25.0",
+            "line-height": "1.3660000610351561",
+            "typeface": "Avenir Next"
           },
           {
-            "id": "Group1",
-            "is-structured": "false",
-            "children": [
-              "Vector8"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "Vector8",
+            "id": "Rectangle 75",
+            "margin": {
+              "top": "38.105712890625"
+            },
+            "border-radius": "20.0",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "proportional",
@@ -2076,30 +1473,76 @@
                 "value": "1.0"
               }
             },
-            "vector-content": "vector8.svg"
+            "vector-content": "rectangle_75.svg"
+          },
+          {
+            "id": "Label the item(s) inside: i.e. ‘laptop covers’",
+            "margin": {
+              "left": "12.46044921875",
+              "top": "53.189208984375",
+              "right": "12.46044921875",
+              "bottom": "46.837890625"
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "font-weight": "500.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "210.00000000000003",
+              "saturation": "0.0975609756097561",
+              "value": "0.4823529411764706"
+            },
+            "text-content": "$Describe Item Text Box",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align": "left",
+            "text-size": "25.0",
+            "line-height": "1.3660000610351561",
+            "typeface": "Avenir Next"
           }
         ]
       }
     }
   },
   "parameters": {
-    "Next Button": {
+    " X Button": {
       "data-type": "void-callback",
       "required": false,
       "description": ""
     },
-    "Back Button": {
+    "Drag Label Box Button": {
       "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "Add Package Button": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "Describe Item Text Box": {
+      "data-type": "text",
       "required": false,
       "description": ""
     }
   },
   "previews": [
     {
-      "design": "Confirm Pickup Component",
+      "design": "Package Info Add Label Component",
       "size": {
         "width": 360.0,
         "height": 800.0
+      },
+      "parameters": {
+        "Describe Item Text Box": "Label the item(s) inside: i.e. ‘laptop covers’"
       }
     }
   ],

@@ -1,14 +1,14 @@
 {
-  "name": "package_info_add_label_component",
+  "name": "thank_you_guest_component",
   "version": 32,
   "source-key": {
     "type": "figma",
     "file": "FhgkbwnKdqKfmYVIHTswcp",
-    "node": "605:2041",
-    "version": "4693204512",
-    "component-id": "9cfadf7544419671c5643dd28aaebebb89317935"
+    "node": "632:3019",
+    "version": "4710229781",
+    "component-id": "ed176ac08d738cc9ddc24429370cae5feb856206"
   },
-  "default": "Package Info Add Label Component",
+  "default": "Thank You Guest Component",
   "design": {
     "atoms": [
       {
@@ -21,20 +21,8 @@
         "id": "Android Large - 3"
       },
       {
-        "type": "text",
-        "id": "Add Digital Label"
-      },
-      {
         "type": "group",
-        "id": "X Button"
-      },
-      {
-        "type": "group",
-        "id": "Drag Label Box"
-      },
-      {
-        "type": "group",
-        "id": "Fill Description Field"
+        "id": "Thank You Text"
       },
       {
         "type": "vector",
@@ -47,6 +35,14 @@
       {
         "type": "group",
         "id": "Dashboard Button"
+      },
+      {
+        "type": "group",
+        "id": "Dashboard Button1"
+      },
+      {
+        "type": "group",
+        "id": "button 9"
       },
       {
         "type": "group",
@@ -154,7 +150,7 @@
       },
       {
         "type": "group",
-        "id": "button 9"
+        "id": "button 10"
       },
       {
         "type": "group",
@@ -162,7 +158,27 @@
       },
       {
         "type": "text",
+        "id": "Schedule A Pickup"
+      },
+      {
+        "type": "group",
+        "id": "Frame 46"
+      },
+      {
+        "type": "group",
+        "id": "Download"
+      },
+      {
+        "type": "text",
         "id": "Install"
+      },
+      {
+        "type": "group",
+        "id": "Arrow--right"
+      },
+      {
+        "type": "group",
+        "id": "download"
       },
       {
         "type": "vector",
@@ -173,54 +189,35 @@
         "id": "Vector6"
       },
       {
-        "type": "vector",
-        "id": "Rectangle 74"
-      },
-      {
-        "type": "text",
-        "id": "Upload Return Label"
-      },
-      {
         "type": "group",
-        "id": "noun-folder-6114711-008BE7 1"
+        "id": "noun-delivery-5814870-008BE7 2"
       },
       {
         "type": "text",
-        "id": "Drag label here or browse files"
+        "id": "A confirmation email will be sent to: johndoe2394@gmail.com"
       },
       {
-        "type": "vector",
-        "id": "Rectangle 73"
+        "type": "text",
+        "id": "John, your pickup order #R957394 is confirmed."
+      },
+      {
+        "type": "text",
+        "id": "Thank you for scheduling a return with us!"
       },
       {
         "type": "vector",
         "id": "Vector7"
-      },
-      {
-        "type": "text",
-        "id": "Description"
-      },
-      {
-        "type": "vector",
-        "id": "Rectangle 75"
-      },
-      {
-        "type": "text",
-        "id": "Label the item(s) inside: i.e. ‘laptop covers’"
       }
     ],
     "modes": {
-      "Package Info Add Label Component": {
+      "Thank You Guest Component": {
         "rules": [
           {
             "id": "top_level",
             "is-structured": "false",
             "children": [
               "Android Large - 3",
-              "Add Digital Label",
-              "X Button",
-              "Drag Label Box",
-              "Fill Description Field"
+              "Thank You Text"
             ],
             "clip-content": "false"
           },
@@ -230,7 +227,9 @@
             "children": [
               "Background",
               "Progress Bar",
-              "Dashboard Button"
+              "Dashboard Button",
+              "Dashboard Button1",
+              "button 9"
             ],
             "background-color": {
               "alpha": "1.0",
@@ -240,83 +239,19 @@
             }
           },
           {
-            "id": "Add Digital Label",
+            "id": "Thank You Text",
             "margin": {
-              "left": "29.0",
-              "top": "141.0",
-              "right": "62.0",
-              "bottom": "599.0"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "font-weight": "700.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "203.60655737704917",
-              "saturation": "0.9384615384615385",
-              "value": "0.2549019607843137"
-            },
-            "text-content": "Add Digital Label",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-size": "32.0",
-            "typeface": "Cairo"
-          },
-          {
-            "id": "X Button",
-            "margin": {
-              "left": "291.0",
-              "top": "130.0",
-              "right": "24.0",
-              "bottom": "621.0"
-            },
-            "tap-handler": "$ X Button",
-            "is-structured": "false",
-            "children": [
-              "Vector5",
-              "Vector6"
-            ]
-          },
-          {
-            "id": "Drag Label Box",
-            "margin": {
-              "left": "47.0",
-              "top": "247.0",
-              "right": "46.0576171875",
-              "bottom": "338.65625"
-            },
-            "tap-handler": "$Drag Label Box Button",
-            "is-structured": "false",
-            "children": [
-              "Rectangle 74",
-              "Upload Return Label",
-              "noun-folder-6114711-008BE7 1",
-              "Drag label here or browse files",
-              "Rectangle 73"
-            ],
-            "clip-content": "false"
-          },
-          {
-            "id": "Fill Description Field",
-            "margin": {
-              "left": "47.0",
-              "top": "529.0",
-              "right": "44.140625",
-              "bottom": "138.42431640625"
+              "left": "14.0",
+              "top": "80.0",
+              "right": "15.0",
+              "bottom": "131.0"
             },
             "is-structured": "false",
             "children": [
-              "Description",
-              "Rectangle 75",
-              "Label the item(s) inside: i.e. ‘laptop covers’"
+              "noun-delivery-5814870-008BE7 2",
+              "A confirmation email will be sent to: johndoe2394@gmail.com",
+              "John, your pickup order #R957394 is confirmed.",
+              "Thank you for scheduling a return with us!"
             ],
             "clip-content": "false"
           },
@@ -374,10 +309,10 @@
               },
               "vertical": {
                 "attachment": "end",
-                "offset": "-25.0"
+                "offset": "-16.0"
               }
             },
-            "tap-handler": "$Add Package Button",
+            "tap-handler": "$Schedule A Pickup Button",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "shrink"
@@ -390,8 +325,78 @@
             "main-axis-align": "start",
             "cross-axis-align": "start",
             "children": [
-              "button 9"
+              "button 10"
             ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Dashboard Button1",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "50.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "630.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink",
+                "min": "261.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink",
+                "min": "60.0"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "cross-axis-align": "start",
+            "clip-content": "false"
+          },
+          {
+            "id": "button 9",
+            "padding": {
+              "left": "29.0",
+              "top": "16.0",
+              "right": "29.0",
+              "bottom": "16.0"
+            },
+            "border-radius": "50.0",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "50.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "647.0"
+              }
+            },
+            "tap-handler": "$Create An Account Button",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "261.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "60.0"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Frame 46"
+            ],
+            "item-spacing": "8.0",
+            "background-color": {
+              "alpha": "1.0",
+              "hue": "204.0",
+              "saturation": "1.0",
+              "value": "0.9019607843137255"
+            },
             "clip-content": "false"
           },
           {
@@ -959,11 +964,11 @@
             "alignment": {
               "horizontal": {
                 "attachment": "start",
-                "offset": "-2.0"
+                "offset": "-1.0"
               },
               "vertical": {
                 "attachment": "start",
-                "offset": "-2.0"
+                "offset": "-1.0"
               }
             },
             "size-constraints": {
@@ -1118,7 +1123,7 @@
             "typeface": "Cairo"
           },
           {
-            "id": "button 9",
+            "id": "button 10",
             "padding": {
               "left": "29.0",
               "top": "16.0",
@@ -1163,10 +1168,65 @@
             "arrangement": "row",
             "main-axis-align": "start",
             "children": [
-              "Install"
+              "Schedule A Pickup"
             ],
             "item-spacing": "10.0",
             "clip-content": "false"
+          },
+          {
+            "id": "Schedule A Pickup",
+            "font-weight": "700.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "1.0"
+            },
+            "text-content": "Schedule A Pickup",
+            "overflow": "visible",
+            "text-align-vertical": "center",
+            "text-size": "24.0",
+            "line-height": "1.25",
+            "typeface": "Cairo"
+          },
+          {
+            "id": "Frame 46",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "start",
+            "children": [
+              "Download",
+              "Install",
+              "Arrow--right"
+            ],
+            "item-spacing": "10.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Download",
+            "presence": "false",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "download"
+            ]
           },
           {
             "id": "Install",
@@ -1177,7 +1237,7 @@
               "saturation": "0.0",
               "value": "1.0"
             },
-            "text-content": "Add Package",
+            "text-content": "Create An Account",
             "overflow": "visible",
             "text-align-vertical": "center",
             "text-size": "24.0",
@@ -1185,23 +1245,59 @@
             "typeface": "Cairo"
           },
           {
-            "id": "Vector5",
-            "margin": {
-              "left": "22.499999905374693",
-              "top": "10.779278811739118",
-              "right": "22.500000094625307",
-              "bottom": "10.779242459012835"
+            "id": "Arrow--right",
+            "presence": "false",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "24.0"
+              }
             },
+            "is-structured": "false",
+            "children": [
+              "Vector6"
+            ],
+            "background-color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "1.0"
+            }
+          },
+          {
+            "id": "download",
             "alignment": {
               "horizontal": {
                 "attachment": "start",
-                "offset": "-1.43505859375"
+                "offset": "1.0"
               },
               "vertical": {
                 "attachment": "start",
-                "offset": "-1.5625"
+                "offset": "2.0"
               }
             },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "22.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "19.642822265625"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "Vector5"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Vector5",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "proportional",
@@ -1211,105 +1307,48 @@
                 "sizing-mode": "proportional",
                 "value": "1.0"
               }
-            },
-            "vector-content": "vector5.svg"
+            }
           },
           {
             "id": "Vector6",
             "margin": {
-              "left": "8.77867403104608",
-              "top": "24.500006619169085",
-              "right": "8.779847239705873",
-              "bottom": "24.499993380830915"
+              "left": "3.0",
+              "top": "4.5",
+              "right": "3.0",
+              "bottom": "4.5"
             },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            }
+          },
+          {
+            "id": "noun-delivery-5814870-008BE7 2",
             "alignment": {
               "horizontal": {
-                "attachment": "start",
-                "offset": "-1.43505859375"
+                "attachment": "center",
+                "offset": "-2.5"
               },
               "vertical": {
                 "attachment": "start",
-                "offset": "-1.5625"
+                "offset": "0.0"
               }
             },
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
+                "sizing-mode": "fixed",
+                "value": "100.0"
               },
               "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
+                "sizing-mode": "fixed",
+                "value": "100.0"
               }
-            },
-            "vector-content": "vector6.svg"
-          },
-          {
-            "id": "Rectangle 74",
-            "margin": {
-              "top": "38.105712890625"
-            },
-            "border-radius": "20.0",
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "-0.75"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "-0.75"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "vector-content": "rectangle_74.svg"
-          },
-          {
-            "id": "Upload Return Label",
-            "margin": {
-              "right": "146.17138671875",
-              "bottom": "187.352294921875"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "font-weight": "500.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "0.0"
-            },
-            "text-content": "Upload Return Label",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-align": "left",
-            "text-size": "25.0",
-            "line-height": "1.3660000610351561",
-            "typeface": "Avenir Next"
-          },
-          {
-            "id": "noun-folder-6114711-008BE7 1",
-            "margin": {
-              "left": "119.33349609375",
-              "top": "79.38671875",
-              "right": "118.85400390625",
-              "bottom": "87.3251953125"
             },
             "is-structured": "false",
             "children": [
@@ -1317,41 +1356,53 @@
             ]
           },
           {
-            "id": "Drag label here or browse files",
-            "margin": {
-              "left": "48.404296875",
-              "top": "136.544921875",
-              "right": "47.9248046875",
-              "bottom": "48.42578125"
+            "id": "A confirmation email will be sent to: johndoe2394@gmail.com",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "end",
+                "offset": "-45.0"
+              }
             },
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
+                "sizing-mode": "fixed",
+                "value": "325.0"
               },
               "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
+                "sizing-mode": "fixed",
+                "value": "134.0"
               }
             },
             "font-weight": "500.0",
             "color": {
               "alpha": "1.0",
-              "hue": "210.00000000000003",
-              "saturation": "0.0975609756097561",
-              "value": "0.4823529411764706"
+              "hue": "203.60655737704917",
+              "saturation": "0.9384615384615385",
+              "value": "0.2549019607843137"
             },
             "annotated-text-content": {
-              "text": "Drag label here or browse files",
+              "text": "A confirmation email will be sent to:\nguest@gmail.com\n",
               "annotated-text-span-list": [
                 {
                   "span-start": "0",
-                  "span-length": "19"
+                  "span-length": "38",
+                  "annotated-text-style": {
+                    "font-weight": "400.0",
+                    "text-size": "24.0",
+                    "typeface": "Cairo"
+                  }
                 },
                 {
-                  "span-start": "19",
-                  "span-length": "12",
+                  "span-start": "38",
+                  "span-length": "16",
                   "annotated-text-style": {
+                    "font-weight": "400.0",
+                    "text-size": "24.0",
+                    "typeface": "Cairo",
                     "color": {
                       "alpha": "1.0",
                       "hue": "204.0",
@@ -1364,55 +1415,164 @@
             },
             "overflow": "visible",
             "max-lines": "-1",
-            "text-size": "25.0",
-            "line-height": "1.3660000610351561",
+            "text-size": "24.0",
+            "line-height": "1.171875",
             "typeface": "Avenir Next"
           },
           {
-            "id": "Rectangle 73",
-            "margin": {
-              "top": "38.105712890625"
-            },
-            "border-radius": "20.0",
+            "id": "John, your pickup order #R957394 is confirmed.",
             "alignment": {
               "horizontal": {
-                "attachment": "start",
-                "offset": "-0.75"
+                "attachment": "center",
+                "offset": "3.0"
               },
               "vertical": {
-                "attachment": "start",
-                "offset": "-0.75"
+                "attachment": "center",
+                "offset": "46.0"
               }
             },
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
+                "sizing-mode": "fixed",
+                "value": "325.0"
               },
               "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
+                "sizing-mode": "fixed",
+                "value": "89.0"
               }
             },
-            "vector-content": "rectangle_73.svg"
+            "font-weight": "500.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "203.60655737704917",
+              "saturation": "0.9384615384615385",
+              "value": "0.2549019607843137"
+            },
+            "annotated-text-content": {
+              "text": "Guest, your pickup order #R957394 is confirmed.",
+              "annotated-text-span-list": [
+                {
+                  "span-start": "0",
+                  "span-length": "25",
+                  "annotated-text-style": {
+                    "font-weight": "400.0",
+                    "text-size": "24.0",
+                    "typeface": "Cairo"
+                  }
+                },
+                {
+                  "span-start": "25",
+                  "span-length": "8",
+                  "annotated-text-style": {
+                    "font-weight": "400.0",
+                    "text-size": "24.0",
+                    "typeface": "Cairo",
+                    "color": {
+                      "alpha": "1.0",
+                      "hue": "204.0",
+                      "saturation": "1.0",
+                      "value": "0.9019607843137255"
+                    }
+                  }
+                },
+                {
+                  "span-start": "33",
+                  "span-length": "14",
+                  "annotated-text-style": {
+                    "font-weight": "400.0",
+                    "text-size": "24.0",
+                    "typeface": "Cairo"
+                  }
+                }
+              ]
+            },
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-size": "24.0",
+            "line-height": "1.171875",
+            "typeface": "Avenir Next"
+          },
+          {
+            "id": "Thank you for scheduling a return with us!",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "100.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "325.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "186.0"
+              }
+            },
+            "font-weight": "500.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "203.60655737704917",
+              "saturation": "0.9384615384615385",
+              "value": "0.2549019607843137"
+            },
+            "annotated-text-content": {
+              "text": "Thank you for scheduling a return with us!\n \n",
+              "annotated-text-span-list": [
+                {
+                  "span-start": "0",
+                  "span-length": "9",
+                  "annotated-text-style": {
+                    "font-weight": "700.0",
+                    "text-size": "32.0",
+                    "typeface": "Cairo",
+                    "color": {
+                      "alpha": "1.0",
+                      "hue": "204.0",
+                      "saturation": "1.0",
+                      "value": "0.9019607843137255"
+                    }
+                  }
+                },
+                {
+                  "span-start": "9",
+                  "span-length": "34",
+                  "annotated-text-style": {
+                    "font-weight": "400.0",
+                    "text-size": "32.0",
+                    "typeface": "Cairo"
+                  }
+                },
+                {
+                  "span-start": "43",
+                  "span-length": "2",
+                  "annotated-text-style": {
+                    "font-weight": "400.0",
+                    "text-size": "24.0",
+                    "line-height": "1.0",
+                    "typeface": "Cairo"
+                  }
+                }
+              ]
+            },
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-size": "24.0",
+            "line-height": "1.171875",
+            "typeface": "Avenir Next"
           },
           {
             "id": "Vector7",
             "margin": {
-              "left": "2.24658203125",
-              "top": "4.93115234375",
-              "right": "2.24609375",
-              "bottom": "4.929931640625"
-            },
-            "alignment": {
-              "horizontal": {
-                "attachment": "start",
-                "offset": "-0.5"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "-0.5"
-              }
+              "left": "6.81640625",
+              "top": "24.9609375",
+              "right": "7.0302734375",
+              "bottom": "24.9610595703125"
             },
             "size-constraints": {
               "width-constraints": {
@@ -1424,125 +1584,30 @@
                 "value": "1.0"
               }
             },
-            "vector-content": "vector7.svg"
-          },
-          {
-            "id": "Description",
-            "margin": {
-              "right": "148.08837890625",
-              "bottom": "105.584228515625"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "font-weight": "500.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "0.0"
-            },
-            "text-content": "Description",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-align": "left",
-            "text-size": "25.0",
-            "line-height": "1.3660000610351561",
-            "typeface": "Avenir Next"
-          },
-          {
-            "id": "Rectangle 75",
-            "margin": {
-              "top": "38.105712890625"
-            },
-            "border-radius": "20.0",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "vector-content": "rectangle_75.svg"
-          },
-          {
-            "id": "Label the item(s) inside: i.e. ‘laptop covers’",
-            "margin": {
-              "left": "12.46044921875",
-              "top": "53.189208984375",
-              "right": "12.46044921875",
-              "bottom": "46.837890625"
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "proportional",
-                "value": "1.0"
-              }
-            },
-            "font-weight": "500.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "210.00000000000003",
-              "saturation": "0.0975609756097561",
-              "value": "0.4823529411764706"
-            },
-            "text-content": "$Describe Item Text Box",
-            "overflow": "visible",
-            "max-lines": "-1",
-            "text-align": "left",
-            "text-size": "25.0",
-            "line-height": "1.3660000610351561",
-            "typeface": "Avenir Next"
+            "vector-content": "vector5.svg"
           }
         ]
       }
     }
   },
   "parameters": {
-    " X Button": {
+    "Schedule A Pickup Button": {
       "data-type": "void-callback",
       "required": false,
       "description": ""
     },
-    "Drag Label Box Button": {
+    "Create An Account Button": {
       "data-type": "void-callback",
-      "required": false,
-      "description": ""
-    },
-    "Add Package Button": {
-      "data-type": "void-callback",
-      "required": false,
-      "description": ""
-    },
-    "Describe Item Text Box": {
-      "data-type": "text",
       "required": false,
       "description": ""
     }
   },
   "previews": [
     {
-      "design": "Package Info Add Label Component",
+      "design": "Thank You Guest Component",
       "size": {
         "width": 360.0,
         "height": 800.0
-      },
-      "parameters": {
-        "Describe Item Text Box": "Label the item(s) inside: i.e. ‘laptop covers’"
       }
     }
   ],

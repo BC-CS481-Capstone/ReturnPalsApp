@@ -5,7 +5,7 @@
     "type": "figma",
     "file": "FhgkbwnKdqKfmYVIHTswcp",
     "node": "605:2022",
-    "version": "4693204512",
+    "version": "4710229781",
     "component-id": "968d0fab3263da2912965081516be02d773260a3"
   },
   "default": "Thank You Component",
@@ -1113,11 +1113,11 @@
             "alignment": {
               "horizontal": {
                 "attachment": "center",
-                "offset": "-3.0"
+                "offset": "0.0"
               },
               "vertical": {
                 "attachment": "end",
-                "offset": "0.0"
+                "offset": "-45.0"
               }
             },
             "size-constraints": {
