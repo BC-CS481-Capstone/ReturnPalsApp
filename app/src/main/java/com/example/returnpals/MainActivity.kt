@@ -58,19 +58,19 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun onBronzePlanSelected() {
-        isBronzeSelected = true
+        this.isBronzeSelected = true
     }
 
     private fun onSilverPlanSelected() {
-        isSilverSelected = true
+        this.isSilverSelected = true
     }
 
     private fun onGoldPlanSelected() {
-        isGoldSelected = true
+        this.isGoldSelected = true
     }
 
     private fun onPlatinumPlanSelected() {
-        isPlatinumSelected = true
+        this.isPlatinumSelected = true
     }
 
 }

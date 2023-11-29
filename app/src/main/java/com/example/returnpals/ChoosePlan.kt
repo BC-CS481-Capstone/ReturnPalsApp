@@ -40,8 +40,7 @@ import com.google.relay.compose.tappable
 
 @Composable
 fun ChoosePlan(
-    width: Dp,
-    height: Dp,
+    width: Dp, height: Dp,
     isBronzeSelected: Boolean = false,
     isSilverSelected: Boolean = false,
     isGoldSelected: Boolean = false,
