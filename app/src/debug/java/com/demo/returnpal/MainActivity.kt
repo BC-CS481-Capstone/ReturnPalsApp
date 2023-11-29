@@ -13,17 +13,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            PackageInfoComponent(physicalLabelButton = {
-                var x = Intent(this,PackageInfoAddLabelActivity::class.java)
-                startActivity(x)
-            },
-                digitalLabelButton = {
-                    var x = Intent(this,PackageInfoAddLabelActivity::class.java)
-                    startActivity(x)
-                }, amazonQRCode = {
-                    var x = Intent(this,PackageInfoAddLabelActivity::class.java)
-                    startActivity(x)
-                } )
+            //If Guest
+
+            //Else user
+            startActivity(Intent(this,PackageInfoActivity::class.java))
         }
     }
 }
