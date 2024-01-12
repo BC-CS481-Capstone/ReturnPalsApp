@@ -30,7 +30,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.learncompose.ui.theme.LearnComposeTheme
 
 @Composable
 fun NextButton(
@@ -131,9 +130,12 @@ fun ProgressBar(
                     // divider
                     Text(
                         text = "....",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight(400),
+                        fontFamily = FontFamily.SansSerif,
                         color = lightBlue,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.offset(x=0.dp,y=(-5).dp)
+                        modifier = Modifier.offset(x=0.dp,y=(-6).dp)
                     )
                 }
             }
@@ -172,28 +174,26 @@ private fun ProgressBarText(text: String) {
         overflow = TextOverflow.Visible,
         textAlign = TextAlign.Center,
         modifier = Modifier
-            .requiredWidth(25.dp)
+            .requiredWidth(24.dp)
     )
 }
 
-@Preview(showBackground = true, widthDp = 300, heightDp = 400)
+@Preview(showBackground = true, widthDp = 250, heightDp = 400)
 @Composable
-fun GreetingPreview() {
-    LearnComposeTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            ProgressBar(4)
-            NextButton(
-                text = "Hello World"
-                onClick = { println("Click!") },
-                modifier = Modifier.offset((-8).dp,(-8).dp)
-            )
-            BackButton(
-                onClick = { println("Click!") },
-                modifier = Modifier.offset((8).dp,(-8).dp)
-            )
-        }
+fun ReusableUIPreview() {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        ProgressBar(4)
+        NextButton(
+            text = "Hello World",
+            onClick = { println("Click!") },
+            modifier = Modifier.offset((-8).dp,(-8).dp)
+        )
+        BackButton(
+            onClick = { println("Click!") },
+            modifier = Modifier.offset((8).dp,(-8).dp)
+        )
     }
 }
