@@ -3,10 +3,12 @@ package com.example.returnpals
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,119 +38,69 @@ enum class PickupMethod {
 
 @Composable
 fun PickupMethodUI(
-    width: Dp, height: Dp,
-    selected: PickupMethod = PickupMethod.NONE,
-    onOptionSelected: (PickupMethod) -> Unit = {},
-    onBackButtonTapped: () -> Unit = {},
-    onNextButtonTapped: () -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClickBack: () -> Unit,
+    onClickNext: () -> Unit,
+    onClickMethod: (PickupMethod) -> Unit,
+    selectedMethod: PickupMethod = PickupMethod.NONE
 ) {
     Box(
         modifier = modifier
             .background(Color(210,240,245))
     ) {
-        PickupMethodOption(
-            onTap = { onOptionSelected(PickupMethod.DOORSTEP) },
-            description = buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        fontFamily = cairo,
-                        fontSize = 20.0.sp,
-                        fontWeight = FontWeight(700),
-                    )
-                ) {
-                    append("Direct Handoff\n")
-                }
-                withStyle(
-                    style = SpanStyle(
-                        fontFamily = cairo,
-                        fontSize = 16.0.sp,
-                        fontWeight = FontWeight(500)
-                    )
-                ) {
-                    append("Hand the package directly to our specialist at your door\n")
-                }
-            },
-            vector = painterResource(R.drawable.pickup_details_method_vector7),
-            isSelected = selected == PickupMethod.HANDOFF,
+        PickupMethodButton(
+            onClick = { onClickMethod(PickupMethod.DOORSTEP) },
+            isSelected = selectedMethod == PickupMethod.HANDOFF,
             modifier = Modifier
                 .align(Alignment.Center)
                 .offset(0.0.dp, 120.0.dp)
-        )
-        PickupMethodOption(
-            onTap = { onOptionSelected(PickupMethod.HANDOFF) },
-            description = buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        fontFamily = cairo,
-                        fontSize = 20.0.sp,
-                        fontWeight = FontWeight(700),
-                    )
-                ) {
-                    append("Leave on Doorstep\n")
-                }
-                withStyle(
-                    style = SpanStyle(
-                        fontFamily = cairo,
-                        fontSize = 16.0.sp,
-                        fontWeight = FontWeight(500)
-                    )
-                ) {
-                    append("Place items outside your door ahead of your pick up window\n")
-                }
-            },
-            vector = painterResource(R.drawable.pickup_details_method_vector1),
-            isSelected = selected == PickupMethod.DOORSTEP,
+        ) {
+            DoorstepDescription()
+        }
+        PickupMethodButton(
+            onClick = { onClickMethod(PickupMethod.HANDOFF) },
+            isSelected = selectedMethod == PickupMethod.DOORSTEP,
             modifier = Modifier
                 .align(Alignment.Center)
                 .offset(0.0.dp, (-120.0).dp)
-        )
-        NextButton(
-            onClick = onNextButtonTapped,
-            hide = selected == PickupMethod.NONE,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(
-                    x = width - 100.0.dp,
-                    y = height - 50.0.dp
-                )
-        )
+        ) {
+            HandOffDescription()
+        }
+        ProgressBar(step = 4)
         BackButton(
-            onClick = onBackButtonTapped,
+            onClick = onClickBack,
             modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(
-                    x = 20.0.dp,
-                    y = height - 50.0.dp
-                )
+                .offset(8.dp,(-8).dp)
         )
-        ProgressBar(
-            width = width,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-        )
+        if (selectedMethod != PickupMethod.NONE) {
+            NextButton(
+                onClick = onClickNext,
+                modifier = Modifier
+                    .offset((-8).dp,(-8).dp)
+            )
+        }
     }
 }
 
 @Preview(widthDp = 393, heightDp = 808)
 @Composable
-private fun PickupMethodUI() {
+private fun PickupMethodPreview() {
     MaterialTheme {
         PickupMethodUI(
-            selected = PickupMethod.DOORSTEP,
-            width = 393.dp,
-            height = 808.dp
+            onClickBack = {},
+            onClickNext = {},
+            onClickMethod = {},
+            selectedMethod = PickupMethod.DOORSTEP,
         )
     }
 }
 
 @Composable
-fun PickupMethodOption(
-    onTap: () -> Unit,
-    description: AnnotatedString,
-    vector: Painter = EmptyPainter(),
+private fun PickupMethodButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
     isSelected: Boolean = false,
-    modifier: Modifier = Modifier
+    content: @Composable() (RowScope.() -> Unit)
 ) {
     var modifier = modifier
         .requiredSize(220.dp, 200.dp)
@@ -156,7 +108,6 @@ fun PickupMethodOption(
             color = Color.White,
             shape = RoundedCornerShape(22.dp, 22.dp, 22.dp, 22.dp)
         )
-        .tappable(onTap)
 
     if (isSelected) {
         modifier = modifier.border(
@@ -172,35 +123,83 @@ fun PickupMethodOption(
         )
     }
 
-    Box(
+    Button(
         modifier = modifier,
-        contentAlignment = Alignment.TopCenter
-    ) {
-        RelayVector(
-            vector = vector,
-            modifier = Modifier
-                .offset(0.dp, 20.dp)
-        )
-        Text(
-            text = description,
-            modifier = Modifier
-                .offset(0.dp,65.dp)
-                .requiredWidth(180.dp),
-            textAlign = TextAlign.Center
-        )
-    }
+        onClick = onClick,
+        content = content,
+    )
 }
 
 @Composable
-fun ProgressBar(
-    width: Dp,
+private fun HandOffDescription(
     modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier = modifier
-            .requiredSize(width, 74.dp)
-            .background(Color(5,50,70))
-    ) {
+    RelayVector(
+        vector = painterResource(R.drawable.pickup_details_method_vector1),
+        modifier = Modifier
+            .offset(0.dp, 20.dp)
+    )
+    Text(
+        text = buildAnnotatedString {
+            withStyle(
+                style = SpanStyle(
+                    fontFamily = cairo,
+                    fontSize = 20.0.sp,
+                    fontWeight = FontWeight(700),
+                )
+            ) {
+                append("Direct Handoff\n")
+            }
+            withStyle(
+                style = SpanStyle(
+                    fontFamily = cairo,
+                    fontSize = 16.0.sp,
+                    fontWeight = FontWeight(500)
+                )
+            ) {
+                append("Hand the package directly to our specialist at your door\n")
+            }
+        },
+        modifier = Modifier
+            .offset(0.dp, 65.dp)
+            .requiredWidth(180.dp),
+        textAlign = TextAlign.Center
+    )
+}
 
-    }
+@Composable
+private fun DoorstepDescription(
+    modifier: Modifier = Modifier
+) {
+    RelayVector(
+        vector = painterResource(R.drawable.pickup_details_method_vector7),
+        modifier = Modifier
+            .offset(0.dp, 20.dp)
+    )
+    Text(
+        text = buildAnnotatedString {
+            withStyle(
+                style = SpanStyle(
+                    fontFamily = cairo,
+                    fontSize = 20.0.sp,
+                    fontWeight = FontWeight(700),
+                )
+            ) {
+                append("Leave on Doorstep\n")
+            }
+            withStyle(
+                style = SpanStyle(
+                    fontFamily = cairo,
+                    fontSize = 16.0.sp,
+                    fontWeight = FontWeight(500)
+                )
+            ) {
+                append("Place items outside your door ahead of your pick up window\n")
+            }
+        },
+        modifier = Modifier
+            .offset(0.dp, 65.dp)
+            .requiredWidth(180.dp),
+        textAlign = TextAlign.Center
+    )
 }

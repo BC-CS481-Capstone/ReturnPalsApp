@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.returnpals.chooseplan.avenirNext
 import com.example.returnpals.chooseplan.cairo
+import kotlinx.coroutines.selects.select
 
 // TODO: ChoosePlanGuestUI
 
@@ -29,56 +30,54 @@ import com.example.returnpals.chooseplan.cairo
 // PUBLIC API
 ////////////////////
 
+enum class Plan {
+    NONE, BRONZE, SILVER, GOLD, PLATINUM
+}
+
 @Composable
 fun ChoosePlanUI(
     modifier: Modifier = Modifier,
     onClickNext: () -> Unit,
     onClickBack: () -> Unit,
-    onClickBronze: () -> Unit = {},
-    onClickSilver: () -> Unit = {},
-    onClickGold: () -> Unit = {},
-    onClickPlatinum: () -> Unit = {},
-    isSelectedBronze: Boolean = false,
-    isSelectedSilver: Boolean = false,
-    isSelectedGold: Boolean = false,
-    isSelectedPlatinum: Boolean = false,
+    onClickPlan: (Plan) -> Unit,
+    selectedPlan: Plan = Plan.NONE
 ) {
     Row(
         modifier = modifier
             .fillMaxSize()
     ) {
         PlanButton(
-            onClick = onClickBronze,
-            isSelected = isSelectedBronze,
+            onClick = { onClickPlan(Plan.BRONZE) },
+            isSelected = selectedPlan == Plan.BRONZE,
         ) {
             BronzePlanText()
         }
         PlanButton(
-            onClick = onClickSilver,
-            isSelected = isSelectedBronze,
+            onClick = { onClickPlan(Plan.SILVER) },
+            isSelected = selectedPlan == Plan.SILVER,
         ) {
             SilverPlanText()
         }
         PlanButton(
-            onClick = onClickGold,
-            isSelected = isSelectedBronze,
+            onClick = { onClickPlan(Plan.GOLD) },
+            isSelected = selectedPlan == Plan.GOLD,
         ) {
             GoldPlanText()
         }
         PlanButton(
-            onClick = onClickPlatinum,
-            isSelected = isSelectedBronze,
+            onClick = { onClickPlan(Plan.PLATINUM) },
+            isSelected = selectedPlan == Plan.PLATINUM,
         ) {
             PlatinumPlanText()
         }
     }
-    ProgressBar(3)
+    ProgressBar(step = 3)
     BackButton(
         onClick = onClickBack,
         modifier = Modifier
             .offset(8.dp,(-8).dp)
     )
-    if (isSelectedBronze || isSelectedSilver || isSelectedGold || isSelectedPlatinum) {
+    if (selectedPlan != Plan.NONE) {
         NextButton(
             onClick = onClickNext,
             modifier = Modifier
@@ -97,7 +96,8 @@ private fun ChoosePlanPreview() {
     ChoosePlanUI(
         onClickNext = {},
         onClickBack = {},
-        isSelectedBronze = true
+        onClickPlan = {},
+        selectedPlan = Plan.BRONZE
     )
 }
 

@@ -84,14 +84,16 @@ fun BackButton(
 
 @Composable
 fun ProgressBar(
+    modifier: Modifier = Modifier,
     step: Int
 ) {
     val stepMax = 5
-    val lightBlue = Color(0, 138, 230, 255)
-    val darkBlue = Color(0, 0, 130, 255)
+    val lightBlue = Color(0, 138, 230)
+    val darkBlue = Color(5,50,70)
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start,
+        modifier = modifier
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -168,7 +170,7 @@ private fun ReusableUIPreview() {
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        ProgressBar(4)
+        ProgressBar(step = 4)
         NextButton(
             text = "Hello World",
             onClick = { println("Click!") },
