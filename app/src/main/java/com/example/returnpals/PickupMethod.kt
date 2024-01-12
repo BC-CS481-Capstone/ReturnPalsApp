@@ -15,22 +15,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.returnpals.chooseplan.cairo
-import com.google.relay.compose.EmptyPainter
 import com.google.relay.compose.RelayVector
-import com.google.relay.compose.tappable
 
 enum class PickupMethod {
     NONE, HANDOFF, DOORSTEP
@@ -136,7 +131,7 @@ private fun HandOffDescription(
 ) {
     RelayVector(
         vector = painterResource(R.drawable.pickup_details_method_vector1),
-        modifier = Modifier
+        modifier = modifier
             .offset(0.dp, 20.dp)
     )
     Text(
@@ -160,7 +155,7 @@ private fun HandOffDescription(
                 append("Hand the package directly to our specialist at your door\n")
             }
         },
-        modifier = Modifier
+        modifier = modifier
             .offset(0.dp, 65.dp)
             .requiredWidth(180.dp),
         textAlign = TextAlign.Center
@@ -173,7 +168,7 @@ private fun DoorstepDescription(
 ) {
     RelayVector(
         vector = painterResource(R.drawable.pickup_details_method_vector7),
-        modifier = Modifier
+        modifier = modifier
             .offset(0.dp, 20.dp)
     )
     Text(
@@ -197,7 +192,7 @@ private fun DoorstepDescription(
                 append("Place items outside your door ahead of your pick up window\n")
             }
         },
-        modifier = Modifier
+        modifier = modifier
             .offset(0.dp, 65.dp)
             .requiredWidth(180.dp),
         textAlign = TextAlign.Center
