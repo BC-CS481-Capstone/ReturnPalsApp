@@ -161,26 +161,9 @@ fun ProgressBar(
     }
 }
 
-@Composable
-private fun ProgressBarText(text: String) {
-    Text(
-        text = text,
-        fontSize = 5.sp,
-        fontWeight = FontWeight(400),
-        fontFamily = FontFamily.SansSerif,
-        color = Color.LightGray,
-        softWrap = true,
-        lineHeight = 6.sp,
-        overflow = TextOverflow.Visible,
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .requiredWidth(24.dp)
-    )
-}
-
 @Preview(showBackground = true, widthDp = 250, heightDp = 400)
 @Composable
-fun ReusableUIPreview() {
+private fun ReusableUIPreview() {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -196,4 +179,21 @@ fun ReusableUIPreview() {
             modifier = Modifier.offset((8).dp,(-8).dp)
         )
     }
+}
+
+@Composable
+private fun ProgressBarText(text: String) {
+    Text(
+        text = text,
+        fontSize = 5.sp,
+        fontWeight = FontWeight(400),
+        fontFamily = FontFamily.SansSerif,
+        color = Color.LightGray,
+        softWrap = true,
+        lineHeight = 6.sp,
+        overflow = TextOverflow.Visible,
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .requiredWidth(24.dp)
+    )
 }
