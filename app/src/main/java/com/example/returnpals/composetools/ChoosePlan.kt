@@ -1,4 +1,4 @@
-package com.example.returnpals
+package com.example.returnpals.composetools
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -52,25 +52,25 @@ fun ChoosePlanUI(
             onClick = { onClickPlan(Plan.BRONZE) },
             isSelected = selectedPlan == Plan.BRONZE,
         ) {
-            BronzePlanText()
+         //   BronzePlanText()
         }
         PlanButton(
             onClick = { onClickPlan(Plan.SILVER) },
             isSelected = selectedPlan == Plan.SILVER,
         ) {
-            SilverPlanText()
+           // SilverPlanText()
         }
         PlanButton(
             onClick = { onClickPlan(Plan.GOLD) },
             isSelected = selectedPlan == Plan.GOLD,
         ) {
-            GoldPlanText()
+           // GoldPlanText()
         }
         PlanButton(
             onClick = { onClickPlan(Plan.PLATINUM) },
             isSelected = selectedPlan == Plan.PLATINUM,
         ) {
-            PlatinumPlanText()
+          //  PlatinumPlanText()
         }
     }
     ProgressBar(step = 3)
