@@ -1,4 +1,4 @@
-package com.example.returnpals
+package com.example.returnpals.composetools
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

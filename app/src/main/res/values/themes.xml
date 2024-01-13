@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="Theme.ReturnPalsSplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#E1F6FF</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/android_icon_screenshot</item>
+        <item name="postSplashScreenTheme">@style/Theme.ReturnPals</item>
+    </style>
     <style name="Theme.ReturnPals" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>
