@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.example.returnpals.composetools.NextButton
+import com.example.returnpals.composetools.ChoosePlanUI
 
 
 class MainActivity : ComponentActivity() {
@@ -12,7 +12,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContent {
-            NextButton(onClick = {})
+
+            ChoosePlanUI(
+            onClickNext = {},
+            onClickBack = {},
+            onClickPlan = {})
         }
     }
 }
