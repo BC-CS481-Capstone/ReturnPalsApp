@@ -13,8 +13,6 @@ import com.example.returnpals.ui.theme.ReturnPalsTheme
 
 class MainActivity : ComponentActivity() {
 
-    private var selectedPlan: Plan = Plan.NONE
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
