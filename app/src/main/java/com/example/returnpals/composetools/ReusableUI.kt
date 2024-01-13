@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -30,6 +31,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.returnpals.R
 
 @Composable
 fun NextButton(
@@ -199,3 +201,17 @@ private fun ProgressBarText(text: String) {
             .requiredWidth(24.dp)
     )
 }
+
+//Adding Font Families as described here https://developer.android.com/jetpack/compose/text/fonts
+
+val cairoFontFamily = FontFamily(
+    Font(R.font.cairo_light, FontWeight.Light),
+    Font(R.font.cairo, FontWeight.Normal),
+    Font(R.font.cairo_medium, FontWeight.Medium),
+    Font(R.font.cairo_bold, FontWeight.Bold),
+    Font(R.font.cairo_black, FontWeight.Black),
+    Font(R.font.cairo_extrabold, FontWeight.ExtraBold),
+    Font(R.font.cairo_extralight, FontWeight.ExtraLight),
+    Font(R.font.cairo_simibold, FontWeight.SemiBold)
+
+)
