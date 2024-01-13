@@ -20,11 +20,10 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.returnpals.chooseplan.avenirNext
-import com.example.returnpals.chooseplan.cairo
 import com.example.returnpals.composetools.BackButton
 import com.example.returnpals.composetools.NextButton
 import com.example.returnpals.composetools.ProgressBar
+import com.example.returnpals.composetools.cairoFontFamily
 import kotlinx.coroutines.selects.select
 
 // TODO: ChoosePlanGuestUI
@@ -151,7 +150,7 @@ private fun SilverPlanText(modifier: Modifier = Modifier) {
                         green = 170,
                         blue = 170
                     ),
-                    fontFamily = cairo,
+                    fontFamily = cairoFontFamily,
                     fontSize = 24.0.sp,
                     fontWeight = FontWeight(800)
                 )
@@ -160,7 +159,7 @@ private fun SilverPlanText(modifier: Modifier = Modifier) {
             }
             withStyle(
                 style = SpanStyle(
-                    fontFamily = cairo,
+                    fontFamily = cairoFontFamily,
                     fontSize = 20.0.sp,
                     fontWeight = FontWeight(800)
                 )
@@ -169,7 +168,7 @@ private fun SilverPlanText(modifier: Modifier = Modifier) {
             }
             withStyle(
                 style = SpanStyle(
-                    fontFamily = cairo,
+                    fontFamily = cairoFontFamily,
                     fontSize = 16.0.sp,
                     fontWeight = FontWeight(500)
                 )
@@ -178,7 +177,7 @@ private fun SilverPlanText(modifier: Modifier = Modifier) {
             }
         },
         fontSize = 32.0.sp,
-        fontFamily = avenirNext,
+        fontFamily = cairoFontFamily,
         color = Color(
             alpha = 255,
             red = 4,
@@ -203,7 +202,7 @@ private fun PlatinumPlanText(modifier: Modifier = Modifier) {
                         green = 175,
                         blue = 175
                     ),
-                    fontFamily = cairo,
+                    fontFamily = cairoFontFamily,
                     fontSize = 24.0.sp,
                     fontWeight = FontWeight(800)
                 )
@@ -212,7 +211,7 @@ private fun PlatinumPlanText(modifier: Modifier = Modifier) {
             }
             withStyle(
                 style = SpanStyle(
-                    fontFamily = cairo,
+                    fontFamily = cairoFontFamily,
                     fontSize = 20.0.sp,
                     fontWeight = FontWeight(800)
                 )
@@ -221,7 +220,7 @@ private fun PlatinumPlanText(modifier: Modifier = Modifier) {
             }
             withStyle(
                 style = SpanStyle(
-                    fontFamily = cairo,
+                    fontFamily = cairoFontFamily,
                     fontSize = 16.0.sp,
                     fontWeight = FontWeight(500)
                 )
@@ -230,7 +229,7 @@ private fun PlatinumPlanText(modifier: Modifier = Modifier) {
             }
         },
         fontSize = 32.0.sp,
-        fontFamily = cairo,
+        fontFamily = cairoFontFamily,
         color = Color(
             alpha = 255,
             red = 4,
@@ -255,7 +254,7 @@ private fun GoldPlanText(modifier: Modifier = Modifier) {
                         green = 190,
                         blue = 100
                     ),
-                    fontFamily = cairo,
+                    fontFamily = cairoFontFamily,
                     fontSize = 24.0.sp,
                     fontWeight = FontWeight(800)
                 )
@@ -264,7 +263,7 @@ private fun GoldPlanText(modifier: Modifier = Modifier) {
             }
             withStyle(
                 style = SpanStyle(
-                    fontFamily = cairo,
+                    fontFamily = cairoFontFamily,
                     fontSize = 20.0.sp,
                     fontWeight = FontWeight(800)
                 )
@@ -273,7 +272,7 @@ private fun GoldPlanText(modifier: Modifier = Modifier) {
             }
             withStyle(
                 style = SpanStyle(
-                    fontFamily = cairo,
+                    fontFamily = cairoFontFamily,
                     fontSize = 16.0.sp,
                     fontWeight = FontWeight(500)
                 )
@@ -282,7 +281,7 @@ private fun GoldPlanText(modifier: Modifier = Modifier) {
             }
         },
         fontSize = 32.0.sp,
-        fontFamily = avenirNext,
+        fontFamily = cairoFontFamily,
         color = Color(
             alpha = 255,
             red = 4,
@@ -307,7 +306,7 @@ private fun BronzePlanText(modifier: Modifier = Modifier) {
                         green = 150,
                         blue = 100
                     ),
-                    fontFamily = cairo,
+                    fontFamily = cairoFontFamily,
                     fontSize = 24.0.sp,
                     fontWeight = FontWeight(800)
                 )
@@ -316,7 +315,7 @@ private fun BronzePlanText(modifier: Modifier = Modifier) {
             }
             withStyle(
                 style = SpanStyle(
-                    fontFamily = cairo,
+                    fontFamily = cairoFontFamily,
                     fontSize = 20.0.sp,
                     fontWeight = FontWeight(800)
                 )
@@ -325,7 +324,7 @@ private fun BronzePlanText(modifier: Modifier = Modifier) {
             }
             withStyle(
                 style = SpanStyle(
-                    fontFamily = cairo,
+                    fontFamily = cairoFontFamily,
                     fontSize = 16.0.sp,
                     fontWeight = FontWeight(500)
                 )
@@ -334,7 +333,7 @@ private fun BronzePlanText(modifier: Modifier = Modifier) {
             }
         },
         fontSize = 32.0.sp,
-        fontFamily = avenirNext,
+        fontFamily = cairoFontFamily,
         color = Color(
             alpha = 255,
             red = 4,
