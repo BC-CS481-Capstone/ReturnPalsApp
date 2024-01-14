@@ -15,17 +15,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.returnpals.chooseplan.cairo
-import com.google.relay.compose.RelayVector
+import com.example.returnpals.composetools.*
+
+/////////////////////////////////////////////////////////////////////////////
+// PUBLIC API
+////////////////////
 
 enum class PickupMethod {
     NONE, HANDOFF, DOORSTEP
@@ -76,6 +79,10 @@ fun PickupMethodUI(
         }
     }
 }
+
+/////////////////////////////////////////////////////////////////////////////
+// PRIVATE API
+////////////////////
 
 @Preview(widthDp = 393, heightDp = 808)
 @Composable
@@ -129,16 +136,16 @@ private fun PickupMethodButton(
 private fun HandOffDescription(
     modifier: Modifier = Modifier
 ) {
-    RelayVector(
-        vector = painterResource(R.drawable.pickup_details_method_vector1),
-        modifier = modifier
-            .offset(0.dp, 20.dp)
-    )
+//    RelayVector(
+//        vector = painterResource(R.drawable.pickup_details_method_vector1),
+//        modifier = modifier
+//            .offset(0.dp, 20.dp)
+//    )
     Text(
         text = buildAnnotatedString {
             withStyle(
                 style = SpanStyle(
-                    fontFamily = cairo,
+                    fontFamily = FontFamily.SansSerif,
                     fontSize = 20.0.sp,
                     fontWeight = FontWeight(700),
                 )
@@ -147,7 +154,7 @@ private fun HandOffDescription(
             }
             withStyle(
                 style = SpanStyle(
-                    fontFamily = cairo,
+                    fontFamily = FontFamily.SansSerif,
                     fontSize = 16.0.sp,
                     fontWeight = FontWeight(500)
                 )
@@ -166,16 +173,16 @@ private fun HandOffDescription(
 private fun DoorstepDescription(
     modifier: Modifier = Modifier
 ) {
-    RelayVector(
-        vector = painterResource(R.drawable.pickup_details_method_vector7),
-        modifier = modifier
-            .offset(0.dp, 20.dp)
-    )
+//    RelayVector(
+//        vector = painterResource(R.drawable.pickup_details_method_vector7),
+//        modifier = modifier
+//            .offset(0.dp, 20.dp)
+//    )
     Text(
         text = buildAnnotatedString {
             withStyle(
                 style = SpanStyle(
-                    fontFamily = cairo,
+                    fontFamily = FontFamily.SansSerif,
                     fontSize = 20.0.sp,
                     fontWeight = FontWeight(700),
                 )
@@ -184,7 +191,7 @@ private fun DoorstepDescription(
             }
             withStyle(
                 style = SpanStyle(
-                    fontFamily = cairo,
+                    fontFamily = FontFamily.SansSerif,
                     fontSize = 16.0.sp,
                     fontWeight = FontWeight(500)
                 )
