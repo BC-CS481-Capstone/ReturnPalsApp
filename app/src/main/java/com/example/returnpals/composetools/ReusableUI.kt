@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.GenericFontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -167,6 +168,15 @@ private fun ProgressBarText(text: String) {
         modifier = Modifier
             .requiredWidth(24.dp)
     )
+}
+
+//Adding get methods for default fonts and colors
+fun getFontFamily(): GenericFontFamily {
+    return FontFamily.Serif
+}
+
+fun getColorPalet() {
+    //TODO get Color palet
 }
 
 //Adding Font Families as described here https://developer.android.com/jetpack/compose/text/fonts
