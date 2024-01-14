@@ -1,10 +1,12 @@
 package com.example.returnpals.composetools
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,13 +18,14 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -32,6 +35,39 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.returnpals.R
+
+@Composable
+fun Button(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+    color: Color = Color(0, 138, 230),
+    border: BorderStroke? = null,
+    shape: Shape = RoundedCornerShape(22.dp, 22.dp, 22.dp, 22.dp),
+    contentAlignment: Alignment = Alignment.Center,
+    content: @Composable() (BoxScope.() -> Unit)
+) {
+    var modifier = modifier
+        .clickable(enabled = true, onClick = onClick)
+        .background(
+            color = color,
+            shape = shape
+        )
+
+    if (border != null) {
+        modifier = modifier
+            .border(
+                border = border,
+                shape = shape
+            )
+    }
+
+    Box(
+        modifier = modifier,
+        contentAlignment = contentAlignment,
+        content = content
+    )
+}
 
 @Composable
 fun NextButton(
@@ -52,7 +88,7 @@ fun NextButton(
             color = Color.White,
             modifier = Modifier
                 .background(
-                    color = Color(0, 138, 230, 255),
+                    color = Color(0, 138, 230),
                     shape = RoundedCornerShape(22.dp, 22.dp, 22.dp, 22.dp)
                 )
                 .padding(12.dp, 6.dp)
@@ -76,10 +112,10 @@ fun BackButton(
             fontSize = 10.sp,
             fontWeight = FontWeight(600),
             fontFamily = FontFamily.SansSerif,
-            color = Color(0, 138, 230, 255),
+            color = Color(0, 138, 230),
             modifier = Modifier
                 .clickable(enabled = true, onClick = onClick)
-                .padding(12.dp,6.dp)
+                .padding(12.dp, 6.dp)
         )
     }
 }
@@ -112,10 +148,12 @@ fun ProgressBar(
                         .border(
                             width = 2.dp,
                             color = lightBlue,
-                            shape = CircleShape)
+                            shape = CircleShape
+                        )
                         .background(
                             color = lightBlue,
-                            shape = CircleShape)
+                            shape = CircleShape
+                        )
                 } else if (i == step) {
                     stepModifier = stepModifier
                         .border(
@@ -169,12 +207,22 @@ fun ProgressBar(
 @Composable
 private fun ReusableUIPreview() {
     Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        modifier = Modifier.fillMaxSize()
     ) {
+        Button(
+            modifier = Modifier
+                .requiredSize(85.dp, 30.dp),
+            color = Color.Black,
+            shape = RectangleShape,
+            onClick = {},
+        ) {
+            Text(
+                text = "Hello World",
+                color = Color.White
+            )
+        }
         ProgressBar(step = 4)
         NextButton(
-            text = "Hello World",
             onClick = { println("Click!") },
             modifier = Modifier.offset((-8).dp,(-8).dp)
         )
