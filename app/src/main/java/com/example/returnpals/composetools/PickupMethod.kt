@@ -1,4 +1,4 @@
-package com.example.returnpals
+package com.example.returnpals.composetools
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,7 +24,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.returnpals.composetools.*
 
 /////////////////////////////////////////////////////////////////////////////
 // PUBLIC API
@@ -64,14 +63,15 @@ fun PickupMethodUI(
         ) {
             HandOffDescription()
         }
+        var click = ButtonManager()
         ProgressBar(step = 4)
-        BackButton(
+        click.BackButton(
             onClick = onClickBack,
             modifier = Modifier
                 .offset(8.dp,(-8).dp)
         )
         if (selectedMethod != PickupMethod.NONE) {
-            NextButton(
+            click.NextButton(
                 onClick = onClickNext,
                 modifier = Modifier
                     .offset((-8).dp,(-8).dp)
@@ -145,7 +145,7 @@ private fun HandOffDescription(
         text = buildAnnotatedString {
             withStyle(
                 style = SpanStyle(
-                    fontFamily = FontFamily.SansSerif,
+                    fontFamily = getFontFamily(),
                     fontSize = 20.0.sp,
                     fontWeight = FontWeight(700),
                 )
@@ -154,7 +154,7 @@ private fun HandOffDescription(
             }
             withStyle(
                 style = SpanStyle(
-                    fontFamily = FontFamily.SansSerif,
+                    fontFamily = getFontFamily(),
                     fontSize = 16.0.sp,
                     fontWeight = FontWeight(500)
                 )
@@ -182,7 +182,7 @@ private fun DoorstepDescription(
         text = buildAnnotatedString {
             withStyle(
                 style = SpanStyle(
-                    fontFamily = FontFamily.SansSerif,
+                    fontFamily = getFontFamily(),
                     fontSize = 20.0.sp,
                     fontWeight = FontWeight(700),
                 )
@@ -191,7 +191,7 @@ private fun DoorstepDescription(
             }
             withStyle(
                 style = SpanStyle(
-                    fontFamily = FontFamily.SansSerif,
+                    fontFamily = getFontFamily(),
                     fontSize = 16.0.sp,
                     fontWeight = FontWeight(500)
                 )

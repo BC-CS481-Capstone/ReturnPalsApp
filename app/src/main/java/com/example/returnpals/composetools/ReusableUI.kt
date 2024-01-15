@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.GenericFontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,89 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.returnpals.R
 
-@Composable
-fun Button(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    enabled: Boolean = true,
-    color: Color = Color(0, 138, 230),
-    border: BorderStroke? = null,
-    shape: Shape = RoundedCornerShape(22.dp, 22.dp, 22.dp, 22.dp),
-    contentAlignment: Alignment = Alignment.Center,
-    content: @Composable() (BoxScope.() -> Unit)
-) {
-    var modifier = modifier
-        .clickable(enabled = true, onClick = onClick)
-        .background(
-            color = color,
-            shape = shape
-        )
 
-    if (border != null) {
-        modifier = modifier
-            .border(
-                border = border,
-                shape = shape
-            )
-    }
-
-    Box(
-        modifier = modifier,
-        contentAlignment = contentAlignment,
-        content = content
-    )
-}
-
-@Composable
-fun NextButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    text: String = "Next"
-) {
-    Row(
-        verticalAlignment = Alignment.Bottom,
-        horizontalArrangement = Arrangement.End,
-        modifier = modifier
-    ) {
-        Text(
-            text = text,
-            fontSize = 10.sp,
-            fontWeight = FontWeight(400),
-            fontFamily = FontFamily.SansSerif,
-            color = Color.White,
-            modifier = Modifier
-                .background(
-                    color = Color(0, 138, 230),
-                    shape = RoundedCornerShape(22.dp, 22.dp, 22.dp, 22.dp)
-                )
-                .padding(12.dp, 6.dp)
-                .clickable(enabled = true, onClick = onClick)
-        )
-    }
-}
-
-@Composable
-fun BackButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    text: String = "Back"
-) {
-    Row(
-        verticalAlignment = Alignment.Bottom,
-        modifier = modifier
-    ) {
-        Text(
-            text = text,
-            fontSize = 10.sp,
-            fontWeight = FontWeight(600),
-            fontFamily = FontFamily.SansSerif,
-            color = Color(0, 138, 230),
-            modifier = Modifier
-                .clickable(enabled = true, onClick = onClick)
-                .padding(12.dp, 6.dp)
-        )
-    }
-}
 
 @Composable
 fun ProgressBar(
@@ -174,7 +93,7 @@ fun ProgressBar(
                         text = "....",
                         fontSize = 18.sp,
                         fontWeight = FontWeight(400),
-                        fontFamily = FontFamily.SansSerif,
+                        fontFamily = getFontFamily(),
                         color = lightBlue,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.offset(x=0.dp,y=(-6).dp)
@@ -206,10 +125,11 @@ fun ProgressBar(
 @Preview(showBackground = true, widthDp = 250, heightDp = 400)
 @Composable
 private fun ReusableUIPreview() {
+    var click = ButtonManager()
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
-        Button(
+        click.Button(
             modifier = Modifier
                 .requiredSize(85.dp, 30.dp),
             color = Color.Black,
@@ -222,11 +142,11 @@ private fun ReusableUIPreview() {
             )
         }
         ProgressBar(step = 4)
-        NextButton(
+        click.NextButton(
             onClick = { println("Click!") },
             modifier = Modifier.offset((-8).dp,(-8).dp)
         )
-        BackButton(
+        click.BackButton(
             onClick = { println("Click!") },
             modifier = Modifier.offset((8).dp,(-8).dp)
         )
@@ -239,7 +159,7 @@ private fun ProgressBarText(text: String) {
         text = text,
         fontSize = 5.sp,
         fontWeight = FontWeight(400),
-        fontFamily = FontFamily.SansSerif,
+        fontFamily = getFontFamily(),
         color = Color.LightGray,
         softWrap = true,
         lineHeight = 6.sp,
@@ -249,6 +169,12 @@ private fun ProgressBarText(text: String) {
             .requiredWidth(24.dp)
     )
 }
+
+//Adding get methods for default fonts and colors
+fun getFontFamily(): GenericFontFamily {
+    return FontFamily.SansSerif
+}
+
 
 //Adding Font Families as described here https://developer.android.com/jetpack/compose/text/fonts
 
