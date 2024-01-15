@@ -17,51 +17,50 @@ public class IconManager {
     * */
     @Composable
     fun getTruckIcon() {
-        return Icon(painter = painterResource(id = R.drawable.truck_100x101),
+        return Icon(painter = painterResource(id = R.drawable.truck_500x300),
             contentDescription = null,
             modifier = Modifier.size(width = 360.dp, height = 360.dp)
         )
     }
     @Composable
     fun getPriceIcon() {
-        //TODO find Price Icon
-        //Icon(painter = painterResource(id = TODO),
-        //    contentDescription = null
-        //)
+        Icon(painter = painterResource(id = R.drawable.bestchoice_500x541),
+            contentDescription = null
+        )
     }
     @Composable
     fun getComputerMonitorIcon() {
-        Icon(painter = painterResource(id = R.drawable.computer_100x93),
+        Icon(painter = painterResource(id = R.drawable.computer_500x464),
             contentDescription = null
         )
     }
     @Composable
     fun getQRcodeIcon() {
-        Icon(painter = painterResource(id = R.drawable.label_100x104),
+        Icon(painter = painterResource(id = R.drawable.label_500x520),
             contentDescription = null
         )
     }
     @Composable
     fun getAmazonIcon() {
-        Icon(painter = painterResource(id = R.drawable.amazon_icon_100x99),
+        Icon(painter = painterResource(id = R.drawable.amazon_icon_500x493),
             contentDescription = null
         )
     }
     @Composable
     fun getFileIcon() {
-        Icon(painter = painterResource(id = R.drawable.file_100x164),
+        Icon(painter = painterResource(id = R.drawable.file_500x819),
             contentDescription = null
         )
     }
     @Composable
     fun getDoorIcon() {
-        Icon(painter = painterResource(id = R.drawable.doorstep_100x88),
+        Icon(painter = painterResource(id = R.drawable.doorstep_500x440),
             contentDescription = null
         )
     }
     @Composable
     fun getPackageIcon() {
-        Icon(painter = painterResource(id = R.drawable.handoff_100x101),
+        Icon(painter = painterResource(id = R.drawable.handoff_500x500),
             contentDescription = null
         )
     }
