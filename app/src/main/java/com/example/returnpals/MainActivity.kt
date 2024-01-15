@@ -21,12 +21,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             Column() {
                 icon.getTruckIcon(Modifier)
-                icon.getComputerMonitorIcon(Modifier)
-                icon.getQRcodeIcon(Modifier)
+                icon.getComputerIcon(Modifier)
+                icon.getLabelIcon(Modifier)
                 icon.getAmazonIcon(Modifier)
                 icon.getFileIcon(Modifier)
-                icon.getDoorIcon(Modifier)
-                icon.getPackageIcon(Modifier)
+                icon.getDoorstepIcon(Modifier)
+                icon.getHandoffIcon(Modifier)
             }
             ChoosePlanUI(
                 onClickNext = {},
