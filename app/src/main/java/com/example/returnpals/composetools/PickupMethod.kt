@@ -145,7 +145,7 @@ private fun HandOffDescription(
         text = buildAnnotatedString {
             withStyle(
                 style = SpanStyle(
-                    fontFamily = FontFamily.SansSerif,
+                    fontFamily = getFontFamily(),
                     fontSize = 20.0.sp,
                     fontWeight = FontWeight(700),
                 )
@@ -154,7 +154,7 @@ private fun HandOffDescription(
             }
             withStyle(
                 style = SpanStyle(
-                    fontFamily = FontFamily.SansSerif,
+                    fontFamily = getFontFamily(),
                     fontSize = 16.0.sp,
                     fontWeight = FontWeight(500)
                 )
@@ -182,7 +182,7 @@ private fun DoorstepDescription(
         text = buildAnnotatedString {
             withStyle(
                 style = SpanStyle(
-                    fontFamily = FontFamily.SansSerif,
+                    fontFamily = getFontFamily(),
                     fontSize = 20.0.sp,
                     fontWeight = FontWeight(700),
                 )
@@ -191,7 +191,7 @@ private fun DoorstepDescription(
             }
             withStyle(
                 style = SpanStyle(
-                    fontFamily = FontFamily.SansSerif,
+                    fontFamily = getFontFamily(),
                     fontSize = 16.0.sp,
                     fontWeight = FontWeight(500)
                 )
