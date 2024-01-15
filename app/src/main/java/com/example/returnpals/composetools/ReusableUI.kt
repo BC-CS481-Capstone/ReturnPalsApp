@@ -93,7 +93,7 @@ fun ProgressBar(
                         text = "....",
                         fontSize = 18.sp,
                         fontWeight = FontWeight(400),
-                        fontFamily = FontFamily.SansSerif,
+                        fontFamily = getFontFamily(),
                         color = lightBlue,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.offset(x=0.dp,y=(-6).dp)
@@ -159,7 +159,7 @@ private fun ProgressBarText(text: String) {
         text = text,
         fontSize = 5.sp,
         fontWeight = FontWeight(400),
-        fontFamily = FontFamily.SansSerif,
+        fontFamily = getFontFamily(),
         color = Color.LightGray,
         softWrap = true,
         lineHeight = 6.sp,
@@ -172,12 +172,9 @@ private fun ProgressBarText(text: String) {
 
 //Adding get methods for default fonts and colors
 fun getFontFamily(): GenericFontFamily {
-    return FontFamily.Serif
+    return FontFamily.SansSerif
 }
 
-fun getColorPalet() {
-    //TODO get Color palet
-}
 
 //Adding Font Families as described here https://developer.android.com/jetpack/compose/text/fonts
 
