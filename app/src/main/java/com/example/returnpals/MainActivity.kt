@@ -20,13 +20,13 @@ class MainActivity : ComponentActivity() {
         var icon = IconManager()
         setContent {
             Column() {
-                icon.getTruckIcon()
-                icon.getComputerMonitorIcon()
-                icon.getQRcodeIcon()
-                icon.getAmazonIcon()
-                icon.getFileIcon()
-                icon.getDoorIcon()
-                icon.getPackageIcon()
+                icon.getTruckIcon(Modifier)
+                icon.getComputerMonitorIcon(Modifier)
+                icon.getQRcodeIcon(Modifier)
+                icon.getAmazonIcon(Modifier)
+                icon.getFileIcon(Modifier)
+                icon.getDoorIcon(Modifier)
+                icon.getPackageIcon(Modifier)
             }
             ChoosePlanUI(
                 onClickNext = {},
