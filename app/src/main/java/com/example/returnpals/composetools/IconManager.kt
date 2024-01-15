@@ -16,52 +16,59 @@ public class IconManager {
     Folloed examples from https://developer.android.com/jetpack/compose/resources
     * */
     @Composable
-    fun getTruckIcon() {
+    fun getTruckIcon(modifier: Modifier) {
         return Icon(painter = painterResource(id = R.drawable.truck_500x300),
             contentDescription = null,
-            modifier = Modifier.size(width = 360.dp, height = 360.dp)
+            modifier = modifier
         )
     }
     @Composable
-    fun getPriceIcon() {
+    fun getPriceIcon(modifier: Modifier) {
         Icon(painter = painterResource(id = R.drawable.bestchoice_500x541),
-            contentDescription = null
+            contentDescription = null,
+            modifier = modifier
         )
     }
     @Composable
-    fun getComputerMonitorIcon() {
+    fun getComputerMonitorIcon(modifier: Modifier) {
         Icon(painter = painterResource(id = R.drawable.computer_500x464),
-            contentDescription = null
+            contentDescription = null,
+            modifier = modifier
         )
     }
     @Composable
-    fun getQRcodeIcon() {
+    fun getQRcodeIcon(modifier: Modifier) {
         Icon(painter = painterResource(id = R.drawable.label_500x520),
-            contentDescription = null
+            contentDescription = null,
+            modifier = modifier
         )
     }
     @Composable
-    fun getAmazonIcon() {
+    fun getAmazonIcon(modifier: Modifier) {
         Icon(painter = painterResource(id = R.drawable.amazon_icon_500x493),
-            contentDescription = null
+            contentDescription = null,
+            modifier = modifier
         )
     }
     @Composable
-    fun getFileIcon() {
+    fun getFileIcon(modifier: Modifier) {
         Icon(painter = painterResource(id = R.drawable.file_500x819),
-            contentDescription = null
+            contentDescription = null,
+            modifier = modifier
         )
     }
     @Composable
-    fun getDoorIcon() {
+    fun getDoorIcon(modifier: Modifier) {
         Icon(painter = painterResource(id = R.drawable.doorstep_500x440),
-            contentDescription = null
+            contentDescription = null,
+            modifier = modifier
         )
     }
     @Composable
-    fun getPackageIcon() {
+    fun getPackageIcon(modifier: Modifier) {
         Icon(painter = painterResource(id = R.drawable.handoff_500x500),
-            contentDescription = null
+            contentDescription = null,
+            modifier = modifier
         )
     }
 
