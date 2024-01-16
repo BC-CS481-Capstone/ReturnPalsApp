@@ -10,8 +10,13 @@
         android:label="MainActivity"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ReturnPals"
-        tools:targetApi="31">
+        android:theme="@style/Theme.Nav"
+        tools:targetApi="34">
+        <activity
+            android:name=".MainMenu"
+            android:exported="true"
+            android:label="@string/title_activity_main_menu"
+            android:theme="@style/Theme.Nav" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -23,6 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
