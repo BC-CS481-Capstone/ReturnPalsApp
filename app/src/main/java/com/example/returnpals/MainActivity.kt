@@ -4,14 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.example.returnpals.composetools.ChoosePlanUI
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.size
-import androidx.compose.ui.unit.dp
 import com.example.returnpals.composetools.IconManager
-import androidx.compose.ui.Modifier
+import com.example.returnpals.mainMenu.MainMenu
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,21 +13,8 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         var icon = IconManager()
         setContent {
-            Column() {
-                icon.getTruckIcon(Modifier)
-                icon.getComputerIcon(Modifier)
-                icon.getLabelIcon(Modifier)
-                icon.getAmazonIcon(Modifier)
-                icon.getFileIcon(Modifier)
-                icon.getDoorstepIcon(Modifier)
-                icon.getHandoffIcon(Modifier)
-            }
-            ChoosePlanUI(
-                onClickNext = {},
-                onClickBack = {},
-                onClickPlan = {}
-            )
+            MainMenu()
+
         }
     }
 }
-
