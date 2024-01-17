@@ -27,6 +27,7 @@ class MainActivity2 : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    //Creates a basic button that calls the photo selector function
                     Button(onClick = { returnPalMediaSelector.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly)) }) {Text("Button")}
                 }
 
@@ -37,7 +38,8 @@ class MainActivity2 : ComponentActivity() {
 
         }
     }
-    val returnPalMediaSelector = registerForActivityResult(PickVisualMedia()) {uri ->
+    //This function pulls up a gallery of photos for you to select the one uploaded.
+    private val returnPalMediaSelector = registerForActivityResult(PickVisualMedia()) { uri ->
         if (uri!= null) {
             Log.d("PhotoPicked", "Selected URI: $uri")
         } else{
