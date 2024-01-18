@@ -51,36 +51,28 @@ fun ChoosePlanUI(
             .fillMaxSize()
     ) {
         Spacer(height=50.dp)
-        PlanButton(
+        BronzePlanButton(
             onClick = { onClickPlan(Plan.BRONZE) },
             selected = selected == Plan.BRONZE
-        ) {
-            BronzePlanText()
-        }
+        )
         Spacer(height=10.dp)
-        PlanButton(
+        SilverPlanButton(
             onClick = { onClickPlan(Plan.SILVER) },
             selected = selected == Plan.SILVER,
             enabled = !guest
-        ) {
-            SilverPlanText()
-        }
+        )
         Spacer(height=10.dp)
-        PlanButton(
+        GoldPlanButton(
             onClick = { onClickPlan(Plan.GOLD) },
             selected = selected == Plan.GOLD,
             enabled = !guest
-        ) {
-            GoldPlanText()
-        }
+        )
         Spacer(height=10.dp)
-        PlanButton(
+        PlatinumPlanButton(
             onClick = { onClickPlan(Plan.PLATINUM) },
             selected = selected == Plan.PLATINUM,
             enabled = !guest
-        ) {
-            PlatinumPlanText()
-        }
+        )
     }
     ProgressBar(step = 3)
     ButtonManager.BackButton(
@@ -94,6 +86,74 @@ fun ChoosePlanUI(
             modifier = Modifier
                 .offset((-8).dp,(-8).dp)
         )
+    }
+}
+
+@Composable
+fun BronzePlanButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    selected: Boolean = false,
+    enabled: Boolean = true
+) {
+    PlanButton(
+        modifier = modifier,
+        onClick = onClick,
+        selected = selected,
+        enabled = enabled
+    ) {
+        BronzePlanText()
+    }
+}
+
+@Composable
+fun SilverPlanButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    selected: Boolean = false,
+    enabled: Boolean = true
+) {
+    PlanButton(
+        modifier = modifier,
+        onClick = onClick,
+        selected = selected,
+        enabled = enabled
+    ) {
+        SilverPlanText()
+    }
+}
+
+@Composable
+fun GoldPlanButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    selected: Boolean = false,
+    enabled: Boolean = true
+) {
+    PlanButton(
+        modifier = modifier,
+        onClick = onClick,
+        selected = selected,
+        enabled = enabled
+    ) {
+        GoldPlanText()
+    }
+}
+
+@Composable
+fun PlatinumPlanButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    selected: Boolean = false,
+    enabled: Boolean = true
+) {
+    PlanButton(
+        modifier = modifier,
+        onClick = onClick,
+        selected = selected,
+        enabled = enabled
+    ) {
+        PlatinumPlanText()
     }
 }
 
