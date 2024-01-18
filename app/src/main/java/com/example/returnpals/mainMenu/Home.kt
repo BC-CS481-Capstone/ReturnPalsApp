@@ -34,7 +34,7 @@ fun Home(navController: NavController) {
             text = "Return Your Package",
             style = TextStyle(
                 color = Color.Black,
-                fontSize = 20.sp,
+                fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
                 // fontFamily = customFont
             ),
@@ -46,7 +46,7 @@ fun Home(navController: NavController) {
             text = "The Easy Way",
             style = TextStyle(
                 color = Color.Gray,
-                fontSize = 18.sp,
+                fontSize = 30.sp,
                 fontWeight = FontWeight.Normal,
                 // fontFamily = customFont
             ),
@@ -74,7 +74,7 @@ fun HomeTest() {
             text = "Return Your Package",
             style = TextStyle(
                 color = Color.Black,
-                fontSize = 20.sp,
+                fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
                 // fontFamily = customFont
             ),
@@ -86,7 +86,7 @@ fun HomeTest() {
             text = "The Easy Way",
             style = TextStyle(
                 color = Color.Gray,
-                fontSize = 18.sp,
+                fontSize = 30.sp,
                 fontWeight = FontWeight.Normal,
                 // fontFamily = customFont
             ),
