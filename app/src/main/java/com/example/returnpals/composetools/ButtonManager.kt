@@ -62,6 +62,7 @@ object ButtonManager {
     fun NextButton(
         modifier: Modifier = Modifier,
         onClick: () -> Unit,
+        text: String = "Next",
         enabled: Boolean = true,
     ) {
         androidx.compose.material3.Button(
@@ -70,7 +71,7 @@ object ButtonManager {
             enabled = enabled,
         ) {
             Text(
-                text = "Next"
+                text = text
             )
         }
     }
@@ -79,6 +80,7 @@ object ButtonManager {
     fun BackButton(
         modifier: Modifier = Modifier,
         onClick: () -> Unit,
+        text: String = "Back",
         enabled: Boolean = true,
     ) {
         OutlinedButton(
@@ -87,7 +89,7 @@ object ButtonManager {
             enabled = enabled,
         ) {
             Text(
-                text = "Back"
+                text = text
             )
         }
     }
