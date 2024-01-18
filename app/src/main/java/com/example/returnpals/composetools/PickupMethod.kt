@@ -62,15 +62,14 @@ fun PickupMethodUI(
         ) {
             HandOffDescription()
         }
-        var click = ButtonManager()
         ProgressBar(step = 4)
-        click.BackButton(
+        ButtonManager.BackButton(
             onClick = onClickBack,
             modifier = Modifier
                 .offset(8.dp,(-8).dp)
         )
         if (selectedMethod != PickupMethod.NONE) {
-            click.NextButton(
+            ButtonManager.NextButton(
                 onClick = onClickNext,
                 modifier = Modifier
                     .offset((-8).dp,(-8).dp)

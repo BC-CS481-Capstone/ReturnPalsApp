@@ -119,11 +119,10 @@ fun ProgressBar(
 @Preview(showBackground = true, widthDp = 250, heightDp = 400)
 @Composable
 private fun ReusableUIPreview() {
-    var click = ButtonManager()
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
-        click.Button(
+        ButtonManager.Button(
             modifier = Modifier
                 .requiredSize(85.dp, 30.dp),
             color = Color.Black,
@@ -136,11 +135,11 @@ private fun ReusableUIPreview() {
             )
         }
         ProgressBar(step = 4)
-        click.NextButton(
+        ButtonManager.NextButton(
             onClick = { println("Click!") },
             modifier = Modifier.offset((-8).dp,(-8).dp)
         )
-        click.BackButton(
+        ButtonManager.BackButton(
             onClick = { println("Click!") },
             modifier = Modifier.offset((8).dp,(-8).dp)
         )

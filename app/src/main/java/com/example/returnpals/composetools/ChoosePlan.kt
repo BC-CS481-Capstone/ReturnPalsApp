@@ -82,15 +82,14 @@ fun ChoosePlanUI(
             PlatinumPlanText()
         }
     }
-    var click = ButtonManager()
     ProgressBar(step = 3)
-    click.BackButton(
+    ButtonManager.BackButton(
         onClick = onClickBack,
         modifier = Modifier
             .offset(8.dp,(-8).dp)
     )
     if (selected != Plan.NONE) {
-        click.NextButton(
+        ButtonManager.NextButton(
             onClick = onClickNext,
             modifier = Modifier
                 .offset((-8).dp,(-8).dp)
@@ -154,8 +153,7 @@ private fun PlanButton(
             shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
         )
     }
-    var click = ButtonManager()
-    click.Button(
+    ButtonManager.Button(
         onClick = onClick,
         enabled = enabled,
         color = Color.White,
