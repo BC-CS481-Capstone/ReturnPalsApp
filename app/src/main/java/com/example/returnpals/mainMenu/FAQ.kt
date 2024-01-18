@@ -27,8 +27,10 @@ import androidx.navigation.NavController
 
 @Composable
 fun FAQ(navController: NavController) {
+    val customColor = Color(0xFFE1F6FF)
     Column(
         modifier = Modifier
+            .background(customColor)
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
