@@ -2,9 +2,9 @@ package com.example.returnpals.composetools
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -22,7 +22,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -36,6 +35,9 @@ enum class Plan {
     NONE, BRONZE, SILVER, GOLD, PLATINUM
 }
 
+/**
+ * Draws the entire screen of the step "Choose Plan" in the "Schedule a Return" process
+ */
 @Composable
 fun ChoosePlanUI(
     modifier: Modifier = Modifier,
@@ -45,56 +47,111 @@ fun ChoosePlanUI(
     selected: Plan = Plan.NONE,
     guest: Boolean = false
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-            .fillMaxSize()
-    ) {
-        Spacer(height=50.dp)
-        PlanButton(
-            onClick = { onClickPlan(Plan.BRONZE) },
-            selected = selected == Plan.BRONZE
+    ScheduleReturnScaffold(
+        step = 3,
+        onClickNext = onClickNext,
+        onClickBack = onClickBack,
+        enabledNext = selected != Plan.NONE
+    ) { padding ->
+        padding.calculateBottomPadding()
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = modifier
+                .fillMaxSize()
+                .padding(padding)
         ) {
-            BronzePlanText()
-        }
-        Spacer(height=10.dp)
-        PlanButton(
-            onClick = { onClickPlan(Plan.SILVER) },
-            selected = selected == Plan.SILVER,
-            enabled = !guest
-        ) {
-            SilverPlanText()
-        }
-        Spacer(height=10.dp)
-        PlanButton(
-            onClick = { onClickPlan(Plan.GOLD) },
-            selected = selected == Plan.GOLD,
-            enabled = !guest
-        ) {
-            GoldPlanText()
-        }
-        Spacer(height=10.dp)
-        PlanButton(
-            onClick = { onClickPlan(Plan.PLATINUM) },
-            selected = selected == Plan.PLATINUM,
-            enabled = !guest
-        ) {
-            PlatinumPlanText()
+            Spacer(Modifier.height(10.dp))
+            BronzePlanButton(
+                onClick = { onClickPlan(Plan.BRONZE) },
+                selected = selected == Plan.BRONZE
+            )
+            Spacer(Modifier.height(10.dp))
+            SilverPlanButton(
+                onClick = { onClickPlan(Plan.SILVER) },
+                selected = selected == Plan.SILVER,
+                enabled = !guest
+            )
+            Spacer(Modifier.height(10.dp))
+            GoldPlanButton(
+                onClick = { onClickPlan(Plan.GOLD) },
+                selected = selected == Plan.GOLD,
+                enabled = !guest
+            )
+            Spacer(Modifier.height(10.dp))
+            PlatinumPlanButton(
+                onClick = { onClickPlan(Plan.PLATINUM) },
+                selected = selected == Plan.PLATINUM,
+                enabled = !guest
+            )
         }
     }
-    var click = ButtonManager()
-    ProgressBar(step = 3)
-    click.BackButton(
-        onClick = onClickBack,
-        modifier = Modifier
-            .offset(8.dp,(-8).dp)
-    )
-    if (selected != Plan.NONE) {
-        click.NextButton(
-            onClick = onClickNext,
-            modifier = Modifier
-                .offset((-8).dp,(-8).dp)
-        )
+}
+
+@Composable
+fun BronzePlanButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    selected: Boolean = false,
+    enabled: Boolean = true
+) {
+    PlanButton(
+        modifier = modifier,
+        onClick = onClick,
+        selected = selected,
+        enabled = enabled
+    ) {
+        BronzePlanText()
+    }
+}
+
+@Composable
+fun SilverPlanButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    selected: Boolean = false,
+    enabled: Boolean = true
+) {
+    PlanButton(
+        modifier = modifier,
+        onClick = onClick,
+        selected = selected,
+        enabled = enabled
+    ) {
+        SilverPlanText()
+    }
+}
+
+@Composable
+fun GoldPlanButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    selected: Boolean = false,
+    enabled: Boolean = true
+) {
+    PlanButton(
+        modifier = modifier,
+        onClick = onClick,
+        selected = selected,
+        enabled = enabled
+    ) {
+        GoldPlanText()
+    }
+}
+
+@Composable
+fun PlatinumPlanButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    selected: Boolean = false,
+    enabled: Boolean = true
+) {
+    PlanButton(
+        modifier = modifier,
+        onClick = onClick,
+        selected = selected,
+        enabled = enabled
+    ) {
+        PlatinumPlanText()
     }
 }
 
@@ -111,19 +168,6 @@ private fun ChoosePlanPreview() {
         onClickPlan = {},
         selected = Plan.BRONZE,
     )
-}
-
-@Composable
-private fun Spacer(
-    width: Dp = 0.dp,
-    height: Dp = 0.dp
-) {
-    Box(
-        modifier = Modifier
-            .requiredSize(width, height)
-    ) {
-
-    }
 }
 
 @Composable
@@ -154,8 +198,7 @@ private fun PlanButton(
             shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
         )
     }
-    var click = ButtonManager()
-    click.Button(
+    ButtonManager.Button(
         onClick = onClick,
         enabled = enabled,
         color = Color.White,

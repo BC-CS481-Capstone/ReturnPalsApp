@@ -2,14 +2,15 @@ package com.example.returnpals.composetools
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -40,41 +42,34 @@ fun PickupMethodUI(
     onClickMethod: (PickupMethod) -> Unit,
     selectedMethod: PickupMethod = PickupMethod.NONE
 ) {
-    Box(
-        modifier = modifier
-            .background(Color(210,240,245))
-    ) {
-        PickupMethodButton(
-            onClick = { onClickMethod(PickupMethod.DOORSTEP) },
-            isSelected = selectedMethod == PickupMethod.HANDOFF,
-            modifier = Modifier
-                .align(Alignment.Center)
-                .offset(0.0.dp, 120.0.dp)
+    ScheduleReturnScaffold(
+        step = 4,
+        onClickNext = onClickNext,
+        onClickBack = onClickBack,
+        enabledNext = selectedMethod != PickupMethod.NONE
+    ) { padding ->
+        padding.calculateBottomPadding()
+        Column(
+            modifier = modifier
+                .background(Color(210,240,245))
+                .fillMaxSize()
+                .padding(padding),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            DoorstepDescription()
-        }
-        PickupMethodButton(
-            onClick = { onClickMethod(PickupMethod.HANDOFF) },
-            isSelected = selectedMethod == PickupMethod.DOORSTEP,
-            modifier = Modifier
-                .align(Alignment.Center)
-                .offset(0.0.dp, (-120.0).dp)
-        ) {
-            HandOffDescription()
-        }
-        var click = ButtonManager()
-        ProgressBar(step = 4)
-        click.BackButton(
-            onClick = onClickBack,
-            modifier = Modifier
-                .offset(8.dp,(-8).dp)
-        )
-        if (selectedMethod != PickupMethod.NONE) {
-            click.NextButton(
-                onClick = onClickNext,
-                modifier = Modifier
-                    .offset((-8).dp,(-8).dp)
-            )
+            PickupMethodButton(
+                onClick = { onClickMethod(PickupMethod.DOORSTEP) },
+                isSelected = selectedMethod == PickupMethod.HANDOFF
+            ) {
+                DoorstepDescription()
+            }
+            Spacer(height = 15.dp)
+            PickupMethodButton(
+                onClick = { onClickMethod(PickupMethod.HANDOFF) },
+                isSelected = selectedMethod == PickupMethod.DOORSTEP
+            ) {
+                HandOffDescription()
+            }
         }
     }
 }
@@ -83,16 +78,27 @@ fun PickupMethodUI(
 // PRIVATE API
 ////////////////////
 
-@Preview(widthDp = 393, heightDp = 808)
+@Preview(showBackground = true, widthDp = 300, heightDp = 460)
 @Composable
 private fun PickupMethodPreview() {
-    MaterialTheme {
-        PickupMethodUI(
-            onClickBack = {},
-            onClickNext = {},
-            onClickMethod = {},
-            selectedMethod = PickupMethod.DOORSTEP,
-        )
+    PickupMethodUI(
+        onClickBack = {},
+        onClickNext = {},
+        onClickMethod = {},
+        selectedMethod = PickupMethod.DOORSTEP
+    )
+}
+
+@Composable
+private fun Spacer(
+    width: Dp = 0.dp,
+    height: Dp = 0.dp
+) {
+    Box(
+        modifier = Modifier
+            .requiredSize(width, height)
+    ) {
+
     }
 }
 
@@ -101,10 +107,10 @@ private fun PickupMethodButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     isSelected: Boolean = false,
-    content: @Composable() (RowScope.() -> Unit)
+    content: @Composable() (BoxScope.() -> Unit)
 ) {
     var modifier = modifier
-        .requiredSize(220.dp, 200.dp)
+        .requiredSize(200.dp, 100.dp)
         .background(
             color = Color.White,
             shape = RoundedCornerShape(22.dp, 22.dp, 22.dp, 22.dp)
@@ -124,10 +130,11 @@ private fun PickupMethodButton(
         )
     }
 
-    Button(
+    ButtonManager.Button(
         modifier = modifier,
         onClick = onClick,
-        content = content,
+        color = Color.White,
+        content = content
     )
 }
 
@@ -162,7 +169,6 @@ private fun HandOffDescription(
             }
         },
         modifier = modifier
-            .offset(0.dp, 65.dp)
             .requiredWidth(180.dp),
         textAlign = TextAlign.Center
     )
@@ -199,7 +205,6 @@ private fun DoorstepDescription(
             }
         },
         modifier = modifier
-            .offset(0.dp, 65.dp)
             .requiredWidth(180.dp),
         textAlign = TextAlign.Center
     )
