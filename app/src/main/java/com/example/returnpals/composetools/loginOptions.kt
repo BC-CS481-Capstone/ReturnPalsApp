@@ -39,7 +39,7 @@ class loginOptions {
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     ButtonManager().BackButton(onClick = reset, text = "Forgot your password?")
-                    ButtonManager().NextButton(onClick = signin, text = "Sign In")
+                    ButtonManager().NextButton(onClick = signin, text = "Sign In",modifier = Modifier.size(config.screenWidthDp.dp/3,config.screenWidthDp.dp/15))
                     Row() {
                         Text(text = "Don't have an account yet?")
                         ButtonManager().BackButton(onClick = signup, text = "Sign up")
