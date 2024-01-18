@@ -6,13 +6,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -44,32 +42,36 @@ fun PickupMethodUI(
     onClickMethod: (PickupMethod) -> Unit,
     selectedMethod: PickupMethod = PickupMethod.NONE
 ) {
-    Column(
-        modifier = modifier
-            .background(Color(210,240,245)),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        PickupMethodButton(
-            onClick = { onClickMethod(PickupMethod.DOORSTEP) },
-            isSelected = selectedMethod == PickupMethod.HANDOFF
-        ) {
-            DoorstepDescription()
-        }
-        Spacer(height = 15.dp)
-        PickupMethodButton(
-            onClick = { onClickMethod(PickupMethod.HANDOFF) },
-            isSelected = selectedMethod == PickupMethod.DOORSTEP
-        ) {
-            HandOffDescription()
-        }
-    }
-    ScheduleReturnUI(
+    ScheduleReturnScaffold(
         step = 4,
         onClickNext = onClickNext,
         onClickBack = onClickBack,
-        enableNext = selectedMethod != PickupMethod.NONE
-    )
+        enabledNext = selectedMethod != PickupMethod.NONE
+    ) { padding ->
+        padding.calculateBottomPadding()
+        Column(
+            modifier = modifier
+                .background(Color(210,240,245))
+                .fillMaxSize()
+                .padding(padding),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            PickupMethodButton(
+                onClick = { onClickMethod(PickupMethod.DOORSTEP) },
+                isSelected = selectedMethod == PickupMethod.HANDOFF
+            ) {
+                DoorstepDescription()
+            }
+            Spacer(height = 15.dp)
+            PickupMethodButton(
+                onClick = { onClickMethod(PickupMethod.HANDOFF) },
+                isSelected = selectedMethod == PickupMethod.DOORSTEP
+            ) {
+                HandOffDescription()
+            }
+        }
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////

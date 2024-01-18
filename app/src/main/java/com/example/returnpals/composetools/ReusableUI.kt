@@ -5,19 +5,25 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.Font
@@ -31,29 +37,80 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.returnpals.R
 
+/////////////////////////////////////////////////////////////////////////////
+// PUBLIC API
+////////////////////
+
+//Adding get methods for default fonts and colors
+fun getFontFamily(): GenericFontFamily {
+    return FontFamily.SansSerif
+}
+
+//Adding Font Families as described here https://developer.android.com/jetpack/compose/text/fonts
+val cairoFontFamily = FontFamily(
+    Font(R.font.cairo_light, FontWeight.Light),
+    Font(R.font.cairo, FontWeight.Normal),
+    Font(R.font.cairo_medium, FontWeight.Medium),
+    Font(R.font.cairo_bold, FontWeight.Bold),
+    Font(R.font.cairo_black, FontWeight.Black),
+    Font(R.font.cairo_extrabold, FontWeight.ExtraBold),
+    Font(R.font.cairo_extralight, FontWeight.ExtraLight),
+    Font(R.font.cairo_simibold, FontWeight.SemiBold)
+)
+
+
+/**
+ * A Material3 scaffold containing a back button, next button, and a
+ * top bar showing the user's progress in the "Schedule a Return" process.
+ */
+@Composable
+fun ScheduleReturnScaffold(
+    step: Int,
+    onClickBack: () -> Unit,
+    onClickNext: () -> Unit,
+    enabledNext: Boolean = true,
+    content: @Composable (PaddingValues) -> Unit
+) {
+    Scaffold(
+        bottomBar = {
+            BackNextNavBar(
+                onClickBack = onClickBack,
+                onClickNext = onClickNext,
+                enabledNext = enabledNext,
+            ) },
+        topBar = { ProgressBar(step = step) },
+        content = content
+    )
+}
+
 
 @Composable
-fun ScheduleReturnUI(
-    step: Int,
+fun BackNextNavBar(
     onClickNext: () -> Unit,
     onClickBack: () -> Unit,
-    enableNext: Boolean = true
+    enabledNext: Boolean = true
 ) {
-    ProgressBar(step = step)
-    ButtonManager.BackButton(
-        onClick = onClickBack,
-        modifier = Modifier
-            .offset(8.dp,(-8).dp)
-    )
-    if (enableNext) {
-        ButtonManager.NextButton(
-            onClick = onClickNext,
+    Row {
+        ButtonManager.BackButton(
             modifier = Modifier
-                .offset((-8).dp,(-8).dp)
+                .align(Alignment.Bottom)
+                .scale(0.7f),
+            onClick = onClickBack,
+        )
+        Spacer(Modifier.weight(1f))
+        ButtonManager.NextButton(
+            modifier = Modifier
+                .align(Alignment.Bottom)
+                .scale(0.7f),
+            onClick = onClickNext,
+            enabled = enabledNext,
         )
     }
 }
 
+/**
+ * Draws a top bar showing the user's progress in the "Schedule a Return" process
+ */
 @Composable
 fun ProgressBar(
     modifier: Modifier = Modifier,
@@ -137,29 +194,45 @@ fun ProgressBar(
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////
+// PRIVATE API
+////////////////////
+
 @Preview(showBackground = true, widthDp = 250, heightDp = 400)
 @Composable
 private fun ReusableUIPreview() {
     Surface(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
     ) {
-        ButtonManager.Button(
-            modifier = Modifier
-                .requiredSize(85.dp, 30.dp),
-            color = Color.Black,
-            shape = RectangleShape,
-            onClick = {},
-        ) {
-            Text(
-                text = "Hello World",
-                color = Color.White
-            )
-        }
-        ScheduleReturnUI(
+        ScheduleReturnScaffold(
             step = 4,
-            onClickNext = { println("Click!") },
-            onClickBack = { println("Click!") }
-        )
+            onClickNext = {},
+            onClickBack = {},
+            enabledNext = false
+        ) { padding ->
+            Row(
+                modifier = Modifier
+                    .padding(padding)
+                    .fillMaxSize(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(
+                    modifier = Modifier
+                        .background(
+                            color = Color.Black,
+                            shape = RectangleShape
+                        ),
+                ) {
+                    Text(
+                        text = "Hello World",
+                        color = Color.White,
+                        modifier = Modifier.padding(10.dp)
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -179,23 +252,3 @@ private fun ProgressBarText(text: String) {
             .requiredWidth(24.dp)
     )
 }
-
-//Adding get methods for default fonts and colors
-fun getFontFamily(): GenericFontFamily {
-    return FontFamily.SansSerif
-}
-
-
-//Adding Font Families as described here https://developer.android.com/jetpack/compose/text/fonts
-
-val cairoFontFamily = FontFamily(
-    Font(R.font.cairo_light, FontWeight.Light),
-    Font(R.font.cairo, FontWeight.Normal),
-    Font(R.font.cairo_medium, FontWeight.Medium),
-    Font(R.font.cairo_bold, FontWeight.Bold),
-    Font(R.font.cairo_black, FontWeight.Black),
-    Font(R.font.cairo_extrabold, FontWeight.ExtraBold),
-    Font(R.font.cairo_extralight, FontWeight.ExtraLight),
-    Font(R.font.cairo_simibold, FontWeight.SemiBold)
-
-)
