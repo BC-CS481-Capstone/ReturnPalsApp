@@ -1,25 +1,97 @@
 package com.example.returnpals.mainMenu
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.returnpals.composetools.IconManager
+
 
 @Composable
 fun Home(navController: NavController) {
-    Text(text = "Test")
+    val customColor = Color(0xFFE1F6FF)
+    // val customFont = FontFamily(Font(R.font.you_font_file))
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(customColor),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top // Align the content to the top
+    ) {
+        Text(
+            text = "Return Your Package",
+            style = TextStyle(
+                color = Color.Black,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                // fontFamily = customFont
+            ),
+            modifier = Modifier
+                .padding(8.dp)
+        )
+
+        Text(
+            text = "The Easy Way",
+            style = TextStyle(
+                color = Color.Gray,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Normal,
+                // fontFamily = customFont
+            ),
+            modifier = Modifier
+                .padding(8.dp)
+        )
+    }
+}
 
 
-    var icon = IconManager()
-        Column() {
-            icon.getTruckIcon(Modifier)
-            icon.getComputerIcon(Modifier)
-            icon.getLabelIcon(Modifier)
-            icon.getAmazonIcon(Modifier)
-            icon.getFileIcon(Modifier)
-            icon.getDoorstepIcon(Modifier)
-            icon.getHandoffIcon(Modifier)
-        }
+@Preview
+@Composable
+fun HomeTest() {
+    val customColor = Color(0xFFE1F6FF)
+    // val customFont = FontFamily(Font(R.font.you_font_file))
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(customColor),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top // Align the content to the top
+    ) {
+        Text(
+            text = "Return Your Package",
+            style = TextStyle(
+                color = Color.Black,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                // fontFamily = customFont
+            ),
+            modifier = Modifier
+                .padding(8.dp)
+        )
+
+        Text(
+            text = "The Easy Way",
+            style = TextStyle(
+                color = Color.Gray,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Normal,
+                // fontFamily = customFont
+            ),
+            modifier = Modifier
+                .padding(8.dp)
+        )
+    }
 }
