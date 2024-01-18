@@ -74,19 +74,12 @@ fun ChoosePlanUI(
             enabled = !guest
         )
     }
-    ProgressBar(step = 3)
-    ButtonManager.BackButton(
-        onClick = onClickBack,
-        modifier = Modifier
-            .offset(8.dp,(-8).dp)
+    ScheduleReturnUI(
+        step = 3,
+        onClickNext = onClickNext,
+        onClickBack = onClickBack,
+        enableNext = selected != Plan.NONE
     )
-    if (selected != Plan.NONE) {
-        ButtonManager.NextButton(
-            onClick = onClickNext,
-            modifier = Modifier
-                .offset((-8).dp,(-8).dp)
-        )
-    }
 }
 
 @Composable

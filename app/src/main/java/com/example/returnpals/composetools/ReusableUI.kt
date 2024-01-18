@@ -32,6 +32,27 @@ import androidx.compose.ui.unit.sp
 import com.example.returnpals.R
 
 
+@Composable
+fun ScheduleReturnUI(
+    step: Int,
+    onClickNext: () -> Unit,
+    onClickBack: () -> Unit,
+    enableNext: Boolean = true
+) {
+    ProgressBar(step = step)
+    ButtonManager.BackButton(
+        onClick = onClickBack,
+        modifier = Modifier
+            .offset(8.dp,(-8).dp)
+    )
+    if (enableNext) {
+        ButtonManager.NextButton(
+            onClick = onClickNext,
+            modifier = Modifier
+                .offset((-8).dp,(-8).dp)
+        )
+    }
+}
 
 @Composable
 fun ProgressBar(
@@ -134,14 +155,10 @@ private fun ReusableUIPreview() {
                 color = Color.White
             )
         }
-        ProgressBar(step = 4)
-        ButtonManager.NextButton(
-            onClick = { println("Click!") },
-            modifier = Modifier.offset((-8).dp,(-8).dp)
-        )
-        ButtonManager.BackButton(
-            onClick = { println("Click!") },
-            modifier = Modifier.offset((8).dp,(-8).dp)
+        ScheduleReturnUI(
+            step = 4,
+            onClickNext = { println("Click!") },
+            onClickBack = { println("Click!") }
         )
     }
 }
