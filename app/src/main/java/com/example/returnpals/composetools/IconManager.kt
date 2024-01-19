@@ -20,7 +20,7 @@ public class IconManager {
     fun getAmazonIcon(modifier: Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.amazon_icon_500x493),
-            contentDescription = null,
+            contentDescription = "Amazon Icon",
             modifier = modifier,
             tint = getBlueIconColor()
         )
@@ -30,7 +30,7 @@ public class IconManager {
     fun getBarcodeIcon(modifier: Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.barcode_500x320),
-            contentDescription = null,
+            contentDescription = "Barcode Icon",
             modifier = modifier,
             tint = getBlueIconColor()
         )
@@ -40,7 +40,7 @@ public class IconManager {
     fun getBestchoiceIcon(modifier: Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.bestchoice_500x541),
-            contentDescription = null,
+            contentDescription = "Bestchoice Icon",
             modifier = modifier,
             tint = getBlueIconColor()
         )
@@ -50,7 +50,7 @@ public class IconManager {
     fun getBoxIcon(modifier: Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.box_500x404),
-            contentDescription = null,
+            contentDescription = "Box Icon",
             modifier = modifier,
             tint = getBlueIconColor()
         )
@@ -60,7 +60,7 @@ public class IconManager {
     fun getBoxholdIcon(modifier: Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.boxhold_500x472),
-            contentDescription = null,
+            contentDescription = "Boxhold Icon",
             modifier = modifier,
             tint = getBlueIconColor()
         )
@@ -70,7 +70,7 @@ public class IconManager {
     fun getBoxliftIcon(modifier: Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.boxlift_500x453),
-            contentDescription = null,
+            contentDescription = "Boxlift Icon",
             modifier = modifier,
             tint = getBlueIconColor()
         )
@@ -80,7 +80,7 @@ public class IconManager {
     fun getCalendarIcon(modifier: Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.calendar_500x517),
-            contentDescription = null,
+            contentDescription = "Calendar Icon",
             modifier = modifier,
             tint = getBlueIconColor()
         )
@@ -90,7 +90,7 @@ public class IconManager {
     fun getCheckmarkIcon(modifier: Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.checkmark_500x300),
-            contentDescription = null,
+            contentDescription = "Checkmark Icon",
             modifier = modifier,
             tint = getBlueIconColor()
         )
@@ -100,7 +100,7 @@ public class IconManager {
     fun getComputerIcon(modifier: Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.computer_500x464),
-            contentDescription = null,
+            contentDescription = "Computer Icon",
             modifier = modifier,
             tint = getBlueIconColor()
         )
@@ -110,7 +110,7 @@ public class IconManager {
     fun getDoorstepIcon(modifier: Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.doorstep_500x440),
-            contentDescription = null,
+            contentDescription = "Doorstep Icon",
             modifier = modifier,
             tint = getBlueIconColor()
         )
@@ -120,7 +120,7 @@ public class IconManager {
     fun getFileIcon(modifier: Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.file_500x819),
-            contentDescription = null,
+            contentDescription = "File Icon",
             modifier = modifier,
             tint = getBlueIconColor()
         )
@@ -130,7 +130,7 @@ public class IconManager {
     fun getHandoffIcon(modifier: Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.handoff_500x500),
-            contentDescription = null,
+            contentDescription = "Handoff Icon",
             modifier = modifier,
             tint = getBlueIconColor()
         )
@@ -139,7 +139,7 @@ public class IconManager {
     fun getLabelIcon(modifier: Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.label_500x520),
-            contentDescription = null,
+            contentDescription = "Label Icon",
             modifier = modifier,
             tint = getBlueIconColor()
         )
@@ -148,7 +148,7 @@ public class IconManager {
     fun getPinIcon(modifier: Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.pin_500x365),
-            contentDescription = null,
+            contentDescription = "Pin Icon",
             modifier = modifier,
             tint = getBlueIconColor()
         )
@@ -157,7 +157,7 @@ public class IconManager {
     fun getReturnPalNameIcon(modifier: Modifier) {
         Image(
             painter = painterResource(id = R.drawable.returnpal_500x196),
-            contentDescription = null,
+            contentDescription = "ReturnPalName Image",
             contentScale = ContentScale.FillWidth,
             modifier = modifier
         )
@@ -166,7 +166,7 @@ public class IconManager {
     fun getReturnPalIcon(modifier: Modifier) {
         Image(
             painter = painterResource(id = R.drawable.returnpal_icon_500x500),
-            contentDescription = null,
+            contentDescription = "ReturnPal Image",
             modifier = modifier
         )
     }
@@ -174,7 +174,7 @@ public class IconManager {
     fun getStopwatchIcon(modifier: Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.stopwatch_500x448),
-            contentDescription = null,
+            contentDescription = "Stopwatch Icon",
             modifier = modifier,
             tint = getBlueIconColor()
         )
@@ -183,7 +183,7 @@ public class IconManager {
     fun getTruckIcon(modifier: Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.truck_500x300),
-            contentDescription = null,
+            contentDescription = "Truck Icon",
             modifier = modifier,
             tint = getBlueIconColor()
         )
@@ -192,7 +192,7 @@ public class IconManager {
     fun getVanIcon(modifier: Modifier) {
         Icon(
             painter = painterResource(id = R.drawable.van_500x295),
-            contentDescription = null,
+            contentDescription = "Van Icon",
             modifier = modifier,
             tint = getBlueIconColor()
         )
