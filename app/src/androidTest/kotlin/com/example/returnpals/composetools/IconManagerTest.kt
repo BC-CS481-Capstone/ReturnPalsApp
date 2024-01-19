@@ -33,7 +33,7 @@ class IconManagerTest {
     @Test
     fun getBestchoiceIcon() {
         rule.setContent {IconManager().getBestchoiceIcon(Modifier)}
-        rule.onNodeWithContentDescription("Bstchoice Icon").assertIsDisplayed()
+        rule.onNodeWithContentDescription("Bestchoice Icon").assertIsDisplayed()
     }
 
     @Test
@@ -99,7 +99,7 @@ class IconManagerTest {
     @Test
     fun getPinIcon() {
         rule.setContent {IconManager().getPinIcon(Modifier)}
-        rule.onNodeWithContentDescription("Amazon Icon").assertIsDisplayed()
+        rule.onNodeWithContentDescription("Pin Icon").assertIsDisplayed()
     }
 
     @Test
