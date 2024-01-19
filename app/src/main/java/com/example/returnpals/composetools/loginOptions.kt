@@ -32,17 +32,17 @@ class loginOptions {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Row() {
                         Text(text = "Sign In |")
-                        ButtonManager().BackButton(onClick = guest, text = "Guest")
+                        ButtonManager.BackButton(onClick = guest, text = "Guest")
                     }
                     TextField(value = "Email", onValueChange = user)
                     TextField(value = "Password", onValueChange = pass)
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    ButtonManager().BackButton(onClick = reset, text = "Forgot your password?")
-                    ButtonManager().NextButton(onClick = signin, text = "Sign In",modifier = Modifier.size(config.screenWidthDp.dp/3,config.screenWidthDp.dp/15))
+                    ButtonManager.BackButton(onClick = reset, text = "Forgot your password?")
+                    ButtonManager.NextButton(onClick = signin, text = "Sign In",modifier = Modifier.size(config.screenWidthDp.dp/3,config.screenWidthDp.dp/15))
                     Row() {
                         Text(text = "Don't have an account yet?")
-                        ButtonManager().BackButton(onClick = signup, text = "Sign up")
+                        ButtonManager.BackButton(onClick = signup, text = "Sign up")
                     }
                 }
             }
