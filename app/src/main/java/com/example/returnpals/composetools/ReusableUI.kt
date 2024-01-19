@@ -49,10 +49,6 @@ fun getBlueIconColor():Color {
     return Color(0xFF008BE6)
 }
 
-fun get getBlueIconColor() : Color {
-    return Color( 0xFF008BE6)
-}
-
 //Adding Font Families as described here https://developer.android.com/jetpack/compose/text/fonts
 val cairoFontFamily = FontFamily(
     Font(R.font.cairo_light, FontWeight.Light),
