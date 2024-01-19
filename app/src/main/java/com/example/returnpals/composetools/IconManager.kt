@@ -155,15 +155,16 @@ public class IconManager {
     }
     @Composable
     fun getReturnPalNameIcon(modifier: Modifier) {
-        Icon(
+        Image(
             painter = painterResource(id = R.drawable.returnpal_500x196),
             contentDescription = null,
+            contentScale = ContentScale.FillWidth,
             modifier = modifier
         )
     }
     @Composable
     fun getReturnPalIcon(modifier: Modifier) {
-        Icon(
+        Image(
             painter = painterResource(id = R.drawable.returnpal_icon_500x500),
             contentDescription = null,
             modifier = modifier
