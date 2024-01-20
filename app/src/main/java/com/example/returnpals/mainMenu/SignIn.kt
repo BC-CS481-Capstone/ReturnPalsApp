@@ -7,7 +7,7 @@ import androidx.navigation.NavController
 import com.example.returnpals.composetools.loginOptions
 @Composable
 fun SignIn(navController: NavController) {
-    loginOptions().drawGuestUI(    user = {},
+    loginOptions().drawLoginUI(    user = {},
     pass = { } ,
     guest = { } ,
     reset = { } ,
