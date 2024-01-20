@@ -14,35 +14,67 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.returnpals.composetools.IconManager
 
 class loginOptions {
-    /* This is the login options class used to create the two login uis for guest and user.*/
+    /* This is the login options class used to create the two login UI for guest and user.*/
     @Composable
-    fun drawGuestUI(user:(String) -> Unit, pass:(String) -> Unit, guest: () -> Unit, reset: () -> Unit, signin:() -> Unit, signup: () -> Unit) {
+    fun drawLoginUI(user:(String) -> Unit, pass:(String) -> Unit, guest: () -> Unit, reset: () -> Unit, signin:() -> Unit, signup: () -> Unit) {
         val config = getConfig()
-        val modifer = Modifier.size(config.screenWidthDp.dp,config.screenHeightDp.dp).background(color = Color(0xFFE1F6FF))
-
-            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifer, verticalArrangement = Arrangement.SpaceBetween) {
+        // get screen size for image size
+            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceBetween) {
+                //Column center top
                 IconManager().getReturnPalNameIcon(Modifier.requiredWidth(config.screenWidthDp.dp))
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Row() {
-                        Text(text = "Sign In |")
-                        ButtonManager.BackButton(onClick = guest, text = "Guest")
+
+                //Set User or Guest options
+                Row() {
+                    Text(text = "Sign In |",Modifier.align(Alignment.CenterVertically))
+                    TextButton(onClick = guest){
+                        Text("Guest",color = Color(0xFF008BE7))
                     }
-                    TextField(value = "Email", onValueChange = user)
-                    TextField(value = "Password", onValueChange = pass)
                 }
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    ButtonManager.BackButton(onClick = reset, text = "Forgot your password?")
-                    ButtonManager.NextButton(onClick = signin, text = "Sign In",modifier = Modifier.size(config.screenWidthDp.dp/3,config.screenWidthDp.dp/15))
-                    Row() {
-                        Text(text = "Don't have an account yet?")
-                        ButtonManager.BackButton(onClick = signup, text = "Sign up")
+
+                //create temp vars for holding user inputs
+                var emails by remember { mutableStateOf("Email")}
+                var passwords by remember { mutableStateOf("Password")}
+
+                //set text fields for users
+                OutlinedTextField(value = emails,
+                    onValueChange = {it -> emails = it }
+                    //,placeholder = Text("Email")
+                )
+                OutlinedTextField(value = passwords, onValueChange = {it -> passwords = it },
+                    visualTransformation = PasswordVisualTransformation()
+                    //,placeholder = Text("Password")
+                )
+                //Forgot your password button
+                TextButton(onClick = reset){
+                    Text("Forgot your password?",color = Color(0xFF008BE7))
+                }
+                // Big Sign in button
+                Button(onClick = signin,colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008BE7), contentColor = Color.White)) {
+                    Text("Sign In")
+                }
+                // Sign up options
+                Row() {
+                    Text(text = "Don't have an account yet?",Modifier.align(Alignment.CenterVertically))
+                    TextButton(onClick = signup) {
+                        Text("Sign up",color = Color(0xFF008BE7))
                     }
                 }
             }
