@@ -18,8 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,19 +49,25 @@ fun About(navController: NavController) {
 
 @Composable
 fun MissionStatement() {
+    val selectedBlue = Color(0xFF008BE7)
+    val text = buildAnnotatedString {
+        withStyle(style = SpanStyle(color = Color.Black, fontSize = 20.sp, fontWeight = FontWeight.Bold)) {
+            append("Mission")
+        }
+        withStyle(style = SpanStyle(color = selectedBlue, fontSize = 20.sp, fontWeight = FontWeight.Bold)) { // Change Color.Red to whatever color you want for "Statement"
+            append(" Statement")
+        }
+    }
+
+
     Column (
         modifier = Modifier
             .padding(16.dp)
     ){
         Text(
-            text = "Mission Statement",
-            style = TextStyle(
-                color = Color.Black,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Normal,
-                // fontFamily = customFont
+            text = text
             )
-        )
+
 
         Row(
             verticalAlignment = Alignment.CenterVertically,

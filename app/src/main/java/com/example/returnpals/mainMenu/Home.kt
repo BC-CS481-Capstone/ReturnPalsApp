@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.returnpals.R
+import com.example.returnpals.composetools.BenefitCards
 import com.example.returnpals.composetools.ProcessCards
 
 
@@ -59,9 +60,7 @@ fun Home(navController: NavController) {
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
                 // fontFamily = customFont
-            ),
-            modifier = Modifier
-                .padding(8.dp),
+            )
         )
 
         Text(
@@ -101,13 +100,31 @@ fun Home(navController: NavController) {
             text = "Our Process",
             style = TextStyle(
                 fontSize = 30.sp,
-                fontWeight = FontWeight.Normal,
+                fontWeight = FontWeight.Bold,
                 //fontFamily = customFont
             )
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         ProcessCards()
+
+
+        Text(
+            text = "Your Benefits",
+            style = TextStyle(
+                color = Color.Black,
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                // fontFamily = customFont
+            ),
+            modifier = Modifier
+                .padding(8.dp),
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        BenefitCards()
+
 
         Column (
             modifier = Modifier
@@ -212,5 +229,6 @@ fun HomeTest() {
         )
         Spacer(modifier = Modifier.height(16.dp))
         ProcessCards()
+
     }
 }
