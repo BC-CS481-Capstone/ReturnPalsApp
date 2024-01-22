@@ -5,12 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -38,7 +36,7 @@ fun ProcessCard1(modifier: Modifier = Modifier, onCardTap: () -> Unit) {
         modifier = Modifier
             .clickable { onCardTap() }
             .padding(8.dp)
-            .size(width = 210.dp, height = 140.dp),
+            .size(width = 210.dp, height = 145.dp),
         shape = RoundedCornerShape(10.dp),
         elevation = 8.dp
 
@@ -48,15 +46,14 @@ fun ProcessCard1(modifier: Modifier = Modifier, onCardTap: () -> Unit) {
                 .background(Color.White)
                 .padding(16.dp)
         ) {
-            Row {
+            Column {
                 Image(
-                    painter = painterResource(id = R.drawable.blue_circle), // Replace with your actual image resource
+                    painter = painterResource(id = R.drawable.one), // Replace with your actual image resource
                     contentDescription = "Card Icon",
                     modifier = Modifier.size(30.dp) // Adjust size as needed
                 )
-                androidx.compose.foundation.layout.Spacer(modifier = Modifier.width(10.dp))
+                androidx.compose.foundation.layout.Spacer(modifier = Modifier.height(8.dp))
 
-            Column {
                 Text(
                     text = "Schedule A Return",
                     style = TextStyle(
@@ -74,7 +71,7 @@ fun ProcessCard1(modifier: Modifier = Modifier, onCardTap: () -> Unit) {
                         // fontFamily = customFont
                     )
                 )
-            }
+
             }
         }
     }
@@ -86,7 +83,7 @@ fun ProcessCard2(modifier: Modifier = Modifier, onCardTap: () -> Unit) {
         modifier = Modifier
             .clickable { onCardTap() }
             .padding(8.dp)
-            .size(width = 210.dp, height = 140.dp),
+            .size(width = 210.dp, height = 145.dp),
         shape = RoundedCornerShape(10.dp),
         elevation = 8.dp
 
@@ -96,14 +93,14 @@ fun ProcessCard2(modifier: Modifier = Modifier, onCardTap: () -> Unit) {
                 .background(Color.White)
                 .padding(16.dp)
         ) {
-            Row {
+            Column {
                 Image(
-                    painter = painterResource(id = R.drawable.blue_circle), // Replace with your actual image resource
+                    painter = painterResource(id = R.drawable.two), // Replace with your actual image resource
                     contentDescription = "Card Icon",
                     modifier = Modifier.size(30.dp) // Adjust size as needed
                 )
-                androidx.compose.foundation.layout.Spacer(modifier = Modifier.width(10.dp))
-            Column {
+                androidx.compose.foundation.layout.Spacer(modifier = Modifier.height(8.dp))
+
                 Text(
                     text = "Select A Pickup Method",
                     style = TextStyle(
@@ -121,7 +118,7 @@ fun ProcessCard2(modifier: Modifier = Modifier, onCardTap: () -> Unit) {
                         // fontFamily = customFont
                     )
                 )
-            }
+
             }
         }
     }
@@ -133,7 +130,7 @@ fun ProcessCard3(modifier: Modifier = Modifier, onCardTap: () -> Unit) {
         modifier = Modifier
             .clickable { onCardTap() }
             .padding(8.dp)
-            .size(width = 210.dp, height = 140.dp),
+            .size(width = 210.dp, height = 145.dp),
         shape = RoundedCornerShape(10.dp),
         elevation = 8.dp
 
@@ -143,14 +140,14 @@ fun ProcessCard3(modifier: Modifier = Modifier, onCardTap: () -> Unit) {
                 .background(Color.White)
                 .padding(16.dp)
         ) {
-            Row {
+            Column {
                 Image(
-                    painter = painterResource(id = R.drawable.blue_circle), // Replace with your actual image resource
+                    painter = painterResource(id = R.drawable.three), // Replace with your actual image resource
                     contentDescription = "Card Icon",
                     modifier = Modifier.size(30.dp) // Adjust size as needed
                 )
-                androidx.compose.foundation.layout.Spacer(modifier = Modifier.width(10.dp))
-            Column {
+                androidx.compose.foundation.layout.Spacer(modifier = Modifier.height(8.dp))
+
                 Text(
                     text = "We're On Our Way",
                     style = TextStyle(
@@ -168,7 +165,7 @@ fun ProcessCard3(modifier: Modifier = Modifier, onCardTap: () -> Unit) {
                         // fontFamily = customFont
                     )
                 )
-            }
+
             }
         }
     }

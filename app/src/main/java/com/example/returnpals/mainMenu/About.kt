@@ -54,7 +54,7 @@ fun MissionStatement() {
         withStyle(style = SpanStyle(color = Color.Black, fontSize = 20.sp, fontWeight = FontWeight.Bold)) {
             append("Mission")
         }
-        withStyle(style = SpanStyle(color = selectedBlue, fontSize = 20.sp, fontWeight = FontWeight.Bold)) { // Change Color.Red to whatever color you want for "Statement"
+        withStyle(style = SpanStyle(color = selectedBlue, fontSize = 20.sp, fontWeight = FontWeight.Bold)) { 
             append(" Statement")
         }
     }
