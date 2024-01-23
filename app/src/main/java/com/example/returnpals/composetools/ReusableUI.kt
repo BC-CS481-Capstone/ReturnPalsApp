@@ -1,5 +1,6 @@
 package com.example.returnpals.composetools
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -47,6 +49,11 @@ fun getFontFamily(): GenericFontFamily {
 }
 fun getBlueIconColor():Color {
     return Color(0xFF008BE6)
+}
+
+@Composable
+fun getConfig(): Configuration {
+    return LocalConfiguration.current
 }
 
 //Adding Font Families as described here https://developer.android.com/jetpack/compose/text/fonts
