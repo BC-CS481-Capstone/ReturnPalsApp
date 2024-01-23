@@ -1,8 +1,3 @@
-/*
-
-
-package com.example.returnpals.mainMenu
-
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -32,23 +27,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.rememberNavController
 import com.example.returnpals.R
+import com.example.returnpals.mainMenu.MenuRoutes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@Preview
 @Composable
-fun MainMenu() {
+fun MainMenuScaffold(navController: NavController, content: @Composable () -> Unit) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
-    val navController = rememberNavController()
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -59,32 +50,31 @@ fun MainMenu() {
                         Image(
                             painter = painterResource(id = R.drawable.returnpal_500x196),
                             contentDescription = "ReturnPals Logo",
-                            modifier = Modifier.size(190.dp) // Adjust the size as needed
-
+                            modifier = Modifier.size(190.dp)
                         )
                     }
                 },
                 navigationIcon = {
                     IconButton(onClick = {
                         scope.launch {
-                            scaffoldState.drawerState.open() // Open the drawer
+                            scaffoldState.drawerState.open()
                         }
                     }) {
                         Icon(Icons.Filled.Menu, contentDescription = "Menu")
                     }
                 },
-                backgroundColor = Color.White, // Set background color to white
-                elevation = 4.dp // Adjust elevation for shadow
+                backgroundColor = Color.White,
+                elevation = 4.dp
             )
         },
         drawerContent = {
             DrawerContent(navController = navController, scaffoldState = scaffoldState)
         }
     ) {
-
-        AppNavigation(navController = navController)
+        content()
     }
 }
+
 
 
 @Composable
@@ -166,6 +156,3 @@ private fun navigateToScreen(
         scaffoldState.drawerState.close() // Close the drawer
     }
 }
-
-
- */

@@ -1,5 +1,6 @@
 package com.example.returnpals.mainMenu
 
+import MainMenuScaffold
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -26,8 +27,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 
+
 @Composable
 fun FAQ(navController: NavController) {
+    MainMenuScaffold(navController = navController) {
+        FAQContent(navController = navController)
+    }
+}
+
+@Composable
+fun FAQContent(navController: NavController) {
     val customColor = Color(0xFFE1F6FF)
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
     LazyColumn(

@@ -1,5 +1,6 @@
 package com.example.returnpals.mainMenu
 
+import MainMenuScaffold
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -31,6 +32,14 @@ import com.example.returnpals.R
 
 @Composable
 fun About(navController: NavController) {
+    MainMenuScaffold(navController = navController) {
+        AboutContent(navController = navController)
+    }
+}
+
+
+@Composable
+fun AboutContent(navController: NavController) {
     //val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
 
     LazyColumn(

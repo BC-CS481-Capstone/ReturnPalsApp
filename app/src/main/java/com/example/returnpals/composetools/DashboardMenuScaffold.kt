@@ -1,10 +1,7 @@
-/*
-
-
-package com.example.returnpals.mainMenu
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,23 +29,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.rememberNavController
 import com.example.returnpals.R
+import com.example.returnpals.mainMenu.MenuRoutes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@Preview
 @Composable
-fun MainMenu() {
+fun DashboardMenuScaffold(navController: NavController, content: @Composable () -> Unit) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
-    val navController = rememberNavController()
+
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -59,78 +53,69 @@ fun MainMenu() {
                         Image(
                             painter = painterResource(id = R.drawable.returnpal_500x196),
                             contentDescription = "ReturnPals Logo",
-                            modifier = Modifier.size(190.dp) // Adjust the size as needed
-
+                            modifier = Modifier.size(190.dp)
                         )
                     }
                 },
                 navigationIcon = {
                     IconButton(onClick = {
                         scope.launch {
-                            scaffoldState.drawerState.open() // Open the drawer
+                            scaffoldState.drawerState.open()
                         }
                     }) {
                         Icon(Icons.Filled.Menu, contentDescription = "Menu")
                     }
                 },
-                backgroundColor = Color.White, // Set background color to white
-                elevation = 4.dp // Adjust elevation for shadow
+                backgroundColor = Color(0xFF052A42),
+                elevation = 4.dp
             )
         },
         drawerContent = {
-            DrawerContent(navController = navController, scaffoldState = scaffoldState)
+            DrawerContent1(navController = navController, scaffoldState = scaffoldState)
         }
     ) {
-
-        AppNavigation(navController = navController)
+        content()
     }
 }
 
 
+
 @Composable
-fun DrawerContent(navController: NavController, scaffoldState: ScaffoldState) {
+fun DrawerContent1(navController: NavController, scaffoldState: ScaffoldState) {
     val scope = rememberCoroutineScope()
     var selectedItem by remember { mutableStateOf("") }
 
     Column {
-        DrawerItem(title = "Home", isSelected = selectedItem == "Home", onClick = {
-            selectedItem = "Home"
-            navigateToScreen(navController, MenuRoutes.Home, scaffoldState, scope)
+        DrawerItem1(title = "Dashboard", isSelected = selectedItem == "Dashboard", onClick = {
+            selectedItem = "Dashboard"
+            navigateToScreen(navController, MenuRoutes.HomeDash, scaffoldState, scope)
         })
-        DrawerItem(title = "About", isSelected = selectedItem == "About", onClick = {
-            selectedItem = "About"
-            navigateToScreen(navController, MenuRoutes.About, scaffoldState, scope)
+        DrawerItem1(title = "Profile", isSelected = selectedItem == "Profile", onClick = {
+            selectedItem = "Profile"
+            navigateToScreen(navController, MenuRoutes.Profile, scaffoldState, scope)
         })
-        DrawerItem(title = "Pricing", isSelected = selectedItem == "Pricing", onClick = {
-            selectedItem = "Pricing"
-            navigateToScreen(navController, MenuRoutes.Pricing, scaffoldState, scope)
+        DrawerItem1(title = "Orders", isSelected = selectedItem == "Orders", onClick = {
+            selectedItem = "Orders"
+            navigateToScreen(navController, MenuRoutes.Orders, scaffoldState, scope)
         })
-        DrawerItem(title = "Video", isSelected = selectedItem == "Video", onClick = {
-            selectedItem = "Video"
-            navigateToScreen(navController, MenuRoutes.Video, scaffoldState, scope)
+        DrawerItem1(title = "Settings", isSelected = selectedItem == "Settings", onClick = {
+            selectedItem = "Settings"
+            navigateToScreen(navController, MenuRoutes.Settings, scaffoldState, scope)
         })
-        DrawerItem(title = "Contact", isSelected = selectedItem == "Contact", onClick = {
-            selectedItem = "Contact"
-            navigateToScreen(navController, MenuRoutes.Contact, scaffoldState, scope)
-        })
-        DrawerItem(title = "Sign In", isSelected = selectedItem == "Sign In", onClick = {
-            selectedItem = "Sign In"
-            navigateToScreen(navController, MenuRoutes.SignIn, scaffoldState, scope)
-        })
-        DrawerItem(title = "FAQ", isSelected = selectedItem == "FAQ", onClick = {
-            selectedItem = "FAQ"
-            navigateToScreen(navController, MenuRoutes.FAQ, scaffoldState, scope)
-        })
+
+        //Add more if needed
     }
 }
 
 @Composable
-fun DrawerItem(title: String, isSelected: Boolean, onClick: () -> Unit) {
+fun DrawerItem1(title: String, isSelected: Boolean, onClick: () -> Unit) {
     val selectedBlue = Color(0xFF008BE7)
+    val dashBlue = Color(0xFF052A42)
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .background(dashBlue)
             .clickable(onClick = onClick)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -141,7 +126,7 @@ fun DrawerItem(title: String, isSelected: Boolean, onClick: () -> Unit) {
                 fontWeight = FontWeight.Bold,
                 // fontFamily = customFont
             ),
-            color = if (isSelected) selectedBlue else Color.Black,
+            color = if (isSelected) selectedBlue else Color.White,
             modifier = Modifier.padding(2.dp)
 
         )
@@ -166,6 +151,3 @@ private fun navigateToScreen(
         scaffoldState.drawerState.close() // Close the drawer
     }
 }
-
-
- */
