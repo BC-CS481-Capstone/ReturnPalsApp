@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -79,30 +80,32 @@ fun ScheduleReturnScaffold(
                 onClickNext = onClickNext,
                 enabledNext = enabledNext,
             ) },
-        topBar = { ProgressBar(step = step) },
+        topBar = { ProgressBar(
+            step = step
+        ) },
         content = content
     )
 }
-
 
 @Composable
 fun BackNextNavBar(
     onClickNext: () -> Unit,
     onClickBack: () -> Unit,
-    enabledNext: Boolean = true
+    enabledNext: Boolean = true,
+    modifier: Modifier = Modifier.padding(15.dp,10.dp)
 ) {
-    Row {
+    Row(
+        modifier = modifier
+    ) {
         ButtonManager.BackButton(
             modifier = Modifier
-                .align(Alignment.Bottom)
-                .scale(0.7f),
+                .align(Alignment.Bottom),
             onClick = onClickBack,
         )
         Spacer(Modifier.weight(1f))
         ButtonManager.NextButton(
             modifier = Modifier
-                .align(Alignment.Bottom)
-                .scale(0.7f),
+                .align(Alignment.Bottom),
             onClick = onClickNext,
             enabled = enabledNext,
         )
@@ -114,7 +117,9 @@ fun BackNextNavBar(
  */
 @Composable
 fun ProgressBar(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
+        .scale(1.75f)
+        .padding(10.dp),
     step: Int
 ) {
     val stepMax = 5
@@ -130,7 +135,6 @@ fun ProgressBar(
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .requiredHeight(25.dp)
                 .background(darkBlue)
         ) {
             for (i in 1..stepMax) {
@@ -199,7 +203,7 @@ fun ProgressBar(
 // PRIVATE API
 ////////////////////
 
-@Preview(showBackground = true, widthDp = 250, heightDp = 400)
+@Preview(showBackground = true)
 @Composable
 private fun ReusableUIPreview() {
     Surface(

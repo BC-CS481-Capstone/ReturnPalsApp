@@ -2,6 +2,7 @@ package com.example.returnpals.composetools
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -44,7 +46,8 @@ fun PricingUI(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.fillMaxSize()
+        verticalArrangement = Arrangement.Center,
+        modifier = modifier.fillMaxSize().scale(1.25f)
     ) {
         Spacer(Modifier.height(10.dp))
         BronzePlanButton(
@@ -93,6 +96,7 @@ fun ChoosePlanUI(
         PricingUI(
             modifier = modifier.padding(padding),
             onClickPlan = onClickPlan,
+            selected = selected,
             guest = guest
         )
     }
@@ -173,6 +177,11 @@ fun PlatinumPlanButton(
 @Preview(showBackground = true)
 @Composable
 private fun ChoosePlanPreview() {
+//    PricingUI(
+//        onClickPlan = {},
+//        selected = Plan.BRONZE,
+//    )
+
     ChoosePlanUI(
         onClickNext = {},
         onClickBack = {},
