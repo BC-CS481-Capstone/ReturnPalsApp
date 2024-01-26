@@ -1,5 +1,7 @@
 package com.example.returnpals.mainMenu
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -8,10 +10,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.createGraph
 import com.example.returnpals.dashboard.HomeDash
 import com.example.returnpals.dashboard.Orders
+import com.example.returnpals.dashboard.PickupProcess
 import com.example.returnpals.dashboard.Profile
+import com.example.returnpals.dashboard.SelectAddress
 import com.example.returnpals.dashboard.Settings
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNavigation(navController: NavController) {
 
@@ -28,7 +33,8 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.Profile) { Profile(navController) }
         composable(MenuRoutes.Settings) { Settings(navController) }
         composable(MenuRoutes.Orders) { Orders(navController) }
-
+        composable(MenuRoutes.PickupProcess) { PickupProcess(navController)}
+        composable(MenuRoutes.SelectAddress) { SelectAddress(navController) }
 
         // Add more destinations as needed
     }

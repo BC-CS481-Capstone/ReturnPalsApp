@@ -9,11 +9,13 @@ object MenuRoutes {
     const val SignIn = "sign in"
     const val FAQ =  "faq"
 
-    const val DashboardMenu = "dashmenu"
     const val HomeDash = "dashboard"
     const val Profile = "profile"
     const val Settings = "settings"
     const val Orders = "orders"
+
+    const val PickupProcess = "pickup"
+    const val SelectAddress = "address"
 
 
 }
