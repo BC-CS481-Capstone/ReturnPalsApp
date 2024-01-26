@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-// TODO: ChoosePlanGuestUI
+// TODO: Guest UI
 
 /////////////////////////////////////////////////////////////////////////////
 // PUBLIC API
@@ -33,6 +33,43 @@ import androidx.compose.ui.unit.sp
 
 enum class Plan {
     NONE, BRONZE, SILVER, GOLD, PLATINUM
+}
+
+@Composable
+fun PricingUI(
+    modifier: Modifier = Modifier,
+    onClickPlan: (Plan) -> Unit,
+    selected: Plan = Plan.NONE,
+    guest: Boolean = false
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier.fillMaxSize()
+    ) {
+        Spacer(Modifier.height(10.dp))
+        BronzePlanButton(
+            onClick = { onClickPlan(Plan.BRONZE) },
+            selected = selected == Plan.BRONZE
+        )
+        Spacer(Modifier.height(10.dp))
+        SilverPlanButton(
+            onClick = { onClickPlan(Plan.SILVER) },
+            selected = selected == Plan.SILVER,
+            enabled = !guest
+        )
+        Spacer(Modifier.height(10.dp))
+        GoldPlanButton(
+            onClick = { onClickPlan(Plan.GOLD) },
+            selected = selected == Plan.GOLD,
+            enabled = !guest
+        )
+        Spacer(Modifier.height(10.dp))
+        PlatinumPlanButton(
+            onClick = { onClickPlan(Plan.PLATINUM) },
+            selected = selected == Plan.PLATINUM,
+            enabled = !guest
+        )
+    }
 }
 
 /**
@@ -53,37 +90,11 @@ fun ChoosePlanUI(
         onClickBack = onClickBack,
         enabledNext = selected != Plan.NONE
     ) { padding ->
-        padding.calculateBottomPadding()
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
-            Spacer(Modifier.height(10.dp))
-            BronzePlanButton(
-                onClick = { onClickPlan(Plan.BRONZE) },
-                selected = selected == Plan.BRONZE
-            )
-            Spacer(Modifier.height(10.dp))
-            SilverPlanButton(
-                onClick = { onClickPlan(Plan.SILVER) },
-                selected = selected == Plan.SILVER,
-                enabled = !guest
-            )
-            Spacer(Modifier.height(10.dp))
-            GoldPlanButton(
-                onClick = { onClickPlan(Plan.GOLD) },
-                selected = selected == Plan.GOLD,
-                enabled = !guest
-            )
-            Spacer(Modifier.height(10.dp))
-            PlatinumPlanButton(
-                onClick = { onClickPlan(Plan.PLATINUM) },
-                selected = selected == Plan.PLATINUM,
-                enabled = !guest
-            )
-        }
+        PricingUI(
+            modifier = modifier.padding(padding),
+            onClickPlan = onClickPlan,
+            guest = guest
+        )
     }
 }
 
@@ -159,7 +170,7 @@ fun PlatinumPlanButton(
 // PRIVATE API
 ////////////////////
 
-@Preview(showBackground = true, widthDp = 250, heightDp = 400)
+@Preview(showBackground = true)
 @Composable
 private fun ChoosePlanPreview() {
     ChoosePlanUI(
@@ -176,7 +187,7 @@ private fun PlanButton(
     onClick: () -> Unit,
     selected: Boolean = false,
     enabled: Boolean = true,
-    content: @Composable() (BoxScope.() -> Unit)
+    content: @Composable (BoxScope.() -> Unit)
 ) {
     var modifier = modifier
         .requiredSize(135.dp, 65.dp)
@@ -185,19 +196,20 @@ private fun PlanButton(
             shape = RoundedCornerShape(22.dp, 22.dp, 22.dp, 22.dp)
         )
 
-    if (selected) {
-        modifier = modifier.border(
-            width = 6.dp,
-            color = Color(0,180,250),
-            shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
-        )
-    } else {
-        modifier = modifier.border(
-            width = 2.dp,
-            color = Color.Black,
-            shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
-        )
-    }
+    modifier =
+        if (selected) {
+            modifier.border(
+                width = 6.dp,
+                color = Color(0,180,250),
+                shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
+            )
+        } else {
+            modifier.border(
+                width = 2.dp,
+                color = Color.Black,
+                shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
+            )
+        }
     ButtonManager.Button(
         onClick = onClick,
         enabled = enabled,

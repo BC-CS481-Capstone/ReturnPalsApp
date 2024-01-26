@@ -20,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -211,12 +212,12 @@ private fun ReusableUIPreview() {
             onClickBack = {},
             enabledNext = false
         ) { padding ->
-            Row(
+            Column(
                 modifier = Modifier
                     .padding(padding)
                     .fillMaxSize(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
                 Box(
                     modifier = Modifier
@@ -229,6 +230,15 @@ private fun ReusableUIPreview() {
                         text = "Hello World",
                         color = Color.White,
                         modifier = Modifier.padding(10.dp)
+                    )
+                }
+                TextButton(
+                    onClick = {}
+                ) {
+                    Text(
+                        text = "Guest",
+                        color = Color(0, 138, 230),
+                        modifier = Modifier.scale(0.65f)
                     )
                 }
             }
