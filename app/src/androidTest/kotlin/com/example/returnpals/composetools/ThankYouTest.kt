@@ -22,6 +22,7 @@ class ThankYouTest {
         rule.setContent {
             ThankYou().drawThankYouUI {}
         }
+        rule.onNodeWithText("Pay & Confirm").assertIsDisplayed()
     }
     @Test
     fun truckIcon() {
