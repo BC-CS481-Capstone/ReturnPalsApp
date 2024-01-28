@@ -50,7 +50,9 @@ fun getFontFamily(): GenericFontFamily {
 fun getBlueIconColor():Color {
     return Color(0xFF008BE6)
 }
-
+fun getBackGroundColor():Color {
+    return Color(0xFFE1F6FF)
+}
 @Composable
 fun getConfig(): Configuration {
     return LocalConfiguration.current
