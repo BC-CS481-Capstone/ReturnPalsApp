@@ -52,15 +52,12 @@ class ConfirmPickup {
                 Text("Order Summary\n" +
                         "_________________",color = getBlueIconColor(),fontSize = 34.sp, maxLines = 2)
 
-                val day = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    DayOfWeek.of(pickUpDate.get(Calendar.DAY_OF_WEEK))
-                } else {
-                    TODO("VERSION.SDK_INT < O")
-                }
-                val month = pickUpDate.get(Calendar.MONTH)
+                val day = pickUpDate.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG,Locale.getDefault())
+
+                val month = pickUpDate.getDisplayName( Calendar.MONTH,Calendar.LONG,Locale.getDefault())
                 val date = pickUpDate.get(Calendar.DATE)
 
-                Text(day.toString()+month.toString()+date.toString(),Modifier)
+                Text(day.toString()+" "+month.toString()+" "+date.toString(),Modifier,fontSize = 26.sp,maxLines = 1)
                 Text(typeOfPickup)
                 if (pickUpAddress.getAddressLine(0) != null ) {
                     Text(text = pickUpAddress.getAddressLine(0))
@@ -71,14 +68,14 @@ class ConfirmPickup {
                 if (pickUpAddress.getAddressLine(2) != null ) {
                     Text(text = pickUpAddress.getAddressLine(2))
                 }
-                Text("Packages")
+                Text("Packages", fontWeight = FontWeight.Bold,fontSize = 22.sp, color = Color.Black)
                 Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
                     IconManager().getBoxIcon(modifier = Modifier.height(22.dp))
-                    Text(numberOfDigitial.toString()+" Package with digital label",fontSize = 18.sp,maxLines = 1)
+                    Text(numberOfDigitial.toString()+" Package with digital label",fontSize = 20.sp,maxLines = 1)
                 }
                 Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
                     IconManager().getBoxIcon(modifier = Modifier.height(22.dp))
-                    Text(numberOfPhysical.toString()+" Package with physical label",fontSize = 18.sp,maxLines = 1)
+                    Text(numberOfPhysical.toString()+" Package with physical label",fontSize = 20.sp,maxLines = 1)
                 }
 
                 if (priceArray[0]!=0) {
