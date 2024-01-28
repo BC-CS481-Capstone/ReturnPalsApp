@@ -7,6 +7,31 @@ import org.junit.Test
 class ThankYouTest {
 
     @Test
-    fun drawThankYouUI() {
+    fun progressBarChecks() {
     }
+    @Test
+    fun truckIcon() {
+    }
+    @Test
+    fun thankYouText() {
+    }
+    @Test
+    fun thankYouTextColors() {
+    }
+    @Test
+    fun confirmText() {
+    }
+    @Test
+    fun confirmTextColors() {
+    }
+    @Test
+    fun emailText() {
+    }
+    @Test
+    fun emailTextColors() {
+    }
+    @Test
+    fun dashBoardButton() {
+    }
+
 }
