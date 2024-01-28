@@ -1,13 +1,19 @@
 package com.example.returnpals.composetools
 
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.test.junit4.createComposeRule
 import org.junit.Assert.*
+import org.junit.Rule
 
 import org.junit.Test
 
 class ConfirmPickupTest {
+    @get:Rule
+    val rule = createComposeRule()
 
     @Test
     fun progressBarChecks() {
+        rule.setContent {  }
     }
     @Test
     fun confimYourPickupText() {
