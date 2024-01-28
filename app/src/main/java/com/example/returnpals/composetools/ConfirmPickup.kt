@@ -2,6 +2,7 @@ package com.example.returnpals.composetools
 
 import android.location.Address
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,10 +30,10 @@ class ConfirmPickup {
                           promoButton: () -> Unit)
     {
         // Set up as a row with progress on top
-        Row(Modifier) {
+        Column(Modifier.background(getBackGroundColor()), verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally ) {
             ProgressBar(modifier = Modifier, step = 4)
             Text("Confirm Your Pickup",Modifier)
-            Row(Modifier.background(Color.White,shape = RoundedCornerShape(10) )) {
+            Column(Modifier.background(Color.White,shape = RoundedCornerShape(10) )) {
                 val day = pickUpDate.get(Calendar.DAY_OF_WEEK)
                 val month = pickUpDate.get(Calendar.MONTH)
                 val date = pickUpDate.get(Calendar.DATE)
@@ -58,7 +59,7 @@ class ConfirmPickup {
                 }
                 Text("Promo and Apply")
             }
-            Column(Modifier) {
+            Row(Modifier) {
                 ButtonManager.BackButton(onClick = backButton)
                 ButtonManager.NextButton(onClick = nextButton)
             }
