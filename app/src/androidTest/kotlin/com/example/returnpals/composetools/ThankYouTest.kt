@@ -38,12 +38,6 @@ class ThankYouTest {
         rule.onNodeWithText("Thank you for scheduling a return with us!").assertIsDisplayed()
     }
     @Test
-    fun thankYouTextColors() {
-        rule.setContent {
-            ThankYou().drawThankYouUI {}
-        }
-    }
-    @Test
     fun confirmText() {
         rule.setContent {
             ThankYou().drawThankYouUI(userName ="David", confirmNumber = "#TEST45873231997") {}
@@ -51,23 +45,11 @@ class ThankYouTest {
         rule.onNodeWithText("David, your pickup order #TEST45873231997 is confirmed.").assertIsDisplayed()
     }
     @Test
-    fun confirmTextColors() {
-        rule.setContent {
-            ThankYou().drawThankYouUI {}
-        }
-    }
-    @Test
     fun emailText() {
         rule.setContent {
             ThankYou().drawThankYouUI(email = "david.caldwell@returnpal.ham") {}
         }
         rule.onNodeWithText("A confirmation email will be sent to david.caldwell@returnpal.ham").assertIsDisplayed()
-    }
-    @Test
-    fun emailTextColors() {
-        rule.setContent {
-            ThankYou().drawThankYouUI {}
-        }
     }
     @Test
     fun dashBoardButton() {
