@@ -114,10 +114,4 @@ class ConfirmPickupTest {
             ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
         }
     }
-    @Test
-    fun promoChecks() {
-        rule.setContent {
-            ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
-        }
-    }
 }
