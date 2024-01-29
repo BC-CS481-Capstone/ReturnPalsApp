@@ -79,11 +79,10 @@ class ConfirmPickup {
                 }
 
                 if (priceArray[0]!=0) {
-                    Text("Visa ending")
-                    Text("One-Time Return")
-                    Text("Tax")
-                    Text("Total")
-                    Text("Promo and Apply")
+                    Text("Visa ending "+visaLastFour)
+                    Text("One-Time Return "+priceArray[0])
+                    Text("Tax "+priceArray[1])
+                    Text("Total "+priceArray[2])
                 }
 
             }
