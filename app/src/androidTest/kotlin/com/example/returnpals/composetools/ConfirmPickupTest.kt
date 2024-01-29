@@ -94,7 +94,7 @@ class ConfirmPickupTest {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(priceArray = prices,nextButton = {}, backButton = {}) {}
         }
-        rule.onNodeWithText("5555").assertIsDisplayed()
+        rule.onNodeWithText("Visa ending 5555").assertIsDisplayed()
     }
     @Test
     fun priceChecks() {
@@ -102,7 +102,7 @@ class ConfirmPickupTest {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(priceArray = prices,nextButton = {}, backButton = {}) {}
         }
-        rule.onNodeWithText("12").assertIsDisplayed()
+        rule.onNodeWithText("Total 12").assertIsDisplayed()
     }
     @Test
     fun nextButton() {
