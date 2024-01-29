@@ -1,0 +1,9 @@
+  name: UI Test Actions
+  on:
+  jobs:
+    build:
+      runs-on:
+      steps:
+    test:
+      runs-on:
+      steps:
