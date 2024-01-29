@@ -56,7 +56,7 @@ class ConfirmPickupTest {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
         }
-        rule.onNodeWithText("Leave On doorstep").assertIsDisplayed()
+        rule.onNodeWithText("Leave On Doorstep").assertIsDisplayed()
     }
     @Test
     fun addresschecks() {
