@@ -2,8 +2,10 @@ package com.example.returnpals.composetools
 
 import android.location.Address
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Assert.*
 import org.junit.Rule
@@ -82,19 +84,23 @@ class ConfirmPickupTest {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
         }
-
+        rule.onAllNodesWithContentDescription("Box Icon").assertCountEquals(2)
     }
     @Test
     fun cardCheck() {
+        val prices = arrayOf(11,1,12)
         rule.setContent {
-            ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
+            ConfirmPickup().drawConfirmPickup(priceArray = prices,nextButton = {}, backButton = {}) {}
         }
+        rule.onNodeWithText("5555").assertIsDisplayed()
     }
     @Test
     fun priceChecks() {
+        val prices = arrayOf(11,1,12)
         rule.setContent {
-            ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
+            ConfirmPickup().drawConfirmPickup(priceArray = prices,nextButton = {}, backButton = {}) {}
         }
+        rule.onNodeWithText("12").assertIsDisplayed()
     }
     @Test
     fun nextButton() {
