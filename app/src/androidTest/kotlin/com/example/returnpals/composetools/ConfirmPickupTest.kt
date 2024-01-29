@@ -1,11 +1,16 @@
 package com.example.returnpals.composetools
 
+import android.location.Address
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithText
 import org.junit.Assert.*
 import org.junit.Rule
 
 import org.junit.Test
+import java.util.Calendar
+import java.util.Locale
 
 class ConfirmPickupTest {
     @get:Rule
@@ -16,12 +21,14 @@ class ConfirmPickupTest {
         rule.setContent {
            ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
         }
+        rule.onNodeWithText("Pay & Confirm").assertIsDisplayed()
     }
     @Test
     fun confimYourPickupText() {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
         }
+        rule.onNodeWithText("Confirm Your Pickup").assertIsDisplayed()
     }
 
     @Test
@@ -29,42 +36,53 @@ class ConfirmPickupTest {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
         }
+        rule.onNodeWithText("Order Summary").assertIsDisplayed()
     }
     @Test
     fun calendarDates() {
+        val dates = Calendar.getInstance()
+        dates.set(2024 ,0, 28)
         rule.setContent {
-            ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
+            ConfirmPickup().drawConfirmPickup(pickUpDate = dates,nextButton = {}, backButton = {}) {}
         }
+        rule.onNodeWithText("Sunday January 28").assertIsDisplayed()
     }
     @Test
     fun pickupTypeChecks() {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
         }
+        rule.onNodeWithText("Leave On doorstep").assertIsDisplayed()
     }
     @Test
     fun addresschecks() {
+        val address = Address(Locale.CANADA)
+        address.setAddressLine(0,"3000 Landerholm Cir SE, Bellevue, WA 98007")
         rule.setContent {
-            ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
+            ConfirmPickup().drawConfirmPickup(pickUpAddress = address,nextButton = {}, backButton = {}) {}
         }
+        rule.onNodeWithText("3000 Landerholm Cir SE, Bellevue, WA 98007").assertIsDisplayed()
     }
     @Test
     fun numberOfLabelsDigital() {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
         }
+        rule.onNodeWithText("0 Package with digital label").assertIsDisplayed()
     }
     @Test
     fun numberOfLabelsPhysical() {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
         }
+        rule.onNodeWithText("0 Package with physical label").assertIsDisplayed()
     }
     @Test
     fun numberOfLabelsIcons() {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
         }
+
     }
     @Test
     fun cardCheck() {
