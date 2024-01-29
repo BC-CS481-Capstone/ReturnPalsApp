@@ -47,7 +47,11 @@ class ConfirmPickup {
                 .background(getBackGroundColor())
                 .fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally ) {
             ProgressBar(modifier = Modifier, step = 4)
+
+            //Text field
             Text("Confirm Your Pickup",Modifier .fillMaxWidth(),color = Color.Black, textAlign = TextAlign.Center, fontWeight = FontWeight.Bold,fontSize = 38.sp,maxLines = 1)
+
+            //Start the white box with summary info
             Column(Modifier.background(Color.White,shape = RoundedCornerShape(10) ),verticalArrangement = Arrangement.SpaceAround, horizontalAlignment = Alignment.CenterHorizontally ) {
                 Text("Order Summary\n" +
                         "_________________",color = getBlueIconColor(),fontSize = 34.sp, maxLines = 2)
@@ -57,8 +61,11 @@ class ConfirmPickup {
                 val month = pickUpDate.getDisplayName( Calendar.MONTH,Calendar.LONG,Locale.getDefault())
                 val date = pickUpDate.get(Calendar.DATE)
 
+                //Confirm Date
                 Text(day.toString()+" "+month.toString()+" "+date.toString(),Modifier,fontSize = 26.sp,maxLines = 1)
+                //Confirm type of pickup as hand off or leave on door step
                 Text(typeOfPickup)
+                //Avoid printing null if no address given
                 if (pickUpAddress.getAddressLine(0) != null ) {
                     Text(text = pickUpAddress.getAddressLine(0))
                 }
@@ -68,16 +75,20 @@ class ConfirmPickup {
                 if (pickUpAddress.getAddressLine(2) != null ) {
                     Text(text = pickUpAddress.getAddressLine(2))
                 }
+                //Confirm packages
                 Text("Packages", fontWeight = FontWeight.Bold,fontSize = 22.sp, color = Color.Black)
+                //Row with Icon and text
                 Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
                     IconManager().getBoxIcon(modifier = Modifier.height(22.dp))
                     Text(numberOfDigitial.toString()+" Package with digital label",fontSize = 20.sp,maxLines = 1)
                 }
+                //Row with Icon and text
                 Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
                     IconManager().getBoxIcon(modifier = Modifier.height(22.dp))
                     Text(numberOfPhysical.toString()+" Package with physical label",fontSize = 20.sp,maxLines = 1)
                 }
-
+                //Print payment if due
+                //Should be able to skip if user is has already payed for a plan.
                 if (priceArray[0]!=0) {
                     Text("Visa ending "+visaLastFour)
                     Text("One-Time Return "+priceArray[0])
@@ -86,6 +97,9 @@ class ConfirmPickup {
                 }
 
             }
+            //end of the white box summary
+
+            //Navigation buttons
             Row(Modifier) {
                 ButtonManager.BackButton(onClick = backButton)
                 ButtonManager.NextButton(onClick = nextButton)
