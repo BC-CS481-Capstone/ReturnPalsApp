@@ -4,6 +4,8 @@ import android.location.Address
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasClickAction
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
@@ -107,11 +109,13 @@ class ConfirmPickupTest {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
         }
+        rule.onNode(hasText("Next") and hasClickAction()).assertIsDisplayed()
     }
     @Test
     fun backButton() {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
         }
+        rule.onNode(hasText("Back") and hasClickAction()).assertIsDisplayed()
     }
 }
