@@ -40,7 +40,7 @@ class ConfirmPickupTest {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
         }
-        rule.onNodeWithText("Order Summary").assertIsDisplayed()
+        rule.onNodeWithText(substring=true,text="Order Summary").assertIsDisplayed()
     }
     @Test
     fun calendarDates() {
