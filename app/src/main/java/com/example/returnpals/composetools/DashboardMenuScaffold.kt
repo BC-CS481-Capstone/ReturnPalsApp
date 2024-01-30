@@ -5,6 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -84,8 +86,13 @@ fun DashboardMenuScaffold(navController: NavController, content: @Composable () 
 fun DrawerContent1(navController: NavController, scaffoldState: ScaffoldState) {
     val scope = rememberCoroutineScope()
     var selectedItem by remember { mutableStateOf("") }
+    val dashBlue = Color(0xFF052A42)
 
-    Column {
+    Column (
+        modifier = Modifier
+            .fillMaxHeight()
+            .background(dashBlue)
+    ) {
         DrawerItem1(title = "Dashboard", isSelected = selectedItem == "Dashboard", onClick = {
             selectedItem = "Dashboard"
             navigateToScreen(navController, MenuRoutes.HomeDash, scaffoldState, scope)
@@ -104,6 +111,15 @@ fun DrawerContent1(navController: NavController, scaffoldState: ScaffoldState) {
         })
 
         //Add more if needed
+
+        Spacer(modifier = Modifier.weight(1f)) // This pushes the items below it to the bottom
+
+        DrawerItem1(title = "Sign Out", isSelected = selectedItem == "Sign Out", onClick = {
+            // Handle sign out logic here
+            selectedItem = "Sign Out"
+            navigateToScreen(navController, MenuRoutes.Home, scaffoldState, scope)
+
+        })
     }
 }
 

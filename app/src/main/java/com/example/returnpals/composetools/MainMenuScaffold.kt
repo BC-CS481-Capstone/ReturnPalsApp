@@ -95,10 +95,9 @@ fun DrawerContent(navController: NavController, scaffoldState: ScaffoldState) {
             selectedItem = "Pricing"
             navigateToScreen(navController, MenuRoutes.Pricing, scaffoldState, scope)
         })
-        DrawerItem(title = "Video", isSelected = selectedItem == "Video", onClick = {
+        /*DrawerItem(title = "Video", isSelected = selectedItem == "Video", onClick = {
             selectedItem = "Video"
-            navigateToScreen(navController, MenuRoutes.Video, scaffoldState, scope)
-        })
+            navigateToSc          */
         DrawerItem(title = "Contact", isSelected = selectedItem == "Contact", onClick = {
             selectedItem = "Contact"
             navigateToScreen(navController, MenuRoutes.Contact, scaffoldState, scope)

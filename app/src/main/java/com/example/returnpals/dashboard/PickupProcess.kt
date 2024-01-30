@@ -1,6 +1,7 @@
 package com.example.returnpals.dashboard
 
 import DashboardMenuScaffold
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.border
@@ -122,6 +123,7 @@ fun getWeekData(startingDate: LocalDate): List<Triple<String, Int, String>> {
     }
 }
 
+@SuppressLint("PrivateResource")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun WeekPickupCard(navController: NavController) {
