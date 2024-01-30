@@ -26,7 +26,24 @@ class LiveChatTest {
         rule.onNodeWithText("Send").performClick()
         assert("David Test 123" == testString )
     }
+    @Test
+    fun sendMessageChatInput() {
+        var testString = ""
+        rule.setContent{
+            LiveChat().drawChatInput(send = {  }, message = {it-> testString = it})
+        }
+        rule.onNodeWithText("Thank you!").performTextInput("David Test 456")
+        rule.onNodeWithText("Send").performClick()
+        assert("David Test 456" == testString )
+    }
 
+    @Test
+    fun readTextInput() {
+        rule.setContent {
+            LiveChat().drawChatFrame(send = { }, message = {}, messages = listOf() )
+        }
+        rule.onNodeWithText("Thank you!").assertIsDisplayed()
+    }
     @Test
     fun readMessages() {
         rule.setContent {
