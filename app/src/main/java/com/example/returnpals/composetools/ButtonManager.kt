@@ -184,26 +184,26 @@ object ButtonManager {
             WheelSelector(
                 onClickPrevious = { onChangeDate(date.minusMonths(1)) },
                 onClickNext = { onChangeDate(date.plusMonths(1)) },
-                previousText = (date.month - 1).toString(),
+                previousText = date.minusMonths(1).month.toString(),
                 selectedText = date.month.toString(),
-                nextText = (date.month + 1).toString(),
+                nextText = date.plusMonths(1).month.toString(),
                 horizontalAlignment = Alignment.End
             )
             Spacer(Modifier.width(5.dp))
             WheelSelector(
                 onClickPrevious = { onChangeDate(date.minusDays(1)) },
                 onClickNext = { onChangeDate(date.plusDays(1)) },
-                previousText = (date.dayOfMonth - 1).toString(),
+                previousText = date.minusDays(1).dayOfMonth.toString(),
                 selectedText = date.dayOfMonth.toString(),
-                nextText = (date.dayOfMonth + 1).toString(),
+                nextText = date.plusDays(1).dayOfMonth.toString(),
             )
             Spacer(Modifier.width(5.dp))
             WheelSelector(
                 onClickPrevious = { onChangeDate(date.minusYears(1)) },
                 onClickNext = { onChangeDate(date.plusYears(1)) },
-                previousText = (date.year - 1).toString(),
+                previousText = date.minusYears(1).year.toString(),
                 selectedText = date.year.toString(),
-                nextText = (date.year + 1).toString(),
+                nextText = date.plusYears(1).year.toString(),
                 horizontalAlignment = Alignment.Start
             )
         }
