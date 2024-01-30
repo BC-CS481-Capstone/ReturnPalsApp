@@ -64,7 +64,7 @@ class LiveChatTest {
     @Test
     fun iconChecks() {
         rule.setContent {
-            LiveChat().drawChatFrame(send = { }, message = {}, messages = listOf("David Test 234","David Test 345") )
+            LiveChat().drawChatFrame(send = { }, message = {}, messages = listOf("This is From ReturnPal","David Test 345") )
         }
         rule.onNodeWithContentDescription("ReturnPal Image").assertIsDisplayed()
     }
