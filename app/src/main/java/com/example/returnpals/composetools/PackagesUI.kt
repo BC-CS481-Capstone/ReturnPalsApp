@@ -1,5 +1,9 @@
 package com.example.returnpals.composetools
 
+import android.os.Build
+import android.util.Log
+import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +24,10 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,6 +37,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.returnpals.mainMenu.MainMenu
+import java.time.LocalDate
 
 // TODO: make table rows clickable/editable
 // TODO: remove description from table?
@@ -40,6 +50,9 @@ fun PackagesUI(
     packages: List<PackageInfo>,
     onClickNext: () -> Unit,
     onClickBack: () -> Unit,
+    onAddPhysicalLabel: (String) -> Unit,
+    onAddDigitalLabel: (String) -> Unit,
+    onAddQRCode: (String) -> Unit,
 ) {
     ScheduleReturnScaffold(
         step = 4,
@@ -76,7 +89,9 @@ fun PackagesUI(
             ) {
                 Button(
                     onClick = { /* TODO */ },
-                    modifier = Modifier.weight(1.0f).requiredHeight(80.dp),
+                    modifier = Modifier
+                        .weight(1.0f)
+                        .requiredHeight(80.dp),
                     shape = RoundedCornerShape(20)
                 ) {
                     Text(
@@ -88,7 +103,9 @@ fun PackagesUI(
                 Spacer(Modifier.width(15.dp))
                 Button(
                     onClick = { /* TODO */ },
-                    modifier = Modifier.weight(1.0f).requiredHeight(80.dp),
+                    modifier = Modifier
+                        .weight(1.0f)
+                        .requiredHeight(80.dp),
                     shape = RoundedCornerShape(20)
                 ) {
                     Text(
@@ -100,7 +117,9 @@ fun PackagesUI(
                 Spacer(Modifier.width(15.dp))
                 Button(
                     onClick = { /* TODO */ },
-                    modifier = Modifier.weight(1.0f).requiredHeight(80.dp),
+                    modifier = Modifier
+                        .weight(1.0f)
+                        .requiredHeight(80.dp),
                     shape = RoundedCornerShape(20)
                 ) {
                     Text(
@@ -234,5 +253,8 @@ private fun PackagesPreview() {
         ),
         onClickNext = {},
         onClickBack = {},
+        onAddDigitalLabel = {},
+        onAddPhysicalLabel = {},
+        onAddQRCode = {},
     )
 }
