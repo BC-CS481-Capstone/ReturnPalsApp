@@ -48,6 +48,7 @@ fun MainMenu() {
     val navController = rememberNavController()
 
     Scaffold(
+        backgroundColor = Color(0xFFE1F6FF), // add background color To set the theme as figma color blue
         scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
