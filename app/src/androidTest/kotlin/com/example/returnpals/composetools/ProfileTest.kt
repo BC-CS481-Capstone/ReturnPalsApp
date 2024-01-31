@@ -13,27 +13,27 @@ class ProfileTest {
 
     @Test
     fun yourPlanTest(){
-        rule.setContent{ ProfileContent()}
+        rule.setContent{ ProfileContent() }
         rule.onNodeWithText("Your Plan:").assertIsDisplayed()
     }
     @Test
     fun planTest(){
-        rule.setContent{ ProfileContent()}
+        rule.setContent{ ProfileContent() }
         rule.onNodeWithText("SILVER").assertIsDisplayed()
     }
     @Test
     fun startDateTest(){
-        rule.setContent{ ProfileContent()}
+        rule.setContent{ ProfileContent() }
         rule.onNodeWithText("Start Date:").assertIsDisplayed()
     }
     @Test
     fun billingTest(){
-        rule.setContent{ ProfileContent()}
+        rule.setContent{ ProfileContent() }
         rule.onNodeWithText("Next Billing On:").assertIsDisplayed()
     }
     @Test
     fun cancelTest(){
-        rule.setContent{ ProfileContent()}
+        rule.setContent{ ProfileContent() }
         rule.onNodeWithText("Cancel").assertIsDisplayed()
     }
 }
