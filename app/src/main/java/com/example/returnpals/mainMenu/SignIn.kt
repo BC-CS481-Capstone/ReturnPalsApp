@@ -1,19 +1,14 @@
 package com.example.returnpals.mainMenu
 
-import MainMenuScaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-
-
-
+import com.example.returnpals.composetools.loginOptions
 @Composable
 fun SignIn(navController: NavController) {
-    MainMenuScaffold(navController = navController) {
-        SignInContent(navController = navController)
-    }
-}
-@Composable
-fun SignInContent(navController: NavController) {
-    Text(text = "Test6")
+    loginOptions().drawLoginUI(    user = {},
+    pass = { } ,
+    guest = { } ,
+    reset = { } ,
+    signin = { } ,
+    signup = { } )
 }
