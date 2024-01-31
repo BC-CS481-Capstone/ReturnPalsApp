@@ -6,5 +6,6 @@
         <item name="windowSplashScreenAnimatedIcon">@drawable/splashicon_288x288</item>
         <item name="postSplashScreenTheme">@style/Theme.ReturnPals</item>
     </style>
+
     <style name="Theme.ReturnPals" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>
