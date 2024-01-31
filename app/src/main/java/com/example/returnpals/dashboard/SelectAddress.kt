@@ -120,7 +120,7 @@ fun AddressItemComposable(addressItem: AddressItem, isSelected: Boolean, onSelec
         Canvas(modifier = Modifier.size(24.dp), onDraw = {
             drawCircle(
                 color = if (isSelected) Color.Green else Color.Gray,
-                radius = size.minDimension / 2
+                radius = size.minDimension / 3
             )
         })
 
