@@ -35,6 +35,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
 import com.example.returnpals.R
+import com.example.returnpals.composetools.getBackGroundColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -48,7 +49,7 @@ fun MainMenu() {
     val navController = rememberNavController()
 
     Scaffold(
-        backgroundColor = Color(0xFFE1F6FF), // add background color To set the theme as figma color blue
+        backgroundColor = getBackGroundColor(), // add background color To set the theme as figma color blue
         scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
