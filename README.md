@@ -22,7 +22,7 @@ This app provides an easy and convenient way for clients of ReturnPal to schedul
 
 ## Design Details
 
-![image](/assets/images/SoftwareDesignOverview.png)
+![image](/assets/images/architecture.png)
 
 ### Layered Architecture
 
