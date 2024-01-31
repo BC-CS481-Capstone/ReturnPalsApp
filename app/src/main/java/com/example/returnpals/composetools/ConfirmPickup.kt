@@ -30,7 +30,7 @@ import java.util.Locale
 class ConfirmPickup {
 
     @Composable
-    fun drawConfirmPickup(numberOfDigitial: Int = 0,
+    fun drawConfirmPickup(numberOfDigital: Int = 0,
                           numberOfPhysical: Int = 0,
                           visaLastFour: Int = 5555,
                           typeOfPickup: String = "Leave On Doorstep",
@@ -80,7 +80,7 @@ class ConfirmPickup {
                 //Row with Icon and text
                 Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
                     IconManager().getBoxIcon(modifier = Modifier.height(22.dp))
-                    Text(numberOfDigitial.toString()+" Package with digital label",fontSize = 20.sp,maxLines = 1)
+                    Text(numberOfDigital.toString()+" Package with digital label",fontSize = 20.sp,maxLines = 1)
                 }
                 //Row with Icon and text
                 Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
