@@ -17,5 +17,4 @@ object MenuRoutes {
     const val PickupProcess = "pickup"
     const val SelectAddress = "address"
 
-
 }

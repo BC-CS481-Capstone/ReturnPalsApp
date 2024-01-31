@@ -3,6 +3,7 @@ package com.example.returnpals.mainMenu
 import MainMenuScaffold
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -35,11 +36,16 @@ import com.example.returnpals.composetools.BenefitCards
 import com.example.returnpals.composetools.ProcessCards
 
 
+
+
 @Composable
 fun Home(navController: NavController) {
+    val customColor = Color(0xFFE1F6FF)
+    // val customFont = FontFamily(Font(R.font.you_font_file))
     MainMenuScaffold(navController = navController) {
-        HomeContent(navController = navController)
+            HomeContent(navController = navController)
     }
+
 }
 
 

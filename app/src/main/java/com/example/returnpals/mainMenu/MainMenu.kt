@@ -123,6 +123,14 @@ fun DrawerContent(navController: NavController, scaffoldState: ScaffoldState) {
             selectedItem = "FAQ"
             navigateToScreen(navController, MenuRoutes.FAQ, scaffoldState, scope)
         })
+        DrawerItem(title = "Orders", isSelected = selectedItem == "Orders", onClick = {
+            selectedItem = "Orders"
+            navigateToScreen(navController, MenuRoutes.Orders, scaffoldState, scope)
+        })
+        DrawerItem(title = "Profile", isSelected = selectedItem == "Profile", onClick = {
+            selectedItem = "Profile"
+            navigateToScreen(navController, MenuRoutes.Profile, scaffoldState, scope)
+        })
     }
 }
 
