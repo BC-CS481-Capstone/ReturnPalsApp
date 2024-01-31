@@ -8,4 +8,6 @@ object MenuRoutes {
     const val Video = "video"
     const val SignIn = "sign in"
     const val FAQ =  "faq"
+    const val Profile = "profile"
+    const val Orders = "orders"
 }

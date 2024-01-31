@@ -20,6 +20,9 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.Video) { Video(navController) }
         composable(MenuRoutes.SignIn) { SignIn(navController) }
         composable(MenuRoutes.FAQ) { FAQ(navController) }
+        composable(MenuRoutes.Orders) {Orders(navController)}
+        composable(MenuRoutes.Profile) {Profile(navController)}
+
         // Add more destinations as needed
     }
 
