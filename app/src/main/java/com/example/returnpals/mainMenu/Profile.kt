@@ -27,12 +27,12 @@ import com.example.returnpals.composetools.SilverPlanButton
 
 @Composable
 fun Profile(navController: NavController) {
-    ProfileContent(navController = navController)
+    ProfileContent()
 
 }
 
 @Composable
-fun ProfileContent(navController:NavController){
+fun ProfileContent(){
 
 
     Column(
@@ -45,7 +45,7 @@ fun ProfileContent(navController:NavController){
     )
     {
         Text(
-            text = "Your plan:",
+            text = "Your Plan:",
             style = TextStyle(
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
@@ -56,10 +56,10 @@ fun ProfileContent(navController:NavController){
         )
         SilverPlanButton(Modifier.padding(15.dp), onClick = { /*TODO*/ })
         Spacer(Modifier.padding(15.dp))
-        Text(text = "Start date:", style =TextStyle(fontSize = 20.sp))
+        Text(text = "Start Date:", style =TextStyle(fontSize = 20.sp))
         Text(text = getStartDate())
         Spacer(Modifier.padding(15.dp))
-        Text(text = "Next Billing on:", style =TextStyle(fontSize = 20.sp))
+        Text(text = "Next Billing On:", style =TextStyle(fontSize = 20.sp))
         Text(text = getBillDate())
         Spacer(Modifier.padding(15.dp))
         CancelPlanButton()

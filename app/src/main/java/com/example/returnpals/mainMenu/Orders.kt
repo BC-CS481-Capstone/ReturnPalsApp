@@ -15,17 +15,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.returnpals.composetools.OrderInfo
-import java.util.LinkedList
 
 @Composable
 fun Orders(navController: NavController) {
-    OrdersContent(navController = navController)
+    OrdersContent()
 
 
 }
 
 @Composable
-fun OrdersContent(navController: NavController){
+fun OrdersContent(){
     OrderTable()
 
 }
@@ -65,8 +64,8 @@ fun OrderTable(){
             }
         items(orderList.size){ index ->
             Row(){
-                TableCell(orderList[index].status, column1Weight)
-                TableCell(orderList[index].date, column2Weight)
+                TableCell(text = orderList[index].status, column1Weight)
+                TableCell(text = orderList[index].date, column2Weight)
             }
         }
     }
