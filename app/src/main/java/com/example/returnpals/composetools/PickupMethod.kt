@@ -3,10 +3,11 @@ package com.example.returnpals.composetools
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
@@ -22,7 +23,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -63,7 +63,7 @@ fun PickupMethodUI(
             ) {
                 DoorstepDescription()
             }
-            Spacer(height = 15.dp)
+            Spacer(Modifier.height(15.dp))
             PickupMethodButton(
                 onClick = { onClickMethod(PickupMethod.HANDOFF) },
                 isSelected = selectedMethod == PickupMethod.DOORSTEP
@@ -87,19 +87,6 @@ private fun PickupMethodPreview() {
         onClickMethod = {},
         selectedMethod = PickupMethod.DOORSTEP
     )
-}
-
-@Composable
-private fun Spacer(
-    width: Dp = 0.dp,
-    height: Dp = 0.dp
-) {
-    Box(
-        modifier = Modifier
-            .requiredSize(width, height)
-    ) {
-
-    }
 }
 
 @Composable

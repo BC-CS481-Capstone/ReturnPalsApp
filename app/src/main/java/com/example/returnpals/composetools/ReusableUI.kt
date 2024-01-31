@@ -16,11 +16,13 @@ import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,7 +52,9 @@ fun getFontFamily(): GenericFontFamily {
 fun getBlueIconColor():Color {
     return Color(0xFF008BE6)
 }
-
+fun getBackGroundColor():Color {
+    return Color(0xFFE1F6FF)
+}
 @Composable
 fun getConfig(): Configuration {
     return LocalConfiguration.current
@@ -88,30 +92,32 @@ fun ScheduleReturnScaffold(
                 onClickNext = onClickNext,
                 enabledNext = enabledNext,
             ) },
-        topBar = { ProgressBar(step = step) },
+        topBar = { ProgressBar(
+            step = step
+        ) },
         content = content
     )
 }
-
 
 @Composable
 fun BackNextNavBar(
     onClickNext: () -> Unit,
     onClickBack: () -> Unit,
-    enabledNext: Boolean = true
+    enabledNext: Boolean = true,
+    modifier: Modifier = Modifier.padding(15.dp,10.dp)
 ) {
-    Row {
+    Row(
+        modifier = modifier
+    ) {
         ButtonManager.BackButton(
             modifier = Modifier
-                .align(Alignment.Bottom)
-                .scale(0.7f),
+                .align(Alignment.Bottom),
             onClick = onClickBack,
         )
         Spacer(Modifier.weight(1f))
         ButtonManager.NextButton(
             modifier = Modifier
-                .align(Alignment.Bottom)
-                .scale(0.7f),
+                .align(Alignment.Bottom),
             onClick = onClickNext,
             enabled = enabledNext,
         )
@@ -123,7 +129,9 @@ fun BackNextNavBar(
  */
 @Composable
 fun ProgressBar(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
+        .scale(1.75f)
+        .padding(10.dp),
     step: Int
 ) {
     val stepMax = 5
@@ -139,7 +147,6 @@ fun ProgressBar(
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .requiredHeight(25.dp)
                 .background(darkBlue)
         ) {
             for (i in 1..stepMax) {
@@ -208,7 +215,7 @@ fun ProgressBar(
 // PRIVATE API
 ////////////////////
 
-@Preview(showBackground = true, widthDp = 250, heightDp = 400)
+@Preview(showBackground = true)
 @Composable
 private fun ReusableUIPreview() {
     Surface(
@@ -221,12 +228,12 @@ private fun ReusableUIPreview() {
             onClickBack = {},
             enabledNext = false
         ) { padding ->
-            Row(
+            Column(
                 modifier = Modifier
                     .padding(padding)
                     .fillMaxSize(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
                 Box(
                     modifier = Modifier
@@ -239,6 +246,15 @@ private fun ReusableUIPreview() {
                         text = "Hello World",
                         color = Color.White,
                         modifier = Modifier.padding(10.dp)
+                    )
+                }
+                TextButton(
+                    onClick = {}
+                ) {
+                    Text(
+                        text = "Guest",
+                        color = Color(0, 138, 230),
+                        modifier = Modifier.scale(0.65f)
                     )
                 }
             }
