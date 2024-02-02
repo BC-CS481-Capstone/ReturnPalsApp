@@ -5,12 +5,13 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -108,38 +109,48 @@ private fun PricingPlans(
     modifier: Modifier = Modifier,
     onClickPlan: (Plan) -> Unit,
     selected: Plan = Plan.NONE,
-    guest: Boolean = false
+    guest: Boolean = false,
+    padding: PaddingValues = PaddingValues(0.dp),
 ) {
-    Column(
+    LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
+        contentPadding = padding,
         modifier = modifier
             .fillMaxSize()
             .scale(1.25f)
     ) {
-        Spacer(Modifier.height(10.dp))
-        BronzePlanButton(
-            onClick = { onClickPlan(Plan.BRONZE) },
-            selected = selected == Plan.BRONZE
-        )
-        Spacer(Modifier.height(10.dp))
-        SilverPlanButton(
-            onClick = { onClickPlan(Plan.SILVER) },
-            selected = selected == Plan.SILVER,
-            enabled = !guest
-        )
-        Spacer(Modifier.height(10.dp))
-        GoldPlanButton(
-            onClick = { onClickPlan(Plan.GOLD) },
-            selected = selected == Plan.GOLD,
-            enabled = !guest
-        )
-        Spacer(Modifier.height(10.dp))
-        PlatinumPlanButton(
-            onClick = { onClickPlan(Plan.PLATINUM) },
-            selected = selected == Plan.PLATINUM,
-            enabled = !guest
-        )
+        item {
+            BronzePlanButton(
+                onClick = { onClickPlan(Plan.BRONZE) },
+                selected = selected == Plan.BRONZE,
+                modifier = Modifier.padding(vertical=6.dp),
+            )
+        }
+        item {
+            SilverPlanButton(
+                onClick = { onClickPlan(Plan.SILVER) },
+                selected = selected == Plan.SILVER,
+                enabled = !guest,
+                modifier = Modifier.padding(vertical=6.dp),
+            )
+        }
+        item {
+            GoldPlanButton(
+                onClick = { onClickPlan(Plan.GOLD) },
+                selected = selected == Plan.GOLD,
+                enabled = !guest,
+                modifier = Modifier.padding(vertical=6.dp),
+            )
+        }
+        item {
+            PlatinumPlanButton(
+                onClick = { onClickPlan(Plan.PLATINUM) },
+                selected = selected == Plan.PLATINUM,
+                enabled = !guest,
+                modifier = Modifier.padding(vertical=6.dp),
+            )
+        }
     }
 }
 
