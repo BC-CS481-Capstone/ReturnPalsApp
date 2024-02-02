@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -26,8 +28,9 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
-// TODO: Guest UI
+// TODO: guest message "sign up for more pricing options"
 
 /////////////////////////////////////////////////////////////////////////////
 // PUBLIC API
@@ -37,8 +40,71 @@ enum class Plan {
     NONE, BRONZE, SILVER, GOLD, PLATINUM
 }
 
+object ScheduleReturn {}
+
+/**
+ * Draws the entire screen of the step "Choose Plan" in the "Schedule a Return" process
+ */
+@Composable
+fun ScheduleReturn.PricingUI(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    plan: Plan = Plan.NONE,
+    guest: Boolean = false,
+) {
+    val selected = remember { mutableStateOf(plan) }
+
+    ScheduleReturnScaffold(
+        step = 3,
+        onClickNext = { /*TODO: navigate to package details */ },
+        onClickBack = { /*TODO: navigate to pickup method */ },
+        enabledNext = selected.value != Plan.NONE
+    ) { padding ->
+        PricingPlans(
+            modifier = modifier.padding(padding),
+            selected = selected.value,
+            onClickPlan = {
+                selected.value = it
+                // TODO: send selected plan to data layer
+            },
+            guest = guest,
+        )
+    }
+}
+
 @Composable
 fun PricingUI(
+    modifier: Modifier = Modifier,
+    plan: Plan = Plan.NONE,
+    guest: Boolean = false,
+) {
+    val selected = remember { mutableStateOf(plan) }
+
+    PricingPlans(
+        modifier = modifier,
+        selected = selected.value,
+        onClickPlan = {
+            selected.value = it
+            // TODO: send selected plan to data layer 
+        },
+        guest = guest,
+    )
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// PRIVATE API
+////////////////////
+
+@Preview(showBackground = true)
+@Composable
+private fun ChoosePlanPreview() {
+    PricingUI(
+        plan = Plan.BRONZE,
+    )
+}
+
+@Composable
+private fun PricingPlans(
     modifier: Modifier = Modifier,
     onClickPlan: (Plan) -> Unit,
     selected: Plan = Plan.NONE,
@@ -47,7 +113,9 @@ fun PricingUI(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = modifier.fillMaxSize().scale(1.25f)
+        modifier = modifier
+            .fillMaxSize()
+            .scale(1.25f)
     ) {
         Spacer(Modifier.height(10.dp))
         BronzePlanButton(
@@ -75,41 +143,14 @@ fun PricingUI(
     }
 }
 
-/**
- * Draws the entire screen of the step "Choose Plan" in the "Schedule a Return" process
- */
 @Composable
-fun ChoosePlanUI(
-    modifier: Modifier = Modifier,
-    onClickNext: () -> Unit,
-    onClickBack: () -> Unit,
-    onClickPlan: (Plan) -> Unit,
-    selected: Plan = Plan.NONE,
-    guest: Boolean = false
-) {
-    ScheduleReturnScaffold(
-        step = 3,
-        onClickNext = onClickNext,
-        onClickBack = onClickBack,
-        enabledNext = selected != Plan.NONE
-    ) { padding ->
-        PricingUI(
-            modifier = modifier.padding(padding),
-            onClickPlan = onClickPlan,
-            selected = selected,
-            guest = guest
-        )
-    }
-}
-
-@Composable
-fun BronzePlanButton(
+private fun BronzePlanButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     selected: Boolean = false,
     enabled: Boolean = true
 ) {
-    PlanButton(
+    PricingPlanButton(
         modifier = modifier,
         onClick = onClick,
         selected = selected,
@@ -120,13 +161,13 @@ fun BronzePlanButton(
 }
 
 @Composable
-fun SilverPlanButton(
+private fun SilverPlanButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     selected: Boolean = false,
     enabled: Boolean = true
 ) {
-    PlanButton(
+    PricingPlanButton(
         modifier = modifier,
         onClick = onClick,
         selected = selected,
@@ -137,13 +178,13 @@ fun SilverPlanButton(
 }
 
 @Composable
-fun GoldPlanButton(
+private fun GoldPlanButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     selected: Boolean = false,
     enabled: Boolean = true
 ) {
-    PlanButton(
+    PricingPlanButton(
         modifier = modifier,
         onClick = onClick,
         selected = selected,
@@ -154,13 +195,13 @@ fun GoldPlanButton(
 }
 
 @Composable
-fun PlatinumPlanButton(
+private fun PlatinumPlanButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     selected: Boolean = false,
     enabled: Boolean = true
 ) {
-    PlanButton(
+    PricingPlanButton(
         modifier = modifier,
         onClick = onClick,
         selected = selected,
@@ -170,28 +211,8 @@ fun PlatinumPlanButton(
     }
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// PRIVATE API
-////////////////////
-
-@Preview(showBackground = true)
 @Composable
-private fun ChoosePlanPreview() {
-//    PricingUI(
-//        onClickPlan = {},
-//        selected = Plan.BRONZE,
-//    )
-
-    ChoosePlanUI(
-        onClickNext = {},
-        onClickBack = {},
-        onClickPlan = {},
-        selected = Plan.BRONZE,
-    )
-}
-
-@Composable
-private fun PlanButton(
+private fun PricingPlanButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     selected: Boolean = false,
@@ -407,7 +428,7 @@ private fun GuestSignUpButton(
         isStructured = false,
         modifier = modifier
     ) {
-        PlanButton(
+        PricingPlanButton(
             onTap = onTap,
             modifier = Modifier.boxAlign(
                 alignment = Alignment.Center,
