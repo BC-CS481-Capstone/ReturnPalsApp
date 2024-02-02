@@ -46,9 +46,9 @@ fun ScheduleReturn.PickupMethodUI(
     val selected = remember { mutableStateOf(method) }
 
     ScheduleReturnScaffold(
-        step = 4,
-        onClickNext = { /*TODO: navigate to pay & confirm */ },
-        onClickBack = { /*TODO: navigate to choose plan */ },
+        step = 2,
+        onClickNext = { /*TODO: navigate to choose plan */ },
+        onClickBack = { /*TODO: navigate to pickup address or pickup date */ },
         enabledNext = selected.value != PickupMethod.NONE
     ) { padding ->
         Column(

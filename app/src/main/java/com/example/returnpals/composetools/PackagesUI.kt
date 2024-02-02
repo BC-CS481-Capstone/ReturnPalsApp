@@ -20,6 +20,8 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,25 +31,28 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 // TODO: make table rows clickable/editable
 // TODO: remove description from table?
 // TODO: put images in add-label buttons
 // TODO: allow user to upload files (pop up ui) as shown in figma
 
+/////////////////////////////////////////////////////////////////////////////
+// PUBLIC API
+////////////////////
+
 @Composable
 fun PackagesUI(
+    navController: NavController,
     packages: List<PackageInfo>,
-    onClickNext: () -> Unit,
-    onClickBack: () -> Unit,
-    onAddPhysicalLabel: (String) -> Unit,
-    onAddDigitalLabel: (String) -> Unit,
-    onAddQRCode: (String) -> Unit,
 ) {
+    val selected = remember { mutableStateOf(packages) }
+
     ScheduleReturnScaffold(
         step = 4,
-        onClickNext = onClickNext,
-        onClickBack = onClickBack,
+        onClickNext = { /*TODO: navigate to pay & confirm */ },
+        onClickBack = { /*TODO: navigate to choose plan */ },
         enabledNext = packages.isNotEmpty(),
     ) { padding ->
         Column(
@@ -77,57 +82,77 @@ fun PackagesUI(
                 modifier = Modifier.padding(vertical=15.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Button(
-                    onClick = { /* TODO */ },
-                    modifier = Modifier
-                        .weight(1.0f)
-                        .requiredHeight(80.dp),
-                    shape = RoundedCornerShape(20)
-                ) {
-                    Text(
-                        text = "Physical Label",
-                        fontWeight = FontWeight.Medium,
-                        textAlign = TextAlign.Center,
-                    )
-                }
+                AddLabelButton(
+                    text = "Physical Label",
+                    onClick = {
+                        /* TODO: upload physical label popup ui */
+                        // selected.value += label
+                    },
+                    modifier = Modifier.weight(1.0f)
+                )
                 Spacer(Modifier.width(15.dp))
-                Button(
-                    onClick = { /* TODO */ },
-                    modifier = Modifier
-                        .weight(1.0f)
-                        .requiredHeight(80.dp),
-                    shape = RoundedCornerShape(20)
-                ) {
-                    Text(
-                        text = "Digital Label",
-                        fontWeight = FontWeight.Medium,
-                        textAlign = TextAlign.Center,
-                    )
-                }
+                AddLabelButton(
+                    text = "Digital Label",
+                    onClick = {
+                        /* TODO: upload digital label popup ui */
+                        // selected.value += label
+                    },
+                    modifier = Modifier.weight(1.0f)
+                )
                 Spacer(Modifier.width(15.dp))
-                Button(
-                    onClick = { /* TODO */ },
-                    modifier = Modifier
-                        .weight(1.0f)
-                        .requiredHeight(80.dp),
-                    shape = RoundedCornerShape(20)
-                ) {
-                    Text(
-                        text = "Amazon QR Code",
-                        fontWeight = FontWeight.Medium,
-                        textAlign = TextAlign.Center,
-                    )
-                }
+                AddLabelButton(
+                    text = "Amazon QR Code",
+                    onClick = {
+                        /* TODO: upload qr code popup ui */
+                        // selected.value += qrcode
+                    },
+                    modifier = Modifier.weight(1.0f)
+                )
             }
             PackagesTable(
-                packages,
-                Modifier.fillMaxSize()
+                items = selected.value,
+                modifier = Modifier.fillMaxSize()
             )
         }
     }
 }
 
-// @Composable (LazyItemScope.() -> Unit)?  = null
+/////////////////////////////////////////////////////////////////////////////
+// PRIVATE API
+////////////////////
+
+@Preview(showBackground = true)
+@Composable
+private fun PackagesPreview() {
+//    PackagesUI(
+//        navController = ...,
+//        packages = listOf(
+//            PackageInfo(
+//                "Nordstrom.png",
+//                "Digital"
+//            )
+//        )
+//    )
+}
+
+@Composable
+private fun AddLabelButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        shape = RoundedCornerShape(20)
+    ) {
+        Text(
+            text = text,
+            fontWeight = FontWeight.Medium,
+            textAlign = TextAlign.Center,
+        )
+    }
+}
 
 @Composable
 private fun PackagesTable(
@@ -229,22 +254,4 @@ private fun Cell(
             softWrap = false,
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PackagesPreview() {
-    PackagesUI(
-        packages = listOf(
-            PackageInfo(
-                "Nordstrom.png",
-                "Digital"
-            )
-        ),
-        onClickNext = {},
-        onClickBack = {},
-        onAddDigitalLabel = {},
-        onAddPhysicalLabel = {},
-        onAddQRCode = {},
-    )
 }
