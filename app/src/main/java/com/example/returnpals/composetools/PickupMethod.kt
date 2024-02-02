@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,6 +27,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 /////////////////////////////////////////////////////////////////////////////
 // PUBLIC API
@@ -35,20 +38,19 @@ enum class PickupMethod {
 }
 
 @Composable
-fun PickupMethodUI(
+fun ScheduleReturn.PickupMethodUI(
+    navController: NavController,
     modifier: Modifier = Modifier,
-    onClickBack: () -> Unit,
-    onClickNext: () -> Unit,
-    onClickMethod: (PickupMethod) -> Unit,
-    selectedMethod: PickupMethod = PickupMethod.NONE
+    method: PickupMethod = PickupMethod.NONE
 ) {
+    val selected = remember { mutableStateOf(method) }
+
     ScheduleReturnScaffold(
         step = 4,
-        onClickNext = onClickNext,
-        onClickBack = onClickBack,
-        enabledNext = selectedMethod != PickupMethod.NONE
+        onClickNext = { /*TODO: navigate to pay & confirm */ },
+        onClickBack = { /*TODO: navigate to choose plan */ },
+        enabledNext = selected.value != PickupMethod.NONE
     ) { padding ->
-        padding.calculateBottomPadding()
         Column(
             modifier = modifier
                 .background(Color(210,240,245))
@@ -57,36 +59,74 @@ fun PickupMethodUI(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            PickupMethodButton(
-                onClick = { onClickMethod(PickupMethod.DOORSTEP) },
-                isSelected = selectedMethod == PickupMethod.HANDOFF
-            ) {
-                DoorstepDescription()
-            }
-            Spacer(Modifier.height(15.dp))
-            PickupMethodButton(
-                onClick = { onClickMethod(PickupMethod.HANDOFF) },
-                isSelected = selectedMethod == PickupMethod.DOORSTEP
-            ) {
-                HandOffDescription()
-            }
+            PickupMethods(
+                onClickMethod = {
+                    selected.value = it
+                    // TODO: send selected method to data layer
+                },
+                modifier = modifier,
+                selected = selected.value,
+            )
         }
     }
+}
+
+@Composable
+fun PickupMethodUI(
+    modifier: Modifier = Modifier,
+    method: PickupMethod = PickupMethod.NONE
+) {
+    val selected = remember { mutableStateOf(method) }
+
+    PickupMethods(
+        onClickMethod = {
+            selected.value = it
+            // TODO: send selected method to data layer
+        },
+        modifier = modifier,
+        selected = selected.value,
+    )
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // PRIVATE API
 ////////////////////
 
-@Preview(showBackground = true, widthDp = 300, heightDp = 460)
+@Preview(showBackground = true)
 @Composable
 private fun PickupMethodPreview() {
     PickupMethodUI(
-        onClickBack = {},
-        onClickNext = {},
-        onClickMethod = {},
-        selectedMethod = PickupMethod.DOORSTEP
+        method = PickupMethod.DOORSTEP
     )
+}
+
+@Composable
+private fun PickupMethods(
+    onClickMethod: (PickupMethod) -> Unit,
+    modifier: Modifier = Modifier,
+    selected: PickupMethod = PickupMethod.NONE
+) {
+    Column(
+        modifier = modifier
+            .background(Color(210,240,245))
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        PickupMethodButton(
+            onClick = { onClickMethod(PickupMethod.DOORSTEP) },
+            isSelected = selected == PickupMethod.HANDOFF
+        ) {
+            DoorstepDescription()
+        }
+        Spacer(Modifier.height(15.dp))
+        PickupMethodButton(
+            onClick = { onClickMethod(PickupMethod.HANDOFF) },
+            isSelected = selected == PickupMethod.DOORSTEP
+        ) {
+            HandOffDescription()
+        }
+    }
 }
 
 @Composable
