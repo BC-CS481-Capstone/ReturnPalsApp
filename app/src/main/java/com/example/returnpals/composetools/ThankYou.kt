@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -11,8 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.unit.TextUnit
 import com.example.returnpals.composetools.ButtonManager
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 class ThankYou {
 
@@ -22,17 +25,19 @@ class ThankYou {
                        email:String = "johndoe2394@gmail.com",
                        dashBoardButton: () -> Unit)
     {
+        val configs = getConfig()
+        val iconSize = configs.screenWidthDp/2
         //Column with progress at top
         Column(Modifier.fillMaxSize(),verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally) {
             ProgressBar(step = 5)
             //Truck icon
-            IconManager().getTruckIcon(modifier = Modifier.height(36.dp))
+            IconManager().getTruckIcon(modifier = Modifier.width(iconSize.dp))
             //Thank you text
-            Text(thankText())
+            Text(thankText(), fontSize = 35.sp)
             //Confirm order number
-            Text(confirmNumberText(name=userName, confirm = confirmNumber))
+            Text(confirmNumberText(name=userName, confirm = confirmNumber),fontSize = 35.sp)
             //Confirm email
-            Text(emailText(email = email))
+            Text(emailText(email = email),fontSize = 35.sp)
             //Navigation button out
             ButtonManager.NextButton(onClick =dashBoardButton, text = "Return to Dashboard")
         }
