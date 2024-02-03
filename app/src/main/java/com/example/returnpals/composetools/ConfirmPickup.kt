@@ -89,30 +89,30 @@ class ConfirmPickup {
             val date = pickUpDate.get(Calendar.DATE)
 
             //Confirm Date
-            Text(day.toString()+" "+month.toString()+" "+date.toString(),Modifier,fontSize = 26.sp,maxLines = 1)
+            Text(day.toString()+" "+month.toString()+" "+date.toString(),Modifier,fontSize = 34.sp,maxLines = 1)
             //Confirm type of pickup as hand off or leave on door step
-            Text(typeOfPickup)
+            Text(typeOfPickup,fontSize = 34.sp)
             //Avoid printing null if no address given
             if (pickUpAddress.getAddressLine(0) != null ) {
-                Text(text = pickUpAddress.getAddressLine(0))
+                Text(text = pickUpAddress.getAddressLine(0),fontSize = 28.sp)
             }
             if (pickUpAddress.getAddressLine(1) != null ) {
-                Text(text = pickUpAddress.getAddressLine(1))
+                Text(text = pickUpAddress.getAddressLine(1),fontSize = 28.sp)
             }
             if (pickUpAddress.getAddressLine(2) != null ) {
-                Text(text = pickUpAddress.getAddressLine(2))
+                Text(text = pickUpAddress.getAddressLine(2),fontSize = 28.sp)
             }
             //Confirm packages
-            Text("Packages", fontWeight = FontWeight.Bold,fontSize = 22.sp, color = Color.Black)
+            Text("Packages", fontWeight = FontWeight.Bold,fontSize = 34.sp, color = Color.Black)
             //Row with Icon and text
             Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
-                IconManager().getBoxIcon(modifier = Modifier.height(22.dp))
-                Text(numberOfDigital.toString()+" Package with digital label",fontSize = 20.sp,maxLines = 1)
+                IconManager().getBoxIcon(modifier = Modifier.height(34.dp))
+                Text(numberOfDigital.toString()+" Package with digital label",fontSize = 30.sp,maxLines = 1)
             }
             //Row with Icon and text
             Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
-                IconManager().getBoxIcon(modifier = Modifier.height(22.dp))
-                Text("$numberOfPhysical Package with physical label",fontSize = 20.sp,maxLines = 1)
+                IconManager().getBoxIcon(modifier = Modifier.height(34.dp))
+                Text("$numberOfPhysical Package with physical label",fontSize = 30.sp,maxLines = 1)
             }
             //Print payment if due
             //Should be able to skip if user is has already payed for a plan.
