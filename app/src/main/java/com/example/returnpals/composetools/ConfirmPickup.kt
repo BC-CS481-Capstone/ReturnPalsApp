@@ -65,7 +65,7 @@ class ConfirmPickup {
             //end of the white box summary
 
             //Navigation buttons
-            Row(Modifier) {
+            Row(horizontalArrangement = Arrangement.SpaceAround, modifier =  Modifier.fillMaxWidth()) {
                 ButtonManager.BackButton(onClick = backButton)
                 ButtonManager.NextButton(onClick = nextButton)
             }
