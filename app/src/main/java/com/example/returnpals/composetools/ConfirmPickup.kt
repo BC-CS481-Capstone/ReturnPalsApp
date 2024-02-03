@@ -73,10 +73,17 @@ class ConfirmPickup {
     }
     @Composable
     fun whiteBox(pickUpDate:Calendar,typeOfPickup:String,pickUpAddress:Address,numberOfDigital:Int,numberOfPhysical:Int,priceArray:Array<Int>,visaLastFour:Int) {
-        Column(Modifier.background(Color.White,
-            shape = RoundedCornerShape(10) )
-            .width((getConfig().screenWidthDp-32).dp)
-            .height((getConfig().screenHeightDp/3*2).dp),
+        val config = getConfig()
+        val wwith =(config.screenWidthDp - 32).dp
+        val whieght = (config.screenHeightDp / 3 * 2).dp
+        Column(
+            Modifier
+                .background(
+                    Color.White,
+                    shape = RoundedCornerShape(10)
+                )
+                .width(wwith)
+                .height(whieght),
             verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally)
         {
@@ -87,7 +94,7 @@ class ConfirmPickup {
 
             val month = pickUpDate.getDisplayName( Calendar.MONTH,Calendar.LONG,Locale.getDefault())
             val date = pickUpDate.get(Calendar.DATE)
-
+            val fsize = (getConfig().screenWidthDp/20).sp
             //Confirm Date
             Text(day.toString()+" "+month.toString()+" "+date.toString(),Modifier,fontSize = 34.sp,maxLines = 1)
             //Confirm type of pickup as hand off or leave on door step
@@ -107,12 +114,12 @@ class ConfirmPickup {
             //Row with Icon and text
             Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
                 IconManager().getBoxIcon(modifier = Modifier.height(34.dp))
-                Text(numberOfDigital.toString()+" Package with digital label",fontSize = 30.sp,maxLines = 1)
+                Text(numberOfDigital.toString()+" Package with digital label",fontSize = fsize,maxLines = 1)
             }
             //Row with Icon and text
             Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
                 IconManager().getBoxIcon(modifier = Modifier.height(34.dp))
-                Text("$numberOfPhysical Package with physical label",fontSize = 30.sp,maxLines = 1)
+                Text("$numberOfPhysical Package with physical label",fontSize = fsize,maxLines = 1)
             }
             //Print payment if due
             //Should be able to skip if user is has already payed for a plan.
