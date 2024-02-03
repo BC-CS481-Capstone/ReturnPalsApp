@@ -9,9 +9,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import com.example.returnpals.composetools.ButtonManager
 import androidx.compose.ui.unit.dp
@@ -33,11 +35,11 @@ class ThankYou {
             //Truck icon
             IconManager().getTruckIcon(modifier = Modifier.width(iconSize.dp))
             //Thank you text
-            Text(thankText(), fontSize = 35.sp)
+            Text(thankText(), fontSize = 35.sp, textAlign = TextAlign.Center)
             //Confirm order number
-            Text(confirmNumberText(name=userName, confirm = confirmNumber),fontSize = 35.sp)
+            Text(confirmNumberText(name=userName, confirm = confirmNumber),fontSize = 35.sp, textAlign = TextAlign.Center)
             //Confirm email
-            Text(emailText(email = email),fontSize = 35.sp)
+            Text(emailText(email = email),fontSize = 35.sp, textAlign = TextAlign.Center)
             //Navigation button out
             ButtonManager.NextButton(onClick =dashBoardButton, text = "Return to Dashboard")
         }
