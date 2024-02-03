@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -72,7 +73,13 @@ class ConfirmPickup {
     }
     @Composable
     fun whiteBox(pickUpDate:Calendar,typeOfPickup:String,pickUpAddress:Address,numberOfDigital:Int,numberOfPhysical:Int,priceArray:Array<Int>,visaLastFour:Int) {
-        Column(Modifier.background(Color.White,shape = RoundedCornerShape(10) ),verticalArrangement = Arrangement.SpaceAround, horizontalAlignment = Alignment.CenterHorizontally ) {
+        Column(Modifier.background(Color.White,
+            shape = RoundedCornerShape(10) )
+            .width((getConfig().screenWidthDp-32).dp)
+            .height((getConfig().screenHeightDp/3*2).dp),
+            verticalArrangement = Arrangement.SpaceAround,
+            horizontalAlignment = Alignment.CenterHorizontally)
+        {
             Text("Order Summary\n" +
                     "_________________",color = getBlueIconColor(),fontSize = 34.sp, maxLines = 2)
 
