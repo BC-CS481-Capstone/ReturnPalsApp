@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import com.example.returnpals.composetools.ButtonManager
@@ -27,53 +28,56 @@ class ThankYou {
             //Truck icon
             IconManager().getTruckIcon(modifier = Modifier.height(36.dp))
             //Thank you text
-            Text("Thank you for scheduling a return with us!")
+            Text(thankText())
             //Confirm order number
-            Text(userName+", your pickup order "+confirmNumber+" is confirmed.")
+            Text(confirmNumberText(name=userName, confirm = confirmNumber))
             //Confirm email
-            Text("A confirmation email will be sent to "+email)
+            Text(emailText(email = email))
             //Navigation button out
             ButtonManager.NextButton(onClick =dashBoardButton, text = "Return to Dashboard")
         }
     }
 
 
-    fun thankText() {
+    fun thankText(): AnnotatedString {
         //Builds annotated string for /BLUE/ thank you /NORMAL/ for scheduling a return with us
-        buildAnnotatedString {
+        var out: AnnotatedString = buildAnnotatedString {
             pushStyle(style = SpanStyle(color = getBlueIconColor())) //push style onto stack
             append("Thank you")
             pop() //pop style off stack
-            append("for scheduling a return with us!")
+            append(" for scheduling a return with us!")
+            toAnnotatedString()
         }
+        return out;
     }
 
 
     fun confirmNumberText(name:String,
                           confirm:String,
-                          )
-    {
+                          ): AnnotatedString {
         //Builds annotated string for /NORMAL/ %NAME%, your pickup order /BLUE/ %CONFIRM#% /NORMAL/ is confirmed.
-        buildAnnotatedString {
+        val out = buildAnnotatedString {
             append(name)
-            append("your pickup order")
+            append("your pickup order ")
             pushStyle(style= SpanStyle(color= getBlueIconColor()))  // Push style onto stack
             append(confirm)
             pop() //pop style off stack
-            append("is confirmed.")
+            append(" is confirmed.")
+            toAnnotatedString()
         }
+        return out
     }
 
 
-    fun emailText(email:String)
-    {
+    fun emailText(email:String): AnnotatedString {
         //Builds annotated string for /NORMAL/ A confirmation email will be sent to: /BLUE/ %EMAIL%
-        buildAnnotatedString {
-            append("A confirmation email will be sent to:")
+        val out =buildAnnotatedString {
+            append("A confirmation email will be sent to: ")
             pushStyle(style = SpanStyle(color = getBlueIconColor())) //push style onto stack
             append(email)
             pop() //pop style off stack
-
+            toAnnotatedString()
         }
+        return out
     }
 }
