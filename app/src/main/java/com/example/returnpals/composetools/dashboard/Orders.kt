@@ -1,6 +1,6 @@
-package com.example.returnpals.mainMenu
+package com.example.returnpals.composetools.dashboard
 
-import MainMenuScaffold
+import DashboardMenuScaffold
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
@@ -23,7 +23,7 @@ import com.example.returnpals.composetools.OrderInfo
 
 @Composable
 fun Orders(navController: NavController) {
-    MainMenuScaffold(navController = navController) {
+    DashboardMenuScaffold(navController = navController) {
         OrdersContent()
     }
 }

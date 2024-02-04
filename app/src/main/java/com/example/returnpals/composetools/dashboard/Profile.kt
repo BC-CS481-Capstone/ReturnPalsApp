@@ -1,6 +1,6 @@
-package com.example.returnpals.mainMenu
+package com.example.returnpals.composetools.dashboard
 
-import MainMenuScaffold
+import DashboardMenuScaffold
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -26,7 +25,7 @@ import com.example.returnpals.composetools.SilverPlanButton
 
 @Composable
 fun Profile(navController: NavController) {
-    MainMenuScaffold(navController = navController) {
+    DashboardMenuScaffold(navController = navController) {
         ProfileContent()
     }
 

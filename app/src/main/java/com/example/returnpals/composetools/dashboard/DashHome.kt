@@ -1,4 +1,4 @@
-package com.example.returnpals.dashboard
+package com.example.returnpals.composetools.dashboard
 
 import DashboardMenuScaffold
 import androidx.compose.foundation.Image
@@ -49,8 +49,8 @@ fun HomeDashContent(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
 
     ){
-        item{ Welcome()}
-        item{ DashCard(navController = navController)}
+        item{ Welcome() }
+        item{ DashCard(navController = navController) }
 
     }
 }

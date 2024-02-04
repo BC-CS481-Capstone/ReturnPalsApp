@@ -1,4 +1,4 @@
-package com.example.returnpals.dashboard
+package com.example.returnpals.composetools.dashboard
 
 import DashboardMenuScaffold
 import androidx.compose.runtime.Composable
