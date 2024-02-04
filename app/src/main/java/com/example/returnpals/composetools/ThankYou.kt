@@ -29,17 +29,18 @@ class ThankYou {
     {
         val configs = getConfig()
         val iconSize = configs.screenWidthDp/2
+        val fontSize = configs.screenWidthDp/14
         //Column with progress at top
         Column(Modifier.fillMaxSize(),verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally) {
             ProgressBar(step = 5)
             //Truck icon
             IconManager().getTruckIcon(modifier = Modifier.width(iconSize.dp))
             //Thank you text
-            Text(thankText(), fontSize = 35.sp, textAlign = TextAlign.Center)
+            Text(thankText(), fontSize = (fontSize+4).sp, textAlign = TextAlign.Center)
             //Confirm order number
-            Text(confirmNumberText(name=userName, confirm = confirmNumber),fontSize = 35.sp, textAlign = TextAlign.Center)
+            Text(confirmNumberText(name=userName, confirm = confirmNumber),fontSize = fontSize.sp, textAlign = TextAlign.Center)
             //Confirm email
-            Text(emailText(email = email),fontSize = 35.sp, textAlign = TextAlign.Center)
+            Text(emailText(email = email),fontSize = fontSize.sp, textAlign = TextAlign.Center)
             //Navigation button out
             ButtonManager.NextButton(onClick =dashBoardButton, text = "Return to Dashboard")
         }
