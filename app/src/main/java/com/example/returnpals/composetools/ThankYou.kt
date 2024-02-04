@@ -67,7 +67,7 @@ class ThankYou {
         //Builds annotated string for /NORMAL/ %NAME%, your pickup order /BLUE/ %CONFIRM#% /NORMAL/ is confirmed.
         val out = buildAnnotatedString {
             append(name)
-            append("your pickup order ")
+            append(", your pickup order ")
             pushStyle(style= SpanStyle(color= getBlueIconColor()))  // Push style onto stack
             append(confirm)
             pop() //pop style off stack
