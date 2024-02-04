@@ -23,24 +23,25 @@ class ThankYou {
 
     @Composable
     fun drawThankYouUI(userName:String = "Guest",
-                       confirmNumber:String = "#R957394",
+                       confirmNumber:String = "#",
                        email:String = "johndoe2394@gmail.com",
                        dashBoardButton: () -> Unit)
     {
-        val configs = getConfig()
-        val iconSize = configs.screenWidthDp/2
-        val fontSize = configs.screenWidthDp/14
+        val configsWidth = getConfig().screenWidthDp
+        val iconSize = configsWidth/2
+        val fontSize = configsWidth/14
+        val lineLength = configsWidth-20
         //Column with progress at top
         Column(Modifier.fillMaxSize(),verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally) {
             ProgressBar(step = 5)
             //Truck icon
             IconManager().getTruckIcon(modifier = Modifier.width(iconSize.dp))
             //Thank you text
-            Text(thankText(), fontSize = (fontSize+4).sp, textAlign = TextAlign.Center)
+            Text(thankText(), fontSize = (fontSize+4).sp, textAlign = TextAlign.Center, modifier = Modifier.width(lineLength.dp))
             //Confirm order number
-            Text(confirmNumberText(name=userName, confirm = confirmNumber),fontSize = fontSize.sp, textAlign = TextAlign.Center)
+            Text(confirmNumberText(name=userName, confirm = confirmNumber),fontSize = fontSize.sp, textAlign = TextAlign.Center, modifier = Modifier.width(lineLength.dp))
             //Confirm email
-            Text(emailText(email = email),fontSize = fontSize.sp, textAlign = TextAlign.Center)
+            Text(emailText(email = email),fontSize = fontSize.sp, textAlign = TextAlign.Center, modifier = Modifier.width(lineLength.dp))
             //Navigation button out
             ButtonManager.NextButton(onClick =dashBoardButton, text = "Return to Dashboard")
         }
