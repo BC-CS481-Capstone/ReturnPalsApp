@@ -65,4 +65,27 @@ class loginOptionsTest {
         rule.setContent { loginOptions().drawLoginUI(user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { } ) }
         rule.onNodeWithContentDescription("ReturnPalName Image").assertIsDisplayed()
     }
+    @Test
+    fun guestSignInButtonDisplay() {
+        rule.setContent { loginOptions().drawGuestLoginUI( signin = { },userSignIn= {}) {} }
+        rule.onNode(hasText("Sign In ") and hasClickAction()).assertIsDisplayed()
+    }
+    @Test
+    fun guestSignInAsGuestButtonDisplay() {
+        rule.setContent { loginOptions().drawGuestLoginUI( signin = { },userSignIn= {}) {} }
+        rule.onNode(hasText("Sign In as Guest") and hasClickAction()).assertIsDisplayed()
+    }
+
+    @Test
+    fun guestSignUpButtonDisplay() {
+        rule.setContent { loginOptions().drawGuestLoginUI( signin = { },userSignIn= {}) {} }
+        rule.onNode(hasText("Sign up") and hasClickAction()).assertIsDisplayed()
+    }
+
+    @Test
+    fun guestEmailTextDisplayed() {
+        rule.setContent { loginOptions().drawGuestLoginUI( signin = { },userSignIn= {}) {} }
+        rule.onNode(hasText("Email") and hasSetTextAction()).assertIsDisplayed()
+
+    }
 }
