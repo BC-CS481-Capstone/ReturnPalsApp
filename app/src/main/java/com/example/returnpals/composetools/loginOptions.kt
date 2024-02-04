@@ -79,4 +79,51 @@ class loginOptions {
                 }
             }
     }
+    @Composable
+    fun drawGuestLoginUI(user:(String) -> Unit, pass:(String) -> Unit, guest: () -> Unit, reset: () -> Unit, signin:() -> Unit, signup: () -> Unit) {
+        val config = getConfig()
+        // get screen size for image size
+        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceBetween) {
+            //Column center top
+            IconManager().getReturnPalNameIcon(Modifier.requiredWidth(config.screenWidthDp.dp))
+
+            //Set User or Guest options
+            Row() {
+                Text(text = "Sign In |",Modifier.align(Alignment.CenterVertically))
+                TextButton(onClick = guest){
+                    Text("Guest",color = Color(0xFF008BE7))
+                }
+            }
+
+            //create temp vars for holding user inputs
+            var emails by remember { mutableStateOf("Email")}
+            var passwords by remember { mutableStateOf("Password")}
+
+            //set text fields for users
+            OutlinedTextField(value = emails,
+                onValueChange = {it -> emails = it }
+                //,placeholder = Text("Email")
+            )
+            //OutlinedTextField(value = passwords, onValueChange = {it -> passwords = it },
+            //    visualTransformation = PasswordVisualTransformation()
+            //    //,placeholder = Text("Password")
+            //)
+            //Forgot your password button
+            //TextButton(onClick = reset){
+            //    Text("Forgot your password?",color = Color(0xFF008BE7))
+            //}
+            // Big Sign in button
+            Button(onClick = signin,colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008BE7), contentColor = Color.White)) {
+                Text("Sign In as Guest")
+            }
+            // Sign up options
+            Row() {
+                Text(text = "Don't have an account yet?",Modifier.align(Alignment.CenterVertically))
+                TextButton(onClick = signup) {
+                    Text("Sign up",color = Color(0xFF008BE7))
+                }
+            }
+        }
+    }
+
 }
