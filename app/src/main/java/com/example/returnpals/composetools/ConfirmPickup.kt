@@ -94,42 +94,62 @@ class ConfirmPickup {
 
             val month = pickUpDate.getDisplayName( Calendar.MONTH,Calendar.LONG,Locale.getDefault())
             val date = pickUpDate.get(Calendar.DATE)
-            val fsize = (getConfig().screenWidthDp/20).sp
+
             //Confirm Date
-            Text(day.toString()+" "+month.toString()+" "+date.toString(),Modifier,fontSize = 34.sp,maxLines = 1)
+            Text(day.toString()+" "+month.toString()+" "+date.toString(),fontSize = 34.sp,maxLines = 1)
+
             //Confirm type of pickup as hand off or leave on door step
             Text(typeOfPickup,fontSize = 34.sp)
-            //Avoid printing null if no address given
-            if (pickUpAddress.getAddressLine(0) != null ) {
-                Text(text = pickUpAddress.getAddressLine(0),fontSize = 28.sp)
-            }
-            if (pickUpAddress.getAddressLine(1) != null ) {
-                Text(text = pickUpAddress.getAddressLine(1),fontSize = 28.sp)
-            }
-            if (pickUpAddress.getAddressLine(2) != null ) {
-                Text(text = pickUpAddress.getAddressLine(2),fontSize = 28.sp)
-            }
-            //Confirm packages
-            Text("Packages", fontWeight = FontWeight.Bold,fontSize = 34.sp, color = Color.Black)
-            //Row with Icon and text
-            Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
-                IconManager().getBoxIcon(modifier = Modifier.height(34.dp))
-                Text(numberOfDigital.toString()+" Package with digital label",fontSize = fsize,maxLines = 1)
-            }
-            //Row with Icon and text
-            Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
-                IconManager().getBoxIcon(modifier = Modifier.height(34.dp))
-                Text("$numberOfPhysical Package with physical label",fontSize = fsize,maxLines = 1)
-            }
-            //Print payment if due
-            //Should be able to skip if user is has already payed for a plan.
-            if (priceArray[0]!=0) {
-                Text("Visa ending $visaLastFour")
-                Text("One-Time Return "+priceArray[0])
-                Text("Tax "+priceArray[1])
-                Text("Total "+priceArray[2])
-            }
 
+            //Avoid printing null if no address given
+            printAddressLines(pickUpAddress)
+
+            //Confirm packages
+            printNumberOfLabels(numberOfDigital,numberOfPhysical)
+
+            //Print payment if due. Should be able to skip if user is has already payed for a plan.
+            printPriceArray(priceArray,visaLastFour)
+
+        }
+    }
+    @Composable
+    fun printPriceArray(priceArray:Array<Int>,visaLastFour:Int) {
+        if (priceArray[0]!=0) {
+            Text("Visa ending $visaLastFour")
+            Text("One-Time Return "+priceArray[0])
+            Text("Tax "+priceArray[1])
+            Text("Total "+priceArray[2])
+        }
+    }
+    @Composable
+    fun printAddressLines(pickUpAddress:Address) {
+        //Avoid printing null if no address given
+        val fsize = (getConfig().screenWidthDp/20)
+        if (pickUpAddress.getAddressLine(0) != null ) {
+            Text(text = pickUpAddress.getAddressLine(0),fontSize = fsize.sp)
+        }
+        if (pickUpAddress.getAddressLine(1) != null ) {
+            Text(text = pickUpAddress.getAddressLine(1),fontSize = fsize.sp)
+        }
+        if (pickUpAddress.getAddressLine(2) != null ) {
+            Text(text = pickUpAddress.getAddressLine(2),fontSize = fsize.sp)
+        }
+    }
+
+    @Composable
+    fun printNumberOfLabels(numberOfDigital:Int,numberOfPhysical:Int) {
+        val fsize = (getConfig().screenWidthDp/16)
+
+        Text("Packages", fontWeight = FontWeight.Bold,fontSize = 34.sp, color = Color.Black)
+        //Row with Icon and text
+        Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+            IconManager().getBoxIcon(modifier = Modifier.height(fsize.dp))
+            Text(numberOfDigital.toString()+" Package with digital label",fontSize = fsize.sp,maxLines = 1)
+        }
+        //Row with Icon and text
+        Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+            IconManager().getBoxIcon(modifier = Modifier.height(fsize.dp))
+            Text("$numberOfPhysical Package with physical label",fontSize = fsize.sp,maxLines = 1)
         }
     }
 
