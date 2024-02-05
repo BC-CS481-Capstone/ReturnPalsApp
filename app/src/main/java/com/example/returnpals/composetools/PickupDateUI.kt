@@ -1,6 +1,7 @@
 package com.example.returnpals.composetools
 
 import android.annotation.SuppressLint
+import android.location.Address
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
@@ -25,6 +26,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.returnpals.composetools.ButtonManager.DateSelector
 import java.time.LocalDate
@@ -39,18 +43,17 @@ import java.time.LocalDate
 @Composable
 fun ScheduleReturn.PickupDateUI(
     navController: NavController,
+    onChangeDate: (LocalDate) -> Unit,
     modifier: Modifier = Modifier,
+    minDate: LocalDate = LocalDate.now(),
+    maxDate: LocalDate = LocalDate.now().plusMonths(1),
+    date: LocalDate = LocalDate.now(),
 ) {
-    val dateMin = LocalDate.now()
-    // you can schedule up to 30 days ahead of time
-    val dateMax = dateMin.plusDays(30)
-    val selected = remember { mutableStateOf(dateMin) }
-
     ScheduleReturnScaffold(
         step = 1,
         onClickNext = { /*TODO: navigate to pickup method or pickup address */ },
         onClickBack = { /*TODO: navigate to dashboard or pickup address */ },
-        enabledNext = selected.value > dateMin && selected.value < dateMax
+        enabledNext = date > minDate && date < maxDate
     ) { padding ->
         Column(
             modifier = Modifier
@@ -68,7 +71,6 @@ fun ScheduleReturn.PickupDateUI(
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.secondary,
             )
-
             Text(
                 modifier = Modifier.padding(20.dp, 0.dp),
                 text = "When should we pickup your package?",
@@ -76,13 +78,9 @@ fun ScheduleReturn.PickupDateUI(
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.secondary,
             )
-
             DateSelector(
-                date = selected.value,
-                onChangeDate = {
-                    selected.value = it
-                    // TODO: send selected date to data layer
-                },
+                date = date,
+                onChangeDate = onChangeDate,
                 modifier = modifier
                     .fillMaxSize(),
                 verticalAlignment = Alignment.CenterVertically
