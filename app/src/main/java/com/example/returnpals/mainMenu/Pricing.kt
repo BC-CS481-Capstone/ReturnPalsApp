@@ -3,7 +3,7 @@ package com.example.returnpals.mainMenu
 
 import MainMenuScaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import com.example.returnpals.PricingPlan
@@ -20,9 +20,9 @@ fun Pricing(navController: NavController) {
 
 @Composable
 fun PricingContent(navController: NavController) {
-    val state = remember { mutableStateOf(PricingViewModel(PricingPlan.BRONZE)) }
+    val state = remember { PricingViewModel(PricingPlan.BRONZE) }
     PricingUI(
-        plan = state.value.plan.value,
-        onChangePlan = { state.value.onChangePlan(it) },
+        plan = state.plan.collectAsState().value,
+        onChangePlan = { state.onChangePlan(it) },
     )
 }

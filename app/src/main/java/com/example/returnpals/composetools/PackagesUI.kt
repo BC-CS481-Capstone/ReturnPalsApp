@@ -51,7 +51,7 @@ fun ScheduleReturn.PackagesUI(
     packages: List<PackageInfo> = listOf(),
     navController: NavController? = null,
     onAddLabel: (PackageInfo) -> Unit = {},
-    onRemoveLabel: (ULong) -> Unit = {},
+    onRemoveLabel: (Long) -> Unit = {},
 ) {
     val showDialogue: MutableState<Boolean> = remember { mutableStateOf(false) }
     val dialogueType: MutableState<PackageLabelType?> = remember { mutableStateOf(null) }
@@ -138,7 +138,7 @@ private fun PackagesPreview() {
     ScheduleReturn.PackagesUI(
         packages = listOf(
             PackageInfo(
-                0u,
+                1,
                 "Nordstrom.png",
                 PackageLabelType.DIGITAL,
                 "Digital"
@@ -154,7 +154,7 @@ private fun AddLabelDialogue(
 ) {
 //    TODO: implement
     onAddLabel(
-        PackageInfo(0u, "Nordstrom.png", type)
+        PackageInfo(0, "Nordstrom.png", type)
     )
 }
 
@@ -200,10 +200,6 @@ private fun PackagesTable(
                 HeaderCell(
                     modifier = Modifier.weight(1.0f),
                     text = "Label Type",
-                )
-                HeaderCell(
-                    modifier = Modifier.weight(1.4f),
-                    text = "Description",
                 )
             }
         }

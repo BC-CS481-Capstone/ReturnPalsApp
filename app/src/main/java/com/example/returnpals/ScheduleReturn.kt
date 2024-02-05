@@ -3,8 +3,10 @@ package com.example.returnpals
 import android.location.Address
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import java.time.LocalDate
 
 /**
@@ -23,39 +25,57 @@ object ScheduleReturn {
     class ViewModel(init: PickupInfo) : androidx.lifecycle.ViewModel() {
 
         private val idManager: IdManager = IdManager()
-        private val _pickup: MutableLiveData<PickupInfo>
-        val pickup: LiveData<PickupInfo>
+        private val _pickup: MutableStateFlow<PickupInfo>
+        val pickup: StateFlow<PickupInfo>
 
         init {
-            _pickup = MutableLiveData<PickupInfo>(init)
-            pickup = _pickup
+            _pickup = MutableStateFlow(init)
+            pickup = _pickup.asStateFlow()
             // _pickup.value and pickup.value should NOT be null after init
         }
 
         fun onChangeDate(value: LocalDate) {
-            _pickup.value!!.date = value
+            _pickup.update {
+                it.date = value
+                it
+            }
         }
 
         fun onChangeAddress(value: Address) {
-            _pickup.value!!.address = value
+            _pickup.update {
+                it.address = value
+                it
+            }
         }
 
         fun onChangePickupMethod(value: PickupMethod) {
-            _pickup.value!!.method = value
+            _pickup.update {
+                it.method = value
+                it
+            }
         }
 
         fun onAddLabel(value: PackageInfo) {
-            val label = value.copy(id=idManager.allot())
-            _pickup.value!!.packages[label.id] = label
+            _pickup.update {
+                val label = value.copy(id=idManager.allot())
+                it.packages[label.id] = label
+                it
+            }
         }
 
-        fun onRemoveLabel(id: ULong) {
-            _pickup.value!!.packages.remove(id)
-            idManager.free(id)
+        fun onRemoveLabel(id: Long) {
+            _pickup.update {
+                it.packages.remove(id)
+                idManager.free(id)
+                it
+            }
         }
 
         fun onChangePricingPlan(value: PricingPlan) {
-            _pickup.value!!.pricing = value
+            _pickup.update {
+                it.pricing = value
+                it
+            }
         }
 
     }

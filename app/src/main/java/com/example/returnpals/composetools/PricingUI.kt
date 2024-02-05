@@ -15,7 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,13 +29,14 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.example.returnpals.PickupInfo
 import com.example.returnpals.PricingPlan
 import com.example.returnpals.ScheduleReturn
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 // TODO: guest message "sign up for more pricing options"
 
@@ -70,16 +71,16 @@ fun ScheduleReturn.PricingUI(
 }
 
 class PricingViewModel(init: PricingPlan) : ViewModel() {
-    private val _plan: MutableLiveData<PricingPlan>
-    val plan: LiveData<PricingPlan>
+    private val _plan: MutableStateFlow<PricingPlan>
+    val plan: StateFlow<PricingPlan>
 
     init {
-        _plan = MutableLiveData(init)
-        plan = _plan
+        _plan = MutableStateFlow(init)
+        plan = _plan.asStateFlow()
     }
 
     fun onChangePlan(value: PricingPlan) {
-        _plan.value = value
+        _plan.update { value }
     }
 }
 
@@ -107,7 +108,7 @@ fun PricingUI(
 private fun ChoosePlanPreview() {
     val viewmodel = remember { PricingViewModel(PricingPlan.BRONZE) }
     ScheduleReturn.PricingUI(
-        plan = viewmodel.plan.value,
+        plan = viewmodel.plan.collectAsState().value,
         onChangePlan = { viewmodel.onChangePlan(it) }
     )
 }
