@@ -28,14 +28,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.returnpals.PickupMethod
+import com.example.returnpals.ScheduleReturn
 
 /////////////////////////////////////////////////////////////////////////////
 // PUBLIC API
 ////////////////////
-
-enum class PickupMethod {
-    NONE, HANDOFF, DOORSTEP
-}
 
 @Composable
 fun ScheduleReturn.PickupMethodUI(

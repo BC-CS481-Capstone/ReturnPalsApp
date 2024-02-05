@@ -30,6 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.returnpals.PricingPlan
+import com.example.returnpals.ScheduleReturn
 
 // TODO: guest message "sign up for more pricing options"
 
@@ -37,20 +39,14 @@ import androidx.navigation.NavController
 // PUBLIC API
 ////////////////////
 
-enum class Plan {
-    NONE, BRONZE, SILVER, GOLD, PLATINUM
-}
-
-object ScheduleReturn {}
-
 /**
- * Draws the entire screen of the step "Choose Plan" in the "Schedule a Return" process
+ * Draws the entire screen of the step "Choose PricingPlan" in the "Schedule a Return" process
  */
 @Composable
 fun ScheduleReturn.PricingUI(
     navController: NavController,
     modifier: Modifier = Modifier,
-    plan: Plan = Plan.NONE,
+    plan: PricingPlan = PricingPlan.NONE,
     guest: Boolean = false,
 ) {
     val selected = remember { mutableStateOf(plan) }
@@ -59,7 +55,7 @@ fun ScheduleReturn.PricingUI(
         step = 3,
         onClickNext = { /*TODO: navigate to package details */ },
         onClickBack = { /*TODO: navigate to pickup method */ },
-        enabledNext = selected.value != Plan.NONE
+        enabledNext = selected.value != PricingPlan.NONE
     ) { padding ->
         PricingPlans(
             modifier = modifier.padding(padding),
@@ -76,7 +72,7 @@ fun ScheduleReturn.PricingUI(
 @Composable
 fun PricingUI(
     modifier: Modifier = Modifier,
-    plan: Plan = Plan.NONE,
+    plan: PricingPlan = PricingPlan.NONE,
     guest: Boolean = false,
 ) {
     val selected = remember { mutableStateOf(plan) }
@@ -100,15 +96,15 @@ fun PricingUI(
 @Composable
 private fun ChoosePlanPreview() {
     PricingUI(
-        plan = Plan.BRONZE,
+        plan = PricingPlan.BRONZE,
     )
 }
 
 @Composable
 private fun PricingPlans(
     modifier: Modifier = Modifier,
-    onClickPlan: (Plan) -> Unit,
-    selected: Plan = Plan.NONE,
+    onClickPlan: (PricingPlan) -> Unit,
+    selected: PricingPlan = PricingPlan.NONE,
     guest: Boolean = false,
     padding: PaddingValues = PaddingValues(0.dp),
 ) {
@@ -122,31 +118,31 @@ private fun PricingPlans(
     ) {
         item {
             BronzePlanButton(
-                onClick = { onClickPlan(Plan.BRONZE) },
-                selected = selected == Plan.BRONZE,
+                onClick = { onClickPlan(PricingPlan.BRONZE) },
+                selected = selected == PricingPlan.BRONZE,
                 modifier = Modifier.padding(vertical=6.dp),
             )
         }
         item {
             SilverPlanButton(
-                onClick = { onClickPlan(Plan.SILVER) },
-                selected = selected == Plan.SILVER,
+                onClick = { onClickPlan(PricingPlan.SILVER) },
+                selected = selected == PricingPlan.SILVER,
                 enabled = !guest,
                 modifier = Modifier.padding(vertical=6.dp),
             )
         }
         item {
             GoldPlanButton(
-                onClick = { onClickPlan(Plan.GOLD) },
-                selected = selected == Plan.GOLD,
+                onClick = { onClickPlan(PricingPlan.GOLD) },
+                selected = selected == PricingPlan.GOLD,
                 enabled = !guest,
                 modifier = Modifier.padding(vertical=6.dp),
             )
         }
         item {
             PlatinumPlanButton(
-                onClick = { onClickPlan(Plan.PLATINUM) },
-                selected = selected == Plan.PLATINUM,
+                onClick = { onClickPlan(PricingPlan.PLATINUM) },
+                selected = selected == PricingPlan.PLATINUM,
                 enabled = !guest,
                 modifier = Modifier.padding(vertical=6.dp),
             )

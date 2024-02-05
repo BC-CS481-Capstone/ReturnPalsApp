@@ -1,9 +1,17 @@
-package com.example.returnpals.composetools
+package com.example.returnpals
 
 import android.location.Address
 import java.time.LocalDate
 
 // TODO: develop backend
+
+enum class PricingPlan {
+    NONE, BRONZE, SILVER, GOLD, PLATINUM
+}
+
+enum class PickupMethod {
+    NONE, HANDOFF, DOORSTEP
+}
 
 data class PackageInfo(
     val label: String, // label is a filename
@@ -16,5 +24,5 @@ data class PickupInfo (
     var address: Address? = null,
     var method: PickupMethod? = null,
     var packages: HashMap<Int, PackageInfo> = hashMapOf(),
-    var pricing: Plan? = null,
+    var pricing: PricingPlan? = null,
 )
