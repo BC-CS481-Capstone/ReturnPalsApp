@@ -37,17 +37,16 @@ import com.example.returnpals.ScheduleReturn
 
 @Composable
 fun ScheduleReturn.PickupMethodUI(
-    navController: NavController,
     modifier: Modifier = Modifier,
-    method: PickupMethod = PickupMethod.NONE
+    navController: NavController? = null,
+    onChangeMethod: (PickupMethod) -> Unit = {},
+    method: PickupMethod? = null,
 ) {
-    val selected = remember { mutableStateOf(method) }
-
     ScheduleReturnScaffold(
         step = 2,
         onClickNext = { /*TODO: navigate to choose plan */ },
         onClickBack = { /*TODO: navigate to pickup address or pickup date */ },
-        enabledNext = selected.value != PickupMethod.NONE
+        enabledNext = method != null
     ) { padding ->
         Column(
             modifier = modifier
@@ -58,12 +57,9 @@ fun ScheduleReturn.PickupMethodUI(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             PickupMethods(
-                onClickMethod = {
-                    selected.value = it
-                    // TODO: send selected method to data layer
-                },
+                onClickMethod = onChangeMethod,
                 modifier = modifier,
-                selected = selected.value,
+                selected = method,
             )
         }
     }
@@ -72,7 +68,7 @@ fun ScheduleReturn.PickupMethodUI(
 @Composable
 fun PickupMethodUI(
     modifier: Modifier = Modifier,
-    method: PickupMethod = PickupMethod.NONE
+    method: PickupMethod? = null
 ) {
     val selected = remember { mutableStateOf(method) }
 
@@ -93,7 +89,7 @@ fun PickupMethodUI(
 @Preview(showBackground = true)
 @Composable
 private fun PickupMethodPreview() {
-    PickupMethodUI(
+    ScheduleReturn.PickupMethodUI(
         method = PickupMethod.DOORSTEP
     )
 }
@@ -102,7 +98,7 @@ private fun PickupMethodPreview() {
 private fun PickupMethods(
     onClickMethod: (PickupMethod) -> Unit,
     modifier: Modifier = Modifier,
-    selected: PickupMethod = PickupMethod.NONE
+    selected: PickupMethod? = null
 ) {
     Column(
         modifier = modifier

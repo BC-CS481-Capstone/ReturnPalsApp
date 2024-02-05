@@ -2,6 +2,7 @@ package com.example.returnpals.composetools
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -32,22 +34,27 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.returnpals.PackageInfo
+import com.example.returnpals.PackageLabelType
+import com.example.returnpals.ScheduleReturn
 
-// TODO: make table rows clickable/editable
-// TODO: remove description from table?
-// TODO: put images in add-label buttons
-// TODO: allow user to upload files (pop up ui) as shown in figma
+// TODO: RemoveLabelButton
+// TODO: EditDescriptionButton
+// TODO: put icons in add-label buttons
+// TODO: implement pop up ui for adding label
 
 /////////////////////////////////////////////////////////////////////////////
 // PUBLIC API
 ////////////////////
 
 @Composable
-fun PackagesUI(
-    navController: NavController,
-    packages: List<PackageInfo>,
+fun ScheduleReturn.PackagesUI(
+    packages: List<PackageInfo> = listOf(),
+    navController: NavController? = null,
+    onAddLabel: (PackageInfo) -> Unit = {},
+    onRemoveLabel: (ULong) -> Unit = {},
 ) {
-    val selected = remember { mutableStateOf(packages) }
+    val showDialogue: MutableState<Boolean> = remember { mutableStateOf(false) }
+    val dialogueType: MutableState<PackageLabelType?> = remember { mutableStateOf(null) }
 
     ScheduleReturnScaffold(
         step = 4,
@@ -85,8 +92,8 @@ fun PackagesUI(
                 AddLabelButton(
                     text = "Physical Label",
                     onClick = {
-                        /* TODO: upload physical label popup ui */
-                        // selected.value += label
+                        showDialogue.value = true
+                        dialogueType.value = PackageLabelType.PHYSICAL
                     },
                     modifier = Modifier.weight(1.0f)
                 )
@@ -94,8 +101,8 @@ fun PackagesUI(
                 AddLabelButton(
                     text = "Digital Label",
                     onClick = {
-                        /* TODO: upload digital label popup ui */
-                        // selected.value += label
+                        showDialogue.value = true
+                        dialogueType.value = PackageLabelType.DIGITAL
                     },
                     modifier = Modifier.weight(1.0f)
                 )
@@ -103,16 +110,20 @@ fun PackagesUI(
                 AddLabelButton(
                     text = "Amazon QR Code",
                     onClick = {
-                        /* TODO: upload qr code popup ui */
-                        // selected.value += qrcode
+                        showDialogue.value = true
+                        dialogueType.value = PackageLabelType.QRCODE
                     },
                     modifier = Modifier.weight(1.0f)
                 )
             }
             PackagesTable(
-                items = selected.value,
+                items = packages,
+                onClickItem = { onRemoveLabel(it.id) },
                 modifier = Modifier.fillMaxSize()
             )
+            if (showDialogue.value && dialogueType.value != null) {
+                AddLabelDialogue(dialogueType.value!!, onAddLabel)
+            }
         }
     }
 }
@@ -124,15 +135,27 @@ fun PackagesUI(
 @Preview(showBackground = true)
 @Composable
 private fun PackagesPreview() {
-//    PackagesUI(
-//        navController = ...,
-//        packages = listOf(
-//            PackageInfo(
-//                "Nordstrom.png",
-//                "Digital"
-//            )
-//        )
-//    )
+    ScheduleReturn.PackagesUI(
+        packages = listOf(
+            PackageInfo(
+                0u,
+                "Nordstrom.png",
+                PackageLabelType.DIGITAL,
+                "Digital"
+            )
+        )
+    )
+}
+
+@Composable
+private fun AddLabelDialogue(
+    type: PackageLabelType,
+    onAddLabel: (PackageInfo) -> Unit
+) {
+//    TODO: implement
+    onAddLabel(
+        PackageInfo(0u, "Nordstrom.png", type)
+    )
 }
 
 @Composable
@@ -157,6 +180,7 @@ private fun AddLabelButton(
 @Composable
 private fun PackagesTable(
     items: List<PackageInfo>,
+    onClickItem: (PackageInfo) -> Unit,
     modifier: Modifier = Modifier,
     horizontal: Alignment.Horizontal = Alignment.CenterHorizontally,
     vertical: Arrangement.Vertical = Arrangement.Top
@@ -184,23 +208,20 @@ private fun PackagesTable(
             }
         }
         // DATA ROWS
-        this.items(items) { item ->
-            Row {
+        this.items(
+            items = items,
+            key = { it.id }
+        ) {
+            Row(
+                Modifier.clickable(onClick = { onClickItem(it) })
+            ) {
                 Cell(
-                    text = item.label,
+                    text = it.label,
                     modifier = Modifier.weight(1.6f),
                 )
                 Cell(
-                    text = item.labelType,
+                    text = it.labelType.toString(),
                     modifier = Modifier.weight(1.0f),
-                )
-                Cell(
-                    text = if (item.description != null) {
-                            "${item.description}"
-                        } else {
-                            "--"
-                        },
-                    modifier = Modifier.weight(1.4f),
                 )
             }
             Divider(

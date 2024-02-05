@@ -29,7 +29,11 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import com.example.returnpals.PickupInfo
 import com.example.returnpals.PricingPlan
 import com.example.returnpals.ScheduleReturn
 
@@ -44,46 +48,52 @@ import com.example.returnpals.ScheduleReturn
  */
 @Composable
 fun ScheduleReturn.PricingUI(
-    navController: NavController,
     modifier: Modifier = Modifier,
-    plan: PricingPlan = PricingPlan.NONE,
+    navController: NavController? = null,
+    onChangePlan: (PricingPlan) -> Unit = {},
+    plan: PricingPlan? = null,
     guest: Boolean = false,
 ) {
-    val selected = remember { mutableStateOf(plan) }
-
     ScheduleReturnScaffold(
         step = 3,
         onClickNext = { /*TODO: navigate to package details */ },
         onClickBack = { /*TODO: navigate to pickup method */ },
-        enabledNext = selected.value != PricingPlan.NONE
+        enabledNext = plan != null
     ) { padding ->
         PricingPlans(
             modifier = modifier.padding(padding),
-            selected = selected.value,
-            onClickPlan = {
-                selected.value = it
-                // TODO: send selected plan to data layer
-            },
+            selected = plan,
+            onClickPlan = onChangePlan,
             guest = guest,
         )
     }
 }
 
+class PricingViewModel(init: PricingPlan) : ViewModel() {
+    private val _plan: MutableLiveData<PricingPlan>
+    val plan: LiveData<PricingPlan>
+
+    init {
+        _plan = MutableLiveData(init)
+        plan = _plan
+    }
+
+    fun onChangePlan(value: PricingPlan) {
+        _plan.value = value
+    }
+}
+
 @Composable
 fun PricingUI(
+    onChangePlan: (PricingPlan) -> Unit,
     modifier: Modifier = Modifier,
-    plan: PricingPlan = PricingPlan.NONE,
+    plan: PricingPlan? = null,
     guest: Boolean = false,
 ) {
-    val selected = remember { mutableStateOf(plan) }
-
     PricingPlans(
         modifier = modifier,
-        selected = selected.value,
-        onClickPlan = {
-            selected.value = it
-            // TODO: send selected plan to data layer 
-        },
+        selected = plan,
+        onClickPlan = onChangePlan,
         guest = guest,
     )
 }
@@ -95,8 +105,10 @@ fun PricingUI(
 @Preview(showBackground = true)
 @Composable
 private fun ChoosePlanPreview() {
-    PricingUI(
-        plan = PricingPlan.BRONZE,
+    val viewmodel = remember { PricingViewModel(PricingPlan.BRONZE) }
+    ScheduleReturn.PricingUI(
+        plan = viewmodel.plan.value,
+        onChangePlan = { viewmodel.onChangePlan(it) }
     )
 }
 
@@ -104,7 +116,7 @@ private fun ChoosePlanPreview() {
 private fun PricingPlans(
     modifier: Modifier = Modifier,
     onClickPlan: (PricingPlan) -> Unit,
-    selected: PricingPlan = PricingPlan.NONE,
+    selected: PricingPlan? = null,
     guest: Boolean = false,
     padding: PaddingValues = PaddingValues(0.dp),
 ) {

@@ -37,9 +37,9 @@ import java.time.LocalDate
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ScheduleReturn.PickupDateUI(
-    navController: NavController,
-    onChangeDate: (LocalDate) -> Unit,
     modifier: Modifier = Modifier,
+    navController: NavController? = null,
+    onChangeDate: (LocalDate) -> Unit = {},
     minDate: LocalDate = LocalDate.now(),
     maxDate: LocalDate = LocalDate.now().plusMonths(1),
     date: LocalDate = LocalDate.now(),
@@ -92,9 +92,7 @@ fun ScheduleReturn.PickupDateUI(
 @Preview(showBackground = true)
 @Composable
 private fun ChoosePlanPreview() {
-//    ScheduleReturn.PickupDateUI(
-//        navController = ...
-//    )
+    ScheduleReturn.PickupDateUI()
 }
 
 // currently not used, but may be useful in future

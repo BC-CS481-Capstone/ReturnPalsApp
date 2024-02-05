@@ -22,6 +22,7 @@ object ScheduleReturn {
     @RequiresApi(Build.VERSION_CODES.O)
     class ViewModel(init: PickupInfo) : androidx.lifecycle.ViewModel() {
 
+        private val idManager: IdManager = IdManager()
         private val _pickup: MutableLiveData<PickupInfo>
         val pickup: LiveData<PickupInfo>
 
@@ -43,12 +44,14 @@ object ScheduleReturn {
             _pickup.value!!.method = value
         }
 
-        fun onAddLabel(id: Int, value: PackageInfo) {
-            _pickup.value!!.packages[id] = value
+        fun onAddLabel(value: PackageInfo) {
+            val label = value.copy(id=idManager.allot())
+            _pickup.value!!.packages[label.id] = label
         }
 
-        fun onRemoveLabel(id: Int) {
+        fun onRemoveLabel(id: ULong) {
             _pickup.value!!.packages.remove(id)
+            idManager.free(id)
         }
 
         fun onChangePricingPlan(value: PricingPlan) {
