@@ -164,7 +164,7 @@ private fun PricingPlans(
 }
 
 @Composable
-private fun BronzePlanButton(
+fun BronzePlanButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     selected: Boolean = false,
@@ -181,7 +181,7 @@ private fun BronzePlanButton(
 }
 
 @Composable
-private fun SilverPlanButton(
+fun SilverPlanButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     selected: Boolean = false,
@@ -198,7 +198,7 @@ private fun SilverPlanButton(
 }
 
 @Composable
-private fun GoldPlanButton(
+fun GoldPlanButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     selected: Boolean = false,
@@ -215,7 +215,7 @@ private fun GoldPlanButton(
 }
 
 @Composable
-private fun PlatinumPlanButton(
+fun PlatinumPlanButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     selected: Boolean = false,
@@ -232,7 +232,7 @@ private fun PlatinumPlanButton(
 }
 
 @Composable
-private fun PricingPlanButton(
+fun PricingPlanButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     selected: Boolean = false,
@@ -271,7 +271,7 @@ private fun PricingPlanButton(
 }
 
 @Composable
-private fun SilverPlanText(modifier: Modifier = Modifier) {
+fun SilverPlanText(modifier: Modifier = Modifier) {
     Column(
         Modifier.offset(x=25.dp)
     ) {
@@ -313,7 +313,7 @@ private fun SilverPlanText(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun PlatinumPlanText(modifier: Modifier = Modifier) {
+fun PlatinumPlanText(modifier: Modifier = Modifier) {
     Column(
         Modifier.offset(x=25.dp)
     ) {
@@ -355,7 +355,7 @@ private fun PlatinumPlanText(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun GoldPlanText(modifier: Modifier = Modifier) {
+fun GoldPlanText(modifier: Modifier = Modifier) {
     Column(
         Modifier.offset(x=25.dp)
     ) {
@@ -397,7 +397,7 @@ private fun GoldPlanText(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun BronzePlanText(modifier: Modifier = Modifier) {
+fun BronzePlanText(modifier: Modifier = Modifier) {
     Column(
         Modifier.offset(x=25.dp)
     ) {
