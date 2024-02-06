@@ -62,8 +62,10 @@ fun ScheduleReturn(
                 navController = navController,
                 method = state.value.method,
             )
-        5 -> ScheduleReturn.PricingUI(
-                navController = navController,
+        5 -> PricingUI(
+                onClickNext = {},
+                onClickBack = {},
+                onChangePlan = {},
                 plan = state.value.pricing,
             )
         6 -> ScheduleReturn.PackagesUI(

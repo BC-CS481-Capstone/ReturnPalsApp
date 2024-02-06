@@ -50,17 +50,18 @@ import kotlinx.coroutines.flow.update
  * Draws the entire screen of the step "Choose PricingPlan" in the "Schedule a Return" process
  */
 @Composable
-fun ScheduleReturn.PricingUI(
+fun PricingUI(
     modifier: Modifier = Modifier,
-    navController: NavController? = null,
-    onChangePlan: (PricingPlan) -> Unit = {},
-    plan: PricingPlan? = null,
+    onChangePlan: (PricingPlan) -> Unit,
+    onClickNext: () -> Unit,
+    onClickBack: () -> Unit,
+    plan: PricingPlan?,
     guest: Boolean = false,
 ) {
     ScheduleReturnScaffold(
         step = 3,
-        onClickNext = { /*TODO: navigate to package details */ },
-        onClickBack = { /*TODO: navigate to pickup method */ },
+        onClickNext = onClickNext,
+        onClickBack = onClickBack,
         enabledNext = plan != null
     ) { padding ->
         Column(
@@ -97,8 +98,8 @@ class PricingViewModel(init: PricingPlan) : ViewModel() {
 @Composable
 fun PricingOptions(
     onClickPlan: (PricingPlan) -> Unit,
+    selected: PricingPlan?,
     modifier: Modifier = Modifier,
-    selected: PricingPlan? = null,
     guest: Boolean = false,
     padding: PaddingValues = PaddingValues(0.dp),
 ) {
@@ -201,10 +202,11 @@ private fun PricingPlanButton(
 @Preview(showBackground = true)
 @Composable
 private fun ChoosePlanPreview() {
-    val viewmodel = remember { PricingViewModel(PricingPlan.BRONZE) }
-    ScheduleReturn.PricingUI(
-        plan = viewmodel.plan.collectAsState().value,
-        onChangePlan = { viewmodel.onChangePlan(it) }
+    PricingUI(
+        plan = PricingPlan.BRONZE,
+        onChangePlan = {},
+        onClickNext = {},
+        onClickBack = {}
     )
 }
 
