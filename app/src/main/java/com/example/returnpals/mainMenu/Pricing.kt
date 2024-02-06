@@ -2,12 +2,14 @@ package com.example.returnpals.mainMenu
 
 
 import MainMenuScaffold
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.returnpals.PricingPlan
-import com.example.returnpals.composetools.PricingUI
+import com.example.returnpals.composetools.PricingOptions
 import com.example.returnpals.composetools.PricingViewModel
 
 
@@ -21,8 +23,9 @@ fun Pricing(navController: NavController) {
 @Composable
 fun PricingContent(navController: NavController) {
     val state = remember { PricingViewModel(PricingPlan.BRONZE) }
-    PricingUI(
-        plan = state.plan.collectAsState().value,
-        onChangePlan = { state.onChangePlan(it) },
+    PricingOptions(
+        selected = state.plan.collectAsState().value,
+        onClickPlan = { state.onChangePlan(it) },
+        modifier = Modifier.fillMaxSize()
     )
 }
