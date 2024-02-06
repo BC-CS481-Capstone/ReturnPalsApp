@@ -9,7 +9,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.createGraph
 import com.example.returnpals.composetools.dashboard.HomeDash
+import com.example.returnpals.composetools.dashboard.Label
 import com.example.returnpals.composetools.dashboard.Orders
+import com.example.returnpals.composetools.dashboard.PickupDetails
 import com.example.returnpals.composetools.dashboard.PickupProcess
 import com.example.returnpals.composetools.dashboard.Profile
 import com.example.returnpals.composetools.dashboard.SelectAddress
@@ -36,6 +38,8 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.Orders) { Orders(navController) }
         composable(MenuRoutes.PickupProcess) { PickupProcess(navController) }
         composable(MenuRoutes.SelectAddress) { SelectAddress(navController) }
+        composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }
+        composable(MenuRoutes.Label) { Label(navController) }
 
 
         // Add more destinations as needed
