@@ -20,12 +20,13 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.ScheduleReturn
 import com.example.returnpals.composetools.ButtonManager.DateSelector
+import com.example.returnpals.mainMenu.MenuRoutes
 import java.time.LocalDate
 
 // TODO: set position so that date selector doesn't move when month changes
@@ -38,15 +39,27 @@ import java.time.LocalDate
 @Composable
 fun ScheduleReturn.PickupDateUI(
     modifier: Modifier = Modifier,
-    navController: NavController? = null,
+    navController: NavController,
     onChangeDate: (LocalDate) -> Unit = {},
     minDate: LocalDate = LocalDate.now(),
     maxDate: LocalDate = LocalDate.now().plusMonths(1),
-    date: LocalDate = LocalDate.now(),
+    date: LocalDate = LocalDate.now().plusDays(2),
 ) {
     ScheduleReturnScaffold(
         step = 1,
-        onClickNext = { /*TODO: navigate to pickup method or pickup address */ },
+        onClickNext = {
+            navController?.navigate(MenuRoutes.SelectAddress) {
+                // Clear all the back stack up to the start destination and save state
+                popUpTo(navController.graph.findStartDestination().id) {
+                    saveState = true
+                }
+                // Avoid multiple copies of the same destination when reselecting the same item
+                launchSingleTop = true
+                // Restore state when navigating back to the composable
+                restoreState = true
+            }
+                      },
+
         onClickBack = { /*TODO: navigate to dashboard or pickup address */ },
         enabledNext = date > minDate && date < maxDate
     ) { padding ->
@@ -89,10 +102,10 @@ fun ScheduleReturn.PickupDateUI(
 ////////////////////
 
 @SuppressLint("NewApi")
-@Preview(showBackground = true)
+
 @Composable
-private fun ChoosePlanPreview() {
-    ScheduleReturn.PickupDateUI()
+private fun ChoosePlanPreview(navController : NavController) {
+    ScheduleReturn.PickupDateUI(navController = navController)
 }
 
 // currently not used, but may be useful in future

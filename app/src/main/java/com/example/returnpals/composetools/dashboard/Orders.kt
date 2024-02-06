@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -28,6 +29,7 @@ fun Orders(navController: NavController) {
     }
 }
 
+@Preview
 @Composable
 fun OrdersContent(){
     OrderTable()
@@ -57,7 +59,8 @@ fun OrderTable(){
     LazyColumn(
         Modifier
             .fillMaxSize()
-            .background(Brush.verticalGradient(colors = gradientColors)),
+            .background(Brush.verticalGradient(colors = gradientColors))
+            .padding(16.dp),
     ){
         item{
             Text(
