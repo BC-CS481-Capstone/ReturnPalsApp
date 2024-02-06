@@ -5,6 +5,8 @@ import androidx.navigation.NavController
 import com.example.returnpals.PickupMethod
 import com.example.returnpals.ScheduleReturn
 import com.example.returnpals.composetools.PickupMethodUI
+import com.example.returnpals.composetools.goto
+import com.example.returnpals.mainMenu.MenuRoutes
 
 @Composable
 fun PickupDetails(navController: NavController) {
@@ -12,6 +14,6 @@ fun PickupDetails(navController: NavController) {
         method = PickupMethod.DOORSTEP,
         onChangeMethod = {},
         onClickNext = {},
-        onClickBack = {}
+        onClickBack = { goto(navController, MenuRoutes.SelectAddress) }
     )
 }
