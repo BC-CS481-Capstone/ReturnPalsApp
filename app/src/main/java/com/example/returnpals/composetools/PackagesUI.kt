@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,6 +23,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -145,46 +147,38 @@ fun ScheduleReturn.PackagesUI(
 fun AddLabelContent(xButton:()->Unit,
                     addButton:(String, String)->Unit) {
     val config = getConfig()
-    Row(
-        Modifier
-            .size(width = (config.screenWidthDp - 10).dp, height = (config.screenHeightDp - 100).dp)
-            .background(color = getBackGroundColor(), shape = RoundedCornerShape(15))
-            .shadow(5.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center)
+    Column(
+        Modifier.fillMaxSize()
+            .padding(6.dp,50.dp)
+            .background(color = getBackGroundColor(), shape = RoundedCornerShape(10)),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween)
     {
-        Column(horizontalAlignment = Alignment.End) {
-            Text("X",
-                color = getBackGroundColor(),
-                fontWeight = FontWeight.Bold, fontSize = 16.sp)
-        }
-        Column(horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly)
-        {
-            Text("Add Digital Label",
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF052A42))
-            UploadReturnContent()
-            DescriptionContent()
-            ButtonManager.NextButton(
-                text = "Add Package",
-                onClick = { addButton("filename", "description") })
-        }
-        Column(horizontalAlignment = Alignment.Start) {
+        Row(Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.End) {
             Text("X",
                 Modifier.clickable(onClick = xButton),
                 color = getBlueIconColor(),
                 fontWeight = FontWeight.Bold, fontSize = 16.sp)
         }
+
+        Text("Add Digital Label",
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF052A42))
+        UploadReturnContent()
+        DescriptionContent()
+        ButtonManager.NextButton(
+            text = "Add Package",
+            onClick = { addButton("filename", "description") }
+        )
     }
 }
 
 @Composable
 fun UploadReturnContent() {
-    Column(horizontalAlignment = Alignment.Start){
+    Column(Modifier.fillMaxWidth().padding(5.dp).height(230.dp),horizontalAlignment = Alignment.Start){
         Text("Upload Return Label")
         Column(
-            Modifier
+            Modifier.fillMaxSize()
                 .background(color = Color(0x0F008BE7), shape = RoundedCornerShape(15))
                 //.border() // TODO add border dashed line
                 ,
@@ -202,7 +196,10 @@ fun UploadReturnContent() {
 fun DescriptionContent() {
     Column(horizontalAlignment = Alignment.Start){
         Text("Description")
-        TextField(value = "Label the item(s) inside: i.e 'laptop covers'", onValueChange = { })
+        TextField(value = "Label the item(s) inside: i.e 'laptop covers'",
+            onValueChange = { },
+            Modifier.height(100.dp)
+            )
     }
 }
 
