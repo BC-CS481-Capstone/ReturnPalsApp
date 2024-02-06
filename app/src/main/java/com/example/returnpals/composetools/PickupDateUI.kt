@@ -1,6 +1,7 @@
 package com.example.returnpals.composetools
 
 import android.annotation.SuppressLint
+import android.location.Address
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
@@ -43,15 +44,13 @@ fun PickupDateUI(
     onClickNext: () -> Unit,
     onClickBack: () -> Unit,
     modifier: Modifier = Modifier,
-    minDate: LocalDate? = null,
-    maxDate: LocalDate? = null,
+    isValidDate: (LocalDate) -> Boolean = { true },
 ) {
     ScheduleReturnScaffold(
         step = 1,
         onClickNext = onClickNext,
         onClickBack = onClickBack,
-        enabledNext = (minDate == null || date > minDate)
-                   && (maxDate == null || date < maxDate)
+        enabledNext = isValidDate(date)
     ) { padding ->
         Column(
             modifier = Modifier

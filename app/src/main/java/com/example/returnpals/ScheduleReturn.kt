@@ -44,12 +44,16 @@ fun ScheduleReturn(
     val confirm = ConfirmPickup()
     val thanks = ThankYou()
 
+    val minDate = LocalDate.now().minusDays(1)
+    val maxDate = LocalDate.now().plusMonths(2)
+
     when (step.intValue) {
         1 -> PickupDateUI(
                 date = state.value.date,
                 onChangeDate = { state.value.date = it },
                 onClickNext = { step.intValue++ },
                 onClickBack = { step.intValue-- },
+                isValidDate = { state.value.date > minDate && state.value.date < maxDate }
             )
         2 -> SelectAddressContent(
                 navController = navController,
@@ -60,26 +64,20 @@ fun ScheduleReturn(
                 onClickBack = {},
                 onChangeMethod = {},
             )
-        4 -> PickupMethodUI(
-                method = state.value.method,
-                onClickNext = {},
-                onClickBack = {},
-                onChangeMethod = {},
-            )
-        5 -> PricingUI(
+        4 -> PricingUI(
                 onClickNext = {},
                 onClickBack = {},
                 onChangePlan = {},
                 plan = state.value.pricing,
             )
-        6 -> PackagesUI(
+        5 -> PackagesUI(
                 packages = state.value.packages.values.toList(),
                 onAddLabel = {},
                 onRemoveLabel = {},
                 onClickNext = {},
                 onClickBack = {},
             )
-        7 -> confirm.drawConfirmPickup(
+        6 -> confirm.drawConfirmPickup(
                 typeOfPickup = state.value.method.toString(),
 //            TODO: change type of pickupDate parameter to LocalDate
 //               OR change type of PackageInfo.date to Calendar
@@ -89,7 +87,7 @@ fun ScheduleReturn(
                 backButton = { step.intValue-- },
                 promoButton = {}
             )
-        8 -> thanks.drawThankYouUI(
+        7 -> thanks.drawThankYouUI(
                 dashBoardButton = { /* TODO: navigate to dashboard */ },
             )
     }
