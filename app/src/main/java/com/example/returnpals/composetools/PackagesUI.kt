@@ -23,6 +23,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -195,7 +196,10 @@ fun UploadReturnContent() {
 fun DescriptionContent() {
     Column(horizontalAlignment = Alignment.Start){
         Text("Description")
-        TextField(value = "Label the item(s) inside: i.e 'laptop covers'", onValueChange = { })
+        TextField(value = "Label the item(s) inside: i.e 'laptop covers'",
+            onValueChange = { },
+            Modifier.height(100.dp)
+            )
     }
 }
 
