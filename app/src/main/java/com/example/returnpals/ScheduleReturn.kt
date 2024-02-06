@@ -72,9 +72,12 @@ fun ScheduleReturn(
                 onChangePlan = {},
                 plan = state.value.pricing,
             )
-        6 -> ScheduleReturn.PackagesUI(
-                navController = navController,
+        6 -> PackagesUI(
                 packages = state.value.packages.values.toList(),
+                onAddLabel = {},
+                onRemoveLabel = {},
+                onClickNext = {},
+                onClickBack = {},
             )
         7 -> confirm.drawConfirmPickup(
                 typeOfPickup = state.value.method.toString(),

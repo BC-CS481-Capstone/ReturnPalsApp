@@ -55,19 +55,20 @@ import com.example.returnpals.ScheduleReturn
 ////////////////////
 
 @Composable
-fun ScheduleReturn.PackagesUI(
-    packages: List<PackageInfo> = listOf(),
-    navController: NavController? = null,
-    onAddLabel: (PackageInfo) -> Unit = {},
-    onRemoveLabel: (Long) -> Unit = {},
+fun PackagesUI(
+    packages: List<PackageInfo>,
+    onAddLabel: (PackageInfo) -> Unit,
+    onRemoveLabel: (Long) -> Unit,
+    onClickNext: () -> Unit,
+    onClickBack: () -> Unit,
 ) {
     val showDialogue: MutableState<Boolean> = remember { mutableStateOf(false) }
     val dialogueType: MutableState<PackageLabelType?> = remember { mutableStateOf(null) }
 
     ScheduleReturnScaffold(
         step = 4,
-        onClickNext = { /*TODO: navigate to pay & confirm */ },
-        onClickBack = { /*TODO: navigate to choose plan */ },
+        onClickNext = onClickNext,
+        onClickBack = onClickBack,
         enabledNext = packages.isNotEmpty(),
     ) { padding ->
         Column(
@@ -210,7 +211,7 @@ fun DescriptionContent() {
 @Preview(showBackground = true)
 @Composable
 private fun PackagesPreview() {
-    ScheduleReturn.PackagesUI(
+    PackagesUI(
         packages = listOf(
             PackageInfo(
                 1,
@@ -218,7 +219,11 @@ private fun PackagesPreview() {
                 PackageLabelType.DIGITAL,
                 "Digital"
             )
-        )
+        ),
+        onAddLabel = {},
+        onRemoveLabel = {},
+        onClickNext = {},
+        onClickBack = {},
     )
 }
 
