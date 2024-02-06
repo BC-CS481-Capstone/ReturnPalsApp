@@ -50,7 +50,7 @@ class ThankYouTest {
         rule.setContent {
             ThankYou().drawThankYouUI(email = "david.caldwell@returnpal.ham") {}
         }
-        rule.onNodeWithText("A confirmation email will be sent to david.caldwell@returnpal.ham").assertIsDisplayed()
+        rule.onNodeWithText("A confirmation email will be sent to: david.caldwell@returnpal.ham").assertIsDisplayed()
     }
     @Test
     fun dashBoardButton() {
