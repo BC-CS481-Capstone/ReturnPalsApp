@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -173,10 +174,10 @@ fun AddLabelContent(xButton:()->Unit,
 
 @Composable
 fun UploadReturnContent() {
-    Column(horizontalAlignment = Alignment.Start){
+    Column(Modifier.fillMaxWidth().padding(5.dp).height(230.dp),horizontalAlignment = Alignment.Start){
         Text("Upload Return Label")
         Column(
-            Modifier.fillMaxWidth().padding(5.dp)
+            Modifier.fillMaxSize()
                 .background(color = Color(0x0F008BE7), shape = RoundedCornerShape(15))
                 //.border() // TODO add border dashed line
                 ,
