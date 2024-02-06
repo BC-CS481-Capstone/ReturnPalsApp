@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.returnpals.composetools.SilverPlanButton
+//import com.example.returnpals.composetools.SilverPlanButton
 
 
 @Composable
@@ -54,7 +54,7 @@ fun ProfileContent(){
 
             )
         )
-        SilverPlanButton(Modifier.padding(15.dp), onClick = { /*TODO*/ })
+       // SilverPlanButton(Modifier.padding(15.dp), onClick = { /*TODO*/ })
         Spacer(Modifier.padding(15.dp))
         Text(text = "Start Date:", style =TextStyle(fontSize = 20.sp))
         Text(text = getStartDate())

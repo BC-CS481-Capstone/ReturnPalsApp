@@ -1,63 +1,32 @@
 package com.example.returnpals.composetools.dashboard
 
-import DashboardMenuScaffold
-import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.example.returnpals.mainMenu.MenuRoutes
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.format.TextStyle
-import java.util.Locale
+import com.example.returnpals.ScheduleReturn
+import com.example.returnpals.composetools.PickupDateUI
 
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PickupProcess(navController: NavController) {
-    DashboardMenuScaffold(navController = navController) {
+   /* DashboardMenuScaffold(navController = navController) {
+        //PickupProcessContent(navController = navController)
         PickupProcessContent(navController = navController)
-    }
+    } */
+    PickupProcessContent(navController = navController)
 }
 
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PickupProcessContent(navController: NavController) {
-    WeekPickupCard(navController = navController)
+   // WeekPickupCard(navController = navController)
+    ScheduleReturn.PickupDateUI(navController = navController)
 }
 
-
+/*
 @Composable
 fun PickupCard(
     month: String,
@@ -200,3 +169,5 @@ fun WeekPickupCard(navController: NavController) {
         )
     }
 }
+
+ */
