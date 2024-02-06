@@ -5,15 +5,18 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -26,90 +29,148 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
+import com.example.returnpals.PricingPlan
+import com.example.returnpals.ScheduleReturn
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
-// TODO: Guest UI
+// TODO: guest message "sign up for more pricing options"
 
 /////////////////////////////////////////////////////////////////////////////
 // PUBLIC API
 ////////////////////
 
-enum class Plan {
-    NONE, BRONZE, SILVER, GOLD, PLATINUM
+/**
+ * Draws the entire screen of the step "Choose PricingPlan" in the "Schedule a Return" process
+ */
+@Composable
+fun ScheduleReturn.PricingUI(
+    modifier: Modifier = Modifier,
+    navController: NavController? = null,
+    onChangePlan: (PricingPlan) -> Unit = {},
+    plan: PricingPlan? = null,
+    guest: Boolean = false,
+) {
+    ScheduleReturnScaffold(
+        step = 3,
+        onClickNext = { /*TODO: navigate to package details */ },
+        onClickBack = { /*TODO: navigate to pickup method */ },
+        enabledNext = plan != null
+    ) { padding ->
+        PricingPlans(
+            modifier = modifier.padding(padding),
+            selected = plan,
+            onClickPlan = onChangePlan,
+            guest = guest,
+        )
+    }
+}
+
+class PricingViewModel(init: PricingPlan) : ViewModel() {
+    private val _plan: MutableStateFlow<PricingPlan>
+    val plan: StateFlow<PricingPlan>
+
+    init {
+        _plan = MutableStateFlow(init)
+        plan = _plan.asStateFlow()
+    }
+
+    fun onChangePlan(value: PricingPlan) {
+        _plan.update { value }
+    }
 }
 
 @Composable
 fun PricingUI(
+    onChangePlan: (PricingPlan) -> Unit,
     modifier: Modifier = Modifier,
-    onClickPlan: (Plan) -> Unit,
-    selected: Plan = Plan.NONE,
-    guest: Boolean = false
+    plan: PricingPlan? = null,
+    guest: Boolean = false,
 ) {
-    Column(
+    PricingPlans(
+        modifier = modifier,
+        selected = plan,
+        onClickPlan = onChangePlan,
+        guest = guest,
+    )
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// PRIVATE API
+////////////////////
+
+@Preview(showBackground = true)
+@Composable
+private fun ChoosePlanPreview() {
+    val viewmodel = remember { PricingViewModel(PricingPlan.BRONZE) }
+    ScheduleReturn.PricingUI(
+        plan = viewmodel.plan.collectAsState().value,
+        onChangePlan = { viewmodel.onChangePlan(it) }
+    )
+}
+
+@Composable
+private fun PricingPlans(
+    modifier: Modifier = Modifier,
+    onClickPlan: (PricingPlan) -> Unit,
+    selected: PricingPlan? = null,
+    guest: Boolean = false,
+    padding: PaddingValues = PaddingValues(0.dp),
+) {
+    LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = modifier.fillMaxSize().scale(1.25f)
+        contentPadding = padding,
+        modifier = modifier
+            .fillMaxSize()
+            .scale(1.25f)
     ) {
-        Spacer(Modifier.height(10.dp))
-        BronzePlanButton(
-            onClick = { onClickPlan(Plan.BRONZE) },
-            selected = selected == Plan.BRONZE
-        )
-        Spacer(Modifier.height(10.dp))
-        SilverPlanButton(
-            onClick = { onClickPlan(Plan.SILVER) },
-            selected = selected == Plan.SILVER,
-            enabled = !guest
-        )
-        Spacer(Modifier.height(10.dp))
-        GoldPlanButton(
-            onClick = { onClickPlan(Plan.GOLD) },
-            selected = selected == Plan.GOLD,
-            enabled = !guest
-        )
-        Spacer(Modifier.height(10.dp))
-        PlatinumPlanButton(
-            onClick = { onClickPlan(Plan.PLATINUM) },
-            selected = selected == Plan.PLATINUM,
-            enabled = !guest
-        )
-    }
-}
-
-/**
- * Draws the entire screen of the step "Choose Plan" in the "Schedule a Return" process
- */
-@Composable
-fun ChoosePlanUI(
-    modifier: Modifier = Modifier,
-    onClickNext: () -> Unit,
-    onClickBack: () -> Unit,
-    onClickPlan: (Plan) -> Unit,
-    selected: Plan = Plan.NONE,
-    guest: Boolean = false
-) {
-    ScheduleReturnScaffold(
-        step = 3,
-        onClickNext = onClickNext,
-        onClickBack = onClickBack,
-        enabledNext = selected != Plan.NONE
-    ) { padding ->
-        PricingUI(
-            modifier = modifier.padding(padding),
-            onClickPlan = onClickPlan,
-            selected = selected,
-            guest = guest
-        )
+        item {
+            BronzePlanButton(
+                onClick = { onClickPlan(PricingPlan.BRONZE) },
+                selected = selected == PricingPlan.BRONZE,
+                modifier = Modifier.padding(vertical=6.dp),
+            )
+        }
+        item {
+            SilverPlanButton(
+                onClick = { onClickPlan(PricingPlan.SILVER) },
+                selected = selected == PricingPlan.SILVER,
+                enabled = !guest,
+                modifier = Modifier.padding(vertical=6.dp),
+            )
+        }
+        item {
+            GoldPlanButton(
+                onClick = { onClickPlan(PricingPlan.GOLD) },
+                selected = selected == PricingPlan.GOLD,
+                enabled = !guest,
+                modifier = Modifier.padding(vertical=6.dp),
+            )
+        }
+        item {
+            PlatinumPlanButton(
+                onClick = { onClickPlan(PricingPlan.PLATINUM) },
+                selected = selected == PricingPlan.PLATINUM,
+                enabled = !guest,
+                modifier = Modifier.padding(vertical=6.dp),
+            )
+        }
     }
 }
 
 @Composable
-fun BronzePlanButton(
+private fun BronzePlanButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     selected: Boolean = false,
     enabled: Boolean = true
 ) {
-    PlanButton(
+    PricingPlanButton(
         modifier = modifier,
         onClick = onClick,
         selected = selected,
@@ -120,13 +181,13 @@ fun BronzePlanButton(
 }
 
 @Composable
-fun SilverPlanButton(
+private fun SilverPlanButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     selected: Boolean = false,
     enabled: Boolean = true
 ) {
-    PlanButton(
+    PricingPlanButton(
         modifier = modifier,
         onClick = onClick,
         selected = selected,
@@ -137,13 +198,13 @@ fun SilverPlanButton(
 }
 
 @Composable
-fun GoldPlanButton(
+private fun GoldPlanButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     selected: Boolean = false,
     enabled: Boolean = true
 ) {
-    PlanButton(
+    PricingPlanButton(
         modifier = modifier,
         onClick = onClick,
         selected = selected,
@@ -154,13 +215,13 @@ fun GoldPlanButton(
 }
 
 @Composable
-fun PlatinumPlanButton(
+private fun PlatinumPlanButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     selected: Boolean = false,
     enabled: Boolean = true
 ) {
-    PlanButton(
+    PricingPlanButton(
         modifier = modifier,
         onClick = onClick,
         selected = selected,
@@ -170,28 +231,8 @@ fun PlatinumPlanButton(
     }
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// PRIVATE API
-////////////////////
-
-@Preview(showBackground = true)
 @Composable
-private fun ChoosePlanPreview() {
-//    PricingUI(
-//        onClickPlan = {},
-//        selected = Plan.BRONZE,
-//    )
-
-    ChoosePlanUI(
-        onClickNext = {},
-        onClickBack = {},
-        onClickPlan = {},
-        selected = Plan.BRONZE,
-    )
-}
-
-@Composable
-private fun PlanButton(
+private fun PricingPlanButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     selected: Boolean = false,
@@ -407,7 +448,7 @@ private fun GuestSignUpButton(
         isStructured = false,
         modifier = modifier
     ) {
-        PlanButton(
+        PricingPlanButton(
             onTap = onTap,
             modifier = Modifier.boxAlign(
                 alignment = Alignment.Center,

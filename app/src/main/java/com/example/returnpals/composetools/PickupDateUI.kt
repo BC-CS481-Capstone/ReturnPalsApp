@@ -2,7 +2,6 @@ package com.example.returnpals.composetools
 
 import android.annotation.SuppressLint
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
@@ -14,10 +13,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,42 +23,32 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.returnpals.ScheduleReturn
 import com.example.returnpals.composetools.ButtonManager.DateSelector
 import java.time.LocalDate
 
 // TODO: set position so that date selector doesn't move when month changes
 
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-fun TestPickupDateUI() {
-    var date: LocalDate by remember { mutableStateOf(LocalDate.now()) }
-
-    PickupDateUI(
-        date = date,
-        onChangeDate = { value -> date = value },
-        onClickNext = { Log.println(Log.INFO,"Next","") },
-        onClickBack = { Log.println(Log.INFO,"Back","") },
-    )
-}
+/////////////////////////////////////////////////////////////////////////////
+// PUBLIC API
+////////////////////
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun PickupDateUI(
-    date: LocalDate,
+fun ScheduleReturn.PickupDateUI(
     modifier: Modifier = Modifier,
-    onClickNext: () -> Unit,
-    onClickBack: () -> Unit,
-    onChangeDate: (LocalDate) -> Unit,
+    navController: NavController? = null,
+    onChangeDate: (LocalDate) -> Unit = {},
+    minDate: LocalDate = LocalDate.now(),
+    maxDate: LocalDate = LocalDate.now().plusMonths(1),
+    date: LocalDate = LocalDate.now(),
 ) {
-    val dateMin = LocalDate.now()
-    // you can schedule up to 30 days ahead of time
-    val dateMax = dateMin.plusDays(30)
-
     ScheduleReturnScaffold(
         step = 1,
-        onClickNext = onClickNext,
-        onClickBack = onClickBack,
-        enabledNext = date > dateMin && date < dateMax
+        onClickNext = { /*TODO: navigate to pickup method or pickup address */ },
+        onClickBack = { /*TODO: navigate to dashboard or pickup address */ },
+        enabledNext = date > minDate && date < maxDate
     ) { padding ->
         Column(
             modifier = Modifier
@@ -81,7 +66,6 @@ fun PickupDateUI(
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.secondary,
             )
-
             Text(
                 modifier = Modifier.padding(20.dp, 0.dp),
                 text = "When should we pickup your package?",
@@ -89,7 +73,6 @@ fun PickupDateUI(
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.secondary,
             )
-
             DateSelector(
                 date = date,
                 onChangeDate = onChangeDate,
@@ -99,6 +82,17 @@ fun PickupDateUI(
             )
         }
     }
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// PRIVATE API
+////////////////////
+
+@SuppressLint("NewApi")
+@Preview(showBackground = true)
+@Composable
+private fun ChoosePlanPreview() {
+    ScheduleReturn.PickupDateUI()
 }
 
 // currently not used, but may be useful in future
@@ -158,16 +152,4 @@ private fun DateUI(
             )
         }
     }
-}
-
-@SuppressLint("NewApi")
-@Preview(showBackground = true)
-@Composable
-private fun ChoosePlanPreview() {
-    PickupDateUI(
-        date = LocalDate.now(),
-        onClickNext = {},
-        onClickBack = {},
-        onChangeDate = {}
-    )
 }
