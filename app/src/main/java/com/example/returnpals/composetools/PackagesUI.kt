@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.returnpals.PackageInfo
 import com.example.returnpals.PackageLabelType
@@ -127,14 +128,22 @@ fun ScheduleReturn.PackagesUI(
                 modifier = Modifier.fillMaxSize()
             )
             if (showDialogue.value && dialogueType.value != null) {
-                AddLabelDialogue(dialogueType.value!!, onAddLabel)
+                AddLabelDialogue(
+                    type = dialogueType.value!!,
+                    onAddLabel = { label ->
+                        showDialogue.value = false
+                        onAddLabel(label)
+                    },
+                    onCancel = { showDialogue.value = false }
+                )
             }
         }
     }
 }
+
 @Composable
 fun AddLabelContent(xButton:()->Unit,
-                    addButton:()->Unit) {
+                    addButton:(String, String)->Unit) {
     val config = getConfig()
     Row(
         Modifier
@@ -157,7 +166,9 @@ fun AddLabelContent(xButton:()->Unit,
                 color = Color(0xFF052A42))
             UploadReturnContent()
             DescriptionContent()
-            ButtonManager.NextButton(text = "Add Package",onClick = addButton)
+            ButtonManager.NextButton(
+                text = "Add Package",
+                onClick = { addButton("filename", "description") })
         }
         Column(horizontalAlignment = Alignment.Start) {
             Text("X",
@@ -167,6 +178,7 @@ fun AddLabelContent(xButton:()->Unit,
         }
     }
 }
+
 @Composable
 fun UploadReturnContent() {
     Column(horizontalAlignment = Alignment.Start){
@@ -185,6 +197,7 @@ fun UploadReturnContent() {
         }
     }
 }
+
 @Composable
 fun DescriptionContent() {
     Column(horizontalAlignment = Alignment.Start){
@@ -215,12 +228,17 @@ private fun PackagesPreview() {
 @Composable
 private fun AddLabelDialogue(
     type: PackageLabelType,
-    onAddLabel: (PackageInfo) -> Unit
+    onAddLabel: (PackageInfo) -> Unit,
+    onCancel: () -> Unit,
 ) {
-//    TODO: implement
-    onAddLabel(
-        PackageInfo(0, "Nordstrom.png", type)
-    )
+    Dialog(onDismissRequest = { /*TODO*/ }) {
+        AddLabelContent(
+            xButton = onCancel,
+            addButton = { filename, description ->
+                onAddLabel(PackageInfo(0, filename, type, description))
+            }
+        )
+    }
 }
 
 @Composable
