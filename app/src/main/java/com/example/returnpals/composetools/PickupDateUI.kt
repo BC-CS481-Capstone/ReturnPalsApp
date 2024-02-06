@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -36,19 +37,21 @@ import java.time.LocalDate
 ////////////////////
 
 @Composable
-fun ScheduleReturn.PickupDateUI(
-    navController: NavController,
+fun PickupDateUI(
+    date: LocalDate,
+    onChangeDate: (LocalDate) -> Unit,
+    onClickNext: () -> Unit,
+    onClickBack: () -> Unit,
     modifier: Modifier = Modifier,
-    onChangeDate: (LocalDate) -> Unit = {},
-    minDate: LocalDate = LocalDate.now().minusDays(1),
-    maxDate: LocalDate = LocalDate.now().plusMonths(1),
-    date: LocalDate = LocalDate.now(),
+    minDate: LocalDate? = null,
+    maxDate: LocalDate? = null,
 ) {
     ScheduleReturnScaffold(
         step = 1,
-        onClickNext = { goto(navController, MenuRoutes.SelectAddress) },
-        onClickBack = { goto(navController, MenuRoutes.HomeDash) },
-        enabledNext = date > minDate && date < maxDate
+        onClickNext = onClickNext,
+        onClickBack = onClickBack,
+        enabledNext = (minDate == null || date > minDate)
+                   && (maxDate == null || date < maxDate)
     ) { padding ->
         Column(
             modifier = Modifier
@@ -88,11 +91,15 @@ fun ScheduleReturn.PickupDateUI(
 // PRIVATE API
 ////////////////////
 
-@SuppressLint("NewApi")
-
+@Preview
 @Composable
-private fun ChoosePlanPreview(navController : NavController) {
-    ScheduleReturn.PickupDateUI(navController = navController)
+private fun ChoosePlanPreview() {
+    PickupDateUI(
+        date = LocalDate.now(),
+        onChangeDate = {},
+        onClickNext = {},
+        onClickBack = {},
+    )
 }
 
 // currently not used, but may be useful in future

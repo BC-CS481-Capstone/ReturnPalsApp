@@ -45,11 +45,11 @@ fun ScheduleReturn(
     val thanks = ThankYou()
 
     when (step.intValue) {
-        1 -> ScheduleReturn.PickupDateUI(
-                navController = navController,
+        1 -> PickupDateUI(
                 date = state.value.date,
-//                onClickNext = { step.intValue++ },
-//                onClickBack = { step.intValue-- },
+                onChangeDate = { state.value.date = it },
+                onClickNext = { step.intValue++ },
+                onClickBack = { step.intValue-- },
             )
         2 -> SelectAddressContent(
                 navController = navController,
