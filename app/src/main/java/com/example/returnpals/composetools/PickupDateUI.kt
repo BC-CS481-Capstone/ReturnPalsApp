@@ -35,32 +35,19 @@ import java.time.LocalDate
 // PUBLIC API
 ////////////////////
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ScheduleReturn.PickupDateUI(
-    modifier: Modifier = Modifier,
     navController: NavController,
+    modifier: Modifier = Modifier,
     onChangeDate: (LocalDate) -> Unit = {},
-    minDate: LocalDate = LocalDate.now(),
+    minDate: LocalDate = LocalDate.now().minusDays(1),
     maxDate: LocalDate = LocalDate.now().plusMonths(1),
-    date: LocalDate = LocalDate.now().plusDays(2),
+    date: LocalDate = LocalDate.now(),
 ) {
     ScheduleReturnScaffold(
         step = 1,
-        onClickNext = {
-            navController?.navigate(MenuRoutes.SelectAddress) {
-                // Clear all the back stack up to the start destination and save state
-                popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
-                }
-                // Avoid multiple copies of the same destination when reselecting the same item
-                launchSingleTop = true
-                // Restore state when navigating back to the composable
-                restoreState = true
-            }
-                      },
-
-        onClickBack = { /*TODO: navigate to dashboard or pickup address */ },
+        onClickNext = { goto(navController, MenuRoutes.SelectAddress) },
+        onClickBack = { goto(navController, MenuRoutes.HomeDash) },
         enabledNext = date > minDate && date < maxDate
     ) { padding ->
         Column(

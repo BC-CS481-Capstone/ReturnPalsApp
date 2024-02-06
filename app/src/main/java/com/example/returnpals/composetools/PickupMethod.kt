@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.returnpals.PickupMethod
 import com.example.returnpals.ScheduleReturn
+import com.example.returnpals.mainMenu.MenuRoutes
 
 /////////////////////////////////////////////////////////////////////////////
 // PUBLIC API
@@ -37,15 +38,15 @@ import com.example.returnpals.ScheduleReturn
 
 @Composable
 fun ScheduleReturn.PickupMethodUI(
+    navController: NavController,
     modifier: Modifier = Modifier,
-    navController: NavController? = null,
     onChangeMethod: (PickupMethod) -> Unit = {},
     method: PickupMethod? = null,
 ) {
     ScheduleReturnScaffold(
         step = 2,
         onClickNext = { /*TODO: navigate to choose plan */ },
-        onClickBack = { /*TODO: navigate to pickup address or pickup date */ },
+        onClickBack = { goto(navController, MenuRoutes.SelectAddress) },
         enabledNext = method != null
     ) { padding ->
         Column(
@@ -89,9 +90,9 @@ fun PickupMethodUI(
 @Preview(showBackground = true)
 @Composable
 private fun PickupMethodPreview() {
-    ScheduleReturn.PickupMethodUI(
-        method = PickupMethod.DOORSTEP
-    )
+//    ScheduleReturn.PickupMethodUI(
+//        method = PickupMethod.DOORSTEP
+//    )
 }
 
 @Composable
