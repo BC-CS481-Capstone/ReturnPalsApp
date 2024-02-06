@@ -150,12 +150,15 @@ fun AddLabelContent(xButton:()->Unit,
             .padding(6.dp,50.dp)
             .background(color = getBackGroundColor(), shape = RoundedCornerShape(10)),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceEvenly)
+        verticalArrangement = Arrangement.SpaceBetween)
     {
-        Text("X",
-            Modifier.clickable(onClick = xButton),
-            color = getBlueIconColor(),
-            fontWeight = FontWeight.Bold, fontSize = 16.sp)
+        Row(Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.End) {
+            Text("X",
+                Modifier.clickable(onClick = xButton),
+                color = getBlueIconColor(),
+                fontWeight = FontWeight.Bold, fontSize = 16.sp)
+        }
+
         Text("Add Digital Label",
             fontWeight = FontWeight.Bold,
             color = Color(0xFF052A42))
