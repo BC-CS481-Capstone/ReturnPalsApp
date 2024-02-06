@@ -1,4 +1,4 @@
-package com.example.returnpals.dashboard
+package com.example.returnpals.composetools.dashboard
 
 import DashboardMenuScaffold
 import androidx.compose.foundation.Canvas
@@ -48,6 +48,8 @@ fun SelectAddress(navController: NavController) {
 @Composable
 fun SelectAddressContent() {
     val customColor = Color(0xFFE1F6FF)
+    var selectedAddress by remember { mutableStateOf<AddressItem?>(null) }
+
 
     LazyColumn(
         modifier = Modifier
@@ -59,7 +61,27 @@ fun SelectAddressContent() {
 
         item { AddressInfo() }
 
-        item{ AddressSelectionScreen()}
+        item {
+            AddressSelectionScreen(onAddressSelected = { address ->
+                selectedAddress = address
+            })
+        }
+
+        item {
+                Row {
+
+                    Button(
+                        onClick = {
+                            // Handle click event
+                        },
+                        enabled = selectedAddress != null,
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Text("Next")
+                    }
+
+                }
+        }
     }
 }
 
@@ -132,7 +154,7 @@ fun AddressItemComposable(addressItem: AddressItem, isSelected: Boolean, onSelec
 }
 
 @Composable
-fun AddressSelectionScreen() {
+fun AddressSelectionScreen(onAddressSelected: (AddressItem?) -> Unit) {
     val addresses = remember { mutableStateListOf(
         AddressItem(1, "123 Your Address One"),
         AddressItem(2, "456 Your Address Two")
@@ -143,7 +165,10 @@ fun AddressSelectionScreen() {
     // Function to add a new address
     val addNewAddress: (String) -> Unit = { newAddress: String ->
         val newId = (addresses.maxOfOrNull { it.id } ?: 0) + 1
-        addresses.add(AddressItem(newId, newAddress))
+        val newAddressItem = AddressItem(newId, newAddress)
+        addresses.add(newAddressItem)
+        selectedAddress = newAddressItem  // Optionally auto-select the new address
+        onAddressSelected(newAddressItem) // Notify the parent composable
     }
 
     Column {
@@ -151,7 +176,10 @@ fun AddressSelectionScreen() {
             AddressItemComposable(
                 addressItem = addressItem,
                 isSelected = addressItem == selectedAddress,
-                onSelect = { selectedAddress = it }
+                onSelect = {
+                    selectedAddress = it
+                    onAddressSelected(it)
+                }
             )
         }
 
@@ -191,3 +219,6 @@ fun AddAddress(onAddAddress: (String) -> Unit) {
         }
     }
 }
+
+
+
