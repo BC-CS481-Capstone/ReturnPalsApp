@@ -141,7 +141,8 @@ fun AddLabelContent(xButton:()->Unit,
             .size(width = (config.screenWidthDp - 10).dp, height = (config.screenHeightDp - 100).dp)
             .background(color = getBackGroundColor(), shape = RoundedCornerShape(15))
             .shadow(5.dp),
-        verticalAlignment = Alignment.Top)
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center)
     {
         Column(horizontalAlignment = Alignment.End) {
             Text("X",
@@ -158,7 +159,7 @@ fun AddLabelContent(xButton:()->Unit,
             DescriptionContent()
             ButtonManager.NextButton(text = "Add Package",onClick = addButton)
         }
-        Column(horizontalAlignment = Alignment.End) {
+        Column(horizontalAlignment = Alignment.Start) {
             Text("X",
                 Modifier.clickable(onClick = xButton),
                 color = getBlueIconColor(),
@@ -172,15 +173,15 @@ fun UploadReturnContent() {
         Text("Upload Return Label")
         Column(
             Modifier
-                .background(color = Color(0xFF008BE7), shape = RoundedCornerShape(15))
+                .background(color = Color(0x0F008BE7), shape = RoundedCornerShape(15))
                 //.border() // TODO add border dashed line
-                .fillMaxWidth(),
+                ,
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         )
         {
             IconManager().getFileIcon(modifier = Modifier.size(width=100.dp,height=100.dp))
-            Text("Drag label here or browse files") //TODO Add composable string to change browse files color to blue
+            Text(" Drag label here or browse files ") //TODO Add composable string to change browse files color to blue
         }
     }
 }
@@ -188,7 +189,7 @@ fun UploadReturnContent() {
 fun DescriptionContent() {
     Column(horizontalAlignment = Alignment.Start){
         Text("Description")
-        TextField(value = "Label the item(s) inside: i.e 'laptop covers'", onValueChange = { },Modifier.fillMaxWidth())
+        TextField(value = "Label the item(s) inside: i.e 'laptop covers'", onValueChange = { })
     }
 }
 
@@ -216,11 +217,10 @@ private fun AddLabelDialogue(
     type: PackageLabelType,
     onAddLabel: (PackageInfo) -> Unit
 ) {
-    AddLabelContent(xButton = { /*TODO*/ }) {
-        onAddLabel(
-            PackageInfo(0, "Nordstrom.png", type)
-        )
-    }
+//    TODO: implement
+    onAddLabel(
+        PackageInfo(0, "Nordstrom.png", type)
+    )
 }
 
 @Composable
