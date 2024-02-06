@@ -145,36 +145,26 @@ fun ScheduleReturn.PackagesUI(
 fun AddLabelContent(xButton:()->Unit,
                     addButton:(String, String)->Unit) {
     val config = getConfig()
-    Row(
+    Column(
         Modifier
-            .size(width = (config.screenWidthDp - 10).dp, height = (config.screenHeightDp - 100).dp)
-            .background(color = getBackGroundColor(), shape = RoundedCornerShape(15)),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center)
+            .size(width = (config.screenWidthDp - 6).dp, height = (config.screenHeightDp - 100).dp)
+            .background(color = getBackGroundColor(), shape = RoundedCornerShape(10)),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center)
     {
-        Column(horizontalAlignment = Alignment.End) {
-            Text("X",
-                color = getBackGroundColor(),
-                fontWeight = FontWeight.Bold, fontSize = 16.sp)
-        }
-        Column(horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly)
-        {
-            Text("Add Digital Label",
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF052A42))
-            UploadReturnContent()
-            DescriptionContent()
-            ButtonManager.NextButton(
-                text = "Add Package",
-                onClick = { addButton("filename", "description") })
-        }
-        Column(horizontalAlignment = Alignment.Start) {
-            Text("X",
-                Modifier.clickable(onClick = xButton),
-                color = getBlueIconColor(),
-                fontWeight = FontWeight.Bold, fontSize = 16.sp)
-        }
+        Text("X",
+            Modifier.clickable(onClick = xButton),
+            color = getBlueIconColor(),
+            fontWeight = FontWeight.Bold, fontSize = 16.sp)
+        Text("Add Digital Label",
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF052A42))
+        UploadReturnContent()
+        DescriptionContent()
+        ButtonManager.NextButton(
+            text = "Add Package",
+            onClick = { addButton("filename", "description") }
+        )
     }
 }
 
