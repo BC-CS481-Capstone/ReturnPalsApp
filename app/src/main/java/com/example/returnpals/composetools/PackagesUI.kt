@@ -146,11 +146,11 @@ fun AddLabelContent(xButton:()->Unit,
                     addButton:(String, String)->Unit) {
     val config = getConfig()
     Column(
-        Modifier
-            .size(width = (config.screenWidthDp - 6).dp, height = (config.screenHeightDp - 100).dp)
+        Modifier.fillMaxSize()
+            .padding(6.dp,50.dp)
             .background(color = getBackGroundColor(), shape = RoundedCornerShape(10)),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center)
+        verticalArrangement = Arrangement.SpaceEvenly)
     {
         Text("X",
             Modifier.clickable(onClick = xButton),
@@ -173,7 +173,7 @@ fun UploadReturnContent() {
     Column(horizontalAlignment = Alignment.Start){
         Text("Upload Return Label")
         Column(
-            Modifier
+            Modifier.fillMaxWidth().padding(5.dp)
                 .background(color = Color(0x0F008BE7), shape = RoundedCornerShape(15))
                 //.border() // TODO add border dashed line
                 ,
