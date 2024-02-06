@@ -6,10 +6,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
+import com.example.returnpals.composetools.PickupMethodUI
 import com.example.returnpals.composetools.ConfirmPickup
 import com.example.returnpals.composetools.PackagesUI
 import com.example.returnpals.composetools.PickupDateUI
-import com.example.returnpals.composetools.PickupMethodUI
 import com.example.returnpals.composetools.PricingUI
 import com.example.returnpals.composetools.ThankYou
 import com.example.returnpals.composetools.dashboard.SelectAddressContent
@@ -54,13 +54,17 @@ fun ScheduleReturn(
         2 -> SelectAddressContent(
                 navController = navController,
             )
-        3 -> ScheduleReturn.PickupMethodUI(
-                navController = navController,
+        3 -> PickupMethodUI(
                 method = state.value.method,
+                onClickNext = {},
+                onClickBack = {},
+                onChangeMethod = {},
             )
-        4 -> ScheduleReturn.PickupMethodUI(
-                navController = navController,
+        4 -> PickupMethodUI(
                 method = state.value.method,
+                onClickNext = {},
+                onClickBack = {},
+                onChangeMethod = {},
             )
         5 -> PricingUI(
                 onClickNext = {},
