@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,13 +21,16 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -127,6 +132,65 @@ fun ScheduleReturn.PackagesUI(
         }
     }
 }
+@Composable
+fun AddLabelContent(xButton:()->Unit,
+                    addButton:()->Unit) {
+    val config = getConfig()
+    Row(
+        Modifier
+            .size(width = (config.screenWidthDp - 10).dp, height = (config.screenHeightDp - 100).dp)
+            .background(color = getBackGroundColor(), shape = RoundedCornerShape(15))
+            .shadow(5.dp),
+        verticalAlignment = Alignment.Top)
+    {
+        Column(horizontalAlignment = Alignment.End) {
+            Text("X",
+                color = getBackGroundColor(),
+                fontWeight = FontWeight.Bold, fontSize = 16.sp)
+        }
+        Column(horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly)
+        {
+            Text("Add Digital Label",
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF052A42))
+            UploadReturnContent()
+            DescriptionContent()
+            ButtonManager.NextButton(text = "Add Package",onClick = addButton)
+        }
+        Column(horizontalAlignment = Alignment.End) {
+            Text("X",
+                Modifier.clickable(onClick = xButton),
+                color = getBlueIconColor(),
+                fontWeight = FontWeight.Bold, fontSize = 16.sp)
+        }
+    }
+}
+@Composable
+fun UploadReturnContent() {
+    Column(horizontalAlignment = Alignment.Start){
+        Text("Upload Return Label")
+        Column(
+            Modifier
+                .background(color = Color(0xFF008BE7), shape = RoundedCornerShape(15))
+                //.border() // TODO add border dashed line
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        )
+        {
+            IconManager().getFileIcon(modifier = Modifier.size(width=100.dp,height=100.dp))
+            Text("Drag label here or browse files") //TODO Add composable string to change browse files color to blue
+        }
+    }
+}
+@Composable
+fun DescriptionContent() {
+    Column(horizontalAlignment = Alignment.Start){
+        Text("Description")
+        TextField(value = "Label the item(s) inside: i.e 'laptop covers'", onValueChange = { },Modifier.fillMaxWidth())
+    }
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // PRIVATE API
@@ -152,10 +216,11 @@ private fun AddLabelDialogue(
     type: PackageLabelType,
     onAddLabel: (PackageInfo) -> Unit
 ) {
-//    TODO: implement
-    onAddLabel(
-        PackageInfo(0, "Nordstrom.png", type)
-    )
+    AddLabelContent(xButton = { /*TODO*/ }) {
+        onAddLabel(
+            PackageInfo(0, "Nordstrom.png", type)
+        )
+    }
 }
 
 @Composable
