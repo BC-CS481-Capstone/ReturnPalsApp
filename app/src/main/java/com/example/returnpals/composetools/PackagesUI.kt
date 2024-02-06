@@ -148,8 +148,7 @@ fun AddLabelContent(xButton:()->Unit,
     Row(
         Modifier
             .size(width = (config.screenWidthDp - 10).dp, height = (config.screenHeightDp - 100).dp)
-            .background(color = getBackGroundColor(), shape = RoundedCornerShape(15))
-            .shadow(5.dp),
+            .background(color = getBackGroundColor(), shape = RoundedCornerShape(15)),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center)
     {
