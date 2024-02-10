@@ -1,6 +1,7 @@
 package com.example.returnpals.composetools
 
 import android.annotation.SuppressLint
+import android.location.Address
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
@@ -20,6 +21,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -35,33 +37,20 @@ import java.time.LocalDate
 // PUBLIC API
 ////////////////////
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ScheduleReturn.PickupDateUI(
+fun PickupDateUI(
+    date: LocalDate,
+    onChangeDate: (LocalDate) -> Unit,
+    onClickNext: () -> Unit,
+    onClickBack: () -> Unit,
     modifier: Modifier = Modifier,
-    navController: NavController,
-    onChangeDate: (LocalDate) -> Unit = {},
-    minDate: LocalDate = LocalDate.now(),
-    maxDate: LocalDate = LocalDate.now().plusMonths(1),
-    date: LocalDate = LocalDate.now().plusDays(2),
+    isValidDate: (LocalDate) -> Boolean = { true },
 ) {
     ScheduleReturnScaffold(
         step = 1,
-        onClickNext = {
-            navController?.navigate(MenuRoutes.SelectAddress) {
-                // Clear all the back stack up to the start destination and save state
-                popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
-                }
-                // Avoid multiple copies of the same destination when reselecting the same item
-                launchSingleTop = true
-                // Restore state when navigating back to the composable
-                restoreState = true
-            }
-                      },
-
-        onClickBack = { /*TODO: navigate to dashboard or pickup address */ },
-        enabledNext = date > minDate && date < maxDate
+        onClickNext = onClickNext,
+        onClickBack = onClickBack,
+        enabledNext = isValidDate(date)
     ) { padding ->
         Column(
             modifier = Modifier
@@ -101,11 +90,15 @@ fun ScheduleReturn.PickupDateUI(
 // PRIVATE API
 ////////////////////
 
-@SuppressLint("NewApi")
-
+@Preview
 @Composable
-private fun ChoosePlanPreview(navController : NavController) {
-    ScheduleReturn.PickupDateUI(navController = navController)
+private fun ChoosePlanPreview() {
+    PickupDateUI(
+        date = LocalDate.now(),
+        onChangeDate = {},
+        onClickNext = {},
+        onClickBack = {},
+    )
 }
 
 // currently not used, but may be useful in future

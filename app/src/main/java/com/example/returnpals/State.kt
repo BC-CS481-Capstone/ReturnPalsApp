@@ -49,7 +49,7 @@ data class PackageInfo(
 )
 
 data class PickupInfo (
-    var date: LocalDate? = null,
+    var date: LocalDate = LocalDate.now(),
     var address: Address? = null,
     var method: PickupMethod? = null,
     var packages: HashMap<Long, PackageInfo> = hashMapOf(),
