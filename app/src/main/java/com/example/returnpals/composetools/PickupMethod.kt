@@ -30,22 +30,24 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.returnpals.PickupMethod
 import com.example.returnpals.ScheduleReturn
+import com.example.returnpals.mainMenu.MenuRoutes
 
 /////////////////////////////////////////////////////////////////////////////
 // PUBLIC API
 ////////////////////
 
 @Composable
-fun ScheduleReturn.PickupMethodUI(
+fun PickupMethodUI(
+    method: PickupMethod?,
+    onChangeMethod: (PickupMethod) -> Unit,
+    onClickNext: () -> Unit,
+    onClickBack: () -> Unit,
     modifier: Modifier = Modifier,
-    navController: NavController? = null,
-    onChangeMethod: (PickupMethod) -> Unit = {},
-    method: PickupMethod? = null,
 ) {
     ScheduleReturnScaffold(
         step = 2,
-        onClickNext = { /*TODO: navigate to choose plan */ },
-        onClickBack = { /*TODO: navigate to pickup address or pickup date */ },
+        onClickNext = onClickNext,
+        onClickBack = onClickBack,
         enabledNext = method != null
     ) { padding ->
         Column(
@@ -65,22 +67,22 @@ fun ScheduleReturn.PickupMethodUI(
     }
 }
 
-@Composable
-fun PickupMethodUI(
-    modifier: Modifier = Modifier,
-    method: PickupMethod? = null
-) {
-    val selected = remember { mutableStateOf(method) }
-
-    PickupMethods(
-        onClickMethod = {
-            selected.value = it
-            // TODO: send selected method to data layer
-        },
-        modifier = modifier,
-        selected = selected.value,
-    )
-}
+//@Composable
+//fun PickupMethodUI(
+//    modifier: Modifier = Modifier,
+//    method: PickupMethod? = null
+//) {
+//    val selected = remember { mutableStateOf(method) }
+//
+//    PickupMethods(
+//        onClickMethod = {
+//            selected.value = it
+//            // TODO: send selected method to data layer
+//        },
+//        modifier = modifier,
+//        selected = selected.value,
+//    )
+//}
 
 /////////////////////////////////////////////////////////////////////////////
 // PRIVATE API
@@ -89,8 +91,11 @@ fun PickupMethodUI(
 @Preview(showBackground = true)
 @Composable
 private fun PickupMethodPreview() {
-    ScheduleReturn.PickupMethodUI(
-        method = PickupMethod.DOORSTEP
+    PickupMethodUI(
+        method = PickupMethod.DOORSTEP,
+        onChangeMethod = {},
+        onClickNext = {},
+        onClickBack = {}
     )
 }
 
