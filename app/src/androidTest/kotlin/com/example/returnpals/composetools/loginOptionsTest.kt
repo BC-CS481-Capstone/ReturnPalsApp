@@ -7,6 +7,7 @@ import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.performClick
 import org.junit.Rule
 
 import org.junit.Test
@@ -82,6 +83,17 @@ class loginOptionsTest {
     fun guestEmailTextDisplayed() {
         rule.setContent { loginOptions().GuestLoginUIContent( signin = { },userSignIn= {}) {} }
         rule.onNode(hasText("Email") and hasSetTextAction()).assertIsDisplayed()
-
+    }
+    @Test
+    fun loginUIStateTestToGuest() {
+        rule.setContent { loginOptions().LoginUISate(false) }
+        rule.onNode(hasText("Sign In") and hasClickAction()).performClick()
+        rule.onNode(hasText("Sign In as Guest") and hasClickAction()).assertIsDisplayed()
+    }
+    @Test
+    fun loginUIStateTestToUser() {
+        rule.setContent { loginOptions().LoginUISate(true) }
+        rule.onNode(hasText("Sign In ") and hasClickAction()).performClick()
+        rule.onNode(hasText("Sign In") and hasClickAction()).assertIsDisplayed()
     }
 }
