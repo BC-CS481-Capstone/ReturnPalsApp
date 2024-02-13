@@ -2,15 +2,18 @@ package com.example.returnpals.composetools
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,31 +22,49 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavController
+import com.example.returnpals.PackageInfo
+import com.example.returnpals.PackageLabelType
+import com.example.returnpals.ScheduleReturn
 
-// TODO: make table rows clickable/editable
-// TODO: remove description from table?
-// TODO: put images in add-label buttons
-// TODO: allow user to upload files (pop up ui) as shown in figma
+// TODO: RemoveLabelButton
+// TODO: EditDescriptionButton
+// TODO: put icons in add-label buttons
+// TODO: implement pop up ui for adding label
+
+/////////////////////////////////////////////////////////////////////////////
+// PUBLIC API
+////////////////////
 
 @Composable
 fun PackagesUI(
     packages: List<PackageInfo>,
+    onAddLabel: (PackageInfo) -> Unit,
+    onRemoveLabel: (Long) -> Unit,
     onClickNext: () -> Unit,
     onClickBack: () -> Unit,
-    onAddPhysicalLabel: (String) -> Unit,
-    onAddDigitalLabel: (String) -> Unit,
-    onAddQRCode: (String) -> Unit,
 ) {
+    val showDialogue: MutableState<Boolean> = remember { mutableStateOf(false) }
+    val dialogueType: MutableState<PackageLabelType?> = remember { mutableStateOf(null) }
+
     ScheduleReturnScaffold(
         step = 4,
         onClickNext = onClickNext,
@@ -77,61 +98,174 @@ fun PackagesUI(
                 modifier = Modifier.padding(vertical=15.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Button(
-                    onClick = { /* TODO */ },
-                    modifier = Modifier
-                        .weight(1.0f)
-                        .requiredHeight(80.dp),
-                    shape = RoundedCornerShape(20)
-                ) {
-                    Text(
-                        text = "Physical Label",
-                        fontWeight = FontWeight.Medium,
-                        textAlign = TextAlign.Center,
-                    )
-                }
+                AddLabelButton(
+                    text = "Physical Label",
+                    onClick = {
+                        showDialogue.value = true
+                        dialogueType.value = PackageLabelType.PHYSICAL
+                    },
+                    modifier = Modifier.weight(1.0f)
+                )
                 Spacer(Modifier.width(15.dp))
-                Button(
-                    onClick = { /* TODO */ },
-                    modifier = Modifier
-                        .weight(1.0f)
-                        .requiredHeight(80.dp),
-                    shape = RoundedCornerShape(20)
-                ) {
-                    Text(
-                        text = "Digital Label",
-                        fontWeight = FontWeight.Medium,
-                        textAlign = TextAlign.Center,
-                    )
-                }
+                AddLabelButton(
+                    text = "Digital Label",
+                    onClick = {
+                        showDialogue.value = true
+                        dialogueType.value = PackageLabelType.DIGITAL
+                    },
+                    modifier = Modifier.weight(1.0f)
+                )
                 Spacer(Modifier.width(15.dp))
-                Button(
-                    onClick = { /* TODO */ },
-                    modifier = Modifier
-                        .weight(1.0f)
-                        .requiredHeight(80.dp),
-                    shape = RoundedCornerShape(20)
-                ) {
-                    Text(
-                        text = "Amazon QR Code",
-                        fontWeight = FontWeight.Medium,
-                        textAlign = TextAlign.Center,
-                    )
-                }
+                AddLabelButton(
+                    text = "Amazon QR Code",
+                    onClick = {
+                        showDialogue.value = true
+                        dialogueType.value = PackageLabelType.QRCODE
+                    },
+                    modifier = Modifier.weight(1.0f)
+                )
             }
             PackagesTable(
-                packages,
-                Modifier.fillMaxSize()
+                items = packages,
+                onClickItem = { onRemoveLabel(it.id) },
+                modifier = Modifier.fillMaxSize()
             )
+            if (showDialogue.value && dialogueType.value != null) {
+                AddLabelDialogue(
+                    type = dialogueType.value!!,
+                    onAddLabel = { label ->
+                        showDialogue.value = false
+                        onAddLabel(label)
+                    },
+                    onCancel = { showDialogue.value = false }
+                )
+            }
         }
     }
 }
 
-// @Composable (LazyItemScope.() -> Unit)?  = null
+@Composable
+fun AddLabelContent(xButton:()->Unit,
+                    addButton:(String, String)->Unit) {
+    val config = getConfig()
+    Column(
+        Modifier.fillMaxSize()
+            .padding(6.dp,50.dp)
+            .background(color = getBackGroundColor(), shape = RoundedCornerShape(10)),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween)
+    {
+        Row(Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.End) {
+            Text("X",
+                Modifier.clickable(onClick = xButton),
+                color = getBlueIconColor(),
+                fontWeight = FontWeight.Bold, fontSize = 16.sp)
+        }
+
+        Text("Add Digital Label",
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF052A42))
+        UploadReturnContent()
+        DescriptionContent()
+        ButtonManager.NextButton(
+            text = "Add Package",
+            onClick = { addButton("filename", "description") }
+        )
+    }
+}
+
+@Composable
+fun UploadReturnContent() {
+    Column(Modifier.fillMaxWidth().padding(5.dp).height(230.dp),horizontalAlignment = Alignment.Start){
+        Text("Upload Return Label")
+        Column(
+            Modifier.fillMaxSize()
+                .background(color = Color(0x0F008BE7), shape = RoundedCornerShape(15))
+                //.border() // TODO add border dashed line
+                ,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        )
+        {
+            IconManager().getFileIcon(modifier = Modifier.size(width=100.dp,height=100.dp))
+            Text(" Drag label here or browse files ") //TODO Add composable string to change browse files color to blue
+        }
+    }
+}
+
+@Composable
+fun DescriptionContent() {
+    Column(horizontalAlignment = Alignment.Start){
+        Text("Description")
+        TextField(value = "Label the item(s) inside: i.e 'laptop covers'",
+            onValueChange = { },
+            Modifier.height(100.dp)
+            )
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// PRIVATE API
+////////////////////
+
+@Preview(showBackground = true)
+@Composable
+private fun PackagesPreview() {
+    PackagesUI(
+        packages = listOf(
+            PackageInfo(
+                1,
+                "Nordstrom.png",
+                PackageLabelType.DIGITAL,
+                "Digital"
+            )
+        ),
+        onAddLabel = {},
+        onRemoveLabel = {},
+        onClickNext = {},
+        onClickBack = {},
+    )
+}
+
+@Composable
+private fun AddLabelDialogue(
+    type: PackageLabelType,
+    onAddLabel: (PackageInfo) -> Unit,
+    onCancel: () -> Unit,
+) {
+    Dialog(onDismissRequest = { /*TODO*/ }) {
+        AddLabelContent(
+            xButton = onCancel,
+            addButton = { filename, description ->
+                onAddLabel(PackageInfo(0, filename, type, description))
+            }
+        )
+    }
+}
+
+@Composable
+private fun AddLabelButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        shape = RoundedCornerShape(20)
+    ) {
+        Text(
+            text = text,
+            fontWeight = FontWeight.Medium,
+            textAlign = TextAlign.Center,
+        )
+    }
+}
 
 @Composable
 private fun PackagesTable(
     items: List<PackageInfo>,
+    onClickItem: (PackageInfo) -> Unit,
     modifier: Modifier = Modifier,
     horizontal: Alignment.Horizontal = Alignment.CenterHorizontally,
     vertical: Arrangement.Vertical = Arrangement.Top
@@ -152,30 +286,23 @@ private fun PackagesTable(
                     modifier = Modifier.weight(1.0f),
                     text = "Label Type",
                 )
-                HeaderCell(
-                    modifier = Modifier.weight(1.4f),
-                    text = "Description",
-                )
             }
         }
         // DATA ROWS
-        this.items(items) { item ->
-            Row {
+        this.items(
+            items = items,
+            key = { it.id }
+        ) {
+            Row(
+                Modifier.clickable(onClick = { onClickItem(it) })
+            ) {
                 Cell(
-                    text = item.label,
+                    text = it.label,
                     modifier = Modifier.weight(1.6f),
                 )
                 Cell(
-                    text = item.labelType,
+                    text = it.labelType.toString(),
                     modifier = Modifier.weight(1.0f),
-                )
-                Cell(
-                    text = if (item.description != null) {
-                            "${item.description}"
-                        } else {
-                            "--"
-                        },
-                    modifier = Modifier.weight(1.4f),
                 )
             }
             Divider(
@@ -229,22 +356,4 @@ private fun Cell(
             softWrap = false,
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PackagesPreview() {
-    PackagesUI(
-        packages = listOf(
-            PackageInfo(
-                "Nordstrom.png",
-                "Digital"
-            )
-        ),
-        onClickNext = {},
-        onClickBack = {},
-        onAddDigitalLabel = {},
-        onAddPhysicalLabel = {},
-        onAddQRCode = {},
-    )
 }

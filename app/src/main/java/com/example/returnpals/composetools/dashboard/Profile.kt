@@ -1,6 +1,6 @@
-package com.example.returnpals.mainMenu
+package com.example.returnpals.composetools.dashboard
 
-import MainMenuScaffold
+import DashboardMenuScaffold
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,26 +12,28 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.returnpals.composetools.SilverPlanButton
-
+import com.example.returnpals.PricingPlan
+import com.example.returnpals.composetools.PricingPlanText
 
 @Composable
 fun Profile(navController: NavController) {
-    MainMenuScaffold(navController = navController) {
+    DashboardMenuScaffold(navController = navController) {
         ProfileContent()
     }
 
 }
 
+@Preview
 @Composable
 fun ProfileContent(){
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
@@ -55,7 +57,7 @@ fun ProfileContent(){
 
             )
         )
-        SilverPlanButton(Modifier.padding(15.dp), onClick = { /*TODO*/ })
+        PricingPlanText(PricingPlan.SILVER, Modifier.padding(15.dp).scale(1.5F))
         Spacer(Modifier.padding(15.dp))
         Text(text = "Start Date:", style =TextStyle(fontSize = 20.sp))
         Text(text = getStartDate())

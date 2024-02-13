@@ -1,19 +1,23 @@
 package com.example.returnpals.composetools
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -22,151 +26,172 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
+import com.example.returnpals.PricingPlan
+import com.example.returnpals.ScheduleReturn
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
-// TODO: Guest UI
+// TODO: guest message "sign up for more pricing options"
 
 /////////////////////////////////////////////////////////////////////////////
 // PUBLIC API
 ////////////////////
 
-enum class Plan {
-    NONE, BRONZE, SILVER, GOLD, PLATINUM
-}
-
+/**
+ * Draws the entire screen of the step "Choose PricingPlan" in the "Schedule a Return" process
+ */
 @Composable
 fun PricingUI(
     modifier: Modifier = Modifier,
-    onClickPlan: (Plan) -> Unit,
-    selected: Plan = Plan.NONE,
-    guest: Boolean = false
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = modifier.fillMaxSize().scale(1.25f)
-    ) {
-        Spacer(Modifier.height(10.dp))
-        BronzePlanButton(
-            onClick = { onClickPlan(Plan.BRONZE) },
-            selected = selected == Plan.BRONZE
-        )
-        Spacer(Modifier.height(10.dp))
-        SilverPlanButton(
-            onClick = { onClickPlan(Plan.SILVER) },
-            selected = selected == Plan.SILVER,
-            enabled = !guest
-        )
-        Spacer(Modifier.height(10.dp))
-        GoldPlanButton(
-            onClick = { onClickPlan(Plan.GOLD) },
-            selected = selected == Plan.GOLD,
-            enabled = !guest
-        )
-        Spacer(Modifier.height(10.dp))
-        PlatinumPlanButton(
-            onClick = { onClickPlan(Plan.PLATINUM) },
-            selected = selected == Plan.PLATINUM,
-            enabled = !guest
-        )
-    }
-}
-
-/**
- * Draws the entire screen of the step "Choose Plan" in the "Schedule a Return" process
- */
-@Composable
-fun ChoosePlanUI(
-    modifier: Modifier = Modifier,
+    onChangePlan: (PricingPlan) -> Unit,
     onClickNext: () -> Unit,
     onClickBack: () -> Unit,
-    onClickPlan: (Plan) -> Unit,
-    selected: Plan = Plan.NONE,
-    guest: Boolean = false
+    plan: PricingPlan?,
+    guest: Boolean = false,
 ) {
     ScheduleReturnScaffold(
         step = 3,
         onClickNext = onClickNext,
         onClickBack = onClickBack,
-        enabledNext = selected != Plan.NONE
+        enabledNext = plan != null
     ) { padding ->
-        PricingUI(
-            modifier = modifier.padding(padding),
-            onClickPlan = onClickPlan,
-            selected = selected,
-            guest = guest
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = modifier.fillMaxSize(),
+        ) {
+            PricingOptions(
+                modifier = Modifier
+                    .padding(padding)
+                    .scale(1.25F),
+                selected = plan,
+                onClickPlan = onChangePlan,
+                guest = guest,
+            )
+        }
+    }
+}
+
+class PricingViewModel(init: PricingPlan) : ViewModel() {
+    private val _plan: MutableStateFlow<PricingPlan>
+    val plan: StateFlow<PricingPlan>
+
+    init {
+        _plan = MutableStateFlow(init)
+        plan = _plan.asStateFlow()
+    }
+
+    fun onChangePlan(value: PricingPlan) {
+        _plan.update { value }
+    }
+}
+
+@Composable
+fun PricingOptions(
+    onClickPlan: (PricingPlan) -> Unit,
+    selected: PricingPlan?,
+    modifier: Modifier = Modifier,
+    guest: Boolean = false,
+    padding: PaddingValues = PaddingValues(0.dp),
+) {
+    LazyColumn(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        contentPadding = padding,
+        modifier = modifier
+    ) {
+        item {
+            PricingPlanButton(
+                plan = PricingPlan.BRONZE,
+                onClick = { onClickPlan(PricingPlan.BRONZE) },
+                selected = selected == PricingPlan.BRONZE,
+                modifier = Modifier.padding(vertical=6.dp),
+            )
+        }
+        item {
+            PricingPlanButton(
+                plan = PricingPlan.SILVER,
+                onClick = { onClickPlan(PricingPlan.SILVER) },
+                selected = selected == PricingPlan.SILVER,
+                enabled = !guest,
+                modifier = Modifier.padding(vertical=6.dp),
+            )
+        }
+        item {
+            PricingPlanButton(
+                plan = PricingPlan.GOLD,
+                onClick = { onClickPlan(PricingPlan.GOLD) },
+                selected = selected == PricingPlan.GOLD,
+                enabled = !guest,
+                modifier = Modifier.padding(vertical=6.dp),
+            )
+        }
+        item {
+            PricingPlanButton(
+                plan = PricingPlan.PLATINUM,
+                onClick = { onClickPlan(PricingPlan.PLATINUM) },
+                selected = selected == PricingPlan.PLATINUM,
+                enabled = !guest,
+                modifier = Modifier.padding(vertical=6.dp),
+            )
+        }
+    }
+}
+
+@Composable
+fun PricingPlanText(
+    plan: PricingPlan,
+    modifier: Modifier = Modifier
+) {
+    when (plan) {
+        PricingPlan.BRONZE -> BronzePlanText(modifier)
+        PricingPlan.SILVER -> SilverPlanText(modifier)
+        PricingPlan.GOLD -> GoldPlanText(modifier)
+        PricingPlan.PLATINUM -> PlatinumPlanText(modifier)
+    }
+}
+
+@Composable
+private fun PricingPlanButton(
+    plan: PricingPlan,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    selected: Boolean = false,
+    enabled: Boolean = true,
+) {
+    OutlinedButton(
+        onClick = onClick,
+        enabled = enabled,
+        border =
+            if (selected) {
+                BorderStroke(
+                    width = 6.dp,
+                    color = Color(0,180,250),
+                )
+            } else {
+                BorderStroke(
+                    width = 2.dp,
+                    color = Color.Black,
+                )
+            },
+        shape = RoundedCornerShape(22.dp, 22.dp, 22.dp, 22.dp),
+        modifier = modifier.requiredSize(145.dp, 70.dp)
+    ) {
+        PricingPlanText(
+            plan,
+            Modifier
+                .offset(x = 5.dp)
+                .fillMaxWidth()
         )
-    }
-}
-
-@Composable
-fun BronzePlanButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    selected: Boolean = false,
-    enabled: Boolean = true
-) {
-    PlanButton(
-        modifier = modifier,
-        onClick = onClick,
-        selected = selected,
-        enabled = enabled
-    ) {
-        BronzePlanText()
-    }
-}
-
-@Composable
-fun SilverPlanButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    selected: Boolean = false,
-    enabled: Boolean = true
-) {
-    PlanButton(
-        modifier = modifier,
-        onClick = onClick,
-        selected = selected,
-        enabled = enabled
-    ) {
-        SilverPlanText()
-    }
-}
-
-@Composable
-fun GoldPlanButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    selected: Boolean = false,
-    enabled: Boolean = true
-) {
-    PlanButton(
-        modifier = modifier,
-        onClick = onClick,
-        selected = selected,
-        enabled = enabled
-    ) {
-        GoldPlanText()
-    }
-}
-
-@Composable
-fun PlatinumPlanButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    selected: Boolean = false,
-    enabled: Boolean = true
-) {
-    PlanButton(
-        modifier = modifier,
-        onClick = onClick,
-        selected = selected,
-        enabled = enabled
-    ) {
-        PlatinumPlanText()
     }
 }
 
@@ -177,76 +202,31 @@ fun PlatinumPlanButton(
 @Preview(showBackground = true)
 @Composable
 private fun ChoosePlanPreview() {
-//    PricingUI(
-//        onClickPlan = {},
-//        selected = Plan.BRONZE,
-//    )
-
-    ChoosePlanUI(
+    PricingUI(
+        plan = PricingPlan.BRONZE,
+        onChangePlan = {},
         onClickNext = {},
-        onClickBack = {},
-        onClickPlan = {},
-        selected = Plan.BRONZE,
-    )
-}
-
-@Composable
-private fun PlanButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    selected: Boolean = false,
-    enabled: Boolean = true,
-    content: @Composable (BoxScope.() -> Unit)
-) {
-    var modifier = modifier
-        .requiredSize(135.dp, 65.dp)
-        .background(
-            color = Color.White,
-            shape = RoundedCornerShape(22.dp, 22.dp, 22.dp, 22.dp)
-        )
-
-    modifier =
-        if (selected) {
-            modifier.border(
-                width = 6.dp,
-                color = Color(0,180,250),
-                shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
-            )
-        } else {
-            modifier.border(
-                width = 2.dp,
-                color = Color.Black,
-                shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
-            )
-        }
-    ButtonManager.Button(
-        onClick = onClick,
-        enabled = enabled,
-        color = Color.White,
-        contentAlignment = Alignment.CenterStart,
-        modifier = modifier,
-        content = content
+        onClickBack = {}
     )
 }
 
 @Composable
 private fun SilverPlanText(modifier: Modifier = Modifier) {
     Column(
-        Modifier.offset(x=25.dp)
+        horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "SILVER",
-            fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight(800),
-            lineHeight = 10.sp,
-            color = Color(150, 170, 170),
-            fontSize = 16.0.sp,
-            modifier = Modifier
-                .padding(0.dp)
-                .height(18.0.dp)
-        )
-        Text(
             text = buildAnnotatedString {
+                withStyle(
+                    style = SpanStyle(
+                        fontSize = 16.0.sp,
+                        fontWeight = FontWeight(800),
+                        color = Color(150, 170, 170),
+                        baselineShift = BaselineShift(0.25F)
+                    )
+                ) {
+                    append("SILVER\n")
+                }
                 withStyle(
                     style = SpanStyle(
                         fontSize = 12.0.sp
@@ -274,21 +254,20 @@ private fun SilverPlanText(modifier: Modifier = Modifier) {
 @Composable
 private fun PlatinumPlanText(modifier: Modifier = Modifier) {
     Column(
-        Modifier.offset(x=25.dp)
+        horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "PLATINUM",
-            fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight(800),
-            lineHeight = 10.sp,
-            color = Color(125, 175, 175),
-            fontSize = 16.0.sp,
-            modifier = Modifier
-                .padding(0.dp)
-                .height(18.0.dp)
-        )
-        Text(
             text = buildAnnotatedString {
+                withStyle(
+                    style = SpanStyle(
+                        fontSize = 16.0.sp,
+                        fontWeight = FontWeight(800),
+                        color = Color(125, 175, 175),
+                        baselineShift = BaselineShift(0.25F)
+                    )
+                ) {
+                    append("PLATINUM\n")
+                }
                 withStyle(
                     style = SpanStyle(
                         fontSize = 12.0.sp
@@ -316,21 +295,20 @@ private fun PlatinumPlanText(modifier: Modifier = Modifier) {
 @Composable
 private fun GoldPlanText(modifier: Modifier = Modifier) {
     Column(
-        Modifier.offset(x=25.dp)
+        horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "GOLD",
-            fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight(800),
-            lineHeight = 10.sp,
-            color = Color(red = 230, green = 190, blue = 100),
-            fontSize = 16.0.sp,
-            modifier = Modifier
-                .padding(0.dp)
-                .height(18.0.dp)
-        )
-        Text(
             text = buildAnnotatedString {
+                withStyle(
+                    style = SpanStyle(
+                        fontSize = 16.0.sp,
+                        fontWeight = FontWeight(800),
+                        color = Color(230, 190, 100),
+                        baselineShift = BaselineShift(0.25F)
+                    )
+                ) {
+                    append("GOLD\n")
+                }
                 withStyle(
                     style = SpanStyle(
                         fontSize = 12.0.sp
@@ -357,22 +335,19 @@ private fun GoldPlanText(modifier: Modifier = Modifier) {
 
 @Composable
 private fun BronzePlanText(modifier: Modifier = Modifier) {
-    Column(
-        Modifier.offset(x=25.dp)
-    ) {
-        Text(
-            text = "Bronze",
-            fontFamily = FontFamily.SansSerif,
-            fontWeight = FontWeight(800),
-            lineHeight = 10.sp,
-            color = Color(200, 150, 100),
-            fontSize = 16.0.sp,
-            modifier = Modifier
-                .padding(0.dp)
-                .height(18.0.dp)
-        )
+    Column {
         Text(
             text = buildAnnotatedString {
+                withStyle(
+                    style = SpanStyle(
+                        fontSize = 16.0.sp,
+                        fontWeight = FontWeight(800),
+                        color = Color(200, 150, 100),
+                        baselineShift = BaselineShift(0.25F)
+                    )
+                ) {
+                    append("Bronze\n")
+                }
                 withStyle(
                     style = SpanStyle(
                         fontSize = 12.0.sp
@@ -407,7 +382,7 @@ private fun GuestSignUpButton(
         isStructured = false,
         modifier = modifier
     ) {
-        PlanButton(
+        PricingPlanButton(
             onTap = onTap,
             modifier = Modifier.boxAlign(
                 alignment = Alignment.Center,

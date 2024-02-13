@@ -1,6 +1,6 @@
-package com.example.returnpals.mainMenu
+package com.example.returnpals.composetools.dashboard
 
-import MainMenuScaffold
+import DashboardMenuScaffold
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -23,11 +24,12 @@ import com.example.returnpals.composetools.OrderInfo
 
 @Composable
 fun Orders(navController: NavController) {
-    MainMenuScaffold(navController = navController) {
+    DashboardMenuScaffold(navController = navController) {
         OrdersContent()
     }
 }
 
+@Preview
 @Composable
 fun OrdersContent(){
     OrderTable()
@@ -57,7 +59,8 @@ fun OrderTable(){
     LazyColumn(
         Modifier
             .fillMaxSize()
-            .background(Brush.verticalGradient(colors = gradientColors)),
+            .background(Brush.verticalGradient(colors = gradientColors))
+            .padding(16.dp),
     ){
         item{
             Text(

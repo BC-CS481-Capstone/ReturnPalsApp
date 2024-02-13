@@ -3,7 +3,7 @@ package com.example.returnpals.composetools
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.example.returnpals.mainMenu.OrdersContent
+import com.example.returnpals.composetools.dashboard.OrdersContent
 import org.junit.Rule
 import org.junit.Test
 

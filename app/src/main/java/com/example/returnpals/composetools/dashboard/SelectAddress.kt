@@ -1,4 +1,4 @@
-package com.example.returnpals.dashboard
+package com.example.returnpals.composetools.dashboard
 
 import DashboardMenuScaffold
 import androidx.compose.foundation.Canvas
@@ -31,23 +31,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.composetools.AddressItem
+import com.example.returnpals.mainMenu.MenuRoutes
 
 @Composable
 fun SelectAddress(navController: NavController) {
     DashboardMenuScaffold(navController = navController) {
-        SelectAddressContent()
+        SelectAddressContent(navController = navController)
     }
 }
 
-@Preview
+
 @Composable
-fun SelectAddressContent() {
+fun SelectAddressContent(navController: NavController) {
     val customColor = Color(0xFFE1F6FF)
+    var selectedAddress by remember { mutableStateOf<AddressItem?>(null) }
+
 
     LazyColumn(
         modifier = Modifier
@@ -59,7 +62,37 @@ fun SelectAddressContent() {
 
         item { AddressInfo() }
 
-        item{ AddressSelectionScreen()}
+        item {
+            AddressSelectionScreen(onAddressSelected = { address ->
+                selectedAddress = address
+            })
+        }
+
+        item {
+                Row {
+
+                    Button(
+                        onClick = {
+                            // Handle click event
+                            navController.navigate(MenuRoutes.PickupDetails) {
+                                // Clear all the back stack up to the start destination and save state
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                // Avoid multiple copies of the same destination when reselecting the same item
+                                launchSingleTop = true
+                                // Restore state when navigating back to the composable
+                                restoreState = true
+                            }
+                        },
+                        enabled = selectedAddress != null,
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Text("Next")
+                    }
+
+                }
+        }
     }
 }
 
@@ -132,7 +165,7 @@ fun AddressItemComposable(addressItem: AddressItem, isSelected: Boolean, onSelec
 }
 
 @Composable
-fun AddressSelectionScreen() {
+fun AddressSelectionScreen(onAddressSelected: (AddressItem?) -> Unit) {
     val addresses = remember { mutableStateListOf(
         AddressItem(1, "123 Your Address One"),
         AddressItem(2, "456 Your Address Two")
@@ -143,7 +176,10 @@ fun AddressSelectionScreen() {
     // Function to add a new address
     val addNewAddress: (String) -> Unit = { newAddress: String ->
         val newId = (addresses.maxOfOrNull { it.id } ?: 0) + 1
-        addresses.add(AddressItem(newId, newAddress))
+        val newAddressItem = AddressItem(newId, newAddress)
+        addresses.add(newAddressItem)
+        selectedAddress = newAddressItem  // Optionally auto-select the new address
+        onAddressSelected(newAddressItem) // Notify the parent composable
     }
 
     Column {
@@ -151,7 +187,10 @@ fun AddressSelectionScreen() {
             AddressItemComposable(
                 addressItem = addressItem,
                 isSelected = addressItem == selectedAddress,
-                onSelect = { selectedAddress = it }
+                onSelect = {
+                    selectedAddress = it
+                    onAddressSelected(it)
+                }
             )
         }
 
@@ -191,3 +230,6 @@ fun AddAddress(onAddAddress: (String) -> Unit) {
         }
     }
 }
+
+
+

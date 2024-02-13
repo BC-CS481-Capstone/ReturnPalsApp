@@ -8,10 +8,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.createGraph
-import com.example.returnpals.dashboard.HomeDash
-import com.example.returnpals.dashboard.PickupProcess
-import com.example.returnpals.dashboard.SelectAddress
-import com.example.returnpals.dashboard.Settings
+import com.example.returnpals.composetools.dashboard.HomeDash
+import com.example.returnpals.composetools.dashboard.Label
+import com.example.returnpals.composetools.dashboard.Orders
+import com.example.returnpals.composetools.dashboard.PickupDetails
+import com.example.returnpals.composetools.dashboard.PickupProcess
+import com.example.returnpals.composetools.dashboard.Profile
+import com.example.returnpals.composetools.dashboard.SelectAddress
+import com.example.returnpals.composetools.dashboard.Settings
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -32,8 +36,10 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.Profile) { Profile(navController) }
         composable(MenuRoutes.Settings) { Settings(navController) }
         composable(MenuRoutes.Orders) { Orders(navController) }
-        composable(MenuRoutes.PickupProcess) { PickupProcess(navController)}
+        composable(MenuRoutes.PickupProcess) { PickupProcess(navController) }
         composable(MenuRoutes.SelectAddress) { SelectAddress(navController) }
+        composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }
+        composable(MenuRoutes.Label) { Label(navController) }
 
 
         // Add more destinations as needed
