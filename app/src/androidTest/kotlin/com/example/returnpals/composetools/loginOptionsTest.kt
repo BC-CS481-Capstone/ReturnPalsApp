@@ -64,30 +64,30 @@ class loginOptionsTest {
     }
     @Test
     fun guestSignInButtonDisplay() {
-        rule.setContent { loginOptions().GuestLoginUIContent( signin = { },userSignIn= {}) {} }
+        rule.setContent { loginOptions().GuestLoginUIContent(userSignIn = { /*TODO*/ }, signin = { /*TODO*/ }, signup = { /*TODO*/ }, email = {})}
         rule.onNode(hasText("Sign In ") and hasClickAction()).assertIsDisplayed()
     }
     @Test
     fun guestSignInAsGuestButtonDisplay() {
-        rule.setContent { loginOptions().GuestLoginUIContent( signin = { },userSignIn= {}) {} }
+        rule.setContent { loginOptions().GuestLoginUIContent(userSignIn = { /*TODO*/ }, signin = { /*TODO*/ }, signup = { /*TODO*/ }, email = {})}
         rule.onNode(hasText("Sign In as Guest") and hasClickAction()).assertIsDisplayed()
     }
 
     @Test
     fun guestSignUpButtonDisplay() {
-        rule.setContent { loginOptions().GuestLoginUIContent( signin = { },userSignIn= {}) {} }
+        rule.setContent { loginOptions().GuestLoginUIContent(userSignIn = { /*TODO*/ }, signin = { /*TODO*/ }, signup = { /*TODO*/ }, email = {})}
         rule.onNode(hasText("Sign up") and hasClickAction()).assertIsDisplayed()
     }
 
     @Test
     fun guestEmailTextDisplayed() {
-        rule.setContent { loginOptions().GuestLoginUIContent( signin = { },userSignIn= {}) {} }
+        rule.setContent { loginOptions().GuestLoginUIContent(userSignIn = { /*TODO*/ }, signin = { /*TODO*/ }, signup = { /*TODO*/ }, email = {})}
         rule.onNode(hasText("Email") and hasSetTextAction()).assertIsDisplayed()
     }
     @Test
     fun loginUIStateTestToGuest() {
         rule.setContent { loginOptions().LoginUISate(false) }
-        rule.onNode(hasText("Sign In") and hasClickAction()).performClick()
+        rule.onNode(hasText("Guest") and hasClickAction()).performClick()
         rule.onNode(hasText("Sign In as Guest") and hasClickAction()).assertIsDisplayed()
     }
     @Test
