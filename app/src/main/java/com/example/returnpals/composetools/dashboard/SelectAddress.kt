@@ -1,6 +1,5 @@
 package com.example.returnpals.composetools.dashboard
 
-import DashboardMenuScaffold
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -36,11 +35,36 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.composetools.AddressItem
+import com.example.returnpals.composetools.ScheduleReturnScaffold
 import com.example.returnpals.mainMenu.MenuRoutes
 
 @Composable
 fun SelectAddress(navController: NavController) {
-    DashboardMenuScaffold(navController = navController) {
+
+    ScheduleReturnScaffold(
+        step = 2,
+        onClickNext = {navController.navigate(MenuRoutes.PickupDetails) {
+            // Clear all the back stack up to the start destination and save state
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            // Avoid multiple copies of the same destination when reselecting the same item
+            launchSingleTop = true
+            // Restore state when navigating back to the composable
+            restoreState = true
+        }},
+        onClickBack = {navController.navigate(MenuRoutes.PickupProcess) {
+            // Clear all the back stack up to the start destination and save state
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            // Avoid multiple copies of the same destination when reselecting the same item
+            launchSingleTop = true
+            // Restore state when navigating back to the composable
+            restoreState = true
+        }},
+        enabledNext = true
+    ){
         SelectAddressContent(navController = navController)
     }
 }
@@ -68,31 +92,6 @@ fun SelectAddressContent(navController: NavController) {
             })
         }
 
-        item {
-                Row {
-
-                    Button(
-                        onClick = {
-                            // Handle click event
-                            navController.navigate(MenuRoutes.PickupDetails) {
-                                // Clear all the back stack up to the start destination and save state
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
-                                }
-                                // Avoid multiple copies of the same destination when reselecting the same item
-                                launchSingleTop = true
-                                // Restore state when navigating back to the composable
-                                restoreState = true
-                            }
-                        },
-                        enabled = selectedAddress != null,
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        Text("Next")
-                    }
-
-                }
-        }
     }
 }
 

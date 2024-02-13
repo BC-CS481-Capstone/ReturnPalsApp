@@ -4,7 +4,6 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.example.returnpals.ScheduleReturn
 import com.example.returnpals.composetools.PickupDateUI
 import com.example.returnpals.composetools.goto
 import com.example.returnpals.mainMenu.MenuRoutes
@@ -30,7 +29,7 @@ fun PickupProcessContent(navController: NavController) {
         date = LocalDate.now(),
         onChangeDate = {},
         onClickNext = { goto(navController, MenuRoutes.SelectAddress) },
-        onClickBack = { goto(navController, MenuRoutes.PickupProcess) }
+        onClickBack = { goto(navController, MenuRoutes.HomeDash) }
     )
 }
 
