@@ -1,6 +1,9 @@
 package com.example.returnpals.composetools.dashboard
 
 import DashboardMenuScaffold
+import android.net.Uri
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -23,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.returnpals.PricingPlan
+import com.example.returnpals.R
 import com.example.returnpals.composetools.PricingPlanText
 
 @Composable
@@ -37,6 +42,7 @@ fun Profile(navController: NavController) {
 @Composable
 fun ProfileContent(){
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
+    var picUri : Uri? = null
 
 
     Column(
@@ -47,7 +53,10 @@ fun ProfileContent(){
 
     )
     {
-        Text(
+        if(picUri == null) {
+            Image(painter = painterResource(R.drawable.returnpal_icon_500x500), contentDescription = "Profile Picture",)
+        }
+            Text(
             text = "Your Plan:",
             style = TextStyle(
                 fontSize = 30.sp,
@@ -57,7 +66,10 @@ fun ProfileContent(){
 
             )
         )
-        PricingPlanText(PricingPlan.SILVER, Modifier.padding(15.dp).scale(1.5F))
+        PricingPlanText(PricingPlan.SILVER,
+            Modifier
+                .padding(15.dp)
+                .scale(1.5F))
         Spacer(Modifier.padding(15.dp))
         Text(text = "Start Date:", style =TextStyle(fontSize = 20.sp))
         Text(text = getStartDate())
@@ -66,7 +78,9 @@ fun ProfileContent(){
         Text(text = getBillDate())
         Spacer(Modifier.padding(15.dp))
         CancelPlanButton()
+
     }
+
 
 }
 fun getStartDate():String{
@@ -90,3 +104,4 @@ fun CancelPlanButton(){
 private fun cancel(){
 
 }
+
