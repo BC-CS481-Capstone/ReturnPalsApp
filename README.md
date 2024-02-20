@@ -44,13 +44,7 @@ We use ViewModel objects to format data from the repository in such a manner tha
 
 ## Installation
 
-TODO *Provide instructions on how to install your project. Include any dependencies or prerequisites.*
-
-```
-$ git clone https://github.com/your-username/your-repo.git
-$ cd your-repo
-$ npm install  # or any other relevant command
-```
+Download App from relevant hosting platform upon release
 
 ## Usage
 
