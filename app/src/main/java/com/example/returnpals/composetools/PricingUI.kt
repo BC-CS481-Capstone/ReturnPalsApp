@@ -1,13 +1,11 @@
 package com.example.returnpals.composetools
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
@@ -16,12 +14,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
@@ -32,9 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
 import com.example.returnpals.PricingPlan
-import com.example.returnpals.ScheduleReturn
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -114,7 +109,8 @@ fun PricingOptions(
                 plan = PricingPlan.BRONZE,
                 onClick = { onClickPlan(PricingPlan.BRONZE) },
                 selected = selected == PricingPlan.BRONZE,
-                modifier = Modifier.padding(vertical=6.dp),
+                modifier = Modifier.padding(vertical=6.dp)
+                    .testTag(PricingPlan.BRONZE.toString()),
             )
         }
         item {
@@ -123,7 +119,8 @@ fun PricingOptions(
                 onClick = { onClickPlan(PricingPlan.SILVER) },
                 selected = selected == PricingPlan.SILVER,
                 enabled = !guest,
-                modifier = Modifier.padding(vertical=6.dp),
+                modifier = Modifier.padding(vertical=6.dp)
+                    .testTag(PricingPlan.SILVER.toString()),
             )
         }
         item {
@@ -132,7 +129,8 @@ fun PricingOptions(
                 onClick = { onClickPlan(PricingPlan.GOLD) },
                 selected = selected == PricingPlan.GOLD,
                 enabled = !guest,
-                modifier = Modifier.padding(vertical=6.dp),
+                modifier = Modifier.padding(vertical=6.dp)
+                    .testTag(PricingPlan.GOLD.toString()),
             )
         }
         item {
@@ -141,7 +139,8 @@ fun PricingOptions(
                 onClick = { onClickPlan(PricingPlan.PLATINUM) },
                 selected = selected == PricingPlan.PLATINUM,
                 enabled = !guest,
-                modifier = Modifier.padding(vertical=6.dp),
+                modifier = Modifier.padding(vertical=6.dp)
+                    .testTag(PricingPlan.PLATINUM.toString()),
             )
         }
     }
