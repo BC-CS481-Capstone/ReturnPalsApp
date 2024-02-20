@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.returnpals.composetools.OrderInfo
+import com.example.returnpals.composetools.OrderRepository
 
 @Composable
 fun Orders(navController: NavController) {
@@ -39,7 +39,7 @@ fun OrdersContent(){
 @Composable
 fun RowScope.TableCell(
     text: String,
-    weight: Float
+    weight: Float,
 ){
     Text(
         text = text,
@@ -53,8 +53,9 @@ fun RowScope.TableCell(
 @Composable
 fun OrderTable(){
     val orderList = getOrders()
-    val column1Weight = .4f
-    val column2Weight = .7f
+    val column1Weight = .2f
+    val column2Weight = .25f
+    val column3Weight = .4f
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
     LazyColumn(
         Modifier
@@ -76,22 +77,27 @@ fun OrderTable(){
             Row(Modifier.background(Color.Gray)) {
                 TableCell(text = "Status", weight = column1Weight)
                 TableCell(text = "Date", weight = column2Weight)
+                TableCell(text = "Address", weight = column3Weight)
             }
             }
+        //Maybe replace with Foreach?
         items(orderList.size){ index ->
             Row(){
-                TableCell(text = orderList[index].status, column1Weight)
-                TableCell(text = orderList[index].date, column2Weight)
+                TableCell(text = orderList[index].getStatus(), column1Weight)
+                TableCell(text = orderList[index].getDate().toString().substring(0, 10), column2Weight)
+                TableCell(text = orderList[index].getAddress().address, column3Weight)
+
             }
         }
     }
 }
 
-fun getOrders(): ArrayList<OrderInfo>{
-    //Access database for each order with this client's details, pass them to OrderInfo class
-    var orders = ArrayList<OrderInfo>()
+fun getOrders(): ArrayList<OrderRepository>{
+    //Access database for each order with this client's details, pass them to OrderRepository class
+    var orders = ArrayList<OrderRepository>()
     for(i in 1..10 ){
-        orders.add(OrderInfo("TBD", "2/1/24"))
+        orders.add(OrderRepository("TBD"))
+
     }
     return orders;
 }
