@@ -55,10 +55,10 @@ class PricingTest {
 
         // Test pricing plan options:
 
-        val bronze = rule.onNodeWithTag(PricingPlan.BRONZE.toString())
-        val silver = rule.onNodeWithTag(PricingPlan.SILVER.toString())
-        val gold = rule.onNodeWithTag(PricingPlan.GOLD.toString())
-        val platinum = rule.onNodeWithTag(PricingPlan.PLATINUM.toString())
+        val bronze = rule.onNodeWithTag(PricingPlan.BRONZE.toString(), useUnmergedTree = true)
+        val silver = rule.onNodeWithTag(PricingPlan.SILVER.toString(), useUnmergedTree = true)
+        val gold = rule.onNodeWithTag(PricingPlan.GOLD.toString(), useUnmergedTree = true)
+        val platinum = rule.onNodeWithTag(PricingPlan.PLATINUM.toString(), useUnmergedTree = true)
 
         bronze.assertExists("Bronze plan does not exist.")
         silver.assertExists("Silver plan does not exist.")
