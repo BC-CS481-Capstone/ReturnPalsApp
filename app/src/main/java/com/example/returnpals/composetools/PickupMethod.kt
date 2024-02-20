@@ -1,36 +1,37 @@
 package com.example.returnpals.composetools
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.returnpals.PickupMethod
-import com.example.returnpals.ScheduleReturn
-import com.example.returnpals.mainMenu.MenuRoutes
+import com.example.returnpals.R
 
 /////////////////////////////////////////////////////////////////////////////
 // PUBLIC API
@@ -52,13 +53,13 @@ fun PickupMethodUI(
     ) { padding ->
         Column(
             modifier = modifier
-                .background(Color(210,240,245))
+                .background(Color(210, 240, 245))
                 .fillMaxSize()
                 .padding(padding),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            PickupMethods(
+            PickupMethodContent(
                 onClickMethod = onChangeMethod,
                 modifier = modifier,
                 selected = method,
@@ -67,22 +68,38 @@ fun PickupMethodUI(
     }
 }
 
-//@Composable
-//fun PickupMethodUI(
-//    modifier: Modifier = Modifier,
-//    method: PickupMethod? = null
-//) {
-//    val selected = remember { mutableStateOf(method) }
-//
-//    PickupMethods(
-//        onClickMethod = {
-//            selected.value = it
-//            // TODO: send selected method to data layer
-//        },
-//        modifier = modifier,
-//        selected = selected.value,
-//    )
-//}
+@Composable
+fun PickupMethodContent(
+    onClickMethod: (PickupMethod) -> Unit,
+    modifier: Modifier = Modifier,
+    selected: PickupMethod? = null
+) {
+    Column(
+        modifier = modifier
+            .background(Color(210, 240, 245))
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        PickupMethodButton(
+            onClick = { onClickMethod(PickupMethod.DOORSTEP) },
+            selected = selected == PickupMethod.DOORSTEP,
+            modifier = Modifier.testTag(PickupMethod.DOORSTEP.toString())
+        ) {
+            DoorstepMethodContent()
+        }
+        Spacer(Modifier.height(15.dp))
+        PickupMethodButton(
+            onClick = { onClickMethod(PickupMethod.HANDOFF) },
+            selected = selected == PickupMethod.HANDOFF,
+            modifier = Modifier.testTag(PickupMethod.HANDOFF.toString())
+        ) {
+            HandOffTMethodContent()
+        }
+    }
+}
+
+
 
 /////////////////////////////////////////////////////////////////////////////
 // PRIVATE API
@@ -100,138 +117,101 @@ private fun PickupMethodPreview() {
 }
 
 @Composable
-private fun PickupMethods(
-    onClickMethod: (PickupMethod) -> Unit,
-    modifier: Modifier = Modifier,
-    selected: PickupMethod? = null
-) {
-    Column(
-        modifier = modifier
-            .background(Color(210,240,245))
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        PickupMethodButton(
-            onClick = { onClickMethod(PickupMethod.DOORSTEP) },
-            isSelected = selected == PickupMethod.HANDOFF
-        ) {
-            DoorstepDescription()
-        }
-        Spacer(Modifier.height(15.dp))
-        PickupMethodButton(
-            onClick = { onClickMethod(PickupMethod.HANDOFF) },
-            isSelected = selected == PickupMethod.DOORSTEP
-        ) {
-            HandOffDescription()
-        }
-    }
-}
-
-@Composable
 private fun PickupMethodButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
-    isSelected: Boolean = false,
-    content: @Composable() (BoxScope.() -> Unit)
+    selected: Boolean = false,
+    content: @Composable() (RowScope.() -> Unit)
 ) {
-    var modifier = modifier
-        .requiredSize(200.dp, 100.dp)
-        .background(
-            color = Color.White,
-            shape = RoundedCornerShape(22.dp, 22.dp, 22.dp, 22.dp)
-        )
-
-    if (isSelected) {
-        modifier = modifier.border(
-            width = 6.dp,
-            color = Color(0,180,250),
-            shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
-        )
-    } else {
-        modifier = modifier.border(
-            width = 2.dp,
-            color = Color.Black,
-            shape = RoundedCornerShape(22.dp,22.dp,22.dp,22.dp)
-        )
-    }
-
-    ButtonManager.Button(
-        modifier = modifier,
+    OutlinedButton(
+        modifier = modifier.requiredWidth(250.dp),
         onClick = onClick,
-        color = Color.White,
+        colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.White),
+        border =
+            if (selected) {
+                BorderStroke(
+                    width = 6.dp,
+                    color = Color(0,180,250),
+                )
+            } else {
+                BorderStroke(
+                    width = 2.dp,
+                    color = Color.Black,
+                )
+            },
+        shape = RoundedCornerShape(22.dp, 22.dp, 22.dp, 22.dp),
         content = content
     )
 }
 
 @Composable
-private fun HandOffDescription(
+private fun HandOffTMethodContent(
     modifier: Modifier = Modifier
 ) {
-//    RelayVector(
-//        vector = painterResource(R.drawable.pickup_details_method_vector1),
-//        modifier = modifier
-//            .offset(0.dp, 20.dp)
-//    )
-    Text(
-        text = buildAnnotatedString {
-            withStyle(
-                style = SpanStyle(
-                    fontFamily = getFontFamily(),
-                    fontSize = 20.0.sp,
-                    fontWeight = FontWeight(700),
-                )
-            ) {
-                append("Direct Handoff\n")
-            }
-            withStyle(
-                style = SpanStyle(
-                    fontFamily = getFontFamily(),
-                    fontSize = 16.0.sp,
-                    fontWeight = FontWeight(500)
-                )
-            ) {
-                append("Hand the package directly to our specialist at your door\n")
-            }
-        },
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
-            .requiredWidth(180.dp),
-        textAlign = TextAlign.Center
-    )
+    ) {
+        Text(
+            text = "Direct Handoff",
+            fontFamily = getFontFamily(),
+            fontSize = 18.0.sp,
+            fontWeight = FontWeight(700),
+            modifier = Modifier.padding(4.dp)
+        )
+        Row {
+            Icon(
+                painter = painterResource(R.drawable.handoff_500x500),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .scale(0.6f)
+                    .size(100.dp)
+            )
+            Text(
+                text = "Hand the package directly to our specialist at your door",
+                fontFamily = getFontFamily(),
+                fontSize = 14.0.sp,
+                fontWeight = FontWeight(500),
+                textAlign = TextAlign.Left,
+                modifier = Modifier.requiredWidth(110.dp)
+            )
+        }
+    }
 }
 
 @Composable
-private fun DoorstepDescription(
+private fun DoorstepMethodContent(
     modifier: Modifier = Modifier
 ) {
-//    RelayVector(
-//        vector = painterResource(R.drawable.pickup_details_method_vector7),
-//        modifier = modifier
-//            .offset(0.dp, 20.dp)
-//    )
-    Text(
-        text = buildAnnotatedString {
-            withStyle(
-                style = SpanStyle(
-                    fontFamily = getFontFamily(),
-                    fontSize = 20.0.sp,
-                    fontWeight = FontWeight(700),
-                )
-            ) {
-                append("Leave on Doorstep\n")
-            }
-            withStyle(
-                style = SpanStyle(
-                    fontFamily = getFontFamily(),
-                    fontSize = 16.0.sp,
-                    fontWeight = FontWeight(500)
-                )
-            ) {
-                append("Place items outside your door ahead of your pick up window\n")
-            }
-        },
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
-            .requiredWidth(180.dp),
-        textAlign = TextAlign.Center
-    )
+    ) {
+        Text(
+            text = "Leave on Doorstep",
+            fontFamily = getFontFamily(),
+            fontSize = 18.0.sp,
+            fontWeight = FontWeight(700),
+            modifier = Modifier.padding(4.dp)
+        )
+        Row {
+            Icon(
+                painter = painterResource(R.drawable.doorstep_500x440),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .scale(0.6f)
+                    .size(100.dp)
+            )
+            Text(
+                text = "Place items outside your door ahead of your pick up window",
+                fontFamily = getFontFamily(),
+                fontSize = 14.0.sp,
+                fontWeight = FontWeight(500),
+                textAlign = TextAlign.Left,
+                modifier = Modifier.requiredWidth(110.dp)
+            )
+        }
+    }
 }
