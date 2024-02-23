@@ -10,13 +10,16 @@ import com.example.returnpals.PricingPlan
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * Tests the [PricingUI] composable.
+ */
 class PricingTest {
 
     @get:Rule
     val rule = createComposeRule()
 
     @Test
-    fun testPricingUI() {
+    fun testNextButton() {
         val plan = mutableStateOf<PricingPlan?>(null)
         var isClicked: Boolean
 
@@ -29,62 +32,131 @@ class PricingTest {
             )
         }
 
-        // Test next and back buttons:
-
         val next = rule.onNodeWithText("Next")
-        val back = rule.onNodeWithText("Back")
-
-        next.assertExists("Next button does not exist")
-        back.assertExists("Back button does not exist")
-
+        next.assertExists("Next button does not exist.")
         next.assertIsDisplayed()
-        back.assertIsDisplayed()
-
-        isClicked = false
-        next.performClick()
-        assert(!isClicked) { "Next button not disabled when no pickup method is selected." }
 
         plan.value = PricingPlan.BRONZE
         isClicked = false
         next.performClick()
-        assert(isClicked) { "Next button not enabled when pickup method is selected." }
+        assert(isClicked) { "Next button on-click event does not work." }
+
+        plan.value = null
+        isClicked = false
+        next.performClick()
+        assert(!isClicked) { "Next button not disabled when no pickup method is selected." }
+
+    }
+
+    @Test
+    fun testBackButton() {
+        val plan = mutableStateOf<PricingPlan?>(null)
+        var isClicked: Boolean
+
+        rule.setContent {
+            PricingUI(
+                plan = plan.value,
+                onChangePlan = { plan.value = it },
+                onClickBack = { isClicked = true },
+                onClickNext = { isClicked = true },
+            )
+        }
+
+        val back = rule.onNodeWithText("Back")
+        back.assertExists("Back button does not exist.")
+        back.assertIsDisplayed()
 
         isClicked = false
         back.performClick()
-        assert(isClicked) { "Back button does not work." }
+        assert(isClicked) { "Back button on-click event does not work." }
+    }
 
-        // Test pricing plan options:
+    @Test
+    fun testBronzeOption() {
+        val plan = mutableStateOf<PricingPlan?>(null)
+
+        rule.setContent {
+            PricingUI(
+                plan = plan.value,
+                onChangePlan = { plan.value = it },
+                onClickBack = { },
+                onClickNext = { },
+            )
+        }
 
         val bronze = rule.onNodeWithTag(PricingPlan.BRONZE.toString(), useUnmergedTree = true)
-        val silver = rule.onNodeWithTag(PricingPlan.SILVER.toString(), useUnmergedTree = true)
-        val gold = rule.onNodeWithTag(PricingPlan.GOLD.toString(), useUnmergedTree = true)
-        val platinum = rule.onNodeWithTag(PricingPlan.PLATINUM.toString(), useUnmergedTree = true)
-
         bronze.assertExists("Bronze plan does not exist.")
-        silver.assertExists("Silver plan does not exist.")
-        gold.assertExists("Gold plan does not exist.")
-        platinum.assertExists("Platinum plan does not exist.")
-
         bronze.assertIsDisplayed()
-        silver.assertIsDisplayed()
-        gold.assertIsDisplayed()
-        platinum.assertIsDisplayed()
 
         plan.value = null
         bronze.performClick()
-        assert(plan.value == PricingPlan.BRONZE) { "Bronze plan's onclick does not work." }
+        assert(plan.value == PricingPlan.BRONZE) { "Bronze option on-click does not work." }
+    }
+
+    @Test
+    fun testSilverOption() {
+        val plan = mutableStateOf<PricingPlan?>(null)
+
+        rule.setContent {
+            PricingUI(
+                plan = plan.value,
+                onChangePlan = { plan.value = it },
+                onClickBack = { },
+                onClickNext = { },
+            )
+        }
+
+        val silver = rule.onNodeWithTag(PricingPlan.SILVER.toString(), useUnmergedTree = true)
+        silver.assertExists("Silver plan does not exist.")
+        silver.assertIsDisplayed()
 
         plan.value = null
         silver.performClick()
-        assert(plan.value == PricingPlan.SILVER) { "Silver plan's onclick does not work." }
+        assert(plan.value == PricingPlan.SILVER) { "Silver option on-click does not work." }
+    }
+
+    @Test
+    fun testGoldOption() {
+        val plan = mutableStateOf<PricingPlan?>(null)
+
+        rule.setContent {
+            PricingUI(
+                plan = plan.value,
+                onChangePlan = { plan.value = it },
+                onClickBack = { },
+                onClickNext = { },
+            )
+        }
+
+        val gold = rule.onNodeWithTag(PricingPlan.GOLD.toString(), useUnmergedTree = true)
+        gold.assertExists("Gold plan does not exist.")
+        gold.assertIsDisplayed()
 
         plan.value = null
         gold.performClick()
-        assert(plan.value == PricingPlan.GOLD) { "Gold plan's onclick does not work." }
+        assert(plan.value == PricingPlan.GOLD) { "Gold option on-click does not work." }
+    }
+
+    @Test
+    fun testPlatinumOption() {
+        val plan = mutableStateOf<PricingPlan?>(null)
+
+        rule.setContent {
+            PricingUI(
+                plan = plan.value,
+                onChangePlan = { plan.value = it },
+                onClickBack = { },
+                onClickNext = { },
+            )
+        }
+
+        val platinum = rule.onNodeWithTag(PricingPlan.PLATINUM.toString(), useUnmergedTree = true)
+        platinum.assertExists("Platinum plan does not exist.")
+        platinum.assertIsDisplayed()
 
         plan.value = null
         platinum.performClick()
-        assert(plan.value == PricingPlan.PLATINUM) { "Platinum plan's onclick does not work." }
+        assert(plan.value == PricingPlan.PLATINUM) { "Platinum option on-click does not work." }
     }
 
 }
