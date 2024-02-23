@@ -1,6 +1,5 @@
 package com.example.returnpals.composetools
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -10,136 +9,164 @@ import org.junit.Rule
 import org.junit.Test
 import java.time.LocalDate
 
+/**
+ * Test the [PickupDateUI] composable.
+ */
 class PickupDateTest {
 
     @get:Rule
     val rule = createComposeRule()
 
     @Test
-    fun testPickupDateUI() {
+    fun testNextButton() {
         val minDate = LocalDate.now()
-        val maxDate = minDate.plusMonths(1)
-        var date = mutableStateOf(minDate)
+        val date = mutableStateOf(minDate)
         var isClicked: Boolean
 
         rule.setContent {
             PickupDateUI(
                 date = date.value,
-                onChangeDate = { date.value = it },
-                onClickBack = { isClicked = true },
+                onChangeDate = { },
+                onClickBack = { },
                 onClickNext = { isClicked = true },
-                isValidDate = { Log.println(Log.INFO, "date", it.toString()); it >= minDate && it < maxDate }
+                isValidDate = { it >= minDate }
             )
         }
 
-        // Test next and back buttons:
-
         val next = rule.onNodeWithText("Next")
-        val back = rule.onNodeWithText("Back")
-
-        next.assertExists("Next button does not exist")
-        back.assertExists("Back button does not exist")
-
+        next.assertExists("Next button does not exist.")
         next.assertIsDisplayed()
+
+        date.value = minDate
+        isClicked = false
+        next.performClick()
+        assert(isClicked) { "Next button on-click event does not work." }
+
+        date.value = minDate.minusDays(1)
+        isClicked = false
+        next.performClick()
+        assert(!isClicked) { "Next button not disabled on invalid date." }
+    }
+
+    @Test
+    fun testBackButton() {
+        var isClicked: Boolean
+
+        rule.setContent {
+            PickupDateUI(
+                date = LocalDate.now(),
+                onChangeDate = { },
+                onClickBack = { isClicked = true },
+                onClickNext = { },
+                isValidDate = { true }
+            )
+        }
+
+        val back = rule.onNodeWithText("Back")
+        back.assertExists("Back button does not exist.")
         back.assertIsDisplayed()
 
         isClicked = false
-        next.performClick()
-        assert(isClicked)
-
-        isClicked = false
         back.performClick()
-        assert(isClicked)
+        assert(isClicked) {"Back button on-click event does not work."}
+    }
 
-        // Test Date Selector:
-        // Test that selected date is displayed:
+    @Test
+    fun testDateSelector() {
+        val initDate = LocalDate.now()
+        val date = mutableStateOf(initDate)
+
+        rule.setContent {
+            PickupDateUI(
+                date = date.value,
+                onChangeDate = { date.value = it },
+                onClickBack = { },
+                onClickNext = { },
+                isValidDate = { true }
+            )
+        }
+
+        // Test that selected date is displayed
 
         val month = rule.onNodeWithText(date.value.month.toString())
         val day = rule.onNodeWithText(date.value.dayOfMonth.toString())
         val year = rule.onNodeWithText(date.value.year.toString())
 
-        month.assertExists("Month does not exist")
-        day.assertExists("Day does not exist")
-        year.assertExists("Year does not exist")
+        month.assertExists("Selected Month does not exist.")
+        day.assertExists("Selected Day does not exist.")
+        year.assertExists("Selected Year does not exist.")
 
         month.assertIsDisplayed()
         day.assertIsDisplayed()
         year.assertIsDisplayed()
 
-        // Test that previous date is displayed:
+        // Test that previous date is displayed
 
         val prevMonth = rule.onNodeWithText(date.value.minusMonths(1).month.toString())
         val prevDay = rule.onNodeWithText(date.value.minusDays(1).dayOfMonth.toString())
         val prevYear = rule.onNodeWithText(date.value.minusYears(1).year.toString())
 
-        prevMonth.assertExists("Previous month does not exist")
-        prevDay.assertExists("Previous day does not exist")
-        prevYear.assertExists("Previous year does not exist")
+        prevMonth.assertExists("Previous Month does not exist.")
+        prevDay.assertExists("Previous Day does not exist.")
+        prevYear.assertExists("Previous Year does not exist.")
 
         prevMonth.assertIsDisplayed()
         prevDay.assertIsDisplayed()
         prevYear.assertIsDisplayed()
 
-        // Test onChangeDate for previous date buttons:
+        // Test that next date is displayed
 
-        date.value = minDate
-        prevMonth.performClick()
-        assert(date.value == minDate.minusMonths(1))
-
-        date.value = minDate
-        prevDay.performClick()
-        assert(date.value == minDate.minusDays(1))
-
-        date.value = minDate
-        prevYear.performClick()
-        assert(date.value == minDate.minusYears(1))
-
-        // Test that next date is displayed:
-
-        date.value = minDate
         val nextMonth = rule.onNodeWithText(date.value.plusMonths(1).month.toString())
         val nextDay = rule.onNodeWithText(date.value.plusDays(1).dayOfMonth.toString())
         val nextYear = rule.onNodeWithText(date.value.plusYears(1).year.toString())
 
-        nextMonth.assertExists("Next month does not exist")
-        nextDay.assertExists("Next day does not exist")
-        nextYear.assertExists("Next year does not exist")
+        nextMonth.assertExists("Next Month does not exist.")
+        nextDay.assertExists("Next Day does not exist.")
+        nextYear.assertExists("Next Year does not exist.")
 
         nextMonth.assertIsDisplayed()
         nextDay.assertIsDisplayed()
         nextYear.assertIsDisplayed()
 
+        // Test onChangeDate for previous date buttons:
+
+        date.value = initDate
+        prevMonth.performClick()
+        assert(date.value == initDate.minusMonths(1)) {
+            "Decrement Month button does not work."
+        }
+
+        date.value = initDate
+        prevDay.performClick()
+        assert(date.value == initDate.minusDays(1)) {
+            "Decrement Day button does not work."
+        }
+
+        date.value = initDate
+        prevYear.performClick()
+        assert(date.value == initDate.minusYears(1)) {
+            "Decrement Year button does not work."
+        }
+
         // Test onChangeDate for next date buttons:
 
-        date.value = minDate
+        date.value = initDate
         nextMonth.performClick()
-        assert(date.value == minDate.plusMonths(1))
+        assert(date.value == initDate.plusMonths(1)) {
+            "Increment Month button does not work."
+        }
 
-        date.value = minDate
+        date.value = initDate
         nextDay.performClick()
-        assert(date.value == minDate.plusDays(1))
+        assert(date.value == initDate.plusDays(1)) {
+            "Increment Day button does not work."
+        }
 
-        date.value = minDate
+        date.value = initDate
         nextYear.performClick()
-        assert(date.value == minDate.plusYears(1))
-
-        // Test isValidDate:
-
-        date.value = minDate.minusDays(1)
-        isClicked = false
-        next.performClick()
-        assert(!isClicked) { "Next button not disabled on invalid date" }
-
-        date.value = maxDate.plusDays(1)
-        isClicked = false
-        next.performClick()
-        assert(!isClicked) { "Next button not disabled on invalid date" }
-
-        date.value = minDate.plusDays(15)
-        isClicked = false
-        next.performClick()
-        assert(isClicked) { "Next button not enabled on invalid date" }
-
+        assert(date.value == initDate.plusYears(1)) {
+            "Increment Year button does not work."
+        }
     }
 
 }

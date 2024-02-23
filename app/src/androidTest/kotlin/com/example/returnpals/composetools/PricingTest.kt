@@ -50,13 +50,12 @@ class PricingTest {
 
     @Test
     fun testBackButton() {
-        val plan = mutableStateOf<PricingPlan?>(null)
         var isClicked: Boolean
 
         rule.setContent {
             PricingUI(
-                plan = plan.value,
-                onChangePlan = { plan.value = it },
+                plan = null,
+                onChangePlan = { },
                 onClickBack = { isClicked = true },
                 onClickNext = { isClicked = true },
             )
