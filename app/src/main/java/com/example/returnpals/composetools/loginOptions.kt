@@ -1,8 +1,5 @@
 package com.example.returnpals.composetools
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.requiredWidth
@@ -11,41 +8,37 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.example.returnpals.services.LoginViewModel
 
 class loginOptions {
     /* This is the login options class used to create the two login UI for guest and user.*/
 
     @Composable
-    fun LoginUISate(isGuest:Boolean) {
+    fun LoginUISate(viewModel:LoginViewModel) {
         //This will switch between the guest login and user login
-        var isGuest = remember { mutableStateOf(isGuest) }
-        var email = remember { mutableStateOf("Email") }
-        var pass = remember { mutableStateOf("Password") }
-        if (isGuest.value) {
+        if (viewModel.isGuest.value) {
             GuestLoginUIContent(
-                userSignIn = { isGuest.value = false },
+                userSignIn = { viewModel.switchGuestUser() },
                 signin = { /*TODO* login(user,pass)*/ },
-                signup = { /*TODO navToSignUp*/ },
-                email = { email.value = it},
-                emailString = email.value)
+                signup = { viewModel.isGuest.value = false },
+                email = { viewModel.email.value = it},
+                emailString = viewModel.email.value)
         } else {
             LoginUIContent(
-                user = {  email.value = it},
-                pass = { pass.value = it },
-                guest = { isGuest.value  = true },
+                user = {  viewModel.changeEmail(it)},
+                pass = { viewModel.changePass(it) },
+                guest = { viewModel.switchGuestUser() },
                 reset = { /*TODO*/ },
-                signin = { /*TODO*/ },
-                signup = { /*TODO*/ },
-                emailString = email.value,
-                passString = pass.value)
+                signin = {viewModel.logIn() },
+                signup = { viewModel.singUp() },
+                emailString = viewModel.email.value,
+                passString =  viewModel.password.value)
         }
     }
 
