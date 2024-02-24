@@ -77,6 +77,12 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.6")
     implementation("androidx.compose.material:material:1.6.0")
 
+    /** AWS */
+    implementation("aws.sdk.kotlin:cognitoidentityprovider:1.0.0")
+
+    // Amplify core dependency
+    implementation("com.amplifyframework:core:2.14.11")
+    
     /** Android Testing */
     testImplementation("junit:junit:4.13.2")
 
