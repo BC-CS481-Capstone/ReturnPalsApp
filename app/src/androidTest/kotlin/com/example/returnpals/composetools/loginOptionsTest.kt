@@ -93,7 +93,9 @@ class loginOptionsTest {
     }
     @Test
     fun loginUIStateTestToUser() {
-        rule.setContent { loginOptions().LoginUISate(LoginViewModel()) }
+        var model = LoginViewModel()
+        model.switchGuestUser()
+        rule.setContent { loginOptions().LoginUISate(model) }
         rule.onNode(hasText("Sign In ") and hasClickAction()).performClick()
         rule.onNode(hasText("Sign In") and hasClickAction()).assertIsDisplayed()
     }
