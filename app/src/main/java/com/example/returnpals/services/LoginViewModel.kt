@@ -11,7 +11,7 @@ import com.amplifyframework.auth.result.AuthSignOutResult
 import com.amplifyframework.core.Amplify
 
 class LoginViewModel: ViewModel() {
-    var email =  mutableStateOf<String>("dcthekiller@yahoo.com")
+    var email =  mutableStateOf<String>("test@bellevue.college")
         private set
     var password =  mutableStateOf<String>("Password123$")
         private set
