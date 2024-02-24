@@ -1,13 +1,11 @@
 package com.example.returnpals.composetools
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
@@ -16,12 +14,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
@@ -32,9 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
 import com.example.returnpals.PricingPlan
-import com.example.returnpals.ScheduleReturn
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -212,164 +207,150 @@ private fun ChoosePlanPreview() {
 
 @Composable
 private fun SilverPlanText(modifier: Modifier = Modifier) {
-    Column(
-        horizontalAlignment = Alignment.Start
-    ) {
-        Text(
-            text = buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        fontSize = 16.0.sp,
-                        fontWeight = FontWeight(800),
-                        color = Color(150, 170, 170),
-                        baselineShift = BaselineShift(0.25F)
-                    )
-                ) {
-                    append("SILVER\n")
-                }
-                withStyle(
-                    style = SpanStyle(
-                        fontSize = 12.0.sp
-                    )
-                ) {
-                    append("\$20.99")
-                }
-                withStyle(
-                    style = SpanStyle(
-                        fontSize = 8.0.sp,
-                    )
-                ) {
-                    append("/month\nbilled monthly")
-                }
-            },
-            fontFamily = FontFamily.SansSerif,
-            lineHeight = 10.sp,
-            fontWeight = FontWeight(700),
-            color = Color(4, 41, 65),
-            modifier = modifier
-        )
-    }
+    Text(
+        text = buildAnnotatedString {
+            withStyle(
+                style = SpanStyle(
+                    fontSize = 16.0.sp,
+                    fontWeight = FontWeight(800),
+                    color = Color(150, 170, 170),
+                    baselineShift = BaselineShift(0.25F)
+                )
+            ) {
+                append("SILVER\n")
+            }
+            withStyle(
+                style = SpanStyle(
+                    fontSize = 12.0.sp
+                )
+            ) {
+                append("\$20.99")
+            }
+            withStyle(
+                style = SpanStyle(
+                    fontSize = 8.0.sp,
+                )
+            ) {
+                append("/month\nbilled monthly")
+            }
+        },
+        fontFamily = FontFamily.SansSerif,
+        lineHeight = 10.sp,
+        fontWeight = FontWeight(700),
+        color = Color(4, 41, 65),
+        modifier = modifier.testTag(PricingPlan.SILVER.toString())
+    )
 }
 
 @Composable
 private fun PlatinumPlanText(modifier: Modifier = Modifier) {
-    Column(
-        horizontalAlignment = Alignment.Start
-    ) {
-        Text(
-            text = buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        fontSize = 16.0.sp,
-                        fontWeight = FontWeight(800),
-                        color = Color(125, 175, 175),
-                        baselineShift = BaselineShift(0.25F)
-                    )
-                ) {
-                    append("PLATINUM\n")
-                }
-                withStyle(
-                    style = SpanStyle(
-                        fontSize = 12.0.sp
-                    )
-                ) {
-                    append("\$14.79")
-                }
-                withStyle(
-                    style = SpanStyle(
-                        fontSize = 8.0.sp,
-                    )
-                ) {
-                    append("/month\nbilled yearly")
-                }
-            },
-            fontFamily = FontFamily.SansSerif,
-            lineHeight = 10.sp,
-            fontWeight = FontWeight(700),
-            color = Color(4, 41, 65),
-            modifier = modifier
-        )
-    }
+    Text(
+        text = buildAnnotatedString {
+            withStyle(
+                style = SpanStyle(
+                    fontSize = 16.0.sp,
+                    fontWeight = FontWeight(800),
+                    color = Color(125, 175, 175),
+                    baselineShift = BaselineShift(0.25F)
+                )
+            ) {
+                append("PLATINUM\n")
+            }
+            withStyle(
+                style = SpanStyle(
+                    fontSize = 12.0.sp
+                )
+            ) {
+                append("\$14.79")
+            }
+            withStyle(
+                style = SpanStyle(
+                    fontSize = 8.0.sp,
+                )
+            ) {
+                append("/month\nbilled yearly")
+            }
+        },
+        fontFamily = FontFamily.SansSerif,
+        lineHeight = 10.sp,
+        fontWeight = FontWeight(700),
+        color = Color(4, 41, 65),
+        modifier = modifier.testTag(PricingPlan.PLATINUM.toString())
+    )
 }
 
 @Composable
 private fun GoldPlanText(modifier: Modifier = Modifier) {
-    Column(
-        horizontalAlignment = Alignment.Start
-    ) {
-        Text(
-            text = buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        fontSize = 16.0.sp,
-                        fontWeight = FontWeight(800),
-                        color = Color(230, 190, 100),
-                        baselineShift = BaselineShift(0.25F)
-                    )
-                ) {
-                    append("GOLD\n")
-                }
-                withStyle(
-                    style = SpanStyle(
-                        fontSize = 12.0.sp
-                    )
-                ) {
-                    append("\$18.99")
-                }
-                withStyle(
-                    style = SpanStyle(
-                        fontSize = 8.0.sp,
-                    )
-                ) {
-                    append("/month\nbilled quarterly")
-                }
-            },
-            fontFamily = FontFamily.SansSerif,
-            lineHeight = 10.sp,
-            fontWeight = FontWeight(700),
-            color = Color(4, 41, 65),
-            modifier = modifier
-        )
-    }
+    Text(
+        text = buildAnnotatedString {
+            withStyle(
+                style = SpanStyle(
+                    fontSize = 16.0.sp,
+                    fontWeight = FontWeight(800),
+                    color = Color(230, 190, 100),
+                    baselineShift = BaselineShift(0.25F)
+                )
+            ) {
+                append("GOLD\n")
+            }
+            withStyle(
+                style = SpanStyle(
+                    fontSize = 12.0.sp
+                )
+            ) {
+                append("\$18.99")
+            }
+            withStyle(
+                style = SpanStyle(
+                    fontSize = 8.0.sp,
+                )
+            ) {
+                append("/month\nbilled quarterly")
+            }
+        },
+        fontFamily = FontFamily.SansSerif,
+        lineHeight = 10.sp,
+        fontWeight = FontWeight(700),
+        color = Color(4, 41, 65),
+        modifier = modifier.testTag(PricingPlan.GOLD.toString())
+    )
 }
 
 @Composable
 private fun BronzePlanText(modifier: Modifier = Modifier) {
-    Column {
-        Text(
-            text = buildAnnotatedString {
-                withStyle(
-                    style = SpanStyle(
-                        fontSize = 16.0.sp,
-                        fontWeight = FontWeight(800),
-                        color = Color(200, 150, 100),
-                        baselineShift = BaselineShift(0.25F)
-                    )
-                ) {
-                    append("Bronze\n")
-                }
-                withStyle(
-                    style = SpanStyle(
-                        fontSize = 12.0.sp
-                    )
-                ) {
-                    append("\$10.99\n")
-                }
-                withStyle(
-                    style = SpanStyle(
-                        fontSize = 8.0.sp,
-                    )
-                ) {
-                    append("+\$3.99 per additional box")
-                }
-            },
-            fontFamily = FontFamily.SansSerif,
-            lineHeight = 10.sp,
-            fontWeight = FontWeight(700),
-            color = Color(4, 41, 65),
-            modifier = modifier
-        )
-    }
+    Text(
+        text = buildAnnotatedString {
+            withStyle(
+                style = SpanStyle(
+                    fontSize = 16.0.sp,
+                    fontWeight = FontWeight(800),
+                    color = Color(200, 150, 100),
+                    baselineShift = BaselineShift(0.25F)
+                )
+            ) {
+                append("BRONZE\n")
+            }
+            withStyle(
+                style = SpanStyle(
+                    fontSize = 12.0.sp
+                )
+            ) {
+                append("\$10.99\n")
+            }
+            withStyle(
+                style = SpanStyle(
+                    fontSize = 8.0.sp,
+                )
+            ) {
+                append("+\$3.99 per additional box")
+            }
+        },
+        fontFamily = FontFamily.SansSerif,
+        lineHeight = 10.sp,
+        fontWeight = FontWeight(700),
+        color = Color(4, 41, 65),
+        modifier = modifier.testTag(PricingPlan.BRONZE.toString())
+    )
 }
 
 /*
