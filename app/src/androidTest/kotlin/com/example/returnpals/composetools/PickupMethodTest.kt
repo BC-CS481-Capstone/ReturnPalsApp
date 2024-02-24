@@ -17,6 +17,9 @@ class PickupMethodTest {
     @get:Rule
     val rule = createComposeRule()
 
+    /**
+     * Test the next button. Check that it is displayed, that the on-click callback works, and that it can be disabled.
+     */
     @Test
     fun testNextButton() {
         val method = mutableStateOf<PickupMethod?>(null)
@@ -46,6 +49,9 @@ class PickupMethodTest {
         assert(!isClicked) { "Next button enabled when no valid option is selected." }
     }
 
+    /**
+     * Test the back button. Check that it is displayed, and that the on-click callback works.
+     */
     @Test
     fun testBackButton() {
         var isClicked: Boolean
@@ -68,6 +74,9 @@ class PickupMethodTest {
         assert(isClicked) { "Back button on-click event does not work." }
     }
 
+    /**
+     * Test the doorstep method button. Check that it is displayed, and that the on-change-method callback works.
+     */
     @Test
     fun testDoorstepOption() {
         val method = mutableStateOf<PickupMethod?>(null)
@@ -90,6 +99,9 @@ class PickupMethodTest {
         assert(method.value == PickupMethod.DOORSTEP) { "\"Leave on Doorstep\" option on-click event does not work." }
     }
 
+    /**
+     * Test the handoff method button. Check that it is displayed, and that the on-change-method callback works.
+     */
     @Test
     fun testHandoffOption() {
         val method = mutableStateOf<PickupMethod?>(null)

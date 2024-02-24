@@ -8,6 +8,7 @@ import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
 import java.time.LocalDate
+import com.example.returnpals.composetools.ButtonManager.DateSelector
 
 /**
  * Test the [PickupDateUI] composable.
@@ -17,6 +18,9 @@ class PickupDateTest {
     @get:Rule
     val rule = createComposeRule()
 
+    /**
+     * Test the next button. Check that it is displayed, that the on-click callback works, and that it can be disabled.
+     */
     @Test
     fun testNextButton() {
         val minDate = LocalDate.now()
@@ -48,6 +52,9 @@ class PickupDateTest {
         assert(!isClicked) { "Next button not disabled on invalid date." }
     }
 
+    /**
+     * Test the back button. Check that it is displayed, and that the on-click callback works.
+     */
     @Test
     fun testBackButton() {
         var isClicked: Boolean
@@ -71,6 +78,9 @@ class PickupDateTest {
         assert(isClicked) {"Back button on-click event does not work."}
     }
 
+    /**
+     * Test the [DateSelector]. Check that it is displayed, and that the increment/decrement date buttons work.
+     */
     @Test
     fun testDateSelector() {
         val initDate = LocalDate.now()

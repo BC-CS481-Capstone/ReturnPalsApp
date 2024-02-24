@@ -18,6 +18,9 @@ class PricingTest {
     @get:Rule
     val rule = createComposeRule()
 
+    /**
+     * Test the next button. Check that it is displayed, that the on-click callback works, and that it can be disabled.
+     */
     @Test
     fun testNextButton() {
         val plan = mutableStateOf<PricingPlan?>(null)
@@ -48,6 +51,9 @@ class PricingTest {
 
     }
 
+    /**
+     * Test the back button. Check that it is displayed, and that the on-click callback works.
+     */
     @Test
     fun testBackButton() {
         var isClicked: Boolean
@@ -70,6 +76,9 @@ class PricingTest {
         assert(isClicked) { "Back button on-click event does not work." }
     }
 
+    /**
+     * Test the bronze plan button. Check that it is displayed, and that the on-change-plan callback works.
+     */
     @Test
     fun testBronzeOption() {
         val plan = mutableStateOf<PricingPlan?>(null)
@@ -92,6 +101,9 @@ class PricingTest {
         assert(plan.value == PricingPlan.BRONZE) { "Bronze option on-click does not work." }
     }
 
+    /**
+     * Test the silver plan button. Check that it is displayed, and that the on-change-plan callback works.
+     */
     @Test
     fun testSilverOption() {
         val plan = mutableStateOf<PricingPlan?>(null)
@@ -114,6 +126,9 @@ class PricingTest {
         assert(plan.value == PricingPlan.SILVER) { "Silver option on-click does not work." }
     }
 
+    /**
+     * Test the gold plan button. Check that it is displayed, and that the on-change-plan callback works.
+     */
     @Test
     fun testGoldOption() {
         val plan = mutableStateOf<PricingPlan?>(null)
@@ -136,6 +151,9 @@ class PricingTest {
         assert(plan.value == PricingPlan.GOLD) { "Gold option on-click does not work." }
     }
 
+    /**
+     * Test the platinum plan button. Check that it is displayed, and that the on-change-plan callback works.
+     */
     @Test
     fun testPlatinumOption() {
         val plan = mutableStateOf<PricingPlan?>(null)

@@ -20,6 +20,9 @@ class PackagesTest {
     @get:Rule
     val rule = createComposeRule()
 
+    /**
+     * Test the next button. Check that it is displayed, that the on-click callback works, and that it can be disabled.
+     */
     @Test
     fun testNextButton() {
         val packages = mutableStateMapOf<Long, PackageInfo>()
@@ -61,6 +64,9 @@ class PackagesTest {
         assert(!isClicked) { "Next button not disabled when packages table is empty." }
     }
 
+    /**
+     * Test the back button. Check that it is displayed, and that the on-click callback works.
+     */
     @Test
     fun testBackButton() {
         var isClicked: Boolean
@@ -85,7 +91,7 @@ class PackagesTest {
     }
 
     /**
-     * Test that every item in packages argument is displayed.
+     * Test the package table. Check that every item in packages argument is displayed.
      */
     @Test
     fun testPackagesTable() {
@@ -111,7 +117,8 @@ class PackagesTest {
     }
 
     /**
-     * INCOMPLETE: functionality not yet tested.
+     * Test the "Add Physical" label button. Check that it is displayed.
+     * INCOMPLETE: functionality not yet fully implemented.
      */
     @Test
     fun testAddLabelPhysical() {
@@ -133,7 +140,8 @@ class PackagesTest {
     }
 
     /**
-     * INCOMPLETE: functionality not yet tested.
+     * Test the "Add Digital" label button. Check that it is displayed.
+     * INCOMPLETE: functionality not yet fully implemented.
      */
     @Test
     fun testAddLabelDigital() {
@@ -155,7 +163,8 @@ class PackagesTest {
     }
 
     /**
-     * INCOMPLETE: functionality not yet tested.
+     * Test the "Add Amazon QR Code" button. Check that it is displayed.
+     * INCOMPLETE: functionality not yet fully implemented.
      */
     @Test
     fun testAddLabelQRCode() {
