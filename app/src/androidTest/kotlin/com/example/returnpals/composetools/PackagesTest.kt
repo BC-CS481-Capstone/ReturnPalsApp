@@ -1,6 +1,5 @@
 package com.example.returnpals.composetools
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -11,13 +10,18 @@ import com.example.returnpals.PackageLabelType
 import org.junit.Rule
 import org.junit.Test
 
+// TODO: Test add label popup UI, onAddLabel, and onRemoveLabel
+
+/**
+ * Tests the [PackagesUI] composable.
+ */
 class PackagesTest {
 
     @get:Rule
     val rule = createComposeRule()
 
     @Test
-    fun testPackagesUI() {
+    fun testNextButton() {
         val packages = mutableStateMapOf<Long, PackageInfo>()
         var isClicked: Boolean
 
@@ -47,33 +51,135 @@ class PackagesTest {
         assert(isClicked) { "Back button does not work." }
 
         isClicked = false
+        packages[1] = PackageInfo(1, "nordstrom.png", PackageLabelType.DIGITAL)
+        next.performClick()
+        assert(isClicked) { "Next button on-click event does not work." }
+
+        isClicked = false
+        packages.clear()
         next.performClick()
         assert(!isClicked) { "Next button not disabled when packages table is empty." }
+    }
+
+    @Test
+    fun testBackButton() {
+        var isClicked: Boolean
+
+        rule.setContent {
+            PackagesUI(
+                packages = emptyList(),
+                onAddLabel = { },
+                onRemoveLabel = { },
+                onClickBack = { isClicked = true },
+                onClickNext = { }
+            )
+        }
+
+        val back = rule.onNodeWithText("Back")
+        back.assertExists("Back button does not exist.")
+        back.assertIsDisplayed()
+
+        isClicked = false
+        back.performClick()
+        assert(isClicked) { "Back button on-click does not work." }
+    }
+
+    /**
+     * Test that every item in packages argument is displayed.
+     */
+    @Test
+    fun testPackagesTable() {
+        val packages = mutableStateMapOf<Long, PackageInfo>()
+
+        rule.setContent {
+            PackagesUI(
+                packages = packages.values.toList(),
+                onAddLabel = { packages[it.id] = it },
+                onRemoveLabel = { },
+                onClickBack = { },
+                onClickNext = { }
+            )
+        }
+
+        // Test next and back buttons:
 
         packages[1] = PackageInfo(1, "nordstrom.png", PackageLabelType.DIGITAL)
         rule.onNodeWithText("nordstrom.png").assertIsDisplayed()
 
-        isClicked = false
-        next.performClick()
-        assert(isClicked) { "Next button not enabled when packages table is non-empty." }
-
         packages[2] = PackageInfo(2, "jcpenny.png", PackageLabelType.PHYSICAL)
         rule.onNodeWithText("jcpenny.png").assertIsDisplayed()
+    }
+
+    /**
+     * INCOMPLETE: functionality not yet tested.
+     */
+    @Test
+    fun testAddLabelPhysical() {
+        val packages = mutableStateMapOf<Long, PackageInfo>()
+
+        rule.setContent {
+            PackagesUI(
+                packages = packages.values.toList(),
+                onAddLabel = { packages[it.id] = it },
+                onRemoveLabel = { },
+                onClickBack = { },
+                onClickNext = { }
+            )
+        }
 
         val physical = rule.onNodeWithText("Physical Label")
-        val digital = rule.onNodeWithText("Digital Label")
-        val qrcode = rule.onNodeWithText("Amazon QR Code")
-
-        physical.assertExists("Add physical label button does not exist.")
-        digital.assertExists("Add digital label button does not exist.")
-        qrcode.assertExists("Add amazon qr code label button does not exist.")
-
+        physical.assertExists("Add Physical Label button does not exist.")
         physical.assertIsDisplayed()
-        digital.assertIsDisplayed()
-        qrcode.assertIsDisplayed()
-
-        // TODO: Test add label popup UI, onAddLabel, and onRemoveLabel
-
     }
+
+    /**
+     * INCOMPLETE: functionality not yet tested.
+     */
+    @Test
+    fun testAddLabelDigital() {
+        val packages = mutableStateMapOf<Long, PackageInfo>()
+
+        rule.setContent {
+            PackagesUI(
+                packages = packages.values.toList(),
+                onAddLabel = { packages[it.id] = it },
+                onRemoveLabel = { },
+                onClickBack = { },
+                onClickNext = { }
+            )
+        }
+
+        val digital = rule.onNodeWithText("Digital Label")
+        digital.assertExists("Add Digital Label button does not exist.")
+        digital.assertIsDisplayed()
+    }
+
+    /**
+     * INCOMPLETE: functionality not yet tested.
+     */
+    @Test
+    fun testAddLabelQRCode() {
+        val packages = mutableStateMapOf<Long, PackageInfo>()
+
+        rule.setContent {
+            PackagesUI(
+                packages = packages.values.toList(),
+                onAddLabel = { packages[it.id] = it },
+                onRemoveLabel = { },
+                onClickBack = { },
+                onClickNext = { }
+            )
+        }
+
+        val qrcode = rule.onNodeWithText("Amazon QR Code")
+        qrcode.assertExists("Add Amazon QR Code button does not exist.")
+        qrcode.assertIsDisplayed()
+    }
+
+    /**
+     * INCOMPLETE: component not yet implemented.
+     */
+    @Test
+    fun testRemoveLabel() {}
 
 }
