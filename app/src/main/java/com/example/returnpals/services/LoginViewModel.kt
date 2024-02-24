@@ -9,7 +9,6 @@ import com.amplifyframework.auth.options.AuthSignUpOptions
 import com.amplifyframework.auth.result.AuthSignInResult
 import com.amplifyframework.auth.result.AuthSignOutResult
 import com.amplifyframework.core.Amplify
-import kotlinx.coroutines.runBlocking
 
 class LoginViewModel: ViewModel() {
     var email =  mutableStateOf<String>("dcthekiller@yahoo.com")
@@ -37,14 +36,13 @@ class LoginViewModel: ViewModel() {
 
     fun singUp() {
         //Allows users to signup with cognito
-        runBlocking {
             Amplify.Auth.signUp(
             email.value,
             password.value,
             AuthSignUpOptions.builder().userAttribute(AuthUserAttributeKey.email(), email.value)
                 .build(),
-            { result -> Log.i("Amplify Auth", "Result: " + result.toString()) }
-        ) { error -> Log.e("Amplify Auth", "Sign up failed", error) } }
+            {  Log.i("Amplify Auth", "Result: " ) }
+        ) {  Log.e("Amplify Auth", "Sign up failed", ) }
 
     }
 

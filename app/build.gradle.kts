@@ -82,7 +82,7 @@ dependencies {
 
     // Amplify core dependency
     implementation("com.amplifyframework:core:2.14.11")
-    implementation("com.amplifyframework:aws-auth-cognito:1.4.0")
+    implementation("com.amplifyframework:aws-auth-cognito:2.14.11")
     
     /** Android Testing */
     testImplementation("junit:junit:4.13.2")
