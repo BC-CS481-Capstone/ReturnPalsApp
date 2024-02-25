@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".ReturnPals"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -12,11 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ReturnPals"
         tools:targetApi="31">
-        <activity
-            android:name=".composetools.ProcessCard"
-            android:exported="false"
-            android:label="@string/title_activity_process_card"
-            android:theme="@style/Theme.ReturnPals" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

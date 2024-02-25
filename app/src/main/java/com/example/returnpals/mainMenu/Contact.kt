@@ -29,8 +29,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.returnpals.R
 import com.example.returnpals.composetools.CustomTextField
-
-
+import com.example.returnpals.services.ContactViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 
@@ -42,13 +42,14 @@ fun Contact(navController: NavController) {
 }
 
 @Composable
-fun ContactContent(navController: NavController) {
+fun ContactContent(navController: NavController, viewModel: ContactViewModel = viewModel()) {
     var fullName by remember { mutableStateOf("") }
     var postalCode by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
     val selectedBlue = Color(0xFF008BE7)
     val customColor = Color(0xFFE1F6FF)
+
 
     Column(
         modifier = Modifier
@@ -75,7 +76,7 @@ fun ContactContent(navController: NavController) {
 
         Button(
             onClick = {
-                // Handle the send action here
+                viewModel.submitData(fullName, postalCode, email, message)
             },
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = selectedBlue,

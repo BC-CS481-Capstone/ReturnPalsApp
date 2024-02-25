@@ -91,4 +91,17 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    /** Amplify Dependencies **/
+    implementation("com.amplifyframework:aws-datastore:2.14.11") {
+        exclude(group = "com.amplifyframework", module = "aws-api-appsync")
+    }
+    implementation("com.amplifyframework:core:1.38.8")
+    implementation("com.amplifyframework:aws-api:1.38.8")
+
+
+
+
+
+
+
 }
