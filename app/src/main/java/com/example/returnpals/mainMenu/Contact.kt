@@ -43,8 +43,8 @@ fun Contact(navController: NavController) {
 
 @Composable
 fun ContactContent(navController: NavController) {
-    var firstName by remember { mutableStateOf("") }
-    var lastName by remember { mutableStateOf("") }
+    var fullName by remember { mutableStateOf("") }
+    var postalCode by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
     val selectedBlue = Color(0xFF008BE7)
@@ -64,9 +64,9 @@ fun ContactContent(navController: NavController) {
             color = Color.Black
         )
         Spacer(modifier = Modifier.height(16.dp))
-        CustomTextField(label = "First Name*", text = firstName, onValueChange = { firstName = it })
+        CustomTextField(label = "Full Name*", text = fullName, onValueChange = { fullName = it })
         Spacer(modifier = Modifier.height(8.dp))
-        CustomTextField(label = "Last Name*", text = lastName, onValueChange = { lastName = it })
+        CustomTextField(label = "Postal Code*", text = postalCode, onValueChange = { postalCode = it })
         Spacer(modifier = Modifier.height(8.dp))
         CustomTextField(label = "Email*", text = email, onValueChange = { email = it })
         Spacer(modifier = Modifier.height(8.dp))
@@ -109,8 +109,8 @@ fun ContactContent(navController: NavController) {
 @Preview
 @Composable
 fun ContactTest() {
-    var firstName by remember { mutableStateOf("") }
-    var lastName by remember { mutableStateOf("") }
+    var fullName by remember { mutableStateOf("") }
+    var postalCode by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
     val selectedBlue = Color(0xFF008BE7)
@@ -130,9 +130,9 @@ fun ContactTest() {
             color = Color.Black
         )
         Spacer(modifier = Modifier.height(16.dp))
-        CustomTextField(label = "First Name*", text = firstName, onValueChange = { firstName = it })
+        CustomTextField(label = "Full Name*", text = fullName, onValueChange = { fullName = it })
         Spacer(modifier = Modifier.height(8.dp))
-        CustomTextField(label = "Last Name*", text = lastName, onValueChange = { lastName = it })
+        CustomTextField(label = "Postal Code*", text = postalCode, onValueChange = { postalCode = it })
         Spacer(modifier = Modifier.height(8.dp))
         CustomTextField(label = "Email*", text = email, onValueChange = { email = it })
         Spacer(modifier = Modifier.height(8.dp))
