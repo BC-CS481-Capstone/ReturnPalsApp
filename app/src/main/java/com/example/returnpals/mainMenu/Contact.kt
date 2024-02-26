@@ -1,5 +1,6 @@
 package com.example.returnpals.mainMenu
 
+import MainMenuScaffold
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -31,8 +32,17 @@ import com.example.returnpals.composetools.CustomTextField
 
 
 
+
+
 @Composable
 fun Contact(navController: NavController) {
+    MainMenuScaffold(navController = navController) {
+        ContactContent(navController = navController)
+    }
+}
+
+@Composable
+fun ContactContent(navController: NavController) {
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }

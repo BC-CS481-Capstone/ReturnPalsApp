@@ -1,13 +1,31 @@
 package com.example.returnpals.mainMenu
 
 
-import androidx.compose.material3.Text
+import MainMenuScaffold
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.example.returnpals.PricingPlan
+import com.example.returnpals.composetools.PricingOptions
+import com.example.returnpals.composetools.PricingViewModel
+
 
 @Composable
 fun Pricing(navController: NavController) {
-    Text(text = "Test3")
+    MainMenuScaffold(navController = navController) {
+        PricingContent(navController = navController)
+    }
+}
 
-
+@Composable
+fun PricingContent(navController: NavController) {
+    val state = remember { PricingViewModel(PricingPlan.BRONZE) }
+    PricingOptions(
+        selected = state.plan.collectAsState().value,
+        onClickPlan = { state.onChangePlan(it) },
+        modifier = Modifier.fillMaxSize()
+    )
 }

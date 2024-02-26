@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +31,7 @@ import java.util.Locale
 class ConfirmPickup {
 
     @Composable
-    fun drawConfirmPickup(numberOfDigitial: Int = 0,
+    fun drawConfirmPickup(numberOfDigital: Int = 0,
                           numberOfPhysical: Int = 0,
                           visaLastFour: Int = 5555,
                           typeOfPickup: String = "Leave On Doorstep",
@@ -47,49 +48,108 @@ class ConfirmPickup {
                 .background(getBackGroundColor())
                 .fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally ) {
             ProgressBar(modifier = Modifier, step = 4)
+
+            //Text field
             Text("Confirm Your Pickup",Modifier .fillMaxWidth(),color = Color.Black, textAlign = TextAlign.Center, fontWeight = FontWeight.Bold,fontSize = 38.sp,maxLines = 1)
-            Column(Modifier.background(Color.White,shape = RoundedCornerShape(10) ),verticalArrangement = Arrangement.SpaceAround, horizontalAlignment = Alignment.CenterHorizontally ) {
-                Text("Order Summary\n" +
-                        "_________________",color = getBlueIconColor(),fontSize = 34.sp, maxLines = 2)
 
-                val day = pickUpDate.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG,Locale.getDefault())
+            //Start the white box with summary info
+            whiteBox(
+                pickUpDate = pickUpDate,
+                typeOfPickup = typeOfPickup,
+                pickUpAddress = pickUpAddress,
+                numberOfDigital = numberOfDigital,
+                numberOfPhysical = numberOfPhysical,
+                priceArray = priceArray,
+                visaLastFour = visaLastFour
+            )
+            //end of the white box summary
 
-                val month = pickUpDate.getDisplayName( Calendar.MONTH,Calendar.LONG,Locale.getDefault())
-                val date = pickUpDate.get(Calendar.DATE)
-
-                Text(day.toString()+" "+month.toString()+" "+date.toString(),Modifier,fontSize = 26.sp,maxLines = 1)
-                Text(typeOfPickup)
-                if (pickUpAddress.getAddressLine(0) != null ) {
-                    Text(text = pickUpAddress.getAddressLine(0))
-                }
-                if (pickUpAddress.getAddressLine(1) != null ) {
-                    Text(text = pickUpAddress.getAddressLine(1))
-                }
-                if (pickUpAddress.getAddressLine(2) != null ) {
-                    Text(text = pickUpAddress.getAddressLine(2))
-                }
-                Text("Packages", fontWeight = FontWeight.Bold,fontSize = 22.sp, color = Color.Black)
-                Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
-                    IconManager().getBoxIcon(modifier = Modifier.height(22.dp))
-                    Text(numberOfDigitial.toString()+" Package with digital label",fontSize = 20.sp,maxLines = 1)
-                }
-                Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
-                    IconManager().getBoxIcon(modifier = Modifier.height(22.dp))
-                    Text(numberOfPhysical.toString()+" Package with physical label",fontSize = 20.sp,maxLines = 1)
-                }
-
-                if (priceArray[0]!=0) {
-                    Text("Visa ending "+visaLastFour)
-                    Text("One-Time Return "+priceArray[0])
-                    Text("Tax "+priceArray[1])
-                    Text("Total "+priceArray[2])
-                }
-
-            }
-            Row(Modifier) {
+            //Navigation buttons
+            Row(horizontalArrangement = Arrangement.SpaceAround, modifier =  Modifier.fillMaxWidth()) {
                 ButtonManager.BackButton(onClick = backButton)
                 ButtonManager.NextButton(onClick = nextButton)
             }
+        }
+    }
+    @Composable
+    fun whiteBox(pickUpDate:Calendar,typeOfPickup:String,pickUpAddress:Address,numberOfDigital:Int,numberOfPhysical:Int,priceArray:Array<Int>,visaLastFour:Int) {
+        val config = getConfig()
+        val wwith =(config.screenWidthDp - 32).dp
+        val whieght = (config.screenHeightDp / 3 * 2).dp
+        Column(
+            Modifier
+                .background(
+                    Color.White,
+                    shape = RoundedCornerShape(10)
+                )
+                .width(wwith)
+                .height(whieght),
+            verticalArrangement = Arrangement.SpaceAround,
+            horizontalAlignment = Alignment.CenterHorizontally)
+        {
+            Text("Order Summary\n" +
+                    "_________________",color = getBlueIconColor(),fontSize = 34.sp, maxLines = 2)
+
+            val day = pickUpDate.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG,Locale.getDefault())
+
+            val month = pickUpDate.getDisplayName( Calendar.MONTH,Calendar.LONG,Locale.getDefault())
+            val date = pickUpDate.get(Calendar.DATE)
+
+            //Confirm Date
+            Text(day.toString()+" "+month.toString()+" "+date.toString(),fontSize = 34.sp,maxLines = 1)
+
+            //Confirm type of pickup as hand off or leave on door step
+            Text(typeOfPickup,fontSize = 34.sp)
+
+            //Avoid printing null if no address given
+            printAddressLines(pickUpAddress)
+
+            //Confirm packages
+            printNumberOfLabels(numberOfDigital,numberOfPhysical)
+
+            //Print payment if due. Should be able to skip if user is has already payed for a plan.
+            printPriceArray(priceArray,visaLastFour)
+
+        }
+    }
+    @Composable
+    fun printPriceArray(priceArray:Array<Int>,visaLastFour:Int) {
+        if (priceArray[0]!=0) {
+            Text("Visa ending $visaLastFour")
+            Text("One-Time Return "+priceArray[0])
+            Text("Tax "+priceArray[1])
+            Text("Total "+priceArray[2])
+        }
+    }
+    @Composable
+    fun printAddressLines(pickUpAddress:Address) {
+        //Avoid printing null if no address given
+        val fsize = (getConfig().screenWidthDp/20)
+        if (pickUpAddress.getAddressLine(0) != null ) {
+            Text(text = pickUpAddress.getAddressLine(0),fontSize = fsize.sp)
+        }
+        if (pickUpAddress.getAddressLine(1) != null ) {
+            Text(text = pickUpAddress.getAddressLine(1),fontSize = fsize.sp)
+        }
+        if (pickUpAddress.getAddressLine(2) != null ) {
+            Text(text = pickUpAddress.getAddressLine(2),fontSize = fsize.sp)
+        }
+    }
+
+    @Composable
+    fun printNumberOfLabels(numberOfDigital:Int,numberOfPhysical:Int) {
+        val fsize = (getConfig().screenWidthDp/16)
+
+        Text("Packages", fontWeight = FontWeight.Bold,fontSize = 34.sp, color = Color.Black)
+        //Row with Icon and text
+        Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+            IconManager().getBoxIcon(modifier = Modifier.height(fsize.dp))
+            Text(numberOfDigital.toString()+" Package with digital label",fontSize = fsize.sp,maxLines = 1)
+        }
+        //Row with Icon and text
+        Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+            IconManager().getBoxIcon(modifier = Modifier.height(fsize.dp))
+            Text("$numberOfPhysical Package with physical label",fontSize = fsize.sp,maxLines = 1)
         }
     }
 
