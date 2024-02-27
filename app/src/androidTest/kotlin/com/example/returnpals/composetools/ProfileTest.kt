@@ -2,7 +2,9 @@ package com.example.returnpals.composetools
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import com.example.returnpals.PricingPlan
 import com.example.returnpals.composetools.dashboard.ProfileContent
 import org.junit.Rule
 import org.junit.Test
@@ -19,7 +21,7 @@ class ProfileTest {
     @Test
     fun planTest(){
         rule.setContent{ ProfileContent() }
-        rule.onNodeWithText("SILVER").assertIsDisplayed()
+        rule.onNodeWithTag(PricingPlan.SILVER.toString()).assertIsDisplayed()
     }
     @Test
     fun startDateTest(){

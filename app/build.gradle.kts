@@ -76,6 +76,7 @@ dependencies {
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.6")
     implementation("androidx.navigation:navigation-compose:2.7.6")
     implementation("androidx.compose.material:material:1.6.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.1")
 
     /** Android Testing */
     testImplementation("junit:junit:4.13.2")
