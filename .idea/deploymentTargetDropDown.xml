@@ -2,7 +2,22 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="NavigationTest">
+        <State />
+      </entry>
       <entry key="Unnamed">
+        <State />
+      </entry>
+      <entry key="appNavHost_verifyStartDestination()">
+        <State />
+      </entry>
+      <entry key="navigateBackFromProfileToHome_verifyBackNavigation()">
+        <State />
+      </entry>
+      <entry key="navigateToContact_verifyNavigation()">
+        <State />
+      </entry>
+      <entry key="navigateToProfile_verifyNavigation()">
         <State />
       </entry>
     </value>
