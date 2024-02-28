@@ -2,17 +2,18 @@ package com.example.returnpals.composetools
 
 
 import java.io.File
+import java.time.LocalDate
 import java.util.Date
 
 
 data class OrderRepository(private val customerId : String,
-                           private var date : Date = Date(),
+                           private var date : LocalDate = LocalDate.now(),
                            private var address : AddressItem = AddressItem(-1, "123 basic ave"),
                            private var status : String = "N/A",
                            private var imageFile : File? = null,
                            private var notes : String = "N/A")  {
 
-    fun setDate(inDate : Date){
+    fun setDate(inDate : LocalDate){
         date = inDate
     }
     fun setAddress(inAddress : AddressItem){
@@ -24,7 +25,7 @@ data class OrderRepository(private val customerId : String,
     fun getId() : String{
         return customerId;
     }
-    fun getDate() : Date{
+    fun getDate() : LocalDate{
         return date;
     }
     fun getAddress() : AddressItem{
@@ -39,6 +40,7 @@ data class OrderRepository(private val customerId : String,
     fun getImage() : File? {
         return imageFile
     }
+
 
 
 
