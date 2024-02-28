@@ -1,7 +1,7 @@
 # A workflow that runs all test with an emulator
 name: Android CI
 
-#Select when and on what [branch]
+#Select when and on what [branch], named "master"
 on:
   push:
     branches: [ "master" ]
