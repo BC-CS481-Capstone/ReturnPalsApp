@@ -5,19 +5,10 @@
       <entry key="All Tests">
         <State />
       </entry>
-      <entry key="NavigationTest">
+      <entry key="LoginViewModelTest">
         <State />
       </entry>
-      <entry key="Unnamed">
-        <State />
-      </entry>
-      <entry key="homeButtonTest()">
-        <State />
-      </entry>
-      <entry key="loginOptionsTest">
-        <State />
-      </entry>
-      <entry key="navigateToPricing_verifyNavigation()">
+      <entry key="app">
         <State />
       </entry>
     </value>
