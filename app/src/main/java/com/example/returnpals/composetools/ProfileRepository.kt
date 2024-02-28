@@ -17,7 +17,7 @@ data class ProfileRepository(
     fun getDataBase(){
         /* Code is commented out for the time being, but should work with Amplify.
         Amplify.API.query(
-            ModelQuery.list(User::class.java, User.EMAIL.contains(email)),
+            ModelQuery.list(UsersMongoDb::class.java, User.EMAIL.contains(email)),
             { response ->
                 response.data.forEach { user ->
                     Log.i("MyAmplifyApp", user.nameFirst)

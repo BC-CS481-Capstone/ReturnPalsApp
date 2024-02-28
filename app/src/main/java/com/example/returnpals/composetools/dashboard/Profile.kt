@@ -60,7 +60,7 @@ fun ProfileContent(){
         if(picUri == null) {
             Image(painter = painterResource(R.drawable.returnpal_icon_500x500), contentDescription = "",)
         }
-        Text(text = "Welcome," + profile.getFirstName() + " " + profile.getLastName(),
+        Text(text = "Welcome, " + profile.getFirstName() + " " + profile.getLastName(),
             style = TextStyle(
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,

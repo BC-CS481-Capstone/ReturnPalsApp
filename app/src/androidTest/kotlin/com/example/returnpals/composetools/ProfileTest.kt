@@ -30,7 +30,7 @@ class ProfileTest {
     @Test
     fun welcomeTest(){
         rule.setContent{ ProfileContent() }
-        rule.onNodeWithText("Welcome").assertIsDisplayed()
+        rule.onNodeWithText("Welcome, John Doe").assertIsDisplayed()
     }
     //Test expired date shows
     @Test
@@ -57,7 +57,7 @@ class ProfileTest {
     //test for profile storing type
     @Test
     fun typeTest(){
-        assertEquals("Silver", profile.getType())
+        assertEquals("SILVER", profile.getType())
     }
     /*
     createRandomEntry()
