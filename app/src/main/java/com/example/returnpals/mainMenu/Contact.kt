@@ -13,7 +13,9 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -29,8 +31,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.returnpals.R
 import com.example.returnpals.composetools.CustomTextField
-
-
+import com.example.returnpals.services.ContactViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 
@@ -42,13 +44,27 @@ fun Contact(navController: NavController) {
 }
 
 @Composable
-fun ContactContent(navController: NavController) {
-    var firstName by remember { mutableStateOf("") }
-    var lastName by remember { mutableStateOf("") }
+fun ContactContent(navController: NavController, viewModel: ContactViewModel = viewModel()) {
+    var fullName by remember { mutableStateOf("") }
+    var postalCode by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
     val selectedBlue = Color(0xFF008BE7)
     val customColor = Color(0xFFE1F6FF)
+    val submissionSuccessful by viewModel.submissionSuccessful.observeAsState()
+
+
+    // Use LaunchedEffect to clear fields on submission success
+    LaunchedEffect(submissionSuccessful) {
+        if (submissionSuccessful == true) {
+            fullName = ""
+            postalCode = ""
+            email = ""
+            message = ""
+            // Reset the submission success state in the ViewModel to prevent repeated actions
+            viewModel.resetSubmissionSuccess()
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -64,9 +80,9 @@ fun ContactContent(navController: NavController) {
             color = Color.Black
         )
         Spacer(modifier = Modifier.height(16.dp))
-        CustomTextField(label = "First Name*", text = firstName, onValueChange = { firstName = it })
+        CustomTextField(label = "Full Name*", text = fullName, onValueChange = { fullName = it })
         Spacer(modifier = Modifier.height(8.dp))
-        CustomTextField(label = "Last Name*", text = lastName, onValueChange = { lastName = it })
+        CustomTextField(label = "Postal Code*", text = postalCode, onValueChange = { postalCode = it })
         Spacer(modifier = Modifier.height(8.dp))
         CustomTextField(label = "Email*", text = email, onValueChange = { email = it })
         Spacer(modifier = Modifier.height(8.dp))
@@ -75,7 +91,13 @@ fun ContactContent(navController: NavController) {
 
         Button(
             onClick = {
-                // Handle the send action here
+                viewModel.submitData(fullName, postalCode, email, message)
+                // Reset state variables after submission
+                fullName = ""
+                postalCode = ""
+                email = ""
+                message = ""
+
             },
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = selectedBlue,
@@ -109,8 +131,8 @@ fun ContactContent(navController: NavController) {
 @Preview
 @Composable
 fun ContactTest() {
-    var firstName by remember { mutableStateOf("") }
-    var lastName by remember { mutableStateOf("") }
+    var fullName by remember { mutableStateOf("") }
+    var postalCode by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
     val selectedBlue = Color(0xFF008BE7)
@@ -130,9 +152,9 @@ fun ContactTest() {
             color = Color.Black
         )
         Spacer(modifier = Modifier.height(16.dp))
-        CustomTextField(label = "First Name*", text = firstName, onValueChange = { firstName = it })
+        CustomTextField(label = "Full Name*", text = fullName, onValueChange = { fullName = it })
         Spacer(modifier = Modifier.height(8.dp))
-        CustomTextField(label = "Last Name*", text = lastName, onValueChange = { lastName = it })
+        CustomTextField(label = "Postal Code*", text = postalCode, onValueChange = { postalCode = it })
         Spacer(modifier = Modifier.height(8.dp))
         CustomTextField(label = "Email*", text = email, onValueChange = { email = it })
         Spacer(modifier = Modifier.height(8.dp))
