@@ -8,6 +8,7 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
+import com.example.returnpals.services.LoginViewModel
 import org.junit.Rule
 
 import org.junit.Test
@@ -86,13 +87,15 @@ class loginOptionsTest {
     }
     @Test
     fun loginUIStateTestToGuest() {
-        rule.setContent { loginOptions().LoginUISate(false) }
+        rule.setContent { loginOptions().LoginUISate(LoginViewModel()) }
         rule.onNode(hasText("Guest") and hasClickAction()).performClick()
         rule.onNode(hasText("Sign In as Guest") and hasClickAction()).assertIsDisplayed()
     }
     @Test
     fun loginUIStateTestToUser() {
-        rule.setContent { loginOptions().LoginUISate(true) }
+        var model = LoginViewModel()
+        model.switchGuestUser()
+        rule.setContent { loginOptions().LoginUISate(model) }
         rule.onNode(hasText("Sign In ") and hasClickAction()).performClick()
         rule.onNode(hasText("Sign In") and hasClickAction()).assertIsDisplayed()
     }
