@@ -8,16 +8,16 @@
       <entry key="Unnamed">
         <State />
       </entry>
-      <entry key="appNavHost_verifyStartDestination()">
+      <entry key="homeButtonTest()">
         <State />
       </entry>
-      <entry key="navigateBackFromProfileToHome_verifyBackNavigation()">
+      <entry key="navigateToAbout_verifyNavigation()">
         <State />
       </entry>
-      <entry key="navigateToContact_verifyNavigation()">
+      <entry key="navigateToHome_verifyNavigation()">
         <State />
       </entry>
-      <entry key="navigateToProfile_verifyNavigation()">
+      <entry key="navigateToPricing_verifyNavigation()">
         <State />
       </entry>
     </value>
