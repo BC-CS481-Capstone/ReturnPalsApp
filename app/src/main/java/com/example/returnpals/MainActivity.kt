@@ -13,6 +13,7 @@ import com.amplifyframework.core.Amplify
 import com.example.returnpals.mainMenu.AppNavigation
 import com.example.returnpals.services.Backend
 var email : String = ""
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +28,6 @@ class MainActivity : ComponentActivity() {
         }
         installSplashScreen()
         setContent {
-            Backend.initialize(applicationContext)
             MainContent()
         }
     }

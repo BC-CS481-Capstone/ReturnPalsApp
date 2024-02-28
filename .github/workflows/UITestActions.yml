@@ -4,9 +4,9 @@ name: Android CI
 #Select when and on what [branch]
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 # Job uses macos, I found the ubuntu could stall starting the emulator.
 jobs:
