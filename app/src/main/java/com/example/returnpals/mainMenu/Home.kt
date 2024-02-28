@@ -104,7 +104,7 @@ fun HomeContent(navController: NavController) {
         Text(text = title)
         Spacer(modifier = Modifier.height(16.dp))
 
-        // ScheduleNow Button
+        // Schedule Now Button
         Button(
             onClick = {
                 // Navigate to the DashboardMenu screen
