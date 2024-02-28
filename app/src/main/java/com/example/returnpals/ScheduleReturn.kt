@@ -55,19 +55,22 @@ enum class ScheduleReturnStep {
 }
 
 @Composable
-fun DemoScheduleReturn() {
+fun DemoScheduleReturn(
+    pickupVM: PickupViewModel
+) {
     val controller = rememberNavController()
     ScheduleReturn(
         navController = controller,
+        pickupVM = pickupVM
     )
 }
 
 @Composable
 fun ScheduleReturn(
     navController: NavController,
+    pickupVM: PickupViewModel,
 ) {
     val step = remember { mutableStateOf(ScheduleReturnStep.values()[0]) }
-    val pickupVM = PickupViewModel(PickupInfo())
 
     ScheduleReturnContent(step.value, pickupVM,
         onClickNext = { step.value++; Log.println(Log.INFO, "onClickNext", step.value.toString()) },
@@ -77,7 +80,7 @@ fun ScheduleReturn(
 
 }
 
-open class PickupViewModel(
+class PickupViewModel(
     pickup: PickupInfo,
 ) : ViewModel() {
 
@@ -90,35 +93,54 @@ open class PickupViewModel(
     // not sure why _data.value is nullable...
 
     fun isValidDate(value: LocalDate): Boolean {
+        Log.println(Log.INFO, "PickupViewModel::isValidDate", (value > _minDate && value < _maxDate).toString())
         return value > _minDate && value < _maxDate
     }
 
     fun onChangeDate(value: LocalDate) {
-        if (isValidDate(value)) _data.value!!.date = value
+        _data.value = _data.value!!.copy(date=value)
+        Log.println(Log.INFO, "PickupViewModel::onChangeDate", _data.value!!.date.toString())
     }
 
     fun onChangeAddress(value: Address) {
         _data.value!!.address = value
+        Log.println(Log.INFO, "PickupViewModel::onChangeAddress", _data.value!!.address.toString())
     }
 
     fun onChangeMethod(value: PickupMethod) {
         _data.value!!.method = value
+        Log.println(Log.INFO, "PickupViewModel::onChangeMethod", _data.value!!.method.toString())
     }
 
     fun onAddLabel(value: PackageInfo) {
         val id = _idManager.allot()
         _data.value!!.packages[id] = value.copy(id=id)
+        Log.println(Log.INFO, "PickupViewModel::onAddLabel", _data.value!!.packages[id].toString())
     }
 
     fun onRemoveLabel(id: Long) {
+        Log.println(Log.INFO, "PickupViewModel::onRemoveLabel", _data.value!!.packages[id].toString())
         _data.value!!.packages.remove(id)
         _idManager.free(id)
     }
 
     fun onChangePlan(value: PricingPlan) {
         _data.value!!.pricing = value
+        Log.println(Log.INFO, "PickupViewModel::onChangePlan", _data.value!!.pricing.toString())
     }
 
+}
+
+@Composable
+fun DemoSelectDate() {
+    val pickupVM = PickupViewModel(PickupInfo())
+    val pickup = pickupVM.data.observeAsState(PickupInfo())
+    PickupDateUI(
+        date = pickup.value.date,
+        onChangeDate = pickupVM::onChangeDate,
+        onClickNext = { Log.println(Log.INFO, "onClickNext", pickup.value.date.toString()) },
+        onClickBack = { Log.println(Log.INFO, "onClickBack", pickupVM.data.value?.date.toString()) }
+    )
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -146,12 +168,12 @@ private fun ScheduleReturnContent(
     onSubmit: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val pickup : PickupInfo by pickupVM.data.observeAsState(PickupInfo())
+    val pickup = pickupVM.data.observeAsState(PickupInfo())
     val confirm = ConfirmPickup()
 
     when (step) {
         ScheduleReturnStep.SelectDate -> PickupDateUI(
-            date = pickup.date,
+            date = pickup.value.date,
             onChangeDate = pickupVM::onChangeDate,
             isValidDate = pickupVM::isValidDate,
             onClickNext = { onClickNext(); onClickNext() },
@@ -160,29 +182,29 @@ private fun ScheduleReturnContent(
         ScheduleReturnStep.SelectAddress -> onClickNext()
 //            SelectAddressContent(navController = navController)
         ScheduleReturnStep.SelectMethod -> PickupMethodUI(
-            method = pickup.method,
+            method = pickup.value.method,
             onChangeMethod = pickupVM::onChangeMethod,
             onClickNext = onClickNext,
             onClickBack = { onClickBack(); onClickBack() },
             modifier = modifier)
         ScheduleReturnStep.SelectPricing -> PricingUI(
-            plan = pickup.pricing,
+            plan = pickup.value.pricing,
             onChangePlan = pickupVM::onChangePlan,
             onClickNext = onClickNext,
             onClickBack = onClickBack,
             modifier = modifier)
         ScheduleReturnStep.AddLabels -> PackagesUI(
-            packages = pickup.packages.values.toList(),
+            packages = pickup.value.packages.values.toList(),
             onAddLabel = pickupVM::onAddLabel,
             onRemoveLabel = pickupVM::onRemoveLabel,
             onClickNext = onClickNext,
             onClickBack = onClickBack)
         ScheduleReturnStep.Confirmation -> confirm.drawConfirmPickup(
-            typeOfPickup = pickup.method.toString(),
+            typeOfPickup = pickup.value.method.toString(),
 //            TODO: change type of pickupDate parameter to LocalDate
 //               OR change type of PackageInfo.date to Calendar
 //            TODO: show pricing only if BRONZE plan is selected
-            pickUpAddress = pickup.address!!,
+            pickUpAddress = pickup.value.address!!,
             nextButton = onClickNext,
             backButton = onClickBack,
             promoButton = {})
