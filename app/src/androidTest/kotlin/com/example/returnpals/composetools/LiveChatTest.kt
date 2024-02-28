@@ -5,18 +5,15 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performTextInput
-import org.junit.Assert.*
 import org.junit.Rule
-
 import org.junit.Test
 
 class LiveChatTest {
     @get:Rule
     val rule = createComposeRule()
 
-    @Test
+   /** Removing unused test for functionality we will not use on current builds
+    * @Test
     fun sendMessage() {
         var testString = ""
         rule.setContent{
@@ -35,7 +32,7 @@ class LiveChatTest {
         rule.onNodeWithText("Thank you!").performTextInput("David Test 456")
         rule.onNodeWithText("Send").performClick()
         assert("David Test 456" == testString )
-    }
+    }*/
 
     @Test
     fun readTextInput() {

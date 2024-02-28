@@ -79,9 +79,17 @@ dependencies {
     implementation("androidx.compose.material:material:1.6.0")
     implementation("androidx.compose.runtime:runtime-livedata:1.6.1")
 
+    /** AWS */
+    implementation("aws.sdk.kotlin:cognitoidentityprovider:1.0.0")
+
+    // Amplify core dependency
+    implementation("com.amplifyframework:core:2.14.11")
+    implementation("com.amplifyframework:aws-auth-cognito:2.14.11")
+    
     /** Android Testing */
     testImplementation("junit:junit:4.13.2")
 
+    androidTestImplementation("androidx.test:core-ktx:1.1.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.10.01"))
