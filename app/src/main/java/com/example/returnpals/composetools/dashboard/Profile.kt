@@ -30,6 +30,7 @@ import com.example.returnpals.PricingPlan
 import com.example.returnpals.R
 import com.example.returnpals.composetools.PricingPlanText
 import com.example.returnpals.composetools.ProfileRepository
+import com.example.returnpals.email
 
 @Composable
 fun Profile(navController: NavController) {
@@ -44,7 +45,7 @@ fun Profile(navController: NavController) {
 fun ProfileContent(){
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
     var picUri : Uri? = null
-    var profile = ProfileRepository()
+    var profile = ProfileRepository(email = email)
     profile.getDataBase()
 
 
@@ -94,6 +95,7 @@ fun ProfileContent(){
 
 
 }
+//Possibly unnecessary function
 fun getStartDate():String{
     //Backend Code
     return "01/01/2024"

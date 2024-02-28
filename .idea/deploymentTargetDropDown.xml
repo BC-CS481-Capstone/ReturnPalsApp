@@ -2,22 +2,10 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="NavigationTest">
+      <entry key="All Tests">
         <State />
       </entry>
       <entry key="Unnamed">
-        <State />
-      </entry>
-      <entry key="homeButtonTest()">
-        <State />
-      </entry>
-      <entry key="navigateToAbout_verifyNavigation()">
-        <State />
-      </entry>
-      <entry key="navigateToHome_verifyNavigation()">
-        <State />
-      </entry>
-      <entry key="navigateToPricing_verifyNavigation()">
         <State />
       </entry>
     </value>

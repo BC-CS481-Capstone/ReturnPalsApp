@@ -12,7 +12,7 @@ import com.amplifyframework.api.aws.AWSApiPlugin
 import com.amplifyframework.core.Amplify
 import com.example.returnpals.mainMenu.AppNavigation
 import com.example.returnpals.services.Backend
-
+var email : String = ""
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
