@@ -38,7 +38,7 @@ import com.example.returnpals.R
 ////////////////////
 
 @Composable
-fun PickupMethodUI(
+fun PickupMethodScreen(
     method: PickupMethod?,
     onChangeMethod: (PickupMethod) -> Unit,
     onClickNext: () -> Unit,
@@ -108,7 +108,7 @@ fun PickupMethodContent(
 @Preview(showBackground = true)
 @Composable
 private fun PickupMethodPreview() {
-    PickupMethodUI(
+    PickupMethodScreen(
         method = PickupMethod.DOORSTEP,
         onChangeMethod = {},
         onClickNext = {},
