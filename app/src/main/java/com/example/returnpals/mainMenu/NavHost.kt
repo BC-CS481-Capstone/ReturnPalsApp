@@ -15,7 +15,7 @@ import com.example.returnpals.composetools.ConfirmPickup
 import com.example.returnpals.composetools.PackagesUI
 import com.example.returnpals.composetools.PickupDateScreen
 import com.example.returnpals.composetools.PickupMethodScreen
-import com.example.returnpals.composetools.PricingUI
+import com.example.returnpals.composetools.PricingScreen
 import com.example.returnpals.composetools.ThankYou
 import com.example.returnpals.composetools.dashboard.HomeDash
 import com.example.returnpals.composetools.dashboard.Label
@@ -83,7 +83,7 @@ fun AppNavigation(navController: NavController) {
             composable("select_pricing") {
                 val viewModel = it.sharedViewModel<ScheduleReturnViewModel>(navController)
                 val pickup = viewModel.pickup.observeAsState(PickupInfo())
-                PricingUI(
+                PricingScreen(
                     plan = pickup.value.pricing,
                     onChangePlan = viewModel::onChangePlan,
                     onClickNext = { navController.navigate("add_labels") },
