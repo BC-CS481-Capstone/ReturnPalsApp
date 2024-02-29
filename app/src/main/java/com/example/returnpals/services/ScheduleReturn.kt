@@ -2,8 +2,6 @@ package com.example.returnpals.services
 
 import android.util.Log
 import androidx.navigation.NavController
-import com.example.returnpals.composetools.goto
-import com.example.returnpals.mainMenu.MenuRoutes
 import java.time.LocalDate
 
 /**
@@ -36,13 +34,7 @@ class ScheduleReturnViewModel(
 
     fun onSubmit() {
         // TODO: send pickup info to repository
-        Log.println(Log.INFO, "ScheduleReturnViewModel::onSubmit", pickup.value.toString())
-    }
-
-    fun onCancel() {
-        if (navController != null)
-            goto(navController, MenuRoutes.Home)
-        Log.println(Log.INFO, "ScheduleReturnViewModel::onCancel", "")
+        Log.println(Log.INFO, "ScheduleReturnViewModel::onSubmit", info.toString())
     }
 
 //    companion object {

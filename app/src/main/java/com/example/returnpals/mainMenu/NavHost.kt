@@ -1,5 +1,6 @@
 package com.example.returnpals.mainMenu
 
+import android.location.Address
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
@@ -26,6 +27,7 @@ import com.example.returnpals.composetools.dashboard.SelectAddress
 import com.example.returnpals.composetools.dashboard.Settings
 import com.example.returnpals.services.PickupInfo
 import com.example.returnpals.services.ScheduleReturnViewModel
+import java.util.Locale
 
 @Composable
 fun AppNavigation(navController: NavController) {
@@ -55,72 +57,66 @@ fun AppNavigation(navController: NavController) {
             startDestination = "select_date",
             route = MenuRoutes.PickupProcess
         ) {
-            composable("select_date") {
-                val viewModel = it.sharedViewModel<ScheduleReturnViewModel>(navController)
-                val pickup = viewModel.pickup.observeAsState(PickupInfo())
+            composable("select_date") { entry ->
+                val vm = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
                 PickupDateScreen(
-                    date = pickup.value.date,
-                    onChangeDate = viewModel::onChangeDate,
-                    isValidDate = viewModel::isValidDate,
+                    date = vm.date.value,
+                    onChangeDate = vm::onChangeDate,
+                    isValidDate = vm::isValidDate,
                     onClickNext = { navController.navigate("select_method") },
                     onClickBack = { navController.navigate(MenuRoutes.HomeDash) },
                 )
             }
-            composable("select_address") {
+            composable("select_address") { entry ->
 //                val viewModel = it.sharedViewModel<ScheduleReturnViewModel>(navController)
 //                val pickup = viewModel.pickup.observeAsState(PickupInfo())
             }
-            composable("select_method") {
-                val viewModel = it.sharedViewModel<ScheduleReturnViewModel>(navController)
-                val pickup = viewModel.pickup.observeAsState(PickupInfo())
+            composable("select_method") { entry ->
+                val vm = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
                 PickupMethodScreen(
-                    method = pickup.value.method,
-                    onChangeMethod = viewModel::onChangeMethod,
+                    method = vm.method.value,
+                    onChangeMethod = vm::onChangeMethod,
                     onClickNext = { navController.navigate("select_pricing") },
                     onClickBack = { navController.navigate("select_date") },
                 )
             }
-            composable("select_pricing") {
-                val viewModel = it.sharedViewModel<ScheduleReturnViewModel>(navController)
-                val pickup = viewModel.pickup.observeAsState(PickupInfo())
+            composable("select_pricing") { entry ->
+                val vm = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
                 PricingScreen(
-                    plan = pickup.value.pricing,
-                    onChangePlan = viewModel::onChangePlan,
+                    plan = vm.plan.value,
+                    onChangePlan = vm::onChangePlan,
                     onClickNext = { navController.navigate("add_labels") },
                     onClickBack = { navController.navigate("select_method") },
                 )
             }
-            composable("add_labels") {
-                val viewModel = it.sharedViewModel<ScheduleReturnViewModel>(navController)
-                val pickup = viewModel.pickup.observeAsState(PickupInfo())
+            composable("add_labels") { entry ->
+                val vm = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
                 AddPackagesScreen(
-                    packages = pickup.value.packages.values.toList(),
-                    onAddLabel = viewModel::onAddLabel,
-                    onRemoveLabel = viewModel::onRemoveLabel,
+                    packages = vm.packages.toMap(),
+                    onAddLabel = vm::onAddLabel,
+                    onRemoveLabel = vm::onRemoveLabel,
                     onClickNext = { navController.navigate("confirm") },
                     onClickBack = { navController.navigate("select_pricing") },
                 )
             }
-            composable("confirm") {
-                val viewModel = it.sharedViewModel<ScheduleReturnViewModel>(navController)
-                val pickup = viewModel.pickup.observeAsState(PickupInfo())
+            composable("confirm") { entry ->
+                val vm = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
                 ConfirmPickup().drawConfirmPickup(
-                    typeOfPickup = pickup.value.method.toString(),
+                    typeOfPickup = vm.method.value.toString(),
 //                    TODO: change type of pickupDate parameter to LocalDate
 //                       OR change type of PackageInfo.date to Calendar
 //                    TODO: show pricing only if BRONZE plan is selected
-                    pickUpAddress = pickup.value.address!!,
+                    pickUpAddress = Address(Locale.CANADA),
                     nextButton = { navController.navigate("thanks") },
                     backButton = { navController.navigate("add_labels") },
                     promoButton = {}
                 )
             }
-            composable("thanks") {
-                val viewModel = it.sharedViewModel<ScheduleReturnViewModel>(navController)
-//                val pickup = viewModel.pickup.observeAsState(PickupInfo())
+            composable("thanks") { entry ->
+                val vm = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
                 ThankYou().drawThankYouUI(
                     dashBoardButton = {
-                        viewModel.onSubmit()
+                        vm.onSubmit()
                         navController.navigate(MenuRoutes.HomeDash)
                     }
                 )

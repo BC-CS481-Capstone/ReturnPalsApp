@@ -9,12 +9,10 @@ import com.example.returnpals.composetools.AddPackagesScreen
 @Composable
 fun Label(navController: NavController) {
     AddPackagesScreen(
-        packages = listOf(
-            PackageInfo(
-                1,
+        packages = mapOf(
+            1 to PackageInfo(
                 "Nordstrom.png",
                 PackageLabelType.DIGITAL,
-                "Digital"
             )
         ),
         onAddLabel = {},

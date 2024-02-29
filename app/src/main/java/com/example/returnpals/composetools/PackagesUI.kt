@@ -51,9 +51,9 @@ import com.example.returnpals.PackageLabelType
 
 @Composable
 fun AddPackagesScreen(
-    packages: List<PackageInfo>,
+    packages: Map<Int, PackageInfo>,
     onAddLabel: (PackageInfo) -> Unit,
-    onRemoveLabel: (Long) -> Unit,
+    onRemoveLabel: (Int) -> Unit,
     onClickNext: () -> Unit,
     onClickBack: () -> Unit,
 ) {
@@ -121,8 +121,8 @@ fun AddPackagesScreen(
                 )
             }
             PackagesTable(
-                items = packages,
-                onClickItem = { onRemoveLabel(it.id) },
+                packages = packages,
+                onClickItem = { id, _ -> onRemoveLabel(id) },
                 modifier = Modifier.fillMaxSize()
             )
             if (showDialogue.value && dialogueType.value != null) {
@@ -207,13 +207,9 @@ fun DescriptionContent() {
 @Composable
 private fun PackagesPreview() {
     AddPackagesScreen(
-        packages = listOf(
-            PackageInfo(
-                1,
-                "Nordstrom.png",
-                PackageLabelType.DIGITAL,
-                "Digital"
-            )
+        packages = mapOf(
+            0 to PackageInfo("Nordstrom.png", PackageLabelType.DIGITAL),
+            (-1) to PackageInfo("JCPenny.png", PackageLabelType.PHYSICAL)
         ),
         onAddLabel = {},
         onRemoveLabel = {},
@@ -232,7 +228,7 @@ private fun AddLabelDialogue(
         AddLabelContent(
             xButton = onCancel,
             addButton = { filename, description ->
-                onAddLabel(PackageInfo(0, filename, type, description))
+                onAddLabel(PackageInfo(filename, type, description))
             }
         )
     }
@@ -259,8 +255,8 @@ private fun AddLabelButton(
 
 @Composable
 private fun PackagesTable(
-    items: List<PackageInfo>,
-    onClickItem: (PackageInfo) -> Unit,
+    packages: Map<Int, PackageInfo>,
+    onClickItem: (Int, PackageInfo) -> Unit,
     modifier: Modifier = Modifier,
     horizontal: Alignment.Horizontal = Alignment.CenterHorizontally,
     vertical: Arrangement.Vertical = Arrangement.Top
@@ -285,18 +281,18 @@ private fun PackagesTable(
         }
         // DATA ROWS
         this.items(
-            items = items,
-            key = { it.id }
+            items = packages.toList(),
+            key = { it.first }
         ) {
             Row(
-                Modifier.clickable(onClick = { onClickItem(it) })
+                Modifier.clickable(onClick = { onClickItem(it.first, it.second) })
             ) {
                 Cell(
-                    text = it.label,
+                    text = it.second.label,
                     modifier = Modifier.weight(1.6f),
                 )
                 Cell(
-                    text = it.labelType.toString(),
+                    text = it.second.labelType.toString(),
                     modifier = Modifier.weight(1.0f),
                 )
             }
