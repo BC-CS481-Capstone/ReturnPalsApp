@@ -13,7 +13,7 @@ import org.junit.Test
 // TODO: Test add label popup UI, onAddLabel, and onRemoveLabel
 
 /**
- * Tests the [PackagesUI] composable.
+ * Tests the [AddPackagesScreen] composable.
  */
 class PackagesTest {
 
@@ -29,7 +29,7 @@ class PackagesTest {
         var isClicked: Boolean
 
         rule.setContent {
-            PackagesUI(
+            AddPackagesScreen(
                 packages = packages.values.toList(),
                 onAddLabel = { packages[it.id] = it },
                 onRemoveLabel = { packages.remove(it) },
@@ -72,7 +72,7 @@ class PackagesTest {
         var isClicked: Boolean
 
         rule.setContent {
-            PackagesUI(
+            AddPackagesScreen(
                 packages = emptyList(),
                 onAddLabel = { },
                 onRemoveLabel = { },
@@ -98,7 +98,7 @@ class PackagesTest {
         val packages = mutableStateMapOf<Long, PackageInfo>()
 
         rule.setContent {
-            PackagesUI(
+            AddPackagesScreen(
                 packages = packages.values.toList(),
                 onAddLabel = { packages[it.id] = it },
                 onRemoveLabel = { },
@@ -125,7 +125,7 @@ class PackagesTest {
         val packages = mutableStateMapOf<Long, PackageInfo>()
 
         rule.setContent {
-            PackagesUI(
+            AddPackagesScreen(
                 packages = packages.values.toList(),
                 onAddLabel = { packages[it.id] = it },
                 onRemoveLabel = { },
@@ -148,7 +148,7 @@ class PackagesTest {
         val packages = mutableStateMapOf<Long, PackageInfo>()
 
         rule.setContent {
-            PackagesUI(
+            AddPackagesScreen(
                 packages = packages.values.toList(),
                 onAddLabel = { packages[it.id] = it },
                 onRemoveLabel = { },
@@ -171,7 +171,7 @@ class PackagesTest {
         val packages = mutableStateMapOf<Long, PackageInfo>()
 
         rule.setContent {
-            PackagesUI(
+            AddPackagesScreen(
                 packages = packages.values.toList(),
                 onAddLabel = { packages[it.id] = it },
                 onRemoveLabel = { },

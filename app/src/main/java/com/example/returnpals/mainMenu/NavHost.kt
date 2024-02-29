@@ -12,7 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.returnpals.composetools.ConfirmPickup
-import com.example.returnpals.composetools.PackagesUI
+import com.example.returnpals.composetools.AddPackagesScreen
 import com.example.returnpals.composetools.PickupDateScreen
 import com.example.returnpals.composetools.PickupMethodScreen
 import com.example.returnpals.composetools.PricingScreen
@@ -93,7 +93,7 @@ fun AppNavigation(navController: NavController) {
             composable("add_labels") {
                 val viewModel = it.sharedViewModel<ScheduleReturnViewModel>(navController)
                 val pickup = viewModel.pickup.observeAsState(PickupInfo())
-                PackagesUI(
+                AddPackagesScreen(
                     packages = pickup.value.packages.values.toList(),
                     onAddLabel = viewModel::onAddLabel,
                     onRemoveLabel = viewModel::onRemoveLabel,

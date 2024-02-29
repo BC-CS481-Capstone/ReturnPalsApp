@@ -50,7 +50,7 @@ import com.example.returnpals.PackageLabelType
 ////////////////////
 
 @Composable
-fun PackagesUI(
+fun AddPackagesScreen(
     packages: List<PackageInfo>,
     onAddLabel: (PackageInfo) -> Unit,
     onRemoveLabel: (Long) -> Unit,
@@ -206,7 +206,7 @@ fun DescriptionContent() {
 @Preview(showBackground = true)
 @Composable
 private fun PackagesPreview() {
-    PackagesUI(
+    AddPackagesScreen(
         packages = listOf(
             PackageInfo(
                 1,
