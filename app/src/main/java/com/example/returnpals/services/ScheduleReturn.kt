@@ -1,26 +1,7 @@
 package com.example.returnpals.services
 
 import android.util.Log
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.createSavedStateHandle
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
-import com.example.returnpals.composetools.PickupMethodUI
-import com.example.returnpals.composetools.ConfirmPickup
-import com.example.returnpals.composetools.PackagesUI
-import com.example.returnpals.composetools.PickupDateUI
-import com.example.returnpals.composetools.PricingUI
-import com.example.returnpals.composetools.ThankYou
 import com.example.returnpals.composetools.goto
 import com.example.returnpals.mainMenu.MenuRoutes
 import java.time.LocalDate

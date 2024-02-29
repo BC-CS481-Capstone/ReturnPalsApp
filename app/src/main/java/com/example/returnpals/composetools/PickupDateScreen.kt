@@ -30,7 +30,7 @@ import java.time.LocalDate
 ////////////////////
 
 @Composable
-fun PickupDateUI(
+fun PickupDateScreen(
     date: LocalDate,
     onChangeDate: (LocalDate) -> Unit,
     onClickNext: () -> Unit,
@@ -85,7 +85,7 @@ fun PickupDateUI(
 @Preview
 @Composable
 private fun ChoosePlanPreview() {
-    PickupDateUI(
+    PickupDateScreen(
         date = LocalDate.now(),
         onChangeDate = {},
         onClickNext = {},

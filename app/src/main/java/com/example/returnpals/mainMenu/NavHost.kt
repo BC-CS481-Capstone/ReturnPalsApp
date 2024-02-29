@@ -13,7 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.returnpals.composetools.ConfirmPickup
 import com.example.returnpals.composetools.PackagesUI
-import com.example.returnpals.composetools.PickupDateUI
+import com.example.returnpals.composetools.PickupDateScreen
 import com.example.returnpals.composetools.PickupMethodUI
 import com.example.returnpals.composetools.PricingUI
 import com.example.returnpals.composetools.ThankYou
@@ -58,7 +58,7 @@ fun AppNavigation(navController: NavController) {
             composable("select_date") {
                 val viewModel = it.sharedViewModel<ScheduleReturnViewModel>(navController)
                 val pickup = viewModel.pickup.observeAsState(PickupInfo())
-                PickupDateUI(
+                PickupDateScreen(
                     date = pickup.value.date,
                     onChangeDate = viewModel::onChangeDate,
                     isValidDate = viewModel::isValidDate,
