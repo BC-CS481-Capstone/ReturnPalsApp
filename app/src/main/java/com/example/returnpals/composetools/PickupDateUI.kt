@@ -1,7 +1,5 @@
 package com.example.returnpals.composetools
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -96,7 +94,6 @@ private fun ChoosePlanPreview() {
 }
 
 // currently not used, but may be useful in future
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun DateUI(
     modifier: Modifier = Modifier,
