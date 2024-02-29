@@ -48,14 +48,6 @@ data class PackageInfo(
     var description: String? = null, // additional info provided by user
 )
 
-data class PickupInfo (
-    var date: LocalDate = LocalDate.now(),
-    var address: Address? = null,
-    var method: PickupMethod? = null,
-    var packages: HashMap<Long, PackageInfo> = hashMapOf(),
-    var pricing: PricingPlan? = null,
-)
-
 // Currently used to assign a unique ID to each label in `ScheduleReturn.PackagesUI`
 class IdManager {
 
