@@ -45,7 +45,7 @@ import kotlinx.coroutines.flow.update
  * Draws the entire screen of the step "Choose PricingPlan" in the "Schedule a Return" process
  */
 @Composable
-fun PricingUI(
+fun PricingScreen(
     modifier: Modifier = Modifier,
     onChangePlan: (PricingPlan) -> Unit,
     onClickNext: () -> Unit,
@@ -197,7 +197,7 @@ private fun PricingPlanButton(
 @Preview(showBackground = true)
 @Composable
 private fun ChoosePlanPreview() {
-    PricingUI(
+    PricingScreen(
         plan = PricingPlan.BRONZE,
         onChangePlan = {},
         onClickNext = {},

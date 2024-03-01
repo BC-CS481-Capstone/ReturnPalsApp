@@ -1,9 +1,5 @@
 package com.example.returnpals.composetools
 
-import android.annotation.SuppressLint
-import android.location.Address
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,11 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.example.returnpals.ScheduleReturn
 import com.example.returnpals.composetools.ButtonManager.DateSelector
-import com.example.returnpals.mainMenu.MenuRoutes
 import java.time.LocalDate
 
 // TODO: set position so that date selector doesn't move when month changes
@@ -38,7 +30,7 @@ import java.time.LocalDate
 ////////////////////
 
 @Composable
-fun PickupDateUI(
+fun PickupDateScreen(
     date: LocalDate,
     onChangeDate: (LocalDate) -> Unit,
     onClickNext: () -> Unit,
@@ -93,7 +85,7 @@ fun PickupDateUI(
 @Preview
 @Composable
 private fun ChoosePlanPreview() {
-    PickupDateUI(
+    PickupDateScreen(
         date = LocalDate.now(),
         onChangeDate = {},
         onClickNext = {},
@@ -102,7 +94,6 @@ private fun ChoosePlanPreview() {
 }
 
 // currently not used, but may be useful in future
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 private fun DateUI(
     modifier: Modifier = Modifier,
