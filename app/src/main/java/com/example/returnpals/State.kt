@@ -42,41 +42,39 @@ enum class PackageLabelType {
 }
 
 data class PackageInfo(
-    val id: Long,
     val label: String, // label is a filename
     val labelType: PackageLabelType,
     var description: String? = null, // additional info provided by user
 )
 
-data class PickupInfo (
-    var date: LocalDate = LocalDate.now(),
-    var address: Address? = null,
-    var method: PickupMethod? = null,
-    var packages: HashMap<Long, PackageInfo> = hashMapOf(),
-    var pricing: PricingPlan? = null,
-)
-
-// Currently used to assign a unique ID to each label in `ScheduleReturn.PackagesUI`
+/**
+ * Used to generate unique IDs by marking them as free or in-use and only giving freed ids.
+ * Currently used to generate reference ids for items in a table.
+ */
 class IdManager {
 
-    private var _next: Long = 1L
-    private var _freed: ArrayDeque<Long> = ArrayDeque()
+    private var _next: Int = 1
+    private var _freed: ArrayDeque<Int> = ArrayDeque()
 
-    // Gets a unique ID and marks said ID as in-use
-    // If there are no more available ids then 0 is returned.
-    fun allot(): Long {
+    /**
+     * Gets a unique ID and marks said ID as in-use.
+     * If there are no more available ids then 0 is returned.
+     */
+    fun allot(): Int {
         var id = _next
         if (_freed.size > 0) {
             id = _freed.last()
             _freed.removeLast()
-        } else if (_next != 0L) {
+        } else if (_next != 0) {
             _next++
         }
         return id
     }
 
-    // Marks the ID as no longer in-use and allows it to be allotted again
-    fun free(id: Long) {
+    /**
+     * Marks the ID as no longer in-use and allows it to be allotted again.
+     */
+    fun free(id: Int) {
         _freed.add(id)
     }
 

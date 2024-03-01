@@ -11,7 +11,7 @@ import org.junit.Rule
 import org.junit.Test
 
 /**
- * Tests the [PricingUI] composable.
+ * Tests the [PricingScreen] composable.
  */
 class PricingTest {
 
@@ -27,7 +27,7 @@ class PricingTest {
         var isClicked: Boolean
 
         rule.setContent {
-            PricingUI(
+            PricingScreen(
                 plan = plan.value,
                 onChangePlan = { plan.value = it },
                 onClickBack = { isClicked = true },
@@ -59,7 +59,7 @@ class PricingTest {
         var isClicked: Boolean
 
         rule.setContent {
-            PricingUI(
+            PricingScreen(
                 plan = null,
                 onChangePlan = { },
                 onClickBack = { isClicked = true },
@@ -84,7 +84,7 @@ class PricingTest {
         val plan = mutableStateOf<PricingPlan?>(null)
 
         rule.setContent {
-            PricingUI(
+            PricingScreen(
                 plan = plan.value,
                 onChangePlan = { plan.value = it },
                 onClickBack = { },
@@ -109,7 +109,7 @@ class PricingTest {
         val plan = mutableStateOf<PricingPlan?>(null)
 
         rule.setContent {
-            PricingUI(
+            PricingScreen(
                 plan = plan.value,
                 onChangePlan = { plan.value = it },
                 onClickBack = { },
@@ -134,7 +134,7 @@ class PricingTest {
         val plan = mutableStateOf<PricingPlan?>(null)
 
         rule.setContent {
-            PricingUI(
+            PricingScreen(
                 plan = plan.value,
                 onChangePlan = { plan.value = it },
                 onClickBack = { },
@@ -159,7 +159,7 @@ class PricingTest {
         val plan = mutableStateOf<PricingPlan?>(null)
 
         rule.setContent {
-            PricingUI(
+            PricingScreen(
                 plan = plan.value,
                 onChangePlan = { plan.value = it },
                 onClickBack = { },

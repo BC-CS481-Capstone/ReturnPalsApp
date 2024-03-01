@@ -23,16 +23,13 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -40,10 +37,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import androidx.navigation.NavController
 import com.example.returnpals.PackageInfo
 import com.example.returnpals.PackageLabelType
-import com.example.returnpals.ScheduleReturn
 
 // TODO: RemoveLabelButton
 // TODO: EditDescriptionButton
@@ -55,10 +50,10 @@ import com.example.returnpals.ScheduleReturn
 ////////////////////
 
 @Composable
-fun PackagesUI(
-    packages: List<PackageInfo>,
+fun AddPackagesScreen(
+    packages: Map<Int, PackageInfo>,
     onAddLabel: (PackageInfo) -> Unit,
-    onRemoveLabel: (Long) -> Unit,
+    onRemoveLabel: (Int) -> Unit,
     onClickNext: () -> Unit,
     onClickBack: () -> Unit,
 ) {
@@ -126,8 +121,8 @@ fun PackagesUI(
                 )
             }
             PackagesTable(
-                items = packages,
-                onClickItem = { onRemoveLabel(it.id) },
+                packages = packages,
+                onClickItem = { id, _ -> onRemoveLabel(id) },
                 modifier = Modifier.fillMaxSize()
             )
             if (showDialogue.value && dialogueType.value != null) {
@@ -211,14 +206,10 @@ fun DescriptionContent() {
 @Preview(showBackground = true)
 @Composable
 private fun PackagesPreview() {
-    PackagesUI(
-        packages = listOf(
-            PackageInfo(
-                1,
-                "Nordstrom.png",
-                PackageLabelType.DIGITAL,
-                "Digital"
-            )
+    AddPackagesScreen(
+        packages = mapOf(
+            0 to PackageInfo("Nordstrom.png", PackageLabelType.DIGITAL),
+            (-1) to PackageInfo("JCPenny.png", PackageLabelType.PHYSICAL)
         ),
         onAddLabel = {},
         onRemoveLabel = {},
@@ -237,7 +228,7 @@ private fun AddLabelDialogue(
         AddLabelContent(
             xButton = onCancel,
             addButton = { filename, description ->
-                onAddLabel(PackageInfo(0, filename, type, description))
+                onAddLabel(PackageInfo(filename, type, description))
             }
         )
     }
@@ -264,8 +255,8 @@ private fun AddLabelButton(
 
 @Composable
 private fun PackagesTable(
-    items: List<PackageInfo>,
-    onClickItem: (PackageInfo) -> Unit,
+    packages: Map<Int, PackageInfo>,
+    onClickItem: (Int, PackageInfo) -> Unit,
     modifier: Modifier = Modifier,
     horizontal: Alignment.Horizontal = Alignment.CenterHorizontally,
     vertical: Arrangement.Vertical = Arrangement.Top
@@ -290,18 +281,18 @@ private fun PackagesTable(
         }
         // DATA ROWS
         this.items(
-            items = items,
-            key = { it.id }
+            items = packages.toList(),
+            key = { it.first }
         ) {
             Row(
-                Modifier.clickable(onClick = { onClickItem(it) })
+                Modifier.clickable(onClick = { onClickItem(it.first, it.second) })
             ) {
                 Cell(
-                    text = it.label,
+                    text = it.second.label,
                     modifier = Modifier.weight(1.6f),
                 )
                 Cell(
-                    text = it.labelType.toString(),
+                    text = it.second.labelType.toString(),
                     modifier = Modifier.weight(1.0f),
                 )
             }

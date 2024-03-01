@@ -10,7 +10,7 @@ import org.junit.Rule
 import org.junit.Test
 
 /**
- * Tests the [PickupMethodUI] composable.
+ * Tests the [PickupMethodScreen] composable.
  */
 class PickupMethodTest {
 
@@ -26,7 +26,7 @@ class PickupMethodTest {
         var isClicked: Boolean
 
         rule.setContent {
-            PickupMethodUI(
+            PickupMethodScreen(
                 method = method.value,
                 onChangeMethod = { },
                 onClickBack = { },
@@ -57,7 +57,7 @@ class PickupMethodTest {
         var isClicked: Boolean
 
         rule.setContent {
-            PickupMethodUI(
+            PickupMethodScreen(
                 method = null,
                 onChangeMethod = { },
                 onClickBack = { isClicked = true },
@@ -82,7 +82,7 @@ class PickupMethodTest {
         val method = mutableStateOf<PickupMethod?>(null)
 
         rule.setContent {
-            PickupMethodUI(
+            PickupMethodScreen(
                 method = method.value,
                 onChangeMethod = { method.value = it },
                 onClickBack = { },
@@ -107,7 +107,7 @@ class PickupMethodTest {
         val method = mutableStateOf<PickupMethod?>(null)
 
         rule.setContent {
-            PickupMethodUI(
+            PickupMethodScreen(
                 method = method.value,
                 onChangeMethod = { method.value = it },
                 onClickBack = { },

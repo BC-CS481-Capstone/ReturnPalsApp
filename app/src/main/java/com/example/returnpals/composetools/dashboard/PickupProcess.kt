@@ -1,17 +1,13 @@
 package com.example.returnpals.composetools.dashboard
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.example.returnpals.ScheduleReturn
-import com.example.returnpals.composetools.PickupDateUI
+import com.example.returnpals.composetools.PickupDateScreen
 import com.example.returnpals.composetools.goto
 import com.example.returnpals.mainMenu.MenuRoutes
 import java.time.LocalDate
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PickupProcess(navController: NavController) {
    /* DashboardMenuScaffold(navController = navController) {
@@ -22,11 +18,10 @@ fun PickupProcess(navController: NavController) {
 }
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PickupProcessContent(navController: NavController) {
    // WeekPickupCard(navController = navController)
-    PickupDateUI(
+    PickupDateScreen(
         date = LocalDate.now(),
         onChangeDate = {},
         onClickNext = { goto(navController, MenuRoutes.SelectAddress) },
@@ -89,7 +84,6 @@ fun NextButton(isEnabled: Boolean, onClick: () -> Unit) {
 }
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 fun getWeekData(startingDate: LocalDate): List<Triple<String, Int, String>> {
     return (0..6).map { offset ->
         val currentDate = startingDate.plusDays(offset.toLong())
@@ -101,7 +95,6 @@ fun getWeekData(startingDate: LocalDate): List<Triple<String, Int, String>> {
 }
 
 @SuppressLint("PrivateResource")
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun WeekPickupCard(navController: NavController) {
     // State to keep track of the starting date of the displayed week
