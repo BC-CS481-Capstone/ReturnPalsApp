@@ -5,6 +5,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import com.example.returnpals.IdManager
 import com.example.returnpals.PackageInfo
 import com.example.returnpals.PackageLabelType
 import org.junit.Rule
@@ -13,7 +14,7 @@ import org.junit.Test
 // TODO: Test add label popup UI, onAddLabel, and onRemoveLabel
 
 /**
- * Tests the [PackagesUI] composable.
+ * Tests the [AddPackagesScreen] composable.
  */
 class PackagesTest {
 
@@ -25,14 +26,14 @@ class PackagesTest {
      */
     @Test
     fun testNextButton() {
-        val packages = mutableStateMapOf<Long, PackageInfo>()
+        val packages = mutableStateMapOf<Int, PackageInfo>()
         var isClicked: Boolean
 
         rule.setContent {
-            PackagesUI(
-                packages = packages.values.toList(),
-                onAddLabel = { packages[it.id] = it },
-                onRemoveLabel = { packages.remove(it) },
+            AddPackagesScreen(
+                packages = packages.toMap(),
+                onAddLabel = { },
+                onRemoveLabel = { },
                 onClickBack = { isClicked = true },
                 onClickNext = { isClicked = true }
             )
@@ -54,7 +55,7 @@ class PackagesTest {
         assert(isClicked) { "Back button does not work." }
 
         isClicked = false
-        packages[1] = PackageInfo(1, "nordstrom.png", PackageLabelType.DIGITAL)
+        packages[1] = PackageInfo("nordstrom.png", PackageLabelType.DIGITAL)
         next.performClick()
         assert(isClicked) { "Next button on-click event does not work." }
 
@@ -72,8 +73,8 @@ class PackagesTest {
         var isClicked: Boolean
 
         rule.setContent {
-            PackagesUI(
-                packages = emptyList(),
+            AddPackagesScreen(
+                packages = emptyMap(),
                 onAddLabel = { },
                 onRemoveLabel = { },
                 onClickBack = { isClicked = true },
@@ -95,12 +96,13 @@ class PackagesTest {
      */
     @Test
     fun testPackagesTable() {
-        val packages = mutableStateMapOf<Long, PackageInfo>()
+        val packages = mutableStateMapOf<Int, PackageInfo>()
+        var nextId = 0
 
         rule.setContent {
-            PackagesUI(
-                packages = packages.values.toList(),
-                onAddLabel = { packages[it.id] = it },
+            AddPackagesScreen(
+                packages = packages.toMap(),
+                onAddLabel = { packages[nextId++] = it },
                 onRemoveLabel = { },
                 onClickBack = { },
                 onClickNext = { }
@@ -109,10 +111,10 @@ class PackagesTest {
 
         // Test next and back buttons:
 
-        packages[1] = PackageInfo(1, "nordstrom.png", PackageLabelType.DIGITAL)
+        packages[1] = PackageInfo("nordstrom.png", PackageLabelType.DIGITAL)
         rule.onNodeWithText("nordstrom.png").assertIsDisplayed()
 
-        packages[2] = PackageInfo(2, "jcpenny.png", PackageLabelType.PHYSICAL)
+        packages[2] = PackageInfo("jcpenny.png", PackageLabelType.PHYSICAL)
         rule.onNodeWithText("jcpenny.png").assertIsDisplayed()
     }
 
@@ -122,12 +124,13 @@ class PackagesTest {
      */
     @Test
     fun testAddLabelPhysical() {
-        val packages = mutableStateMapOf<Long, PackageInfo>()
+        val packages = mutableStateMapOf<Int, PackageInfo>()
+        var nextId = 0
 
         rule.setContent {
-            PackagesUI(
-                packages = packages.values.toList(),
-                onAddLabel = { packages[it.id] = it },
+            AddPackagesScreen(
+                packages = packages.toMap(),
+                onAddLabel = { packages[nextId++] = it },
                 onRemoveLabel = { },
                 onClickBack = { },
                 onClickNext = { }
@@ -145,12 +148,13 @@ class PackagesTest {
      */
     @Test
     fun testAddLabelDigital() {
-        val packages = mutableStateMapOf<Long, PackageInfo>()
+        val packages = mutableStateMapOf<Int, PackageInfo>()
+        var nextId = 0
 
         rule.setContent {
-            PackagesUI(
-                packages = packages.values.toList(),
-                onAddLabel = { packages[it.id] = it },
+            AddPackagesScreen(
+                packages = packages.toMap(),
+                onAddLabel = { packages[nextId++] = it },
                 onRemoveLabel = { },
                 onClickBack = { },
                 onClickNext = { }
@@ -168,12 +172,13 @@ class PackagesTest {
      */
     @Test
     fun testAddLabelQRCode() {
-        val packages = mutableStateMapOf<Long, PackageInfo>()
+        val packages = mutableStateMapOf<Int, PackageInfo>()
+        var nextId = 0
 
         rule.setContent {
-            PackagesUI(
-                packages = packages.values.toList(),
-                onAddLabel = { packages[it.id] = it },
+            AddPackagesScreen(
+                packages = packages.toMap(),
+                onAddLabel = { packages[nextId++] = it },
                 onRemoveLabel = { },
                 onClickBack = { },
                 onClickNext = { }

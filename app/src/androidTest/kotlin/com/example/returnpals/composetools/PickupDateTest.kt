@@ -11,7 +11,7 @@ import java.time.LocalDate
 import com.example.returnpals.composetools.ButtonManager.DateSelector
 
 /**
- * Test the [PickupDateUI] composable.
+ * Test the [PickupDateScreen] composable.
  */
 class PickupDateTest {
 
@@ -28,7 +28,7 @@ class PickupDateTest {
         var isClicked: Boolean
 
         rule.setContent {
-            PickupDateUI(
+            PickupDateScreen(
                 date = date.value,
                 onChangeDate = { },
                 onClickBack = { },
@@ -60,7 +60,7 @@ class PickupDateTest {
         var isClicked: Boolean
 
         rule.setContent {
-            PickupDateUI(
+            PickupDateScreen(
                 date = LocalDate.now(),
                 onChangeDate = { },
                 onClickBack = { isClicked = true },
@@ -87,7 +87,7 @@ class PickupDateTest {
         val date = mutableStateOf(initDate)
 
         rule.setContent {
-            PickupDateUI(
+            PickupDateScreen(
                 date = date.value,
                 onChangeDate = { date.value = it },
                 onClickBack = { },
