@@ -107,7 +107,9 @@ fun AppNavigation(navController: NavController) {
 //                       OR change type of PackageInfo.date to Calendar
 //                    TODO: show pricing only if BRONZE plan is selected
                     pickUpAddress = Address(Locale.CANADA),
-                    nextButton = { navController.navigate("thanks") },
+                    nextButton = {
+                        vm.onSubmit()
+                        navController.navigate("thanks") },
                     backButton = { navController.navigate("add_labels") },
                     promoButton = {}
                 )
@@ -115,10 +117,7 @@ fun AppNavigation(navController: NavController) {
             composable("thanks") { entry ->
                 val vm = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
                 ThankYou().drawThankYouUI(
-                    dashBoardButton = {
-                        vm.onSubmit()
-                        navController.navigate(MenuRoutes.HomeDash)
-                    }
+                    dashBoardButton = { navController.navigate(MenuRoutes.HomeDash) }
                 )
             }
         }
