@@ -12,9 +12,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -28,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.returnpals.composetools.CustomTextField
-import com.example.returnpals.composetools.loginOptions
 
 @Composable
 fun Register(navController: NavController) {
@@ -119,7 +116,7 @@ fun Form() {
         CustomTextField(label = "Email*", text = email, onValueChange = { email = it })
         Spacer(modifier = Modifier.height(8.dp))
 
-        CustomTextField(label = "Message*", text = message, onValueChange = { message = it })
+        CustomTextField(label = "Phone Number*", text = message, onValueChange = { message = it })
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
