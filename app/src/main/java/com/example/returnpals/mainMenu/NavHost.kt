@@ -2,7 +2,6 @@ package com.example.returnpals.mainMenu
 
 import android.location.Address
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -12,11 +11,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.returnpals.composetools.ConfirmPickup
 import com.example.returnpals.composetools.AddPackagesScreen
+import com.example.returnpals.composetools.ConfirmPickup
 import com.example.returnpals.composetools.PickupDateScreen
 import com.example.returnpals.composetools.PickupMethodScreen
 import com.example.returnpals.composetools.PricingScreen
+import com.example.returnpals.composetools.SignUp
 import com.example.returnpals.composetools.ThankYou
 import com.example.returnpals.composetools.dashboard.HomeDash
 import com.example.returnpals.composetools.dashboard.Label
@@ -25,7 +25,6 @@ import com.example.returnpals.composetools.dashboard.PickupDetails
 import com.example.returnpals.composetools.dashboard.Profile
 import com.example.returnpals.composetools.dashboard.SelectAddress
 import com.example.returnpals.composetools.dashboard.Settings
-import com.example.returnpals.services.PickupInfo
 import com.example.returnpals.services.ScheduleReturnViewModel
 import java.util.Locale
 
@@ -52,6 +51,7 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.SelectAddress) { SelectAddress(navController) }
         composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }
         composable(MenuRoutes.Label) { Label(navController) }
+        composable(MenuRoutes.SignUp) { SignUp(navController) }
 
         navigation(
             startDestination = "select_date",
