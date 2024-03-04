@@ -23,6 +23,7 @@ import androidx.navigation.NavController
 import com.example.returnpals.composetools.OrderRepository
 
 @Composable
+//Deviates from needing to pass NavController.
 fun Orders(navController: NavController) {
     DashboardMenuScaffold(navController = navController) {
         OrdersContent()
@@ -30,6 +31,7 @@ fun Orders(navController: NavController) {
 }
 
 @Preview
+//Gets the content
 @Composable
 fun OrdersContent(){
     OrderTable()
@@ -37,6 +39,7 @@ fun OrdersContent(){
 }
 
 @Composable
+//Defines TableCell
 fun RowScope.TableCell(
     text: String,
     weight: Float,
@@ -51,6 +54,7 @@ fun RowScope.TableCell(
 }
 
 @Composable
+//This function creates the OrderTable that will be displayed, listing the information of the order. Ideally, there will be a click option to show the uploaded image.
 fun OrderTable(){
     val orderList = getOrders()
     val column1Weight = .2f
@@ -91,7 +95,7 @@ fun OrderTable(){
         }
     }
 }
-
+//This function gets orders, needs to be updated to account for the Order
 fun getOrders(): ArrayList<OrderRepository>{
     //Access database for each order with this client's details, pass them to OrderRepository class
     var orders = ArrayList<OrderRepository>()
@@ -100,4 +104,7 @@ fun getOrders(): ArrayList<OrderRepository>{
 
     }
     return orders;
+    /*
+
+     */
 }
