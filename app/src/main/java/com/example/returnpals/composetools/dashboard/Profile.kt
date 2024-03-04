@@ -29,6 +29,8 @@ import androidx.navigation.NavController
 import com.example.returnpals.PricingPlan
 import com.example.returnpals.R
 import com.example.returnpals.composetools.PricingPlanText
+import com.example.returnpals.composetools.ProfileRepository
+import com.example.returnpals.email
 
 @Composable
 fun Profile(navController: NavController) {
@@ -43,6 +45,8 @@ fun Profile(navController: NavController) {
 fun ProfileContent(){
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
     var picUri : Uri? = null
+    var profile = ProfileRepository(email = email)
+    profile.getDataBase()
 
 
     Column(
@@ -54,8 +58,18 @@ fun ProfileContent(){
     )
     {
         if(picUri == null) {
-            Image(painter = painterResource(R.drawable.returnpal_icon_500x500), contentDescription = "Profile Picture",)
+            Image(painter = painterResource(R.drawable.returnpal_icon_500x500), contentDescription = "",)
         }
+        Text(text = "Welcome, " + profile.getFirstName() + " " + profile.getLastName(),
+            style = TextStyle(
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+                ,
+
+                )
+
+            )
             Text(
             text = "Your Plan:",
             style = TextStyle(
@@ -66,16 +80,14 @@ fun ProfileContent(){
 
             )
         )
+        //Code to detect what profile plan is being used goes here
         PricingPlanText(PricingPlan.SILVER,
             Modifier
                 .padding(15.dp)
                 .scale(1.5F))
         Spacer(Modifier.padding(15.dp))
-        Text(text = "Start Date:", style =TextStyle(fontSize = 20.sp))
-        Text(text = getStartDate())
-        Spacer(Modifier.padding(15.dp))
-        Text(text = "Next Billing On:", style =TextStyle(fontSize = 20.sp))
-        Text(text = getBillDate())
+        Text(text = "Plan Expires On:", style =TextStyle(fontSize = 20.sp))
+        Text(text = profile.getExpireDate().toString())
         Spacer(Modifier.padding(15.dp))
         CancelPlanButton()
 
@@ -83,6 +95,7 @@ fun ProfileContent(){
 
 
 }
+//Possibly unnecessary function
 fun getStartDate():String{
     //Backend Code
     return "01/01/2024"
