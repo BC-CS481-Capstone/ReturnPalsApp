@@ -16,7 +16,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.returnpals.services.LoginViewModel
 
-class loginOptions {
     /* This is the login options class used to create the two login UI for guest and user.*/
 
     @Composable
@@ -42,6 +41,11 @@ class loginOptions {
         }
     }
 
+    @Composable
+    fun ConfirmNumberContent() {
+        //Promt a user for confirm number with space to enter and button to confirm
+
+    }
     @Composable
     fun LoginUIContent(user:(String) -> Unit, pass:(String) -> Unit, guest: () -> Unit, reset: () -> Unit, signin:() -> Unit, signup: () -> Unit, emailString:String = "Email",passString:String="Password") {
         val config = getConfig()
@@ -122,5 +126,3 @@ class loginOptions {
             }
         }
     }
-
-}
