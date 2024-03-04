@@ -2,6 +2,8 @@ package com.example.returnpals.services
 
 import android.util.Log
 import androidx.navigation.NavController
+import com.example.returnpals.composetools.AddressItem
+import com.example.returnpals.composetools.OrderRepository
 import java.time.LocalDate
 
 /**
@@ -34,9 +36,19 @@ class ScheduleReturnViewModel(
 
     fun onSubmit() {
         // TODO: send pickup info to repository
+        var order = OrderRepository(
+            "Email@Placeholder.com",
+            info.date,
+            AddressItem(1, info.address.toString()),
+            "Submitted"
+        )
+        order.setNotes("address", info.address.toString())
+        order.setNotes("method", info.method.toString())
+        order.setNotes("plan", info.plan.toString())
+        Backend.createOrder(order)
+
         Log.println(Log.INFO, "ScheduleReturnViewModel::onSubmit", info.toString())
     }
-
 //    companion object {
 //
 //        // This determines the default value for the view-model that gets instantiated in navigation.

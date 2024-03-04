@@ -5,6 +5,7 @@ import android.util.Log
 import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.generated.model.Orders
+import org.json.JSONObject
 import java.io.File
 import java.time.LocalDate
 import java.util.Date
@@ -16,7 +17,8 @@ data class OrderRepository(private val customerId : String,
                            private var status : String = "N/A",
                            private var hasImage : Boolean = false,
                            private var imageFile : File? = null,
-                           private var notes : String = "N/A")  {
+                           private var notes : JSONObject = JSONObject()
+)  {
     //Sets selected date
     fun setDate(inDate : LocalDate){
         date = inDate
@@ -45,6 +47,10 @@ data class OrderRepository(private val customerId : String,
     fun getStatus() : String{
         return status
     }
+    fun setNotes(string1: String, string2: String){
+        notes.put(string1, string2)
+
+    }
     //Sets Image and acknowledges it exists
     fun setImage(inFile : File){
         imageFile = inFile
@@ -59,27 +65,17 @@ data class OrderRepository(private val customerId : String,
         return hasImage
     }
     //Sends the Order to database
-    fun submitOrder(){
-        val order = Orders.builder()
+    val order : Orders
+        get() = Orders.builder()
+            .orderNumber("9")
             .orderDate(date.toString())
             .status(status)
-            .orderDetails("Test")
+            .orderDetails(notes.toString())
+            .clientDetails("{\n \"Email\" : \"{$customerId}\"}")
             .build()
-        Amplify.API.mutate(ModelMutation.create(order),
-            { Log.i("MyAmplifyApp", "Added Order with id: ${it.data.id}")},
-            { Log.e("MyAmplifyApp", "Create failed", it)}
-        )
-        if(hasImage) {
-            val setImage = imageFile as File
-            uploadFile("TestKey", setImage)
-        }
-
-    }
 
 //Function to upload the image
 private fun uploadFile(key: String, file: File){
-
-
     Amplify.Storage.uploadFile(key, file,
         { Log.i("MyAmplifyApp", "Successfully uploaded: $key" ) },
         { error -> Log.e("MyAmplifyApp", "Upload failed", error) }
