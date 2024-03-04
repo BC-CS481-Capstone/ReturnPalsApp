@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -32,9 +31,9 @@ fun Register(navController: NavController) {
 
 }
 
-@Preview
+
 @Composable
-fun RegisterContent(){
+fun RegisterContent(submitData:()->Unit){
     val customColor = Color(0xFFE1F6FF)
 
     LazyColumn(
@@ -46,7 +45,7 @@ fun RegisterContent(){
     ){
         
         item { RegisterTitle() }
-        item { Form() }
+        item { Form(submitData) }
 
 
     }
@@ -65,7 +64,7 @@ fun RegisterTitle() {
 }
 
 @Composable
-fun Form() {
+fun Form(submitData:()->Unit) {
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
@@ -120,15 +119,7 @@ fun Form() {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = {
-               // viewModel.submitData(fullName, postalCode, email, message)
-                // Reset state variables after submission
-                firstName = ""
-                address = ""
-                email = ""
-                message = ""
-
-            },
+            onClick = submitData,
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = selectedBlue,
                 contentColor = Color.White

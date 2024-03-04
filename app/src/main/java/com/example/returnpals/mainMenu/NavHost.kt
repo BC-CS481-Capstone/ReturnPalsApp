@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.returnpals.composetools.AddPackagesScreen
+import com.example.returnpals.composetools.ConfirmNumber
 import com.example.returnpals.composetools.ConfirmPickup
 import com.example.returnpals.composetools.PickupDateScreen
 import com.example.returnpals.composetools.PickupMethodScreen
@@ -52,6 +53,7 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }
         composable(MenuRoutes.Label) { Label(navController) }
         composable(MenuRoutes.SignUp) { SignUp(navController) }
+        composable(MenuRoutes.ConfirmNumber) { ConfirmNumber(navController) }
 
         navigation(
             startDestination = "select_date",

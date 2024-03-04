@@ -8,5 +8,5 @@ import com.example.returnpals.services.LoginViewModel
 var viewModelLogin = LoginViewModel()
 @Composable
 fun SignIn(navController: NavController) {
-    LoginUISate(viewModelLogin)
+    LoginUISate(viewModelLogin,signUp = {navController.navigate(MenuRoutes.SignUp)})
 }
