@@ -14,9 +14,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.returnpals.mainMenu.MenuRoutes
 import com.example.returnpals.services.LoginViewModel
 
+
     /* This is the login options class used to create the two login UI for guest and user.*/
+
+
+@Composable
+fun SignUp(navController: NavController) {
+    navController.navigate(MenuRoutes.Video)
+}
 
     @Composable
     fun LoginUISate(viewModel:LoginViewModel) {
@@ -30,6 +39,7 @@ import com.example.returnpals.services.LoginViewModel
                 emailString = viewModel.email.value)
         } else {
             LoginUIContent(
+                failMessage = viewModel.failLogInMessage.value,
                 user = {  viewModel.changeEmail(it)},
                 pass = { viewModel.changePass(it) },
                 guest = { viewModel.switchGuestUser() },
@@ -47,7 +57,7 @@ import com.example.returnpals.services.LoginViewModel
 
     }
     @Composable
-    fun LoginUIContent(user:(String) -> Unit, pass:(String) -> Unit, guest: () -> Unit, reset: () -> Unit, signin:() -> Unit, signup: () -> Unit, emailString:String = "Email",passString:String="Password") {
+    fun LoginUIContent(failMessage:String,user:(String) -> Unit, pass:(String) -> Unit, guest: () -> Unit, reset: () -> Unit, signin:() -> Unit, signup: () -> Unit, emailString:String = "Email",passString:String="Password") {
         val config = getConfig()
         // get screen size for image size
             Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceBetween) {
@@ -72,6 +82,7 @@ import com.example.returnpals.services.LoginViewModel
                 OutlinedTextField(value = passString, onValueChange = pass,
                     visualTransformation = PasswordVisualTransformation()
                 )
+                Text(failMessage)
                 //Forgot your password button
                 TextButton(onClick = reset){
                     Text("Forgot your password?",color = Color(0xFF008BE7))

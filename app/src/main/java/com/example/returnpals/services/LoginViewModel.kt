@@ -10,13 +10,16 @@ import com.amplifyframework.auth.result.AuthSignInResult
 import com.amplifyframework.auth.result.AuthSignOutResult
 import com.amplifyframework.core.Amplify
 
-class LoginViewModel: ViewModel() {
+class LoginViewModel(): ViewModel() {
     var email =  mutableStateOf<String>("test@bellevue.college")
         private set
     var password =  mutableStateOf<String>("Password123$")
         private set
 
     var isGuest = mutableStateOf(false)
+        private set
+
+    var failLogInMessage = mutableStateOf("This is a test.")
         private set
 
     fun changeEmail(emailNew:String) {
