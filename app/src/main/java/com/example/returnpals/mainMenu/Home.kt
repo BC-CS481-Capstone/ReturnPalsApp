@@ -107,17 +107,8 @@ fun HomeContent(navController: NavController) {
         // Schedule Now Button
         Button(
             onClick = {
-                // Navigate to the DashboardMenu screen
-                navController.navigate(MenuRoutes.HomeDash) {
-                    // Clear all the back stack up to the start destination and save state
-                    popUpTo(navController.graph.findStartDestination().id) {
-                        saveState = true
-                    }
-                    // Avoid multiple copies of the same destination when reselecting the same item
-                    launchSingleTop = true
-                    // Restore state when navigating back to the composable
-                    restoreState = true
-                }
+             // Navigate to the DashboardMenu screen
+                navController.navigate("dashboard home")
             },
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(
