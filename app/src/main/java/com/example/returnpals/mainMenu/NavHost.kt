@@ -37,21 +37,29 @@ fun AppNavigation(navController: NavController) {
         startDestination = MenuRoutes.Home
     ) {
 
-        composable(MenuRoutes.Home) { Home(navController) }
+        composable(MenuRoutes.Home) {
+            Home(navController)
+        }
         composable(MenuRoutes.About) { About(navController) }
         composable(MenuRoutes.Pricing) { Pricing(navController) }
         composable(MenuRoutes.Contact) { Contact(navController) }
         composable(MenuRoutes.Video) { Video(navController) }
         composable(MenuRoutes.SignIn) { SignIn(navController) }
         composable(MenuRoutes.FAQ) { FAQ(navController) }
+        composable(MenuRoutes.Register) { Register(navController)}
 
-        composable(MenuRoutes.HomeDash) { HomeDash(navController) }
-        composable(MenuRoutes.Profile) { Profile(navController) }
-        composable(MenuRoutes.Settings) { Settings(navController) }
-        composable(MenuRoutes.Orders) { Orders(navController) }
-        composable(MenuRoutes.SelectAddress) { SelectAddress(navController) }
-        composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }
-        composable(MenuRoutes.Label) { Label(navController) }
+        navigation(
+            startDestination = MenuRoutes.HomeDash,
+            route = "dashboard home"
+        ) {
+            composable(MenuRoutes.HomeDash) { HomeDash(navController) }
+            composable(MenuRoutes.Profile) { Profile(navController) }
+            composable(MenuRoutes.Settings) { Settings(navController) }
+            composable(MenuRoutes.Orders) { Orders(navController) }
+           // composable(MenuRoutes.SelectAddress) { SelectAddress(navController) }
+           // composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }
+          //  composable(MenuRoutes.Label) { Label(navController) }
+        }
 
         navigation(
             startDestination = "select_date",
