@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.compose.ReturnPalTheme
 import com.example.returnpals.composetools.ButtonManager.DateSelector
 import java.time.LocalDate
 
@@ -58,14 +58,14 @@ fun PickupDateScreen(
                 fontWeight = FontWeight.Bold,
                 fontSize = 30.sp,
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.secondary,
+                color = ReturnPalTheme.colorScheme.secondary,
             )
             Text(
                 modifier = Modifier.padding(20.dp, 0.dp),
                 text = "When should we pickup your package?",
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.secondary,
+                color = ReturnPalTheme.colorScheme.secondary,
             )
             DateSelector(
                 date = date,
@@ -85,12 +85,14 @@ fun PickupDateScreen(
 @Preview
 @Composable
 private fun ChoosePlanPreview() {
-    PickupDateScreen(
-        date = LocalDate.now(),
-        onChangeDate = {},
-        onClickNext = {},
-        onClickBack = {},
-    )
+    ReturnPalTheme {
+        PickupDateScreen(
+            date = LocalDate.now(),
+            onChangeDate = {},
+            onClickNext = {},
+            onClickBack = {},
+        )
+    }
 }
 
 // currently not used, but may be useful in future
@@ -101,11 +103,11 @@ private fun DateUI(
     onClickMonth: () -> Unit = {},
     onClickDay: () -> Unit = {},
     onClickYear: () -> Unit = {},
-    textColor: Color = MaterialTheme.colorScheme.primary,
+    textColor: Color = ReturnPalTheme.colorScheme.primary,
     fontWeight: FontWeight = FontWeight.Normal,
     border: BorderStroke? = BorderStroke(
             width = 1.dp,
-            color = MaterialTheme.colorScheme.primary,
+            color = ReturnPalTheme.colorScheme.primary,
         ),
     shape: Shape = RectangleShape
 ) {

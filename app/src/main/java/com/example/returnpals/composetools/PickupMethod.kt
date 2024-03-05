@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.compose.ReturnPalTheme
 import com.example.returnpals.PickupMethod
 import com.example.returnpals.R
 
@@ -108,12 +108,14 @@ fun PickupMethodContent(
 @Preview(showBackground = true)
 @Composable
 private fun PickupMethodPreview() {
-    PickupMethodScreen(
-        method = PickupMethod.DOORSTEP,
-        onChangeMethod = {},
-        onClickNext = {},
-        onClickBack = {}
-    )
+    ReturnPalTheme {
+        PickupMethodScreen(
+            method = PickupMethod.DOORSTEP,
+            onChangeMethod = {},
+            onClickNext = {},
+            onClickBack = {}
+        )
+    }
 }
 
 @Composable
@@ -126,17 +128,17 @@ private fun PickupMethodButton(
     OutlinedButton(
         modifier = modifier.requiredWidth(250.dp),
         onClick = onClick,
-        colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.White),
+        colors = ButtonDefaults.outlinedButtonColors(containerColor = ReturnPalTheme.colorScheme.primaryContainer),
         border =
             if (selected) {
                 BorderStroke(
                     width = 6.dp,
-                    color = Color(0,180,250),
+                    color = ReturnPalTheme.colorScheme.primary,
                 )
             } else {
                 BorderStroke(
-                    width = 2.dp,
-                    color = Color.Black,
+                    width = 4.dp,
+                    color = ReturnPalTheme.colorScheme.inversePrimary,
                 )
             },
         shape = RoundedCornerShape(22.dp, 22.dp, 22.dp, 22.dp),
@@ -163,7 +165,7 @@ private fun HandOffTMethodContent(
             Icon(
                 painter = painterResource(R.drawable.handoff_500x500),
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
+                tint = ReturnPalTheme.colorScheme.primary,
                 modifier = Modifier
                     .scale(0.6f)
                     .size(100.dp)
@@ -199,7 +201,7 @@ private fun DoorstepMethodContent(
             Icon(
                 painter = painterResource(R.drawable.doorstep_500x440),
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
+                tint = ReturnPalTheme.colorScheme.primary,
                 modifier = Modifier
                     .scale(0.6f)
                     .size(100.dp)
