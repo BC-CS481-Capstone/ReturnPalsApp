@@ -69,7 +69,7 @@ class PickupDateTest {
             )
         }
 
-        val back = rule.onNodeWithText("Back")
+        val back = rule.onNodeWithText("Cancel")
         back.assertExists("Back button does not exist.")
         back.assertIsDisplayed()
 
