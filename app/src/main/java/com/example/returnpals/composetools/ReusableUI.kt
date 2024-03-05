@@ -108,6 +108,12 @@ fun ProgressBar(
     val dotModifier = Modifier
         .requiredSize((6.0f * scale).dp)
         .offset(0.dp, (6.0f * scale).dp)
+        .border(
+            width = 1.dp,
+            color = ReturnPalTheme.colorScheme.primary,
+            shape = CircleShape
+        )
+    val completedDotModifier = dotModifier
         .background(
             color = ReturnPalTheme.colorScheme.primary,
             shape = CircleShape
@@ -115,13 +121,13 @@ fun ProgressBar(
     val stepModifier = Modifier
         .requiredSize((18.0f * scale).dp)
         .border(
-            width = 1.dp,
+            width = 2.dp,
             color = ReturnPalTheme.colorScheme.primary,
             shape = CircleShape
         )
     val completedStepModifier = stepModifier
         .border(
-            width = 3.dp,
+            width = 5.dp,
             color = ReturnPalTheme.colorScheme.primary,
             shape = CircleShape
         )
@@ -131,7 +137,7 @@ fun ProgressBar(
         )
     val selectedStepModifier = stepModifier
         .border(
-            width = 3.dp,
+            width = 5.dp,
             color = ReturnPalTheme.colorScheme.primary,
             shape = CircleShape
         )
@@ -167,11 +173,19 @@ fun ProgressBar(
                         }
                     }
                     if (i != stepRange.last) {
-                        Box(dotModifier)
-                        Spacer(Modifier.width((3.0f * scale).dp))
-                        Box(dotModifier)
-                        Spacer(Modifier.width((3.0f * scale).dp))
-                        Box(dotModifier)
+                        if (i < step) {
+                            Box(completedDotModifier)
+                            Spacer(Modifier.width((3.0f * scale).dp))
+                            Box(completedDotModifier)
+                            Spacer(Modifier.width((3.0f * scale).dp))
+                            Box(completedDotModifier)
+                        } else {
+                            Box(dotModifier)
+                            Spacer(Modifier.width((3.0f * scale).dp))
+                            Box(dotModifier)
+                            Spacer(Modifier.width((3.0f * scale).dp))
+                            Box(dotModifier)
+                        }
                     }
                 }
             }
