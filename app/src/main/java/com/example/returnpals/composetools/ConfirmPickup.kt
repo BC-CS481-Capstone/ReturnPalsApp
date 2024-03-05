@@ -1,18 +1,16 @@
 package com.example.returnpals.composetools
 
 import android.location.Address
-import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,12 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import java.security.AllPermission
-import java.time.DayOfWeek
+import com.example.compose.ReturnPalTheme
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
 class ConfirmPickup {
@@ -33,6 +30,7 @@ class ConfirmPickup {
     @Composable
     fun drawConfirmPickup(numberOfDigital: Int = 0,
                           numberOfPhysical: Int = 0,
+                          numberOfQRCodes: Int = 0,
                           visaLastFour: Int = 5555,
                           typeOfPickup: String = "Leave On Doorstep",
                           pickUpDate: Calendar = Calendar.getInstance(),
@@ -42,51 +40,73 @@ class ConfirmPickup {
                           backButton: () -> Unit,
                           promoButton: () -> Unit)
     {
-        // Set up as a row with progress on top
-        Column(
-            Modifier
-                .background(getBackGroundColor())
-                .fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween, horizontalAlignment = Alignment.CenterHorizontally ) {
-            ProgressBar(modifier = Modifier, step = 4)
-
-            //Text field
-            Text("Confirm Your Pickup",Modifier .fillMaxWidth(),color = Color.Black, textAlign = TextAlign.Center, fontWeight = FontWeight.Bold,fontSize = 38.sp,maxLines = 1)
-
-            //Start the white box with summary info
-            whiteBox(
-                pickUpDate = pickUpDate,
-                typeOfPickup = typeOfPickup,
-                pickUpAddress = pickUpAddress,
-                numberOfDigital = numberOfDigital,
-                numberOfPhysical = numberOfPhysical,
-                priceArray = priceArray,
-                visaLastFour = visaLastFour
-            )
-            //end of the white box summary
-
-            //Navigation buttons
-            Row(horizontalArrangement = Arrangement.SpaceAround, modifier =  Modifier.fillMaxWidth()) {
-                ButtonManager.BackButton(onClick = backButton)
-                ButtonManager.NextButton(onClick = nextButton)
+        ScheduleReturnScaffold(
+            step = 5,
+            onClickBack = backButton,
+            onClickNext = nextButton,
+            nextButtonText = "Confirm"
+        ) { padding ->
+            // Set up as a row with progress on top
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .background(getBackGroundColor())
+                    .padding(padding)
+                    .padding(horizontal = 20.dp)
+                    .fillMaxSize()
+            ) {
+                Text(
+                    text = "Confirm Your Pickup",
+                    color = Color.Black,
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 28.sp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 10.dp)
+                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    //Start the white box with summary info
+                    WhiteBox(
+                        pickUpDate = pickUpDate,
+                        typeOfPickup = typeOfPickup,
+                        pickUpAddress = pickUpAddress,
+                        numberOfDigital = numberOfDigital,
+                        numberOfPhysical = numberOfPhysical,
+                        numberOfQRCodes = numberOfQRCodes,
+                        priceArray = priceArray,
+                        visaLastFour = visaLastFour
+                    )
+                    //end of the white box summary
+                }
             }
         }
     }
     @Composable
-    fun whiteBox(pickUpDate:Calendar,typeOfPickup:String,pickUpAddress:Address,numberOfDigital:Int,numberOfPhysical:Int,priceArray:Array<Int>,visaLastFour:Int) {
-        val config = getConfig()
-        val wwith =(config.screenWidthDp - 32).dp
-        val whieght = (config.screenHeightDp / 3 * 2).dp
+    fun WhiteBox(
+        pickUpDate: Calendar,
+        typeOfPickup: String,
+        pickUpAddress: Address,
+        numberOfDigital: Int,
+        numberOfPhysical: Int,
+        numberOfQRCodes: Int,
+        priceArray: Array<Int>,
+        visaLastFour: Int
+    ) {
         Column(
             Modifier
                 .background(
-                    Color.White,
+                    ReturnPalTheme.colorScheme.onPrimary,
                     shape = RoundedCornerShape(10)
                 )
-                .width(wwith)
-                .height(whieght),
+                .padding(32.dp),
             verticalArrangement = Arrangement.SpaceAround,
-            horizontalAlignment = Alignment.CenterHorizontally)
-        {
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Text("Order Summary\n" +
                     "_________________",color = getBlueIconColor(),fontSize = 34.sp, maxLines = 2)
 
@@ -99,13 +119,13 @@ class ConfirmPickup {
             Text(day.toString()+" "+month.toString()+" "+date.toString(),fontSize = 34.sp,maxLines = 1)
 
             //Confirm type of pickup as hand off or leave on door step
-            Text(typeOfPickup,fontSize = 34.sp)
+            Text(typeOfPickup,fontSize = 26.sp)
 
             //Avoid printing null if no address given
             printAddressLines(pickUpAddress)
 
             //Confirm packages
-            printNumberOfLabels(numberOfDigital,numberOfPhysical)
+            PackagesText(numberOfDigital, numberOfPhysical, numberOfQRCodes)
 
             //Print payment if due. Should be able to skip if user is has already payed for a plan.
             printPriceArray(priceArray,visaLastFour)
@@ -116,9 +136,9 @@ class ConfirmPickup {
     fun printPriceArray(priceArray:Array<Int>,visaLastFour:Int) {
         if (priceArray[0]!=0) {
             Text("Visa ending $visaLastFour")
-            Text("One-Time Return "+priceArray[0])
-            Text("Tax "+priceArray[1])
-            Text("Total "+priceArray[2])
+            Text("One-Time Return ${priceArray[0]}")
+            Text("Tax ${priceArray[1]}")
+            Text("Total ${priceArray[2]}")
         }
     }
     @Composable
@@ -137,20 +157,75 @@ class ConfirmPickup {
     }
 
     @Composable
-    fun printNumberOfLabels(numberOfDigital:Int,numberOfPhysical:Int) {
+    private fun PackagesText(
+        numberOfDigital: Int,
+        numberOfPhysical: Int,
+        numberOfQRCodes: Int,
+    ) {
         val fsize = (getConfig().screenWidthDp/16)
 
-        Text("Packages", fontWeight = FontWeight.Bold,fontSize = 34.sp, color = Color.Black)
+        Text(
+            text = "Packages",
+            fontWeight = FontWeight.Bold,
+            fontSize = 34.sp,
+            color = Color.Black
+        )
         //Row with Icon and text
-        Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            horizontalArrangement =  Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(vertical=6.dp)
+        ) {
             IconManager().getBoxIcon(modifier = Modifier.height(fsize.dp))
-            Text(numberOfDigital.toString()+" Package with digital label",fontSize = fsize.sp,maxLines = 1)
+            Text(
+                text = numberOfDigital.toString() + " digital labels",
+                fontSize = fsize.sp,
+                modifier = Modifier.padding(horizontal = 20.dp)
+            )
         }
         //Row with Icon and text
-        Row(horizontalArrangement =  Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(vertical=6.dp)
+        ) {
             IconManager().getBoxIcon(modifier = Modifier.height(fsize.dp))
-            Text("$numberOfPhysical Package with physical label",fontSize = fsize.sp,maxLines = 1)
+            Text(
+                text = "$numberOfPhysical physical labels",
+                fontSize = fsize.sp,
+                modifier = Modifier.padding(horizontal = 20.dp)
+            )
+        }
+        //Row with Icon and text
+        Row(
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(vertical=6.dp)
+        ) {
+            IconManager().getBoxIcon(modifier = Modifier.height(fsize.dp))
+            Text(
+                text = "$numberOfQRCodes QR codes",
+                fontSize = fsize.sp,
+                modifier = Modifier.padding(horizontal = 20.dp)
+            )
         }
     }
 
+}
+
+@Preview
+@Composable
+private fun ConfirmPickupPreview() {
+    ReturnPalTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            ConfirmPickup().drawConfirmPickup(
+                nextButton = { /*TODO*/ },
+                backButton = { /*TODO*/ }
+            ) {
+                
+            }
+        }
+    }
 }
