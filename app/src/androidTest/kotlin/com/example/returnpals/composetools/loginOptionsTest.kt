@@ -99,7 +99,7 @@ class loginOptionsTest {
         var model = LoginViewModel()
         model.switchGuestUser()
         rule.setContent { val navController = TestNavHostController(LocalContext.current)
-            LoginScreen(LoginViewModel(), navController) }
+            LoginScreen(model, navController) }
         rule.onNode(hasText("Sign In ") and hasClickAction()).performClick()
         rule.onNode(hasText("Sign In") and hasClickAction()).assertIsDisplayed()
     }

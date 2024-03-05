@@ -11,7 +11,8 @@ class LoginViewModelTest {
     fun getEmail() {
         //Test if view model holds email data
         val test = LoginViewModel()
-        assert(test.getEmail() == "test@bellevue.college")
+        test.changeEmail("test@bellevue.college")
+        assert(test.getEmail() == "test@bellevue.college" )
     }
 
     @Test
