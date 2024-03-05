@@ -19,6 +19,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import com.amplifyframework.auth.result.AuthSignUpResult
 import com.amplifyframework.core.Amplify
 import com.example.returnpals.mainMenu.MenuRoutes
 import com.example.returnpals.mainMenu.RegisterContent
@@ -41,14 +42,16 @@ fun SignUp(navController: NavController) {
         //address = ""
         //email = ""
         //message = ""
-        navController.navigate(MenuRoutes.ConfirmNumber)
+        go2(navController,MenuRoutes.ConfirmNumber)
     })
 }
 private var confirmviewMd = ConfirmNumberViewModel()
 @Composable
 fun ConfirmNumber(navController: NavController) {
     ConfirmNumberContent(emailToConfirm = confirmviewMd.getEmail(), submitNumber = confirmviewMd.code.value, onSubmitNumberChange = {confirmviewMd.setCode(it)}) {
-        navController.navigate(MenuRoutes.SignIn)
+        confirmviewMd.confirmNumber {
+            GlobalScope.launch(Dispatchers.Main) {go2(navController,MenuRoutes.Home)}
+        }
     }
 }
 
@@ -70,7 +73,7 @@ fun ConfirmNumber(navController: NavController) {
                 guest = { viewModel.switchGuestUser() },
                 reset = { /*TODO*/ },
                 signin = {viewModel.logIn({ GlobalScope.launch(Dispatchers.Main) { go2(navController, MenuRoutes.HomeDash) } }) },
-                signup = {viewModel.signUp({ GlobalScope.launch(Dispatchers.Main) {navController.navigate(MenuRoutes.SignUp) } })
+                signup = {viewModel.signUp({ GlobalScope.launch(Dispatchers.Main) {go2(navController, MenuRoutes.SignUp) } })
                 },
                 emailString = viewModel.getEmail(),
                 passString =  viewModel.password.value)
@@ -171,28 +174,25 @@ fun ConfirmNumber(navController: NavController) {
     }
 
 private class ConfirmNumberViewModel(): ViewModel() {
-    var repository = UserRepository
+    private var repository = UserRepository
+
+
     fun getEmail():String {
         return repository.getEmail()
     }
     var code =  mutableStateOf<String>("test@bellevue.college")
         private set
-    fun confirmNumber() {
+    fun confirmNumber(onSuccess:(AuthSignUpResult)->Unit) {
         Amplify.Auth.confirmSignUp(
             getEmail(), code.value,
-            { result ->
-                if (result.isSignUpComplete) {
-                    Log.i("AuthQuickstart", "Confirm signUp succeeded")
-                } else {
-                    Log.i("AuthQuickstart","Confirm sign up not complete")
-                }
-            },
+            onSuccess,
             { Log.e("AuthQuickstart", "Failed to confirm sign up", it) }
         )
     }
     fun setCode(codeValue:String) {
         code.value = codeValue
     }
+
 }
 
 
