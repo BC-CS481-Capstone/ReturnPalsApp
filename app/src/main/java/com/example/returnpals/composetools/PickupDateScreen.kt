@@ -42,7 +42,8 @@ fun PickupDateScreen(
         step = 1,
         onClickNext = onClickNext,
         onClickBack = onClickBack,
-        enabledNext = isValidDate(date)
+        enabledNext = isValidDate(date),
+        backButtonText = "Cancel",
     ) { padding ->
         Column(
             modifier = Modifier
