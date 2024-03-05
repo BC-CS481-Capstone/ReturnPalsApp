@@ -23,9 +23,13 @@ import com.amplifyframework.core.Amplify
 import com.example.returnpals.mainMenu.MenuRoutes
 import com.example.returnpals.mainMenu.RegisterContent
 import com.example.returnpals.services.LoginViewModel
+import com.example.returnpals.services.UserRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
-    /* This is the login options class used to create the two login UI for guest and user.*/
+/* This is the login options class used to create the two login UI for guest and user.*/
 
 
 @Composable
@@ -43,21 +47,21 @@ fun SignUp(navController: NavController) {
 private var confirmviewMd = ConfirmNumberViewModel()
 @Composable
 fun ConfirmNumber(navController: NavController) {
-    ConfirmNumberContent(emailToConfirm = confirmviewMd.email, submitNumber = confirmviewMd.code.value, onSubmitNumberChange = {confirmviewMd.setCode(it)}) {
+    ConfirmNumberContent(emailToConfirm = confirmviewMd.getEmail(), submitNumber = confirmviewMd.code.value, onSubmitNumberChange = {confirmviewMd.setCode(it)}) {
         navController.navigate(MenuRoutes.SignIn)
     }
 }
 
     @Composable
-    fun LoginUISate(viewModel:LoginViewModel,signUp:()->Unit) {
+    fun LoginScreen(viewModel:LoginViewModel, navController: NavController) {
         //This will switch between the guest login and user login
         if (viewModel.isGuest.value) {
             GuestLoginUIContent(
                 userSignIn = { viewModel.switchGuestUser() },
                 signin = { /*TODO* login(user,pass)*/ },
                 signup = { viewModel.isGuest.value = false },
-                email = { viewModel.email.value = it},
-                emailString = viewModel.email.value)
+                email = { viewModel.changeEmail(it) },
+                emailString = viewModel.getEmail())
         } else {
             LoginUIContent(
                 failMessage = viewModel.failLogInMessage.value,
@@ -65,9 +69,10 @@ fun ConfirmNumber(navController: NavController) {
                 pass = { viewModel.changePass(it) },
                 guest = { viewModel.switchGuestUser() },
                 reset = { /*TODO*/ },
-                signin = {viewModel.logIn() },
-                signup = signUp,
-                emailString = viewModel.email.value,
+                signin = {viewModel.logIn({ GlobalScope.launch(Dispatchers.Main) { go2(navController, MenuRoutes.HomeDash) } }) },
+                signup = {viewModel.signUp({ GlobalScope.launch(Dispatchers.Main) {navController.navigate(MenuRoutes.SignUp) } })
+                },
+                emailString = viewModel.getEmail(),
                 passString =  viewModel.password.value)
         }
     }
@@ -166,12 +171,15 @@ fun ConfirmNumber(navController: NavController) {
     }
 
 private class ConfirmNumberViewModel(): ViewModel() {
-    val email = "test@email.com"
+    var repository = UserRepository
+    fun getEmail():String {
+        return repository.getEmail()
+    }
     var code =  mutableStateOf<String>("test@bellevue.college")
         private set
     fun confirmNumber() {
         Amplify.Auth.confirmSignUp(
-            email, code.value,
+            getEmail(), code.value,
             { result ->
                 if (result.isSignUpComplete) {
                     Log.i("AuthQuickstart", "Confirm signUp succeeded")

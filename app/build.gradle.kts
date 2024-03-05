@@ -81,7 +81,6 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.6.1")
 
     /** AWS */
-    implementation("aws.sdk.kotlin:cognitoidentityprovider:1.0.0")
 
     // Amplify core dependency
     implementation("com.amplifyframework:core:2.14.11")

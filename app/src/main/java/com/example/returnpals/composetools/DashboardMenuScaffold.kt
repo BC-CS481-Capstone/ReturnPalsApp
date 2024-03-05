@@ -1,5 +1,6 @@
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -36,7 +37,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.R
 import com.example.returnpals.mainMenu.MenuRoutes
+import com.example.returnpals.services.AmplifyOperations.signOut
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -115,9 +119,12 @@ fun DrawerContent1(navController: NavController, scaffoldState: ScaffoldState) {
         Spacer(modifier = Modifier.weight(1f)) // This pushes the items below it to the bottom
 
         DrawerItem1(title = "Sign Out", isSelected = selectedItem == "Sign Out", onClick = {
-            // Handle sign out logic here
-            selectedItem = "Sign Out"
-            navigateToScreen(navController, MenuRoutes.Home, scaffoldState, scope)
+            signOut {
+                Log.i("signOut",it.toString())
+                selectedItem = "Sign Out"
+               GlobalScope.launch(Dispatchers.Main) {  navigateToScreen(navController, MenuRoutes.Home, scaffoldState, scope)}
+            }
+
 
         })
     }
