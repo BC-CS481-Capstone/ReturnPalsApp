@@ -72,21 +72,28 @@ class ConfirmPickupTest {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
         }
-        rule.onNodeWithText("0 Package with digital label").assertIsDisplayed()
+        rule.onNodeWithText("0 digital labels").assertIsDisplayed()
     }
     @Test
     fun numberOfLabelsPhysical() {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
         }
-        rule.onNodeWithText("0 Package with physical label").assertIsDisplayed()
+        rule.onNodeWithText("0 physical labels").assertIsDisplayed()
+    }
+    @Test
+    fun numberOfLabelsQRCode() {
+        rule.setContent {
+            ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
+        }
+        rule.onNodeWithText("0 QR codes").assertIsDisplayed()
     }
     @Test
     fun numberOfLabelsIcons() {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
         }
-        rule.onAllNodesWithContentDescription("Box Icon").assertCountEquals(2)
+        rule.onAllNodesWithContentDescription("Box Icon").assertCountEquals(3)
     }
     @Test
     fun cardCheck() {
@@ -109,7 +116,7 @@ class ConfirmPickupTest {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(nextButton = {}, backButton = {}) {}
         }
-        rule.onNode(hasText("Next") and hasClickAction()).assertIsDisplayed()
+        rule.onNode(hasText("Confirm") and hasClickAction()).assertIsDisplayed()
     }
     @Test
     fun backButton() {
