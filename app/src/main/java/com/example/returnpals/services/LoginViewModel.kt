@@ -54,7 +54,9 @@ class LoginViewModel: ViewModel() {
                 "Amplify Auth",
                 "Signed out successfully completed"
             )
+            Backend.resetEmail()
         }
+
     }
 
     fun logIn(){
@@ -67,6 +69,7 @@ class LoginViewModel: ViewModel() {
                     "Amplify Auth",
                     if (result.isSignedIn) "Sign in succeeded" else "Sign in not complete"
                 )
+                Backend.accessEmail()
             }
         ) { error: AuthException ->
             Log.e(

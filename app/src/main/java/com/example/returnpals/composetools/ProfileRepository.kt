@@ -5,8 +5,11 @@ import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.api.graphql.model.ModelQuery
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.generated.model.User
+import com.amplifyframework.datastore.generated.model.UsersMongoDb
+import com.example.returnpals.services.Backend
 import java.time.LocalDate
 //For this, email on login should be stored in Profile Repository.
+
 data class ProfileRepository(
     private var nameFirst : String = "John",
     private var nameLast : String = "Doe",
@@ -14,24 +17,40 @@ data class ProfileRepository(
     private var expireDate : LocalDate = LocalDate.now(),
     private var memberShipType : String = "SILVER"
 ) {
+    private val TAG = "ProfileRepo"
     fun getDataBase(){
-        /* Code is commented out for the time being, but should work with Amplify.
+        email = Backend.getEmail()
         Amplify.API.query(
-            ModelQuery.list(UsersMongoDb::class.java, User.EMAIL.contains(email)),
+            ModelQuery.list(UsersMongoDb::class.java, UsersMongoDb.EMAIL.contains(email)),
             { response ->
-                response.data.forEach { user ->
-                    Log.i("MyAmplifyApp", user.nameFirst)
-                    nameLast = user.nameLast
-                    nameFirst = user.nameFirst
-                    //We'll need to edit the data type of the ExpireDate in the database to LocalDate at some point
-                    //Or use Strings, one of the two
-                    //expireDate = user.expireDate
-                    memberShipType = user.memberShipType
+                Log.i("ProfileRepo", response.toString())
+                if(response.hasData()) {
+                    response.data.forEach { user ->
+                        Log.i("ProfileRepo", user.firstName)
+                        try {
+                            nameLast = user.lastName
+                        }   catch(except: Exception){
+                            throw Exception(except)
+                        }
+
+
+                        try {
+                            nameFirst = user.firstName
+                        }   catch(except: Exception){
+                            throw Exception(except)
+                        }
+                        try {
+                            memberShipType = user.subscription
+                        } catch(except: Exception){
+                            throw Exception(except)
+                        }
+                    }
                 }
+
             },
-            { Log.e("MyAmplifyApp", "Query failed", it) }
-        );
-        */
+            { Log.e(TAG, "Query failed", it) }
+        )
+        Log.i(TAG, "$nameLast $nameFirst")
     }
     fun getFirstName() :String{
         return nameFirst

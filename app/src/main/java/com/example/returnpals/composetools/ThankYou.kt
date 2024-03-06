@@ -18,13 +18,14 @@ import androidx.compose.ui.unit.TextUnit
 import com.example.returnpals.composetools.ButtonManager
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.returnpals.services.Backend
 
 class ThankYou {
 
     @Composable
     fun drawThankYouUI(userName:String = "Guest",
                        confirmNumber:String = "#",
-                       email:String = "johndoe2394@gmail.com",
+                       email:String = Backend.getEmail(),
                        dashBoardButton: () -> Unit)
     {
         val configsWidth = getConfig().screenWidthDp

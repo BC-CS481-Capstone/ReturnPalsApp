@@ -7,10 +7,15 @@ import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin
 import com.amplifyframework.core.Amplify
 import com.example.returnpals.composetools.OrderRepository
+import com.example.returnpals.composetools.ProfileRepository
+
 /**Adds amplify backend on create code as tutorial examples provided.**/
 object Backend {
 
-    private const val TAG = "Backend"
+     private const val TAG = "Backend"
+    private var email = "";
+    var Profile = ProfileRepository()
+    //var orderList = List<OrderRepository>
 
     fun initialize(applicationContext: Context) : Backend {
         /**Adds amplify backend on create code as tutorial examples provided.**/
@@ -41,6 +46,24 @@ object Backend {
             {error ->
                 Log.e(TAG, "Create failed", error)}
         )
+    }
+    fun resetEmail(){
+        email = ""
+    }
+    fun accessEmail(){
+        Amplify.Auth.fetchUserAttributes(
+            {
+                email = it[0].value
+                Log.i("AuthDemo", "User attributes = ${it.get(0).value}")
+                Profile.getDataBase()
 
+            },
+            { Log.e("AuthDemo", "Failed to fetch user attributes", it) }
+        )
+
+    }
+    fun getEmail(): String{
+        Log.i(TAG, "Email Retrieved")
+        return email
     }
 }

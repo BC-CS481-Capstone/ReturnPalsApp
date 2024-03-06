@@ -5,6 +5,7 @@ import com.amplifyframework.core.model.ModelIdentifier;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.Objects;
 
 import androidx.core.util.ObjectsCompat;
 
@@ -12,6 +13,7 @@ import com.amplifyframework.core.model.AuthStrategy;
 import com.amplifyframework.core.model.Model;
 import com.amplifyframework.core.model.ModelOperation;
 import com.amplifyframework.core.model.annotations.AuthRule;
+import com.amplifyframework.core.model.annotations.Index;
 import com.amplifyframework.core.model.annotations.ModelConfig;
 import com.amplifyframework.core.model.annotations.ModelField;
 import com.amplifyframework.core.model.query.predicate.QueryField;
@@ -26,14 +28,14 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 public final class UsersMongoDb implements Model {
   public static final QueryField ID = field("UsersMongoDb", "id");
   public static final QueryField EMAIL = field("UsersMongoDb", "email");
-  public static final QueryField ADDRESSES = field("UsersMongoDb", "addresses");
+  public static final QueryField ADDRESS = field("UsersMongoDb", "address");
   public static final QueryField SUBSCRIPTION = field("UsersMongoDb", "subscription");
   public static final QueryField FIRST_NAME = field("UsersMongoDb", "first_name");
   public static final QueryField LAST_NAME = field("UsersMongoDb", "last_name");
   public static final QueryField PHONE_NUMBER = field("UsersMongoDb", "phone_number");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String") String email;
-  private final @ModelField(targetType="AWSJSON") List<String> addresses;
+  private final @ModelField(targetType="String") List<String> address;
   private final @ModelField(targetType="String") String subscription;
   private final @ModelField(targetType="String") String first_name;
   private final @ModelField(targetType="String") String last_name;
@@ -54,8 +56,8 @@ public final class UsersMongoDb implements Model {
       return email;
   }
   
-  public List<String> getAddresses() {
-      return addresses;
+  public List<String> getAddress() {
+      return address;
   }
   
   public String getSubscription() {
@@ -82,10 +84,10 @@ public final class UsersMongoDb implements Model {
       return updatedAt;
   }
   
-  private UsersMongoDb(String id, String email, List<String> addresses, String subscription, String first_name, String last_name, String phone_number) {
+  private UsersMongoDb(String id, String email, List<String> address, String subscription, String first_name, String last_name, String phone_number) {
     this.id = id;
     this.email = email;
-    this.addresses = addresses;
+    this.address = address;
     this.subscription = subscription;
     this.first_name = first_name;
     this.last_name = last_name;
@@ -102,7 +104,7 @@ public final class UsersMongoDb implements Model {
       UsersMongoDb usersMongoDb = (UsersMongoDb) obj;
       return ObjectsCompat.equals(getId(), usersMongoDb.getId()) &&
               ObjectsCompat.equals(getEmail(), usersMongoDb.getEmail()) &&
-              ObjectsCompat.equals(getAddresses(), usersMongoDb.getAddresses()) &&
+              ObjectsCompat.equals(getAddress(), usersMongoDb.getAddress()) &&
               ObjectsCompat.equals(getSubscription(), usersMongoDb.getSubscription()) &&
               ObjectsCompat.equals(getFirstName(), usersMongoDb.getFirstName()) &&
               ObjectsCompat.equals(getLastName(), usersMongoDb.getLastName()) &&
@@ -117,7 +119,7 @@ public final class UsersMongoDb implements Model {
     return new StringBuilder()
       .append(getId())
       .append(getEmail())
-      .append(getAddresses())
+      .append(getAddress())
       .append(getSubscription())
       .append(getFirstName())
       .append(getLastName())
@@ -134,7 +136,7 @@ public final class UsersMongoDb implements Model {
       .append("UsersMongoDb {")
       .append("id=" + String.valueOf(getId()) + ", ")
       .append("email=" + String.valueOf(getEmail()) + ", ")
-      .append("addresses=" + String.valueOf(getAddresses()) + ", ")
+      .append("address=" + String.valueOf(getAddress()) + ", ")
       .append("subscription=" + String.valueOf(getSubscription()) + ", ")
       .append("first_name=" + String.valueOf(getFirstName()) + ", ")
       .append("last_name=" + String.valueOf(getLastName()) + ", ")
@@ -172,7 +174,7 @@ public final class UsersMongoDb implements Model {
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
       email,
-      addresses,
+      address,
       subscription,
       first_name,
       last_name,
@@ -182,7 +184,7 @@ public final class UsersMongoDb implements Model {
     UsersMongoDb build();
     BuildStep id(String id);
     BuildStep email(String email);
-    BuildStep addresses(List<String> addresses);
+    BuildStep address(List<String> address);
     BuildStep subscription(String subscription);
     BuildStep firstName(String firstName);
     BuildStep lastName(String lastName);
@@ -193,7 +195,7 @@ public final class UsersMongoDb implements Model {
   public static class Builder implements BuildStep {
     private String id;
     private String email;
-    private List<String> addresses;
+    private List<String> address;
     private String subscription;
     private String first_name;
     private String last_name;
@@ -202,10 +204,10 @@ public final class UsersMongoDb implements Model {
       
     }
     
-    private Builder(String id, String email, List<String> addresses, String subscription, String first_name, String last_name, String phone_number) {
+    private Builder(String id, String email, List<String> address, String subscription, String first_name, String last_name, String phone_number) {
       this.id = id;
       this.email = email;
-      this.addresses = addresses;
+      this.address = address;
       this.subscription = subscription;
       this.first_name = first_name;
       this.last_name = last_name;
@@ -219,7 +221,7 @@ public final class UsersMongoDb implements Model {
         return new UsersMongoDb(
           id,
           email,
-          addresses,
+          address,
           subscription,
           first_name,
           last_name,
@@ -233,8 +235,8 @@ public final class UsersMongoDb implements Model {
     }
     
     @Override
-     public BuildStep addresses(List<String> addresses) {
-        this.addresses = addresses;
+     public BuildStep address(List<String> address) {
+        this.address = address;
         return this;
     }
     
@@ -274,8 +276,8 @@ public final class UsersMongoDb implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String email, List<String> addresses, String subscription, String firstName, String lastName, String phoneNumber) {
-      super(id, email, addresses, subscription, first_name, last_name, phone_number);
+    private CopyOfBuilder(String id, String email, List<String> address, String subscription, String firstName, String lastName, String phoneNumber) {
+      super(id, email, address, subscription, first_name, last_name, phone_number);
       
     }
     
@@ -285,8 +287,8 @@ public final class UsersMongoDb implements Model {
     }
     
     @Override
-     public CopyOfBuilder addresses(List<String> addresses) {
-      return (CopyOfBuilder) super.addresses(addresses);
+     public CopyOfBuilder address(List<String> address) {
+      return (CopyOfBuilder) super.address(address);
     }
     
     @Override

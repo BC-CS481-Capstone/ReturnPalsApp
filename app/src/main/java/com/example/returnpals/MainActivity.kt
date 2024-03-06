@@ -16,6 +16,7 @@ var email : String = ""
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        Backend.accessEmail()
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContent {

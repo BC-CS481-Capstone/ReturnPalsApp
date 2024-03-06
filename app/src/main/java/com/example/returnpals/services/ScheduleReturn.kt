@@ -35,9 +35,8 @@ class ScheduleReturnViewModel(
     }
 
     fun onSubmit() {
-        // TODO: send pickup info to repository
         var order = OrderRepository(
-            "Email@Placeholder.com",
+            Backend.getEmail(),
             info.date,
             AddressItem(1, info.address.toString()),
             "Submitted"
