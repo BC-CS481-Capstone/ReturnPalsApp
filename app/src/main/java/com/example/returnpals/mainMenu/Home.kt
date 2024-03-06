@@ -3,6 +3,7 @@ package com.example.returnpals.mainMenu
 import MainMenuScaffold
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,9 +30,10 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.R
-import com.example.returnpals.ui.BenefitCards
-import com.example.returnpals.ui.ProcessCards
+import com.example.returnpals.composetools.BenefitCards
+import com.example.returnpals.composetools.ProcessCards
 
 
 

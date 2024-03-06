@@ -2,6 +2,7 @@ package com.example.returnpals.mainMenu
 
 import android.location.Address
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -11,17 +12,20 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.returnpals.ui.pickup.ConfirmPickup
-import com.example.returnpals.ui.pickup.AddPackagesScreen
-import com.example.returnpals.ui.pickup.PickupDateScreen
-import com.example.returnpals.ui.pickup.PickupMethodScreen
-import com.example.returnpals.ui.pickup.PricingScreen
-import com.example.returnpals.ui.pickup.ThankYou
-import com.example.returnpals.ui.dashboard.HomeDash
-import com.example.returnpals.ui.dashboard.Orders
-import com.example.returnpals.ui.dashboard.Profile
-import com.example.returnpals.ui.pickup.SelectAddress
-import com.example.returnpals.ui.dashboard.Settings
+import com.example.returnpals.composetools.ConfirmPickup
+import com.example.returnpals.composetools.AddPackagesScreen
+import com.example.returnpals.composetools.PickupDateScreen
+import com.example.returnpals.composetools.PickupMethodScreen
+import com.example.returnpals.composetools.PricingScreen
+import com.example.returnpals.composetools.ThankYou
+import com.example.returnpals.composetools.dashboard.HomeDash
+import com.example.returnpals.composetools.dashboard.Label
+import com.example.returnpals.composetools.dashboard.Orders
+import com.example.returnpals.composetools.dashboard.PickupDetails
+import com.example.returnpals.composetools.dashboard.Profile
+import com.example.returnpals.composetools.dashboard.SelectAddress
+import com.example.returnpals.composetools.dashboard.Settings
+import com.example.returnpals.services.PickupInfo
 import com.example.returnpals.services.ScheduleReturnViewModel
 import java.util.Locale
 
@@ -72,10 +76,8 @@ fun AppNavigation(navController: NavController) {
                 )
             }
             composable("select_address") { entry ->
-                val vm = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
-                SelectAddress(
-                    navController =
-                )
+//                val viewModel = it.sharedViewModel<ScheduleReturnViewModel>(navController)
+//                val pickup = viewModel.pickup.observeAsState(PickupInfo())
             }
             composable("select_method") { entry ->
                 val vm = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
@@ -123,13 +125,7 @@ fun AppNavigation(navController: NavController) {
             composable("thanks") { entry ->
                 val vm = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
                 ThankYou().drawThankYouUI(
-                    dashBoardButton = {
-                        navController.navigate("dashboard home") {
-                            popUpTo(MenuRoutes.PickupProcess) {
-                                inclusive = true
-                            }
-                        }
-                    }
+                    dashBoardButton = { navController.navigate(MenuRoutes.HomeDash) }
                 )
             }
         }
@@ -137,6 +133,7 @@ fun AppNavigation(navController: NavController) {
     }
 
 }
+
 
 // magic https://youtu.be/FIEnIBq7Ups?si=O2ePHcmj0VsmQ7R-
 @Composable

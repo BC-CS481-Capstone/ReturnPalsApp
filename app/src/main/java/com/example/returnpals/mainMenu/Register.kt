@@ -28,7 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.returnpals.ui.CustomTextField
+import com.amplifyframework.datastore.generated.model.UsersMongoDb
+import com.example.returnpals.composetools.CustomTextField
 import com.example.returnpals.services.RegisterViewModel
 
 @Composable
