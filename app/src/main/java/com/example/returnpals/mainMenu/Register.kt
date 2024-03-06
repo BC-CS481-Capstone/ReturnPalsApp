@@ -23,23 +23,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.amplifyframework.datastore.generated.model.UsersMongoDb
 import com.example.returnpals.composetools.CustomTextField
+import com.example.returnpals.composetools.go2
 import com.example.returnpals.services.RegisterViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun Register(navController: NavController) {
-    RegisterContent()
+    RegisterContent() {GlobalScope.launch(Dispatchers.Main){go2(navController,MenuRoutes.SignIn)} }
 }
 
-@Preview
+
 @Composable
-fun RegisterContent(){
+fun RegisterContent(onSubmitSuccess:()->Unit){
     val customColor = Color(0xFFE1F6FF)
 
     LazyColumn(
@@ -51,7 +53,7 @@ fun RegisterContent(){
     ){
         
         item { RegisterTitle() }
-        item { Form() }
+        item { Form(onSubmitSuccess = onSubmitSuccess ) }
 
 
     }
@@ -70,7 +72,7 @@ fun RegisterTitle() {
 }
 
 @Composable
-fun Form(viewModel: RegisterViewModel = viewModel()) {
+fun Form(viewModel: RegisterViewModel = viewModel(), onSubmitSuccess:()->Unit) {
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
@@ -128,7 +130,7 @@ fun Form(viewModel: RegisterViewModel = viewModel()) {
         Button(
             onClick = {
                 viewModel.submitRegistration(firstName, lastName, email,
-                    listOf(address), phoneNumber)
+                    listOf(address), phoneNumber,onSubmitSuccess)
                 // Reset state variables after submission
                 firstName = ""
                 lastName = ""

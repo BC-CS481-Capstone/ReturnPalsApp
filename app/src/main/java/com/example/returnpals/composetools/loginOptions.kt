@@ -1,5 +1,4 @@
 package com.example.returnpals.composetools
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,7 +21,6 @@ import androidx.navigation.NavController
 import com.amplifyframework.auth.result.AuthSignUpResult
 import com.amplifyframework.core.Amplify
 import com.example.returnpals.mainMenu.MenuRoutes
-import com.example.returnpals.mainMenu.RegisterContent
 import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.services.UserRepository
 import kotlinx.coroutines.Dispatchers
@@ -33,24 +31,13 @@ import kotlinx.coroutines.launch
 /* This is the login options class used to create the two login UI for guest and user.*/
 
 
-@Composable
-fun SignUp(navController: NavController) {
-    RegisterContent(submitData = {
-        // viewModel.submitData(fullName, postalCode, email, message)
-        // Reset state variables after submission
-        //firstName = ""
-        //address = ""
-        //email = ""
-        //message = ""
-        go2(navController,MenuRoutes.ConfirmNumber)
-    })
-}
+
 private var confirmviewMd = ConfirmNumberViewModel()
 @Composable
 fun ConfirmNumber(navController: NavController) {
-    ConfirmNumberContent(emailToConfirm = confirmviewMd.getEmail(), submitNumber = confirmviewMd.code.value, onSubmitNumberChange = {confirmviewMd.setCode(it)}) {
+    ConfirmNumberContent(emailToConfirm = confirmviewMd.getEmail(),message= confirmviewMd.getMessage(),submitNumber = confirmviewMd.code.value, onSubmitNumberChange = {confirmviewMd.setCode(it)}) {
         confirmviewMd.confirmNumber {
-            GlobalScope.launch(Dispatchers.Main) {go2(navController,MenuRoutes.Home)}
+            GlobalScope.launch(Dispatchers.Main) {go2(navController,MenuRoutes.Register)}
         }
     }
 }
@@ -72,8 +59,12 @@ fun ConfirmNumber(navController: NavController) {
                 pass = { viewModel.changePass(it) },
                 guest = { viewModel.switchGuestUser() },
                 reset = { /*TODO*/ },
-                signin = {viewModel.logIn({ GlobalScope.launch(Dispatchers.Main) { go2(navController, MenuRoutes.HomeDash) } }) },
-                signup = {viewModel.signUp({ GlobalScope.launch(Dispatchers.Main) {go2(navController, MenuRoutes.SignUp) } })
+                signin = {viewModel.logIn({ GlobalScope.launch(Dispatchers.Main) { go2(navController, MenuRoutes.HomeDash) } }) {
+                    viewModel.setFailLogInMessage(it.message!!)
+                    if (it.message!!.contains("User not confirmed in the system."))
+                    GlobalScope.launch(Dispatchers.Main) { go2(navController, MenuRoutes.ConfirmNumber) }
+                } },
+                signup = {viewModel.signUp({ GlobalScope.launch(Dispatchers.Main) {go2(navController, MenuRoutes.ConfirmNumber) } })
                 },
                 emailString = viewModel.getEmail(),
                 passString =  viewModel.password.value)
@@ -81,11 +72,12 @@ fun ConfirmNumber(navController: NavController) {
     }
 
     @Composable
-    fun ConfirmNumberContent(emailToConfirm:String,submitNumber:String,onSubmitNumberChange:(String)->Unit,verifyButton:()->Unit) {
+    fun ConfirmNumberContent(emailToConfirm:String,message:String,submitNumber:String,onSubmitNumberChange:(String)->Unit,verifyButton:()->Unit) {
         //Promt a user for confirm number with space to enter and button to confirm
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceBetween,modifier = Modifier.fillMaxSize()) {
             Text(emailToConfirm)
             OutlinedTextField(value=submitNumber, onValueChange = onSubmitNumberChange)
+            Text(message)
             Button(onClick = verifyButton,colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008BE7), contentColor = Color.White)) {
                 Text("Verify")
             }
@@ -175,18 +167,25 @@ fun ConfirmNumber(navController: NavController) {
 
 private class ConfirmNumberViewModel(): ViewModel() {
     private var repository = UserRepository
-
-
+    var code =  mutableStateOf<String>("")
+        private set
+    var message = mutableStateOf<String>("")
     fun getEmail():String {
         return repository.getEmail()
     }
-    var code =  mutableStateOf<String>("test@bellevue.college")
-        private set
+    fun getMessage():String {
+        return message.value
+    }
+
+    fun setMessage(value:String){
+        message.value = value
+    }
+
     fun confirmNumber(onSuccess:(AuthSignUpResult)->Unit) {
         Amplify.Auth.confirmSignUp(
             getEmail(), code.value,
             onSuccess,
-            { Log.e("AuthQuickstart", "Failed to confirm sign up", it) }
+            { setMessage(it.toString()) }
         )
     }
     fun setCode(codeValue:String) {

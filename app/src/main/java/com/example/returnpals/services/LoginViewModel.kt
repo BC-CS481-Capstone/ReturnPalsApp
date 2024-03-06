@@ -2,6 +2,7 @@ package com.example.returnpals.services
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.amplifyframework.auth.AuthException
 import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.auth.options.AuthSignUpOptions
 import com.amplifyframework.auth.result.AuthSignInResult
@@ -61,15 +62,13 @@ class LoginViewModel(): ViewModel() {
         }
     }
 
-    fun logIn(onSignInSuccess:(AuthSignInResult)->Unit){
+    fun logIn(onSignInSuccess:(AuthSignInResult)->Unit,needConfirm:(AuthException)->Unit){
         // Allows users to signIn with cognito
         Amplify.Auth.signIn(
             getEmail(),
             password.value,
-            onSignInSuccess
-        ) {
-            setFailLogInMessage(it.message!!)
-        }
+            onSignInSuccess,needConfirm
+        )
     }
 }
 

@@ -1,5 +1,6 @@
 package com.example.returnpals.services
 
+import android.util.Log
 import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.auth.AuthSession
 import com.amplifyframework.auth.AuthUserAttributeKey
@@ -7,7 +8,6 @@ import com.amplifyframework.auth.options.AuthSignUpOptions
 import com.amplifyframework.auth.result.AuthSignOutResult
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.generated.model.MailingList
-import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.datastore.generated.model.UsersMongoDb
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
