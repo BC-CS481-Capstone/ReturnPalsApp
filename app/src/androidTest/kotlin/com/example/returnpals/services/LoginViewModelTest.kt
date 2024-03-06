@@ -11,7 +11,8 @@ class LoginViewModelTest {
     fun getEmail() {
         //Test if view model holds email data
         val test = LoginViewModel()
-        assert(test.email.value == "test@bellevue.college")
+        test.changeEmail("test@bellevue.college")
+        assert(test.getEmail() == "test@bellevue.college" )
     }
 
     @Test
@@ -33,7 +34,7 @@ class LoginViewModelTest {
         //Test if viewmodel can update email data
         val test = LoginViewModel()
         test.changeEmail("test2@bellevue2.college2")
-        assert(test.email.value == "test2@bellevue2.college2")
+        assert(test.getEmail() == "test2@bellevue2.college2")
     }
 
     @Test

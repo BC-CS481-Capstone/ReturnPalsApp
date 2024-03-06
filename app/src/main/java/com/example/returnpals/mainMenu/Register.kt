@@ -23,21 +23,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.returnpals.composetools.CustomTextField
-import com.example.returnpals.composetools.loginOptions
+import com.example.returnpals.composetools.go2
+import com.example.returnpals.services.RegisterViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun Register(navController: NavController) {
-
+    RegisterContent() {GlobalScope.launch(Dispatchers.Main){go2(navController,MenuRoutes.SignIn)} }
 }
 
-@Preview
+
 @Composable
-fun RegisterContent(){
+fun RegisterContent(onSubmitSuccess:()->Unit){
     val customColor = Color(0xFFE1F6FF)
 
     LazyColumn(
@@ -49,7 +53,7 @@ fun RegisterContent(){
     ){
         
         item { RegisterTitle() }
-        item { Form() }
+        item { Form(onSubmitSuccess = onSubmitSuccess ) }
 
 
     }
@@ -68,28 +72,29 @@ fun RegisterTitle() {
 }
 
 @Composable
-fun Form() {
+fun Form(viewModel: RegisterViewModel = viewModel(), onSubmitSuccess:()->Unit) {
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
-    var message by remember { mutableStateOf("") }
+    var phoneNumber by remember { mutableStateOf("") }
     val selectedBlue = Color(0xFF008BE7)
     val customColor = Color(0xFFE1F6FF)
-   // val submissionSuccessful by viewModel.submissionSuccessful.observeAsState()
+    val submissionSuccessful by viewModel.submissionSuccessful.observeAsState()
 
 
     // Use LaunchedEffect to clear fields on submission success
- /*   LaunchedEffect(submissionSuccessful) {
+   LaunchedEffect(submissionSuccessful) {
         if (submissionSuccessful == true) {
-            fullName = ""
-            postalCode = ""
+            firstName = ""
+            lastName = ""
+            address = ""
             email = ""
-            message = ""
+            phoneNumber = ""
             // Reset the submission success state in the ViewModel to prevent repeated actions
             viewModel.resetSubmissionSuccess()
         }
-    } */
+    }
 
     Column(
         modifier = Modifier
@@ -119,17 +124,19 @@ fun Form() {
         CustomTextField(label = "Email*", text = email, onValueChange = { email = it })
         Spacer(modifier = Modifier.height(8.dp))
 
-        CustomTextField(label = "Message*", text = message, onValueChange = { message = it })
+        CustomTextField(label = "Phone Number*", text = phoneNumber, onValueChange = { phoneNumber = it })
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = {
-               // viewModel.submitData(fullName, postalCode, email, message)
+                viewModel.submitRegistration(firstName, lastName, email,
+                    listOf(address), phoneNumber,onSubmitSuccess)
                 // Reset state variables after submission
                 firstName = ""
+                lastName = ""
                 address = ""
                 email = ""
-                message = ""
+                phoneNumber = ""
 
             },
             colors = ButtonDefaults.buttonColors(

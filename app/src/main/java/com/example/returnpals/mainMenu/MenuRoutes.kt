@@ -8,6 +8,7 @@ object MenuRoutes {
     const val Video = "video"
     const val SignIn = "sign in"
     const val FAQ =  "faq"
+    const val Register = "register"
 
     const val HomeDash = "dashboard"
     const val Profile = "profile"
@@ -18,5 +19,8 @@ object MenuRoutes {
     const val SelectAddress = "address"
     const val PickupDetails = "pickup details"
     const val Label = "label"
+
+    const val SignUp = "SignUp"
+    const val ConfirmNumber = "ConfirmNumber"
 
 }

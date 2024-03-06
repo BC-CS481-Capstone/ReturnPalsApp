@@ -81,7 +81,6 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.6.1")
 
     /** AWS */
-    implementation("aws.sdk.kotlin:cognitoidentityprovider:1.0.0")
 
     // Amplify core dependency
     implementation("com.amplifyframework:core:2.14.11")
@@ -109,8 +108,10 @@ dependencies {
     implementation("com.amplifyframework:aws-datastore:2.14.11") {
         exclude(group = "com.amplifyframework", module = "aws-api-appsync")
     }
-    implementation("com.amplifyframework:core:1.38.8")
+
     implementation("com.amplifyframework:aws-api:1.38.8")
+
+
 
 
 
