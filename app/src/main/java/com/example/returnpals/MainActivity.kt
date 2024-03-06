@@ -10,7 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import com.amplifyframework.AmplifyException
 import com.amplifyframework.api.aws.AWSApiPlugin
 import com.amplifyframework.core.Amplify
-import com.example.compose.ReturnPalTheme
+import com.example.returnpals.ui.theme.ReturnPalTheme
 import com.example.returnpals.mainMenu.AppNavigation
 var email : String = ""
 

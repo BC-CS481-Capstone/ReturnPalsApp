@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.returnpals.R
-import com.example.returnpals.composetools.CustomTextField
+import com.example.returnpals.ui.CustomTextField
 import com.example.returnpals.services.ContactViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 
