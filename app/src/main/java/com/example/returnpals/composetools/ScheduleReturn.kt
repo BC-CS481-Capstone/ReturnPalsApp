@@ -23,9 +23,10 @@ import com.example.compose.ReturnPalTheme
  */
 @Composable
 fun ScheduleReturnScaffold(
-    step: Int,
-    onClickBack: () -> Unit,
-    onClickNext: () -> Unit,
+    modifier: Modifier = Modifier,
+    step: Int = 0,
+    onClickBack: () -> Unit = {},
+    onClickNext: () -> Unit = {},
     enabledNext: Boolean = true,
     nextButtonText: String = "Next",
     backButtonText: String = "Back",
@@ -41,7 +42,8 @@ fun ScheduleReturnScaffold(
                 backButtonText = backButtonText
             ) },
         topBar = { ScheduleReturnProgressBar(step = step) },
-        content = content
+        content = content,
+        modifier = modifier
     )
 }
 

@@ -89,7 +89,7 @@ fun OrderTable(){
             Row(){
                 TableCell(text = orderList[index].getStatus(), column1Weight)
                 TableCell(text = orderList[index].getDate().toString().substring(0, 10), column2Weight)
-                TableCell(text = orderList[index].getAddress().address, column3Weight)
+                TableCell(text = orderList[index].getAddress(), column3Weight)
 
             }
         }

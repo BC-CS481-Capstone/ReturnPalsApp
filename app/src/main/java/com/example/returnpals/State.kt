@@ -72,6 +72,13 @@ class IdManager {
     }
 
     /**
+     * Returns a list with unique IDs assigned to all the items.
+     */
+    fun <T> allot(items: List<T>): List<Pair<Int, T>> {
+        return items.associateBy { allot() }.toList()
+    }
+
+    /**
      * Marks the ID as no longer in-use and allows it to be allotted again.
      */
     fun free(id: Int) {
