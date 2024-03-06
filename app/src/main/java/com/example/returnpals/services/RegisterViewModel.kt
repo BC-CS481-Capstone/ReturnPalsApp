@@ -10,7 +10,7 @@ class RegisterViewModel : ViewModel(){
     private val _submissionSuccessful = MutableLiveData<Boolean?>()
     val submissionSuccessful: LiveData<Boolean?> = _submissionSuccessful
 
-    fun submitRegistration(firstName: String, lastName: String, email: String, address: List<String>, phoneNumber: String) {
+    fun submitRegistration(firstName: String, lastName: String, email: String, address: List<String>, phoneNumber: String, onSuccess:()->Unit) {
         val model = UsersMongoDb.builder()
             .firstName(firstName)
             .lastName(lastName)
@@ -22,6 +22,7 @@ class RegisterViewModel : ViewModel(){
         AmplifyOperations.sendRegistrationData(model,
             onSuccess = { id ->
                 _submissionSuccessful.postValue(true)
+                onSuccess
             },
             onError = { error ->
                 _submissionSuccessful.postValue(false)

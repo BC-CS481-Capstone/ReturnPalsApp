@@ -20,4 +20,7 @@ object MenuRoutes {
     const val PickupDetails = "pickup details"
     const val Label = "label"
 
+    const val SignUp = "SignUp"
+    const val ConfirmNumber = "ConfirmNumber"
+
 }

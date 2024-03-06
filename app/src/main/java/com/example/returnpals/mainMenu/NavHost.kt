@@ -17,6 +17,7 @@ import com.example.returnpals.composetools.pickup.PickupDateScreen
 import com.example.returnpals.composetools.pickup.PickupMethodScreen
 import com.example.returnpals.composetools.pickup.PricingScreen
 import com.example.returnpals.composetools.pickup.ThankYou
+import com.example.returnpals.composetools.ConfirmNumber
 import com.example.returnpals.composetools.dashboard.HomeDash
 import com.example.returnpals.composetools.dashboard.Orders
 import com.example.returnpals.composetools.dashboard.Profile
@@ -57,6 +58,7 @@ fun AppNavigation(navController: NavController) {
            // composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }
           //  composable(MenuRoutes.Label) { Label(navController) }
         }
+        composable(MenuRoutes.ConfirmNumber) { ConfirmNumber(navController) }
 
         navigation(
             startDestination = "select_date",
