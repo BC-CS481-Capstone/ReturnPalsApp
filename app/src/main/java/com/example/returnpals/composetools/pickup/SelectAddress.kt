@@ -161,7 +161,7 @@ private fun AddressItem(
     ) {
         RadioButton(
             selected = isSelected,
-            onClick = {},
+            onClick = onSelect,
             modifier = Modifier
                 .scale(.7f)
                 .requiredSize(12.dp)
