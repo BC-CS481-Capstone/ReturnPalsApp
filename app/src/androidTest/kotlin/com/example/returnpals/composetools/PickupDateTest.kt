@@ -9,6 +9,7 @@ import org.junit.Rule
 import org.junit.Test
 import java.time.LocalDate
 import com.example.returnpals.composetools.ButtonManager.DateSelector
+import com.example.returnpals.composetools.pickup.PickupDateScreen
 
 /**
  * Test the [PickupDateScreen] composable.

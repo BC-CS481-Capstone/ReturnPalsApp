@@ -1,4 +1,4 @@
-package com.example.returnpals.composetools
+package com.example.returnpals.composetools.pickup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -39,6 +39,12 @@ import androidx.compose.ui.window.Dialog
 import com.example.compose.ReturnPalTheme
 import com.example.returnpals.PackageInfo
 import com.example.returnpals.PackageLabelType
+import com.example.returnpals.composetools.ButtonManager
+import com.example.returnpals.composetools.IconManager
+import com.example.returnpals.composetools.ScheduleReturnScaffold
+import com.example.returnpals.composetools.getBackGroundColor
+import com.example.returnpals.composetools.getBlueIconColor
+import com.example.returnpals.composetools.getConfig
 
 // TODO: RemoveLabelButton
 // TODO: EditDescriptionButton

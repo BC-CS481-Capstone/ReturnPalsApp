@@ -1,7 +1,6 @@
 package com.example.returnpals.composetools
 
 import android.location.Address
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasClickAction
@@ -9,7 +8,7 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import org.junit.Assert.*
+import com.example.returnpals.composetools.pickup.ConfirmPickup
 import org.junit.Rule
 
 import org.junit.Test

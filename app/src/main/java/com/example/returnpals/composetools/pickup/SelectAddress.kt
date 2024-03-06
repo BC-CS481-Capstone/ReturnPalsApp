@@ -1,4 +1,4 @@
-package com.example.returnpals.composetools.dashboard
+package com.example.returnpals.composetools.pickup
 
 import DashboardMenuScaffold
 import androidx.compose.foundation.Canvas

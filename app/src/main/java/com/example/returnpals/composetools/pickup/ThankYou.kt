@@ -1,4 +1,4 @@
-package com.example.returnpals.composetools
+package com.example.returnpals.composetools.pickup
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,7 +22,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose.ReturnPalTheme
-
+import com.example.returnpals.composetools.ButtonManager
+import com.example.returnpals.composetools.IconManager
+import com.example.returnpals.composetools.ScheduleReturnProgressBar
+import com.example.returnpals.composetools.getBlueIconColor
+import com.example.returnpals.composetools.getConfig
 
 
 class ThankYou {
@@ -45,7 +49,10 @@ class ThankYou {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.fillMaxWidth().padding(10.dp)
                 ) {
-                    ButtonManager.NextButton(onClick=dashBoardButton, text="Return to Dashboard")
+                    ButtonManager.NextButton(
+                        onClick = dashBoardButton,
+                        text = "Return to Dashboard"
+                    )
                 } },
         ) { padding ->
             Column(

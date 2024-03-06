@@ -1,4 +1,4 @@
-package com.example.returnpals.composetools
+package com.example.returnpals.composetools.pickup
 
 import android.location.Address
 import androidx.compose.foundation.background
@@ -22,6 +22,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose.ReturnPalTheme
+import com.example.returnpals.composetools.IconManager
+import com.example.returnpals.composetools.ScheduleReturnScaffold
+import com.example.returnpals.composetools.getBackGroundColor
+import com.example.returnpals.composetools.getBlueIconColor
+import com.example.returnpals.composetools.getConfig
 import java.util.Calendar
 import java.util.Locale
 
