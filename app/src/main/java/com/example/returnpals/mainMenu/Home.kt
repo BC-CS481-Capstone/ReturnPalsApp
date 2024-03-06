@@ -3,6 +3,7 @@ package com.example.returnpals.mainMenu
 import MainMenuScaffold
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -93,6 +94,7 @@ fun HomeContent(navController: NavController) {
             append("EASY")
         }
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -103,6 +105,7 @@ fun HomeContent(navController: NavController) {
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = title)
         Spacer(modifier = Modifier.height(16.dp))
+
         // Schedule Now Button
         Button(
             onClick = {
