@@ -38,6 +38,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.R
 import com.example.returnpals.mainMenu.MenuRoutes
 import com.example.returnpals.services.AmplifyOperations.signOut
+import com.example.returnpals.services.Backend
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -121,6 +122,7 @@ fun DrawerContent1(navController: NavController, scaffoldState: ScaffoldState) {
         DrawerItem1(title = "Sign Out", isSelected = selectedItem == "Sign Out", onClick = {
             signOut {
                 Log.i("signOut",it.toString())
+                Backend.resetEmail()
                 selectedItem = "Sign Out"
                GlobalScope.launch(Dispatchers.Main) {  navigateToScreen(navController, MenuRoutes.Home, scaffoldState, scope)}
             }

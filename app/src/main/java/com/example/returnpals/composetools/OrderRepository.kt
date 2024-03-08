@@ -12,7 +12,7 @@ import java.util.Date
 
 //Data Class for everything needed in the repository
 data class OrderRepository(private val customerId : String,
-                           private var date : LocalDate = LocalDate.now(),
+                           private var date : String = LocalDate.now().toString(),
                            private var address : AddressItem = AddressItem(-1, "123 basic ave"),
                            private var status : String = "N/A",
                            private var hasImage : Boolean = false,
@@ -20,7 +20,7 @@ data class OrderRepository(private val customerId : String,
                            private var notes : JSONObject = JSONObject()
 )  {
     //Sets selected date
-    fun setDate(inDate : LocalDate){
+    fun setDate(inDate : String){
         date = inDate
     }
     //Sets their address
@@ -36,7 +36,7 @@ data class OrderRepository(private val customerId : String,
         return customerId;
     }
     //Gets Date
-    fun getDate() : LocalDate{
+    fun getDate() : String{
         return date;
     }
     //Gets Address
@@ -68,7 +68,7 @@ data class OrderRepository(private val customerId : String,
     val order : Orders
         get() = Orders.builder()
             .orderNumber("9")
-            .orderDate(date.toString())
+            .orderDate(date)
             .status(status)
             .orderDetails(notes.toString())
             .clientDetails("{\n \"Email\" : \"{$customerId}\"}")

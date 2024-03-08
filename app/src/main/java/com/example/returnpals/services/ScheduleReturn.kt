@@ -37,7 +37,7 @@ class ScheduleReturnViewModel(
     fun onSubmit() {
         val order = OrderRepository(
             Backend.getEmail(),
-            info.date,
+            info.date.toString(),
             AddressItem(1, info.address.toString()),
             "Submitted"
         )
