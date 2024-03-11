@@ -23,6 +23,7 @@ import androidx.navigation.NavController
 import com.amplifyframework.auth.result.AuthSignUpResult
 import com.amplifyframework.core.Amplify
 import com.example.returnpals.mainMenu.MenuRoutes
+import com.example.returnpals.services.Backend
 import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.services.UserRepository
 import kotlinx.coroutines.Dispatchers
@@ -52,6 +53,7 @@ fun ConfirmNumber(navController: NavController) {
 
     @Composable
     fun LoginScreen(viewModel:LoginViewModel, navController: NavController) {
+
         Box(modifier = Modifier.background(getBackGroundColor()).fillMaxSize()) {
             //This will switch between the guest login and user login
             if (viewModel.isGuest.value) {
@@ -68,7 +70,9 @@ fun ConfirmNumber(navController: NavController) {
                     pass = { viewModel.changePass(it) },
                     guest = { viewModel.switchGuestUser() },
                     reset = { /*TODO*/ },
-                    signin = {viewModel.logIn({ GlobalScope.launch(Dispatchers.Main) { go2(navController, MenuRoutes.HomeDash) } }) {
+                    signin = {viewModel.logIn({ GlobalScope.launch(Dispatchers.Main) { go2(navController, MenuRoutes.HomeDash) }
+                    Backend.accessEmail()
+                    }) {
                         viewModel.setFailLogInMessage(it.message!!)
                         if (it.message!!.contains("User not confirmed in the system."))
                             GlobalScope.launch(Dispatchers.Main) { go2(navController, MenuRoutes.ConfirmNumber) }
@@ -78,6 +82,7 @@ fun ConfirmNumber(navController: NavController) {
                     emailString = viewModel.getEmail(),
                     passString =  viewModel.password.value)
             }
+
         }
     }
 

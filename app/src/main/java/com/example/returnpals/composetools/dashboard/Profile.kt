@@ -2,6 +2,9 @@ package com.example.returnpals.composetools.dashboard
 
 import DashboardMenuScaffold
 import android.net.Uri
+
+import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -30,6 +33,7 @@ import com.example.returnpals.R
 import com.example.returnpals.composetools.pickup.PricingPlanText
 import com.example.returnpals.composetools.ProfileRepository
 import com.example.returnpals.email
+import com.example.returnpals.services.Backend
 
 @Composable
 fun Profile(navController: NavController) {
@@ -43,9 +47,8 @@ fun Profile(navController: NavController) {
 @Composable
 fun ProfileContent(){
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
-    var picUri : Uri? = null
-    var profile = ProfileRepository(email = email)
-    profile.getDataBase()
+    val profile = Backend.Profile
+
 
 
     Column(
@@ -56,9 +59,8 @@ fun ProfileContent(){
 
     )
     {
-        if(picUri == null) {
-            Image(painter = painterResource(R.drawable.returnpal_icon_500x500), contentDescription = "",)
-        }
+        Image(painter = painterResource(R.drawable.returnpal_icon_500x500), contentDescription = "",)
+
         Text(text = "Welcome, " + profile.getFirstName() + " " + profile.getLastName(),
             style = TextStyle(
                 fontSize = 30.sp,
@@ -94,6 +96,7 @@ fun ProfileContent(){
 
 
 }
+
 //Possibly unnecessary function
 fun getStartDate():String{
     //Backend Code

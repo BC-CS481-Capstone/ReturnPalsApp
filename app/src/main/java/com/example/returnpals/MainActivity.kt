@@ -16,16 +16,9 @@ var email : String = ""
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        try {
-            // Add these lines to add the AWSApiPlugin plugins
-            Amplify.addPlugin(AWSApiPlugin())
-            Amplify.configure(applicationContext)
 
-            Log.i("MyAmplifyApp", "Initialized Amplify")
-        } catch (error: AmplifyException) {
-            Log.e("MyAmplifyApp", "Could not initialize Amplify", error)
-        }
+        Backend.accessEmail()
+        super.onCreate(savedInstanceState)
         installSplashScreen()
         setContent {
             MainContent()

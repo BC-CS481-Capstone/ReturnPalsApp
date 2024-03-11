@@ -59,6 +59,7 @@ class LoginViewModel(): ViewModel() {
                 "Amplify Auth",
                 "Signed out successfully completed"
             )
+            Backend.resetEmail()
         }
     }
 
