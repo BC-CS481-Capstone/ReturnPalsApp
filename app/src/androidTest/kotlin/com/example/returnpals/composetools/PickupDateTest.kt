@@ -9,6 +9,7 @@ import org.junit.Rule
 import org.junit.Test
 import java.time.LocalDate
 import com.example.returnpals.composetools.ButtonManager.DateSelector
+import com.example.returnpals.composetools.pickup.PickupDateScreen
 
 /**
  * Test the [PickupDateScreen] composable.
@@ -69,7 +70,7 @@ class PickupDateTest {
             )
         }
 
-        val back = rule.onNodeWithText("Back")
+        val back = rule.onNodeWithText("Cancel")
         back.assertExists("Back button does not exist.")
         back.assertIsDisplayed()
 

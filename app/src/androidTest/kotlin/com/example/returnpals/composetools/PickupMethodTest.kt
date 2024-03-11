@@ -6,6 +6,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.example.returnpals.PickupMethod
+import com.example.returnpals.composetools.pickup.PickupMethodScreen
 import org.junit.Rule
 import org.junit.Test
 

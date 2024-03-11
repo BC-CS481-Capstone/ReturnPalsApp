@@ -5,9 +5,9 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.example.returnpals.IdManager
 import com.example.returnpals.PackageInfo
 import com.example.returnpals.PackageLabelType
+import com.example.returnpals.composetools.pickup.AddPackagesScreen
 import org.junit.Rule
 import org.junit.Test
 
