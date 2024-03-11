@@ -87,6 +87,7 @@ fun OrderTable(){
             }
             }
 
+
         items(1) {
             Log.i("Order", orderList.toString())
             orderList.forEach{
@@ -94,7 +95,7 @@ fun OrderTable(){
                 Row(){
                     TableCell(text = it.getStatus(), column1Weight)
                     TableCell(text = it.getDate().substring(0, 10), column2Weight)
-                    TableCell(text = it.getAddress().address, column3Weight)
+                    TableCell(text = it.getAddress(), column3Weight)
 
                 }
 

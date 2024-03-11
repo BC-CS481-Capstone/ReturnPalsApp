@@ -12,8 +12,10 @@ import java.util.Date
 
 //Data Class for everything needed in the repository
 data class OrderRepository(private val customerId : String,
+
                            private var date : String = LocalDate.now().toString(),
-                           private var address : AddressItem = AddressItem(-1, "123 basic ave"),
+                           private var address : String = "123 basic ave",
+
                            private var status : String = "N/A",
                            private var hasImage : Boolean = false,
                            private var imageFile : File? = null,
@@ -24,7 +26,7 @@ data class OrderRepository(private val customerId : String,
         date = inDate
     }
     //Sets their address
-    fun setAddress(inAddress : AddressItem){
+    fun setAddress(inAddress : String){
         address = inAddress;
     }
     //Sets the status
@@ -40,7 +42,7 @@ data class OrderRepository(private val customerId : String,
         return date;
     }
     //Gets Address
-    fun getAddress() : AddressItem{
+    fun getAddress() : String{
         return address
     }
     //Gets Status

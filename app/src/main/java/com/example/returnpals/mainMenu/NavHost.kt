@@ -11,17 +11,19 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.returnpals.composetools.AddPackagesScreen
+import com.example.returnpals.composetools.pickup.ConfirmPickup
+import com.example.returnpals.composetools.pickup.AddPackagesScreen
+import com.example.returnpals.composetools.pickup.PickupDateScreen
+import com.example.returnpals.composetools.pickup.PickupMethodScreen
+import com.example.returnpals.composetools.pickup.PricingScreen
+import com.example.returnpals.composetools.pickup.ThankYou
 import com.example.returnpals.composetools.ConfirmNumber
-import com.example.returnpals.composetools.ConfirmPickup
-import com.example.returnpals.composetools.PickupDateScreen
-import com.example.returnpals.composetools.PickupMethodScreen
-import com.example.returnpals.composetools.PricingScreen
-import com.example.returnpals.composetools.ThankYou
 import com.example.returnpals.composetools.dashboard.HomeDash
 import com.example.returnpals.composetools.dashboard.Orders
 import com.example.returnpals.composetools.dashboard.Profile
 import com.example.returnpals.composetools.dashboard.Settings
+import com.example.returnpals.composetools.pickup.SelectAddressScreen
+import com.example.returnpals.services.AddressesViewModel
 import com.example.returnpals.services.ScheduleReturnViewModel
 import java.util.Locale
 
@@ -63,66 +65,84 @@ fun AppNavigation(navController: NavController) {
             route = MenuRoutes.PickupProcess
         ) {
             composable("select_date") { entry ->
-                val vm = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
+                val pickupVM = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
                 PickupDateScreen(
-                    date = vm.date.value,
-                    onChangeDate = vm::onChangeDate,
-                    isValidDate = vm::isValidDate,
-                    onClickNext = { navController.navigate("select_method") },
+                    date = pickupVM.date.value,
+                    onChangeDate = pickupVM::onChangeDate,
+                    isValidDate = pickupVM::isValidDate,
+                    onClickNext = { navController.navigate("select_address") },
                     onClickBack = { navController.navigate(MenuRoutes.HomeDash) },
                 )
             }
             composable("select_address") { entry ->
-//                val viewModel = it.sharedViewModel<ScheduleReturnViewModel>(navController)
-//                val pickup = viewModel.pickup.observeAsState(PickupInfo())
+                val pickupVM = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
+                val addressesVM = entry.sharedViewModel<AddressesViewModel>(navController)
+                // TODO: retrieve addresses from user account
+                // TODO: send added addresses to user account
+                SelectAddressScreen(
+                    selectedAddressId = addressesVM.selectedId.value,
+                    addresses = addressesVM.addresses,
+                    onSelectAddress = { id ->
+                        addressesVM.onSelectAddress(id)
+                        addressesVM.selectedAddress?.let { pickupVM.onChangeAddress(it) }
+                    },
+                    onAddAddress = addressesVM::onAddAddress,
+                    onClickNext = { navController.navigate("select_method") },
+                    onClickBack = { navController.navigate(("select_date")) }
+                )
             }
             composable("select_method") { entry ->
-                val vm = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
+                val pickupVM = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
                 PickupMethodScreen(
-                    method = vm.method.value,
-                    onChangeMethod = vm::onChangeMethod,
+                    method = pickupVM.method.value,
+                    onChangeMethod = pickupVM::onChangeMethod,
                     onClickNext = { navController.navigate("select_pricing") },
-                    onClickBack = { navController.navigate("select_date") },
+                    onClickBack = { navController.navigate("select_address") },
                 )
             }
             composable("select_pricing") { entry ->
-                val vm = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
+                val pickupVM = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
                 PricingScreen(
-                    plan = vm.plan.value,
-                    onChangePlan = vm::onChangePlan,
+                    plan = pickupVM.plan.value,
+                    onChangePlan = pickupVM::onChangePlan,
                     onClickNext = { navController.navigate("add_labels") },
                     onClickBack = { navController.navigate("select_method") },
                 )
             }
             composable("add_labels") { entry ->
-                val vm = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
+                val pickupVM = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
                 AddPackagesScreen(
-                    packages = vm.packages.toMap(),
-                    onAddLabel = vm::onAddLabel,
-                    onRemoveLabel = vm::onRemoveLabel,
+                    packages = pickupVM.packages.toMap(),
+                    onAddLabel = pickupVM::onAddLabel,
+                    onRemoveLabel = pickupVM::onRemoveLabel,
                     onClickNext = { navController.navigate("confirm") },
                     onClickBack = { navController.navigate("select_pricing") },
                 )
             }
             composable("confirm") { entry ->
-                val vm = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
+                val pickupVM = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
                 ConfirmPickup().drawConfirmPickup(
-                    typeOfPickup = vm.method.value.toString(),
+                    typeOfPickup = pickupVM.method.value.toString(),
 //                    TODO: change type of pickupDate parameter to LocalDate
 //                       OR change type of PackageInfo.date to Calendar
 //                    TODO: show pricing only if BRONZE plan is selected
                     pickUpAddress = Address(Locale.CANADA),
-                    nextButton = { navController.navigate("thanks") },
+                    nextButton = {
+                        pickupVM.onSubmit()
+                        navController.navigate("thanks") },
                     backButton = { navController.navigate("add_labels") },
                     promoButton = {}
                 )
             }
             composable("thanks") { entry ->
-                val vm = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
+                val pickupVM = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
                 ThankYou().drawThankYouUI(
                     dashBoardButton = {
-                        vm.onSubmit()
-                        navController.navigate(MenuRoutes.HomeDash)
+                        navController.navigate("dashboard home") {
+                            popUpTo(MenuRoutes.PickupProcess) {
+                                inclusive = true
+                            }
+                        }
                     }
                 )
             }

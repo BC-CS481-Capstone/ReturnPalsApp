@@ -10,8 +10,8 @@ import androidx.navigation.compose.rememberNavController
 import com.amplifyframework.AmplifyException
 import com.amplifyframework.api.aws.AWSApiPlugin
 import com.amplifyframework.core.Amplify
+import com.example.compose.ReturnPalTheme
 import com.example.returnpals.mainMenu.AppNavigation
-import com.example.returnpals.services.Backend
 var email : String = ""
 
 class MainActivity : ComponentActivity() {
@@ -29,6 +29,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainContent() {
     val navController = rememberNavController()
-
-    AppNavigation(navController = navController)
+    ReturnPalTheme {
+        AppNavigation(navController = navController)
+    }
 }

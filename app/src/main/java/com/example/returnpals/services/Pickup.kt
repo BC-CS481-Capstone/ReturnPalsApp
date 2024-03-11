@@ -1,6 +1,5 @@
 package com.example.returnpals.services
 
-import android.location.Address
 import android.util.Log
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -13,7 +12,7 @@ import java.time.LocalDate
 
 data class PickupInfo(
     var date: LocalDate = LocalDate.now(),
-    var address: Address? = null,
+    var address: String? = null,
     var method: PickupMethod? = null,
     var plan: PricingPlan? = null,
     var packages: List<PackageInfo> = listOf()
@@ -21,7 +20,7 @@ data class PickupInfo(
 
 open class PickupViewModel(
     date: LocalDate = LocalDate.now(),
-    address: Address? = null,
+    address: String? = null,
     method: PickupMethod? = null,
     pricing: PricingPlan? = null,
     packages: List<PackageInfo> = listOf()
@@ -45,11 +44,7 @@ open class PickupViewModel(
     val address = mutableStateOf(address)
     val method = mutableStateOf(method)
     val plan = mutableStateOf(pricing)
-    val packages = mutableStateMapOf(
-        *packages.associateBy { _packageIdManager.allot() }
-            .toList()
-            .toTypedArray()
-    )
+    val packages = mutableStateMapOf(*_packageIdManager.allot(packages).toTypedArray())
 
     /**
      * Constructs a PickupInfo object from mutable state.
@@ -68,7 +63,7 @@ open class PickupViewModel(
         Log.println(Log.INFO, "PickupViewModel::onChangeDate", "Updated value: ${date.value}")
     }
 
-    fun onChangeAddress(value: Address) {
+    fun onChangeAddress(value: String) {
         address.value = value
         Log.println(Log.INFO, "PickupViewModel::onChangeAddress", "Updated value: ${address.value}")
     }

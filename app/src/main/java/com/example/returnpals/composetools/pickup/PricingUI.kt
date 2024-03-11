@@ -1,4 +1,4 @@
-package com.example.returnpals.composetools
+package com.example.returnpals.composetools.pickup
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import com.example.returnpals.PricingPlan
+import com.example.returnpals.composetools.ScheduleReturnScaffold
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.example.returnpals.PackageInfo
 import com.example.returnpals.PackageLabelType
-import com.example.returnpals.composetools.AddPackagesScreen
+import com.example.returnpals.composetools.pickup.AddPackagesScreen
 
 @Composable
 fun Label(navController: NavController) {

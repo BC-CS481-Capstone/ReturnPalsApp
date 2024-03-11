@@ -1,4 +1,4 @@
-package com.example.returnpals.composetools
+package com.example.returnpals.composetools.pickup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -20,7 +20,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -37,13 +36,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.compose.ReturnPalTheme
 import com.example.returnpals.PackageInfo
 import com.example.returnpals.PackageLabelType
+import com.example.returnpals.composetools.ButtonManager
+import com.example.returnpals.composetools.IconManager
+import com.example.returnpals.composetools.ScheduleReturnScaffold
+import com.example.returnpals.composetools.getBackGroundColor
+import com.example.returnpals.composetools.getBlueIconColor
+import com.example.returnpals.composetools.getConfig
 
 // TODO: RemoveLabelButton
 // TODO: EditDescriptionButton
 // TODO: put icons in add-label buttons
-// TODO: implement pop up ui for adding label
+// TODO: implement upload photo functionality
 
 /////////////////////////////////////////////////////////////////////////////
 // PUBLIC API
@@ -81,13 +87,13 @@ fun AddPackagesScreen(
                 fontWeight = FontWeight.Bold,
                 fontSize = 30.sp,
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.secondary,
+                color = ReturnPalTheme.colorScheme.secondary,
             )
             Text(
                 text = "Upload a label and we'll handle the label printing and repackaging.",
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.secondary,
+                color = ReturnPalTheme.colorScheme.secondary,
             )
             Row(
                 modifier = Modifier.padding(vertical=15.dp),
@@ -144,13 +150,17 @@ fun AddLabelContent(xButton:()->Unit,
                     addButton:(String, String)->Unit) {
     val config = getConfig()
     Column(
-        Modifier.fillMaxSize()
-            .padding(6.dp,50.dp)
+        Modifier
+            .fillMaxSize()
+            .padding(6.dp, 50.dp)
             .background(color = getBackGroundColor(), shape = RoundedCornerShape(10)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween)
     {
-        Row(Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.End) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(20.dp), horizontalArrangement = Arrangement.End) {
             Text("X",
                 Modifier.clickable(onClick = xButton),
                 color = getBlueIconColor(),
@@ -171,10 +181,15 @@ fun AddLabelContent(xButton:()->Unit,
 
 @Composable
 fun UploadReturnContent() {
-    Column(Modifier.fillMaxWidth().padding(5.dp).height(230.dp),horizontalAlignment = Alignment.Start){
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(5.dp)
+            .height(230.dp),horizontalAlignment = Alignment.Start){
         Text("Upload Return Label")
         Column(
-            Modifier.fillMaxSize()
+            Modifier
+                .fillMaxSize()
                 .background(color = Color(0x0F008BE7), shape = RoundedCornerShape(15))
                 //.border() // TODO add border dashed line
                 ,
@@ -206,16 +221,18 @@ fun DescriptionContent() {
 @Preview(showBackground = true)
 @Composable
 private fun PackagesPreview() {
-    AddPackagesScreen(
-        packages = mapOf(
-            0 to PackageInfo("Nordstrom.png", PackageLabelType.DIGITAL),
-            (-1) to PackageInfo("JCPenny.png", PackageLabelType.PHYSICAL)
-        ),
-        onAddLabel = {},
-        onRemoveLabel = {},
-        onClickNext = {},
-        onClickBack = {},
-    )
+    ReturnPalTheme {
+        AddPackagesScreen(
+            packages = mapOf(
+                0 to PackageInfo("Nordstrom.png", PackageLabelType.DIGITAL),
+                (-1) to PackageInfo("JCPenny.png", PackageLabelType.PHYSICAL)
+            ),
+            onAddLabel = {},
+            onRemoveLabel = {},
+            onClickNext = {},
+            onClickBack = {},
+        )
+    }
 }
 
 @Composable
@@ -297,7 +314,7 @@ private fun PackagesTable(
                 )
             }
             Divider(
-                color = MaterialTheme.colorScheme.secondary,
+                color = ReturnPalTheme.colorScheme.secondary,
             )
         }
     }
@@ -313,7 +330,7 @@ private fun HeaderCell(
     Box(
         modifier = modifier
             .border(width = 1.dp, color = Color.White)
-            .background(MaterialTheme.colorScheme.secondary),
+            .background(ReturnPalTheme.colorScheme.secondary),
         contentAlignment = textAlignment
     ) {
         Text(
@@ -331,7 +348,7 @@ private fun HeaderCell(
 private fun Cell(
     text: String,
     modifier: Modifier = Modifier,
-    textColor: Color = MaterialTheme.colorScheme.secondary,
+    textColor: Color = ReturnPalTheme.colorScheme.secondary,
     textAlignment: Alignment = Alignment.Center,
 ) {
     Box(

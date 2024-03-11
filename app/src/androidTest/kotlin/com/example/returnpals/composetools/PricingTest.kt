@@ -7,6 +7,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.example.returnpals.PricingPlan
+import com.example.returnpals.composetools.pickup.PricingScreen
 import org.junit.Rule
 import org.junit.Test
 

@@ -8,7 +8,7 @@ fun goto(
     controller: NavController,
     route: String,
 ) {
-    controller.navigate(MenuRoutes.SelectAddress) {
+    controller.navigate(route) {
         // Clear all the back stack up to the start destination and save state
         popUpTo(controller.graph.findStartDestination().id) {
             saveState = true

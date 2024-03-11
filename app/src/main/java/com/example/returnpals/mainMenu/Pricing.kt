@@ -9,8 +9,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.returnpals.PricingPlan
-import com.example.returnpals.composetools.PricingOptions
-import com.example.returnpals.composetools.PricingViewModel
+import com.example.returnpals.composetools.pickup.PricingOptions
+import com.example.returnpals.composetools.pickup.PricingViewModel
 
 
 @Composable

@@ -2,7 +2,7 @@ package com.example.returnpals.services
 
 import android.util.Log
 import androidx.navigation.NavController
-import com.example.returnpals.composetools.AddressItem
+
 import com.example.returnpals.composetools.OrderRepository
 import java.time.LocalDate
 
@@ -38,7 +38,7 @@ class ScheduleReturnViewModel(
         val order = OrderRepository(
             Backend.getEmail(),
             info.date.toString(),
-            AddressItem(1, info.address.toString()),
+            info.address.toString(),
             "Submitted"
         )
         order.setNotes("address", info.address.toString())

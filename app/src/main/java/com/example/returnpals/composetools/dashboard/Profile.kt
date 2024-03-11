@@ -2,6 +2,7 @@ package com.example.returnpals.composetools.dashboard
 
 import DashboardMenuScaffold
 import android.net.Uri
+
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -29,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.returnpals.PricingPlan
 import com.example.returnpals.R
-import com.example.returnpals.composetools.PricingPlanText
+import com.example.returnpals.composetools.pickup.PricingPlanText
 import com.example.returnpals.composetools.ProfileRepository
 import com.example.returnpals.email
 import com.example.returnpals.services.Backend
