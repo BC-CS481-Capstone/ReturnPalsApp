@@ -1,5 +1,7 @@
 package com.example.returnpals.composetools
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,53 +38,71 @@ import kotlinx.coroutines.launch
 private var confirmviewMd = ConfirmNumberViewModel()
 @Composable
 fun ConfirmNumber(navController: NavController) {
-    ConfirmNumberContent(emailToConfirm = confirmviewMd.getEmail(),message= confirmviewMd.getMessage(),submitNumber = confirmviewMd.code.value, onSubmitNumberChange = {confirmviewMd.setCode(it)}) {
-        confirmviewMd.confirmNumber {
-            GlobalScope.launch(Dispatchers.Main) {go2(navController,MenuRoutes.Register)}
+    Box(modifier = Modifier.background(getBackGroundColor()).fillMaxSize()) {
+        ConfirmNumberContent(
+            emailToConfirm = confirmviewMd.getEmail(),
+            message = confirmviewMd.getMessage(),
+            submitNumber = confirmviewMd.code.value,
+            onSubmitNumberChange = { confirmviewMd.setCode(it) }) {
+            confirmviewMd.confirmNumber {
+                GlobalScope.launch(Dispatchers.Main) { go2(navController, MenuRoutes.Register) }
+            }
         }
     }
 }
 
     @Composable
     fun LoginScreen(viewModel:LoginViewModel, navController: NavController) {
-        //This will switch between the guest login and user login
-        if (viewModel.isGuest.value) {
-            GuestLoginUIContent(
-                userSignIn = { viewModel.switchGuestUser() },
-                signin = { /*TODO* login(user,pass)*/ },
-                signup = { viewModel.isGuest.value = false },
-                email = { viewModel.changeEmail(it) },
-                emailString = viewModel.getEmail())
-        } else {
-            LoginUIContent(
-                failMessage = viewModel.failLogInMessage.value,
-                user = {  viewModel.changeEmail(it)},
-                pass = { viewModel.changePass(it) },
-                guest = { viewModel.switchGuestUser() },
-                reset = { /*TODO*/ },
-                signin = {viewModel.logIn({
-                    GlobalScope.launch(Dispatchers.Main) { go2(navController, MenuRoutes.HomeDash) }
+
+        Box(modifier = Modifier.background(getBackGroundColor()).fillMaxSize()) {
+            //This will switch between the guest login and user login
+            if (viewModel.isGuest.value) {
+                GuestLoginUIContent(
+                    userSignIn = { viewModel.switchGuestUser() },
+                    signin = { /*TODO* login(user,pass)*/ },
+                    signup = { viewModel.isGuest.value = false },
+                    email = { viewModel.changeEmail(it) },
+                    emailString = viewModel.getEmail())
+            } else {
+                LoginUIContent(
+                    failMessage = viewModel.failLogInMessage.value,
+                    user = {  viewModel.changeEmail(it)},
+                    pass = { viewModel.changePass(it) },
+                    guest = { viewModel.switchGuestUser() },
+                    reset = { /*TODO*/ },
+                    signin = {viewModel.logIn({ GlobalScope.launch(Dispatchers.Main) { go2(navController, MenuRoutes.HomeDash) }
                     Backend.accessEmail()
-                }) {
-                    viewModel.setFailLogInMessage(it.message!!)
-                    if (it.message!!.contains("User not confirmed in the system."))
-                        GlobalScope.launch(Dispatchers.Main) { go2(navController, MenuRoutes.ConfirmNumber) }
-                } },
-                signup = {viewModel.signUp({ GlobalScope.launch(Dispatchers.Main) {go2(navController, MenuRoutes.ConfirmNumber) } })
-                },
-                emailString = viewModel.getEmail(),
-                passString =  viewModel.password.value)
+                    }) {
+                        viewModel.setFailLogInMessage(it.message!!)
+                        if (it.message!!.contains("User not confirmed in the system."))
+                            GlobalScope.launch(Dispatchers.Main) { go2(navController, MenuRoutes.ConfirmNumber) }
+                    } },
+                    signup = {viewModel.signUp({ GlobalScope.launch(Dispatchers.Main) {go2(navController, MenuRoutes.ConfirmNumber) } })
+                    },
+                    emailString = viewModel.getEmail(),
+                    passString =  viewModel.password.value)
+            }
+
         }
     }
 
     @Composable
     fun ConfirmNumberContent(emailToConfirm:String,message:String,submitNumber:String,onSubmitNumberChange:(String)->Unit,verifyButton:()->Unit) {
         //Promt a user for confirm number with space to enter and button to confirm
-        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceBetween,modifier = Modifier.fillMaxSize()) {
-            Text(emailToConfirm)
+        val config = getConfig()
+        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceBetween
+            //,modifier = Modifier.fillMaxSize()
+
+        ) {
+            IconManager().getReturnPalNameIcon(Modifier.requiredWidth(config.screenWidthDp.dp))
+            Text("Please enter the confirmation number sent to,\n"+emailToConfirm)
             OutlinedTextField(value=submitNumber, onValueChange = onSubmitNumberChange)
             Text(message)
-            Button(onClick = verifyButton,colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008BE7), contentColor = Color.White)) {
+            Button(onClick = verifyButton,
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008BE7),
+                    contentColor = Color.White)
+                //,modifier = Modifier.padding(bottom=300.dp)
+            ) {
                 Text("Verify")
             }
         }
@@ -189,7 +209,7 @@ private class ConfirmNumberViewModel(): ViewModel() {
         Amplify.Auth.confirmSignUp(
             getEmail(), code.value,
             onSuccess,
-            { setMessage(it.toString()) }
+            { setMessage(it.message.toString()) }
         )
     }
     fun setCode(codeValue:String) {
