@@ -100,7 +100,7 @@ class ConfirmPickupTest {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(priceArray = prices,nextButton = {}, backButton = {}) {}
         }
-        rule.onNodeWithText("Visa ending 5555", useUnmergedTree = true).assertIsDisplayed()
+        rule.onNodeWithText("Visa ending 5555").assertExists().assertIsDisplayed()
     }
     @Test
     fun priceChecks() {
@@ -108,7 +108,7 @@ class ConfirmPickupTest {
         rule.setContent {
             ConfirmPickup().drawConfirmPickup(priceArray = prices,nextButton = {}, backButton = {}) {}
         }
-        rule.onNodeWithText("Total 12", useUnmergedTree = true).assertIsDisplayed()
+        rule.onNodeWithText("Total 12").assertExists().assertIsDisplayed()
     }
     @Test
     fun nextButton() {
