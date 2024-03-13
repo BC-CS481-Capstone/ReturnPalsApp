@@ -42,7 +42,7 @@ data class ProfileRepository(
                         try {
                             memberShipType = user.subscription
                         } catch(except: Exception){
-                            throw Exception(except)
+                            memberShipType = "none"
                         }
                     }
                 }
