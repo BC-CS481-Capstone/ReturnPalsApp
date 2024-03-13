@@ -45,7 +45,7 @@ fun Profile(navController: NavController) {
 
 @Preview
 @Composable
-fun ProfileContent(){
+fun ProfileContent() {
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
     val profile = Backend.Profile
 
@@ -59,43 +59,76 @@ fun ProfileContent(){
 
     )
     {
-        Image(painter = painterResource(R.drawable.returnpal_icon_500x500), contentDescription = "",)
+        Image(
+            painter = painterResource(R.drawable.returnpal_icon_500x500),
+            contentDescription = "",
+        )
 
-        Text(text = "Welcome, " + profile.getFirstName() + " " + profile.getLastName(),
+        Text(
+            text = "Welcome, " + profile.getFirstName() + " " + profile.getLastName(),
             style = TextStyle(
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-                ,
+                textAlign = TextAlign.Center,
 
                 )
 
-            )
-            Text(
+        )
+        Text(
             text = "Your Plan:",
             style = TextStyle(
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-                ,
+                textAlign = TextAlign.Center,
 
-            )
+                )
         )
         //Code to detect what profile plan is being used goes here
-        PricingPlanText(PricingPlan.SILVER,
-            Modifier
-                .padding(15.dp)
-                .scale(1.5F))
-        Spacer(Modifier.padding(15.dp))
-        Text(text = "Plan Expires On:", style =TextStyle(fontSize = 20.sp))
-        Text(text = profile.getExpireDate().toString())
-        Spacer(Modifier.padding(15.dp))
-        CancelPlanButton()
+        val plan = profile.getType()
+        when (plan) {
+            "SILVER" -> PricingPlanText(
+                PricingPlan.SILVER,
+                Modifier
+                    .padding(15.dp)
+                    .scale(1.5F)
+            )
 
+            "BRONZE" -> PricingPlanText(
+                PricingPlan.BRONZE,
+                Modifier
+                    .padding(15.dp)
+                    .scale(1.5F)
+            )
+
+            "GOLD" -> PricingPlanText(
+                PricingPlan.GOLD,
+                Modifier
+                    .padding(15.dp)
+                    .scale(1.5F)
+            )
+
+            "PLATINUM" -> PricingPlanText(
+                PricingPlan.PLATINUM,
+                Modifier
+                    .padding(15.dp)
+                    .scale(1.5F)
+            )
+
+        }
+
+
+
+      Spacer(Modifier.padding(15.dp))
+      Text(text = "Plan Expires On:", style = TextStyle(fontSize = 20.sp))
+      Text(text = profile.getExpireDate().toString())
+      Spacer(Modifier.padding(15.dp))
+      CancelPlanButton()
     }
 
-
 }
+
+
+
 
 //Possibly unnecessary function
 fun getStartDate():String{
