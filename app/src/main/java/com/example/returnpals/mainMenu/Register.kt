@@ -36,12 +36,12 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun Register(navController: NavController) {
-    RegisterContent() {GlobalScope.launch(Dispatchers.Main){go2(navController,MenuRoutes.SignIn)} }
+    RegisterContent(navController = navController)
 }
 
 
 @Composable
-fun RegisterContent(onSubmitSuccess:()->Unit){
+fun RegisterContent(navController: NavController){
     val customColor = Color(0xFFE1F6FF)
 
     LazyColumn(
@@ -53,7 +53,7 @@ fun RegisterContent(onSubmitSuccess:()->Unit){
     ){
         
         item { RegisterTitle() }
-        item { Form(onSubmitSuccess = onSubmitSuccess ) }
+        item { Form(navController = navController) }
 
 
     }
@@ -72,7 +72,7 @@ fun RegisterTitle() {
 }
 
 @Composable
-fun Form(viewModel: RegisterViewModel = viewModel(), onSubmitSuccess:()->Unit) {
+fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel()) {
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
@@ -130,13 +130,15 @@ fun Form(viewModel: RegisterViewModel = viewModel(), onSubmitSuccess:()->Unit) {
         Button(
             onClick = {
                 viewModel.submitRegistration(firstName, lastName, email,
-                    listOf(address), phoneNumber,onSubmitSuccess)
+                    listOf(address), phoneNumber)
                 // Reset state variables after submission
                 firstName = ""
                 lastName = ""
                 address = ""
                 email = ""
                 phoneNumber = ""
+
+                navController.navigate("sign in")
 
             },
             colors = ButtonDefaults.buttonColors(
