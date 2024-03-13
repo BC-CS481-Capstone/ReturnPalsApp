@@ -2,14 +2,12 @@ package com.example.returnpals.composetools
 
 
 import android.util.Log
-import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.api.graphql.model.ModelQuery
 import com.amplifyframework.core.Amplify
-import com.amplifyframework.datastore.generated.model.User
 import com.amplifyframework.datastore.generated.model.UsersMongoDb
 import com.example.returnpals.services.Backend
-
 import java.time.LocalDate
+
 //For this, email on login should be stored in Profile Repository.
 
 data class ProfileRepository(
