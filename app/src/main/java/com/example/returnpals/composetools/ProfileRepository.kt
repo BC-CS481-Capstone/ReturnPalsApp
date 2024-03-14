@@ -27,22 +27,23 @@ data class ProfileRepository(
                 if(response.hasData()) {
                     response.data.forEach { user ->
                         Log.i("ProfileRepo", user.firstName)
-                        try {
-                            nameLast = user.lastName
+                        nameLast = try {
+                            user.lastName
                         }   catch(except: Exception){
-                            throw Exception(except)
+                            "Name"
                         }
 
 
-                        try {
-                            nameFirst = user.firstName
+                        nameFirst = try {
+                            user.firstName
                         }   catch(except: Exception){
-                            throw Exception(except)
+                            "User"
                         }
-                        try {
-                            memberShipType = user.subscription
+                        memberShipType = try {
+                            user.subscription
                         } catch(except: Exception){
-                            memberShipType = "none"
+
+                            "none"
                         }
                     }
                 }

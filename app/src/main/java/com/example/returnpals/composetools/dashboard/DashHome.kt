@@ -31,6 +31,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.R
 import com.example.returnpals.mainMenu.MenuRoutes
+import com.example.returnpals.services.Backend
 
 
 @Composable
@@ -64,7 +65,7 @@ fun Welcome() {
     ){
 
         Text(
-            text = "Welcome Back, user", // Needs to get user's name
+            text = "Welcome Back, " + Backend.Profile.getFirstName(), // Needs to get user's name
             style = TextStyle(
                 color = Color.Black,
                 fontSize = 30.sp,
