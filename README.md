@@ -3,9 +3,10 @@
 ## Table of Contents
 - [Introduction](#introduction)
 - [Features](#features)
-- [Design Details](#design-details)
-- [Installation](#installation)
-- [Usage](#usage)
+- [Backend Design Details](#frontend-design-details)
+- [Frontend Design Details](#backend-design-details)
+- [Contribution](#contribution)
+- [License](#license)
 
 ## Introduction
 
@@ -52,7 +53,7 @@ We are using DynamoDB, Cognito, and S3 buckets behind the Amplify API.
 
 ![AWS services.png](assets%2Fimages%2FAWS%20services.png)
 
-## Contributing
+## Contribution
 
 1. Download the latest version of Android Studio.
 2. Clone the remote repository onto your device:  `git pull https://github.com/BC-CS481-Capstone/ReturnPalsApp`
