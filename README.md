@@ -73,3 +73,5 @@ We are always looking for improvements to our UI.
 
 ## License
 TODO *Specify the license under which your project is distributed. For example, MIT License, Apache License, etc.*
+
+Return Pal has not specified a license for this poject yet.
