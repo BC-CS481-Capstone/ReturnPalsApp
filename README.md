@@ -3,8 +3,8 @@
 ## Table of Contents
 - [Introduction](#introduction)
 - [Features](#features)
-- [Backend Design Details](#frontend-design-details)
-- [Frontend Design Details](#backend-design-details)
+- [Frontend Design Details](#frontend-design-details)
+- [Backend Design Details](#backend-design-details)
 - [Contribution](#contribution)
 - [License](#license)
 
@@ -58,7 +58,7 @@ We are using DynamoDB, Cognito, and S3 buckets behind the Amplify API.
 1. Download the latest version of Android Studio.
 2. Clone the remote repository onto your device:  `git pull https://github.com/BC-CS481-Capstone/ReturnPalsApp`
 3. Create a development branch:  `git checkout -b <your_branch_name>`
-4. Save the changes made to your branch:  `git add <filename>` && `git commit -m "did a thing"`
+4. Save the changes made to your branch:  `git add <filename>` and `git commit -m "did a thing"`
 5. Upload changes to the remote repository:  `git push --set-upstream origin master`
 6. Make a pull request.
 7. Wait for feedback.
