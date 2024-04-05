@@ -51,7 +51,11 @@ We are using AWS Amplify to host our user pools and data tables. AWS provides us
 
 We are using DynamoDB, Cognito, and S3 buckets behind the Amplify API. 
 
-![AWS services.png](assets%2Fimages%2FAWS%20services.png)
+![image](assets/images/aws-services.png)
+
+### Database
+
+![image](assets/images/db.png)
 
 ## Contribution
 
