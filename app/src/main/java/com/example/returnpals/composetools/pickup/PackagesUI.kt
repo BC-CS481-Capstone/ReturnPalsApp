@@ -9,14 +9,18 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -47,6 +51,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.core.util.toAndroidPair
 import coil.compose.AsyncImage
 import com.example.compose.ReturnPalTheme
 import com.example.returnpals.PackageInfo
@@ -241,7 +246,7 @@ private fun UploadLabelContent(
             .height(230.dp),horizontalAlignment = Alignment.Start
     ) {
 //        Text("Upload Return Label")
-        val borderColor = ReturnPalTheme.colorScheme.primary;
+        val borderColor = ReturnPalTheme.colorScheme.primary
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -270,7 +275,7 @@ private fun UploadLabelContent(
                 AsyncImage(
                     model = label,
                     contentDescription = null,
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Inside,
                 )
             }
         }
@@ -331,6 +336,7 @@ private fun PackagesTable(
     horizontal: Alignment.Horizontal = Alignment.CenterHorizontally,
     vertical: Arrangement.Vertical = Arrangement.Top
 ) {
+    val columnWeights = floatArrayOf(1.0f, 0.9f, 1.4f)
     LazyColumn(
         modifier = modifier,
         horizontalAlignment = horizontal,
@@ -340,32 +346,50 @@ private fun PackagesTable(
         this.item {
             Row {
                 HeaderCell(
-                    modifier = Modifier.weight(1.6f),
-                    text = "Attachment",
+                    modifier = Modifier.weight(columnWeights[0]),
+                    text = "Label",
                 )
                 HeaderCell(
-                    modifier = Modifier.weight(1.0f),
-                    text = "Label Type",
+                    modifier = Modifier.weight(columnWeights[1]),
+                    text = "Type",
+                )
+                HeaderCell(
+                    modifier = Modifier.weight(columnWeights[2]),
+                    text = "Description",
                 )
             }
         }
-        // DATA ROWS
+        // PACKAGES:
         this.items(
             items = packages.toList(),
             key = { it.first }
         ) {
+            val packageInfo = it.second
             Row(
-                Modifier.clickable(onClick = { onClickItem(it.first, it.second) })
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.requiredHeight(60.dp)
+                    .clickable(onClick = { onClickItem(it.first, it.second) })
             ) {
-                Cell(
-                    text = if (it.second.label.path == null) ""
-                        else getFilename(it.second.label.path!!),
-                    modifier = Modifier.weight(1.6f),
-                )
-                Cell(
-                    text = it.second.labelType.toString(),
-                    modifier = Modifier.weight(1.0f),
-                )
+                Cell( // Label
+                    modifier = Modifier.weight(columnWeights[0]).fillMaxSize(),
+                ) {
+                    AsyncImage(
+                        model = packageInfo.label,
+                        contentDescription = null,
+                        alignment = Alignment.Center,
+                        contentScale = ContentScale.Crop,
+                    )
+                }
+                Cell( // Label Type
+                    modifier = Modifier.weight(columnWeights[1]),
+                ) {
+                    CellText(packageInfo.labelType.toString())
+                }
+                Cell( // Description
+                    modifier = Modifier.weight(columnWeights[2]),
+                ) {
+                    packageInfo.description?.let { text -> CellText(text) }
+                }
             }
             Divider(
                 color = ReturnPalTheme.colorScheme.secondary,
@@ -380,17 +404,17 @@ private fun HeaderCell(
     modifier: Modifier = Modifier,
     textColor: Color = Color.White,
     textAlignment: Alignment = Alignment.Center,
+    padding: PaddingValues = PaddingValues(10.dp, 5.dp),
 ) {
     Box(
         modifier = modifier
             .border(width = 1.dp, color = Color.White)
-            .background(ReturnPalTheme.colorScheme.secondary),
+            .background(ReturnPalTheme.colorScheme.secondary)
+            .padding(padding),
         contentAlignment = textAlignment
     ) {
         Text(
             text = text,
-            modifier = Modifier
-                .padding(10.dp, 5.dp),
             color = textColor,
             overflow = TextOverflow.Ellipsis,
             softWrap = false,
@@ -400,22 +424,32 @@ private fun HeaderCell(
 
 @Composable
 private fun Cell(
-    text: String,
     modifier: Modifier = Modifier,
-    textColor: Color = ReturnPalTheme.colorScheme.secondary,
-    textAlignment: Alignment = Alignment.Center,
+    alignment: Alignment = Alignment.Center,
+    padding: PaddingValues = PaddingValues(10.dp, 5.dp),
+    content: @Composable BoxScope.() -> Unit
 ) {
     Box(
+        modifier = modifier.padding(padding),
+        contentAlignment = alignment,
+        propagateMinConstraints = true,
+        content = content
+    )
+}
+
+@Composable
+private fun CellText(
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color = ReturnPalTheme.colorScheme.secondary
+) {
+    Text(
+        text = text,
+        fontSize = 14.sp,
+        textAlign = TextAlign.Center,
         modifier = modifier,
-        contentAlignment = textAlignment
-    ) {
-        Text(
-            text = text,
-            modifier = Modifier
-                .padding(10.dp, 5.dp),
-            color = textColor,
-            overflow = TextOverflow.Ellipsis,
-            softWrap = false,
-        )
-    }
+        color = color,
+        overflow = TextOverflow.Ellipsis,
+        softWrap = false,
+    )
 }
