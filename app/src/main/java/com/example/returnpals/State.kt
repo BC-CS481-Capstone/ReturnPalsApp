@@ -1,6 +1,7 @@
 package com.example.returnpals
 
 import android.location.Address
+import android.net.Uri
 import java.time.LocalDate
 
 // TODO: develop backend
@@ -42,7 +43,7 @@ enum class PackageLabelType {
 }
 
 data class PackageInfo(
-    val label: String, // label is a filename
+    val label: Uri, // label is a filename
     val labelType: PackageLabelType,
     var description: String? = null, // additional info provided by user
 )

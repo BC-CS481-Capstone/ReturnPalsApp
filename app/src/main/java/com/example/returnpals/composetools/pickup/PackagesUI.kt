@@ -1,5 +1,9 @@
 package com.example.returnpals.composetools.pickup
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -20,15 +24,22 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -36,15 +47,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import coil.compose.AsyncImage
 import com.example.compose.ReturnPalTheme
 import com.example.returnpals.PackageInfo
 import com.example.returnpals.PackageLabelType
-import com.example.returnpals.composetools.ButtonManager
 import com.example.returnpals.composetools.IconManager
 import com.example.returnpals.composetools.ScheduleReturnScaffold
 import com.example.returnpals.composetools.getBackGroundColor
-import com.example.returnpals.composetools.getBlueIconColor
-import com.example.returnpals.composetools.getConfig
 
 // TODO: RemoveLabelButton
 // TODO: EditDescriptionButton
@@ -55,13 +64,14 @@ import com.example.returnpals.composetools.getConfig
 // PUBLIC API
 ////////////////////
 
+@Preview
 @Composable
 fun AddPackagesScreen(
-    packages: Map<Int, PackageInfo>,
-    onAddLabel: (PackageInfo) -> Unit,
-    onRemoveLabel: (Int) -> Unit,
-    onClickNext: () -> Unit,
-    onClickBack: () -> Unit,
+    packages: Map<Int, PackageInfo> = mapOf(),
+    onAddLabel: (PackageInfo) -> Unit = {},
+    onRemoveLabel: (Int) -> Unit = {},
+    onClickNext: () -> Unit = {},
+    onClickBack: () -> Unit = {},
 ) {
     val showDialogue: MutableState<Boolean> = remember { mutableStateOf(false) }
     val dialogueType: MutableState<PackageLabelType?> = remember { mutableStateOf(null) }
@@ -145,93 +155,125 @@ fun AddPackagesScreen(
     }
 }
 
-@Composable
-fun AddLabelContent(xButton:()->Unit,
-                    addButton:(String, String)->Unit) {
-    val config = getConfig()
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(6.dp, 50.dp)
-            .background(color = getBackGroundColor(), shape = RoundedCornerShape(10)),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween)
-    {
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .padding(20.dp), horizontalArrangement = Arrangement.End) {
-            Text("X",
-                Modifier.clickable(onClick = xButton),
-                color = getBlueIconColor(),
-                fontWeight = FontWeight.Bold, fontSize = 16.sp)
-        }
-
-        Text("Add Digital Label",
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF052A42))
-        UploadReturnContent()
-        DescriptionContent()
-        ButtonManager.NextButton(
-            text = "Add Package",
-            onClick = { addButton("filename", "description") }
-        )
-    }
-}
-
-@Composable
-fun UploadReturnContent() {
-    Column(
-        Modifier
-            .fillMaxWidth()
-            .padding(5.dp)
-            .height(230.dp),horizontalAlignment = Alignment.Start){
-        Text("Upload Return Label")
-        Column(
-            Modifier
-                .fillMaxSize()
-                .background(color = Color(0x0F008BE7), shape = RoundedCornerShape(15))
-                //.border() // TODO add border dashed line
-                ,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        )
-        {
-            IconManager().getFileIcon(modifier = Modifier.size(width=100.dp,height=100.dp))
-            Text(" Drag label here or browse files ") //TODO Add composable string to change browse files color to blue
-        }
-    }
-}
-
-@Composable
-fun DescriptionContent() {
-    Column(horizontalAlignment = Alignment.Start){
-        Text("Description")
-        TextField(value = "Label the item(s) inside: i.e 'laptop covers'",
-            onValueChange = { },
-            Modifier.height(100.dp)
-            )
-    }
+fun getFilename(filepath: String): String {
+    val i = filepath.lastIndexOf('/')
+    return if (i == -1) ""
+        else filepath.substring(i + 1)
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // PRIVATE API
 ////////////////////
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-private fun PackagesPreview() {
-    ReturnPalTheme {
-        AddPackagesScreen(
-            packages = mapOf(
-                0 to PackageInfo("Nordstrom.png", PackageLabelType.DIGITAL),
-                (-1) to PackageInfo("JCPenny.png", PackageLabelType.PHYSICAL)
-            ),
-            onAddLabel = {},
-            onRemoveLabel = {},
-            onClickNext = {},
-            onClickBack = {},
+private fun AddLabelDialogueContent(
+    label: Uri? = null,
+    type: PackageLabelType? = null,
+    onCancel: () -> Unit = {},
+    onUpload: () -> Unit = {},
+    onConfirm: (String) -> Unit = {}
+) {
+    var description by remember { mutableStateOf("") }
+    Column(
+        Modifier
+            .padding(12.dp, 50.dp)
+            .background(color = getBackGroundColor(), shape = RoundedCornerShape(10)),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+//        Row(
+//            Modifier
+//                .fillMaxWidth()
+//                .padding(20.dp), horizontalArrangement = Arrangement.End
+//        ) {
+//            Text(
+//                text = "X",
+//                color = getBlueIconColor(),
+//                fontWeight = FontWeight.Bold, fontSize = 16.sp,
+//                modifier = Modifier.clickable(onClick = onCancel)
+//            )
+//        }
+        Text(
+            text = when (type) {
+                PackageLabelType.PHYSICAL -> "Add a Physical Label"
+                PackageLabelType.DIGITAL -> "Add a Digital Label"
+                PackageLabelType.QRCODE -> "Add a QR Code"
+                else -> "Add a Label" },
+            color = ReturnPalTheme.colorScheme.secondary,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(20.dp)
         )
+        UploadLabelContent(label, onUpload)
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(30.dp, 10.dp)
+        ) {
+            OutlinedTextField(
+                value = description,
+                label = { Text("Description") },
+                placeholder = { Text("Label the item(s) inside: i.e 'laptop covers'") },
+                onValueChange = { description = it },
+                modifier = Modifier.fillMaxWidth()
+            )
+            Row(modifier = Modifier.padding(0.dp, 10.dp)) {
+                OutlinedButton(onClick = onCancel) { Text("Cancel") }
+                Spacer(Modifier.weight(1f))
+                Button(onClick = { onConfirm(description) }) { Text("Add Package") }
+            }
+        }
+    }
+}
+
+@Composable
+private fun UploadLabelContent(
+    label: Uri? = null,
+    onClick: () -> Unit = {}
+) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(5.dp)
+            .height(230.dp),horizontalAlignment = Alignment.Start
+    ) {
+//        Text("Upload Return Label")
+        val borderColor = ReturnPalTheme.colorScheme.primary;
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .clickable(onClick = onClick)
+                .fillMaxSize()
+                .padding(10.dp, 0.dp)
+                .background(color = Color(0x0F008BE7), shape = RoundedCornerShape(15))
+                .drawBehind {
+                    drawRoundRect(
+                        color = borderColor,
+                        style = Stroke(
+                            width = 4f,
+                            pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), phase = 0f)
+                        )
+                    )
+                }
+        ) {
+            if (label == null) {
+                IconManager().getFileIcon(Modifier.size(width=100.dp,height=100.dp))
+                Text(
+                    text = "Drag label here or browse files",
+                    color = ReturnPalTheme.colorScheme.primary
+                )
+            } else {
+                AsyncImage(
+                    model = label,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop
+                )
+            }
+        }
     }
 }
 
@@ -241,11 +283,22 @@ private fun AddLabelDialogue(
     onAddLabel: (PackageInfo) -> Unit,
     onCancel: () -> Unit,
 ) {
-    Dialog(onDismissRequest = { /*TODO*/ }) {
-        AddLabelContent(
-            xButton = onCancel,
-            addButton = { filename, description ->
-                onAddLabel(PackageInfo(filename, type, description))
+    var image by remember { mutableStateOf<Uri?>(null) }
+    val imagePicker = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri -> image = uri }
+    )
+    Dialog(onDismissRequest = onCancel) {
+        AddLabelDialogueContent(
+            label = image,
+            type = type,
+            onCancel = onCancel,
+            onUpload = {
+                imagePicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            },
+            onConfirm = { description ->
+                if (image != null) onAddLabel(PackageInfo(image!!, type, description))
+                else onCancel()
             }
         )
     }
@@ -305,7 +358,8 @@ private fun PackagesTable(
                 Modifier.clickable(onClick = { onClickItem(it.first, it.second) })
             ) {
                 Cell(
-                    text = it.second.label,
+                    text = if (it.second.label.path == null) ""
+                        else getFilename(it.second.label.path!!),
                     modifier = Modifier.weight(1.6f),
                 )
                 Cell(
