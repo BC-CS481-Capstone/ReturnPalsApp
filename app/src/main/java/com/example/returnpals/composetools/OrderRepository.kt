@@ -2,13 +2,11 @@ package com.example.returnpals.composetools
 
 
 import android.util.Log
-import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.core.Amplify
-import com.amplifyframework.datastore.generated.model.Orders
 import org.json.JSONObject
 import java.io.File
 import java.time.LocalDate
-import java.util.Date
+
 
 //Data Class for everything needed in the repository
 data class OrderRepository(private val customerId : String,
