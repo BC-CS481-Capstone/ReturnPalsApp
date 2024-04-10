@@ -91,7 +91,7 @@ fun ConfirmNumber(navController: NavController) {
             }
             if (logInSuccessful == true) {
                 viewModel.reset()
-                go2(navController,MenuRoutes.Register)
+                go2(navController,MenuRoutes.HomeDash)
             }
         }
     }
