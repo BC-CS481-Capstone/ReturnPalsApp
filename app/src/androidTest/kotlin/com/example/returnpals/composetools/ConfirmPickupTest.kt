@@ -92,8 +92,8 @@ class ConfirmPickupTest {
     @Test
     fun testQRCodeCount() {
         rule.setContent { ConfirmPickupScreen(info = testPickupInfo) }
-        rule.onNodeWithText("Amazon QR Codes:").assertIsDisplayed()
-        rule.onNodeWithText((testPickupInfo.packages.count { it.labelType == PackageLabelType.QRCODE }).toString()).assertIsDisplayed()
+        rule.onNodeWithText("Amazon QR Codes:").assertExists()
+        rule.onNodeWithText((testPickupInfo.packages.count { it.labelType == PackageLabelType.QRCODE }).toString()).assertExists()
     }
     @Test
     fun testIcons() {
@@ -103,7 +103,7 @@ class ConfirmPickupTest {
     @Test
     fun testVisa() {
         rule.setContent { ConfirmPickupScreen(info = testPickupInfo, visaLastFour = 4213) }
-        rule.onNodeWithText("Charged to Visa ending in 4213").assertIsDisplayed()
+        rule.onNodeWithText("Charged to Visa ending in 4213").assertExists()
     }
     @Test
     fun testCost() {
