@@ -80,10 +80,11 @@ fun ConfirmPickupScreen(
         ) {
             Text(
                 text = "Confirm Your Pickup",
-                color = Color.Black,
+                color = ReturnPalTheme.colorScheme.secondary,
                 textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold,
-                fontSize = 28.sp,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = ReturnPalTheme.typography.titleLarge.fontFamily,
+                fontSize = ReturnPalTheme.typography.titleLarge.fontSize,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 10.dp)
@@ -148,7 +149,8 @@ private fun ConfirmPickupContent(
             text = "Order Summary",
             fontWeight = FontWeight.SemiBold,
             color = ReturnPalTheme.colorScheme.primary,
-            fontSize = 34.sp
+            fontFamily = ReturnPalTheme.typography.titleLarge.fontFamily,
+            fontSize = ReturnPalTheme.typography.titleLarge.fontSize.times(1.2f)
         )
         Divider(
             color = ReturnPalTheme.colorScheme.tertiary,
@@ -261,7 +263,7 @@ private fun SubtitleRow(
                 text = name,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Start,
-                fontSize = 16.sp,
+                fontSize = ReturnPalTheme.typography.titleMedium.fontSize,
                 color = ReturnPalTheme.colorScheme.secondary
             )
             Spacer(Modifier.width(10.dp))
@@ -302,7 +304,6 @@ private fun SummaryRow(
 
 @Composable
 private fun AddressText(address: String) {
-//    val fsize = (getConfig().screenWidthDp/20)
     Text(
         text = buildAnnotatedString {
             withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
@@ -315,28 +316,28 @@ private fun AddressText(address: String) {
 
 @Composable
 private fun PackagesText(info: PickupInfo) {
-    val fsize = (getConfig().screenWidthDp/16)
     val numberOfPhysical = info.packages.count { it.labelType == PackageLabelType.PHYSICAL }
     val numberOfDigital = info.packages.count { it.labelType == PackageLabelType.DIGITAL }
     val numberOfQRCodes = info.packages.count { it.labelType == PackageLabelType.QRCODE }
+    val iconHeight = ReturnPalTheme.typography.bodyLarge.fontSize.value.dp + 4.dp
 
     SubtitleRow(name = "Packages")
     SummaryRow(
         name = "Physical Labels:",
         value = numberOfPhysical.toString(),
     ) {
-        IconManager().getBoxIcon(modifier = Modifier.height(fsize.dp))
+        IconManager().getBoxIcon(modifier = Modifier.height(iconHeight))
     }
     SummaryRow(
         name = "Digital Labels:",
         value = numberOfDigital.toString(),
     ) {
-        IconManager().getComputerIcon(modifier = Modifier.height(fsize.dp))
+        IconManager().getComputerIcon(modifier = Modifier.height(iconHeight))
     }
     SummaryRow(
         name = "Amazon QR Codes:",
         value = numberOfQRCodes.toString(),
     ) {
-        IconManager().getAmazonIcon(modifier = Modifier.height(fsize.dp))
+        IconManager().getAmazonIcon(modifier = Modifier.height(iconHeight))
     }
 }
