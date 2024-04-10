@@ -8,7 +8,7 @@ import com.amplifyframework.auth.options.AuthSignUpOptions
 import com.amplifyframework.auth.result.AuthSignOutResult
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.generated.model.MailingList
-import com.amplifyframework.datastore.generated.model.UsersMongoDb
+import com.amplifyframework.datastore.generated.model.User
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -28,7 +28,7 @@ object AmplifyOperations {
         )
     }
 
-    fun sendRegistrationData(model: UsersMongoDb, onSuccess: (String) -> Unit, onError: (Throwable) -> Unit) {
+    fun sendRegistrationData(model: User, onSuccess: (String) -> Unit, onError: (Throwable) -> Unit) {
         Amplify.API.mutate(
             ModelMutation.create(model),
             { response ->

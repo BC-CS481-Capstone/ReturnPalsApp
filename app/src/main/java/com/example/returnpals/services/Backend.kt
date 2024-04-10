@@ -7,12 +7,10 @@ import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.api.graphql.model.ModelQuery
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin
 import com.amplifyframework.core.Amplify
-import com.amplifyframework.datastore.generated.model.Orders
-import com.amplifyframework.datastore.generated.model.UsersMongoDb
+import com.amplifyframework.datastore.generated.model.Returns
 import com.example.returnpals.composetools.OrderRepository
 import com.example.returnpals.composetools.ProfileRepository
 import org.json.JSONObject
-import java.time.LocalDate
 
 /**Adds amplify backend on create code as tutorial examples provided.**/
 object Backend {
@@ -82,18 +80,18 @@ object Backend {
     private fun orderRetrieval() {
         Log.i(TAG, "Order Retrieval Called")
         Amplify.API.query(
-            ModelQuery.list(Orders::class.java, Orders.ORDER_NUMBER.contains("9")),
+            ModelQuery.list(Returns::class.java, Returns.ID.contains("9")),
             { response ->
                 Log.i(TAG, response.toString())
                 if (response.hasData()) {
                     response.data.forEach() { orderData ->
-                        if (orderData.clientDetails.contains(email)) {
-                            Log.i(TAG, "Order Added ${orderData.clientDetails}")
+                        if (orderData.email.contains(email)) {
+                            Log.i(TAG, "Order Added ${orderData.method.toString()}")
                             val order = OrderRepository(
                                 email,
-                                status = orderData.status,
-                                date = orderData.orderDate,
-                                notes = JSONObject(orderData.orderDetails)
+                                status = orderData.status.toString(),
+                                date = orderData.date.toString(),
+                                notes = JSONObject(orderData.method.toString())
                             )
                             orderList.add(order)
                         }

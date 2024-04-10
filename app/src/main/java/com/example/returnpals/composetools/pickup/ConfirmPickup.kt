@@ -65,7 +65,7 @@ class ConfirmPickup {
                     color = Color.Black,
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 28.sp,
+                    fontSize = 14.sp,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 10.dp)
@@ -113,7 +113,7 @@ class ConfirmPickup {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text("Order Summary\n" +
-                    "_________________",color = getBlueIconColor(),fontSize = 34.sp, maxLines = 2)
+                    "_________________",color = getBlueIconColor(),fontSize = 17.sp, maxLines = 2)
 
             val day = pickUpDate.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.LONG,Locale.getDefault())
 
@@ -121,7 +121,7 @@ class ConfirmPickup {
             val date = pickUpDate.get(Calendar.DATE)
 
             //Confirm Date
-            Text(day.toString()+" "+month.toString()+" "+date.toString(),fontSize = 34.sp,maxLines = 1)
+            Text(day.toString()+" "+month.toString()+" "+date.toString(),fontSize = 17.sp,maxLines = 1)
 
             //Confirm type of pickup as hand off or leave on door step
             Text(typeOfPickup,fontSize = 26.sp)
@@ -149,7 +149,7 @@ class ConfirmPickup {
     @Composable
     fun printAddressLines(pickUpAddress:Address) {
         //Avoid printing null if no address given
-        val fsize = (getConfig().screenWidthDp/20)
+        val fsize = (getConfig().screenWidthDp/40)
         if (pickUpAddress.getAddressLine(0) != null ) {
             Text(text = pickUpAddress.getAddressLine(0),fontSize = fsize.sp)
         }
@@ -172,7 +172,7 @@ class ConfirmPickup {
         Text(
             text = "Packages",
             fontWeight = FontWeight.Bold,
-            fontSize = 34.sp,
+            fontSize = 17.sp,
             color = Color.Black
         )
         //Row with Icon and text

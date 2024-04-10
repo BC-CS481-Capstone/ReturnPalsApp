@@ -2,13 +2,14 @@ package com.example.returnpals.composetools
 
 
 import android.util.Log
-import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.core.Amplify
-import com.amplifyframework.datastore.generated.model.Orders
+import com.amplifyframework.datastore.generated.model.PickupMethod
+import com.amplifyframework.datastore.generated.model.PickupStatus
+import com.amplifyframework.datastore.generated.model.Returns
 import org.json.JSONObject
 import java.io.File
 import java.time.LocalDate
-import java.util.Date
+
 
 //Data Class for everything needed in the repository
 data class OrderRepository(private val customerId : String,
@@ -67,14 +68,16 @@ data class OrderRepository(private val customerId : String,
         return hasImage
     }
     //Sends the Order to database
-    val order : Orders
-        get() = Orders.builder()
-            .orderNumber("9")
-            .orderDate(date)
-            .status(status)
-            .orderDetails(notes.toString())
-            .clientDetails("{\n \"Email\" : \"{$customerId}\"}")
-            .build()
+    val order : Returns
+        get() = Returns.builder().userId("")
+            .email("test12346789@testemailtestemail.com")
+            .labelIds(listOf())
+            .method(PickupMethod.DOORSTEP)
+            .confrimationNumber("Lorem ipsum dolor sit amet")
+            .address("Lorem ipsum dolor sit amet")
+            .labelIds(listOf())
+            .status(PickupStatus.ON_THE_WAY)
+            .build();
 
 //Function to upload the image
 private fun uploadFile(key: String, file: File){

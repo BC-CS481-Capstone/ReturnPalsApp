@@ -28,11 +28,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.returnpals.composetools.CustomTextField
-import com.example.returnpals.composetools.go2
 import com.example.returnpals.services.RegisterViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.example.returnpals.services.UserRepository
 
 @Composable
 fun Register(navController: NavController) {
@@ -73,15 +70,15 @@ fun RegisterTitle() {
 
 @Composable
 fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel()) {
+    var repository = UserRepository
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf(repository.getEmail()) }
     var phoneNumber by remember { mutableStateOf("") }
     val selectedBlue = Color(0xFF008BE7)
     val customColor = Color(0xFFE1F6FF)
     val submissionSuccessful by viewModel.submissionSuccessful.observeAsState()
-
 
     // Use LaunchedEffect to clear fields on submission success
    LaunchedEffect(submissionSuccessful) {
@@ -130,15 +127,9 @@ fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel(
         Button(
             onClick = {
                 viewModel.submitRegistration(firstName, lastName, email,
-                    listOf(address), phoneNumber)
+                    address, phoneNumber)
                 // Reset state variables after submission
-                firstName = ""
-                lastName = ""
-                address = ""
-                email = ""
-                phoneNumber = ""
 
-                navController.navigate("sign in")
 
             },
             colors = ButtonDefaults.buttonColors(
@@ -156,7 +147,16 @@ fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel(
             )
         }
         Spacer(modifier = Modifier.padding(24.dp))
+        Text(viewModel.failMessage)
+        if (submissionSuccessful == true) {
+            firstName = ""
+            lastName = ""
+            address = ""
+            email = ""
+            phoneNumber = ""
 
+            navController.navigate(MenuRoutes.HomeDash)
+        }
     }
 }
 
