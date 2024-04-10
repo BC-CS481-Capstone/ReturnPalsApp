@@ -12,23 +12,23 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.amplifyframework.auth.result.AuthSignUpResult
 import com.amplifyframework.core.Amplify
 import com.example.returnpals.mainMenu.MenuRoutes
-import com.example.returnpals.services.Backend
+import com.example.returnpals.mainMenu.viewModelLogin
 import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.services.UserRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 
 /* This is the login options class used to create the two login UI for guest and user.*/
@@ -38,23 +38,33 @@ import kotlinx.coroutines.launch
 private var confirmviewMd = ConfirmNumberViewModel()
 @Composable
 fun ConfirmNumber(navController: NavController) {
-    Box(modifier = Modifier.background(getBackGroundColor()).fillMaxSize()) {
+    val confirmSuccessful by confirmviewMd.confirmSuccessful.observeAsState()
+    Box(modifier = Modifier
+        .background(getBackGroundColor())
+        .fillMaxSize()) {
         ConfirmNumberContent(
             emailToConfirm = confirmviewMd.getEmail(),
             message = confirmviewMd.getMessage(),
             submitNumber = confirmviewMd.code.value,
             onSubmitNumberChange = { confirmviewMd.setCode(it) }) {
-            confirmviewMd.confirmNumber {
-                GlobalScope.launch(Dispatchers.Main) { go2(navController, MenuRoutes.Register) }
-            }
+            confirmviewMd.confirmNumber()
         }
+    }
+    if (confirmSuccessful == true) {
+        viewModelLogin.logIn()
+        go2(navController, MenuRoutes.Register)
     }
 }
 
     @Composable
     fun LoginScreen(viewModel:LoginViewModel, navController: NavController) {
-
-        Box(modifier = Modifier.background(getBackGroundColor()).fillMaxSize()) {
+        // Condition variables
+        val signUpSuccessful by viewModel.signUpSuccessful.observeAsState()
+        val logInSuccessful by viewModel.logInSuccessful.observeAsState()
+        viewModel.checkUser()
+        Box(modifier = Modifier
+            .background(getBackGroundColor())
+            .fillMaxSize()) {
             //This will switch between the guest login and user login
             if (viewModel.isGuest.value) {
                 GuestLoginUIContent(
@@ -70,19 +80,19 @@ fun ConfirmNumber(navController: NavController) {
                     pass = { viewModel.changePass(it) },
                     guest = { viewModel.switchGuestUser() },
                     reset = { /*TODO*/ },
-                    signin = {viewModel.logIn({ GlobalScope.launch(Dispatchers.Main) { go2(navController, MenuRoutes.HomeDash) }
-                    Backend.accessEmail()
-                    }) {
-                        viewModel.setFailLogInMessage(it.message!!)
-                        if (it.message!!.contains("User not confirmed in the system."))
-                            GlobalScope.launch(Dispatchers.Main) { go2(navController, MenuRoutes.ConfirmNumber) }
-                    } },
-                    signup = {viewModel.signUp({ GlobalScope.launch(Dispatchers.Main) {go2(navController, MenuRoutes.ConfirmNumber) } })
-                    },
+                    signin = {viewModel.logIn()},
+                    signup = {viewModel.signUp()},
                     emailString = viewModel.getEmail(),
                     passString =  viewModel.password.value)
             }
-
+            if (signUpSuccessful == true) {
+                viewModel.reset()
+                go2(navController,MenuRoutes.ConfirmNumber)
+            }
+            if (logInSuccessful == true) {
+                viewModel.reset()
+                go2(navController,MenuRoutes.Register)
+            }
         }
     }
 
@@ -190,6 +200,10 @@ fun ConfirmNumber(navController: NavController) {
     }
 
 private class ConfirmNumberViewModel(): ViewModel() {
+
+    private val _confirmSuccessful = MutableLiveData<Boolean?>()
+    val confirmSuccessful: LiveData<Boolean?> = _confirmSuccessful
+
     private var repository = UserRepository
     var code =  mutableStateOf<String>("")
         private set
@@ -205,11 +219,12 @@ private class ConfirmNumberViewModel(): ViewModel() {
         message.value = value
     }
 
-    fun confirmNumber(onSuccess:(AuthSignUpResult)->Unit) {
+    fun confirmNumber() {
         Amplify.Auth.confirmSignUp(
             getEmail(), code.value,
-            onSuccess,
-            { setMessage(it.message.toString()) }
+            { _confirmSuccessful.postValue(true) },
+            { _confirmSuccessful.postValue(false)
+                setMessage(it.message.toString()) }
         )
     }
     fun setCode(codeValue:String) {

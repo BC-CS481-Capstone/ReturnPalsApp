@@ -1,16 +1,23 @@
 package com.example.returnpals.services
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.amplifyframework.auth.AuthException
 import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.auth.options.AuthSignUpOptions
-import com.amplifyframework.auth.result.AuthSignInResult
 import com.amplifyframework.auth.result.AuthSignOutResult
-import com.amplifyframework.auth.result.AuthSignUpResult
 import com.amplifyframework.core.Amplify
 
+//Login View model provides the information and function needed to login, logout, and signup.
 class LoginViewModel(): ViewModel() {
+
+    // Condition variables
+    private val _logInSuccessful = MutableLiveData<Boolean?>()
+    val logInSuccessful: LiveData<Boolean?> = _logInSuccessful
+
+    private val _signUpSuccessful = MutableLiveData<Boolean?>()
+    val signUpSuccessful: LiveData<Boolean?> = _signUpSuccessful
 
     val repository = UserRepository
     var password =  mutableStateOf<String>("Password123$")
@@ -42,14 +49,18 @@ class LoginViewModel(): ViewModel() {
 // This file create the functions to signUp, login, and logout of the cognito.
 // */
 
-    fun signUp(onSignUpSuccess:(AuthSignUpResult)->Unit) {
+    fun signUp() {
+        //Allows user to sign up with cognito user pools
         Amplify.Auth.signUp(
             getEmail(),
             password.value,
             AuthSignUpOptions.builder().userAttribute(AuthUserAttributeKey.email(), getEmail())
                 .build(),
-            onSignUpSuccess
-        ) {setFailLogInMessage(it.message!!)}
+            { _signUpSuccessful.postValue(true) }
+        ) {
+            _signUpSuccessful.postValue(false)
+            setFailLogInMessage(it.message!!)
+        }
     }
 
     fun signOut() {
@@ -63,13 +74,30 @@ class LoginViewModel(): ViewModel() {
         }
     }
 
-    fun logIn(onSignInSuccess:(AuthSignInResult)->Unit,needConfirm:(AuthException)->Unit){
+    fun logIn(){
         // Allows users to signIn with cognito
         Amplify.Auth.signIn(
             getEmail(),
             password.value,
-            onSignInSuccess,needConfirm
+            { _logInSuccessful.postValue(true) },{
+                setFailLogInMessage(it.message!!)
+                _logInSuccessful.postValue(false)
+                if (it.message!!.contains("User not confirmed in the system.")) {
+                    _signUpSuccessful.postValue(true)
+                }
+            }
         )
+    }
+
+    fun checkUser() {
+        Amplify.Auth.getCurrentUser({_logInSuccessful.postValue(true)},{_logInSuccessful.postValue(false)})
+    }
+
+    fun reset() {
+        //Reset the boolean values to false and error messages to empty
+        _signUpSuccessful.postValue(false)
+        _logInSuccessful.postValue(false)
+        setFailLogInMessage("")
     }
 }
 
