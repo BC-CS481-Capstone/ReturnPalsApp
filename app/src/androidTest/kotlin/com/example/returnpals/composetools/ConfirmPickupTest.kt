@@ -106,14 +106,23 @@ class ConfirmPickupTest {
         rule.onNodeWithText("Charged to Visa ending in 4213").assertIsDisplayed()
     }
     @Test
-    fun testBill() {
+    fun testCost() {
         rule.setContent { ConfirmPickupScreen(info = testPickupInfo) }
         rule.onNodeWithText("Cost:").assertIsDisplayed()
         // causes fail because more than one node has this text because total and cost are same because tax is currently zero
 //        rule.onNodeWithText(testPickupInfo.cost.toString()).assertIsDisplayed()
+    }
+    @Test
+    fun testTax() {
+        rule.setContent { ConfirmPickupScreen(info = testPickupInfo) }
         rule.onNodeWithText("Tax:").assertIsDisplayed()
         rule.onNodeWithText(testPickupInfo.tax.toString()).assertIsDisplayed()
+    }
+    @Test
+    fun testTotal() {
+        rule.setContent { ConfirmPickupScreen(info = testPickupInfo) }
         rule.onNodeWithText("Total:").assertIsDisplayed()
+        // causes fail because more than one node has this text because total and cost are same because tax is currently zero
 //        rule.onNodeWithText(testPickupInfo.total.toString()).assertIsDisplayed()
     }
     @Test
