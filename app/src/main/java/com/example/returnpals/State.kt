@@ -1,49 +1,50 @@
 package com.example.returnpals
 
 import android.location.Address
+import android.net.Uri
 import java.time.LocalDate
 
 // TODO: develop backend
 
 enum class PricingPlan {
     BRONZE {
-        override fun toString(): String { return "BRONZE" }
+        override fun toString(): String { return "Bronze" }
     },
     SILVER {
-        override fun toString(): String { return "SILVER" }
+        override fun toString(): String { return "Silver" }
     },
     GOLD {
-        override fun toString(): String { return "GOLD" }
+        override fun toString(): String { return "Gold" }
     },
     PLATINUM {
-        override fun toString(): String { return "PLATINUM" }
+        override fun toString(): String { return "Platinum" }
     }
 }
 
 enum class PickupMethod {
     HANDOFF {
-        override fun toString(): String { return "HANDOFF" }
+        override fun toString(): String { return "Handoff" }
     },
     DOORSTEP {
-        override fun toString(): String { return "DOORSTEP" }
+        override fun toString(): String { return "Doorstep" }
     }
 }
 
 enum class PackageLabelType {
     PHYSICAL {
-        override fun toString(): String { return "PHYSICAL" }
+        override fun toString(): String { return "Physical" }
     },
     DIGITAL  {
-        override fun toString(): String { return "DIGITAL" }
+        override fun toString(): String { return "Digital" }
     },
     QRCODE  {
-        override fun toString(): String { return "QR CODE" }
+        override fun toString(): String { return "QR Code" }
     }
 }
 
 data class PackageInfo(
-    val label: String, // label is a filename
-    val labelType: PackageLabelType,
+    val label: Uri = Uri.EMPTY, // label is a filename
+    val labelType: PackageLabelType = PackageLabelType.PHYSICAL,
     var description: String? = null, // additional info provided by user
 )
 

@@ -11,7 +11,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.returnpals.composetools.pickup.ConfirmPickup
 import com.example.returnpals.composetools.pickup.AddPackagesScreen
 import com.example.returnpals.composetools.pickup.PickupDateScreen
 import com.example.returnpals.composetools.pickup.PickupMethodScreen
@@ -22,6 +21,7 @@ import com.example.returnpals.composetools.dashboard.HomeDash
 import com.example.returnpals.composetools.dashboard.Orders
 import com.example.returnpals.composetools.dashboard.Profile
 import com.example.returnpals.composetools.dashboard.Settings
+import com.example.returnpals.composetools.pickup.ConfirmPickupScreen
 import com.example.returnpals.composetools.pickup.SelectAddressScreen
 import com.example.returnpals.services.AddressesViewModel
 import com.example.returnpals.services.ScheduleReturnViewModel
@@ -121,17 +121,13 @@ fun AppNavigation(navController: NavController) {
             }
             composable("confirm") { entry ->
                 val pickupVM = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
-                ConfirmPickup().drawConfirmPickup(
-                    typeOfPickup = pickupVM.method.value.toString(),
-//                    TODO: change type of pickupDate parameter to LocalDate
-//                       OR change type of PackageInfo.date to Calendar
-//                    TODO: show pricing only if BRONZE plan is selected
-                    pickUpAddress = Address(Locale.CANADA),
-                    nextButton = {
+                ConfirmPickupScreen(
+                    info = pickupVM.info,
+                    onClickNext = {
                         pickupVM.onSubmit()
                         navController.navigate("thanks") },
-                    backButton = { navController.navigate("add_labels") },
-                    promoButton = {}
+                    onClickBack = { navController.navigate("add_labels") },
+                    onClickPromoButton = {}
                 )
             }
             composable("thanks") { entry ->

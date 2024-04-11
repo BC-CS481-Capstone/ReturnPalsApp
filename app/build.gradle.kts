@@ -111,8 +111,7 @@ dependencies {
 
     implementation("com.amplifyframework:aws-api:1.38.8")
 
-
-
+    implementation("io.coil-kt:coil-compose:2.1.0") // for photo picker
 
 
 

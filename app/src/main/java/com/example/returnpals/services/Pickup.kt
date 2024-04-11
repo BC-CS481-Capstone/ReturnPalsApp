@@ -16,7 +16,18 @@ data class PickupInfo(
     var method: PickupMethod? = null,
     var plan: PricingPlan? = null,
     var packages: List<PackageInfo> = listOf()
-)
+) {
+    val tax get() = 0.00
+    val cost get() =
+        when (plan) {
+            PricingPlan.BRONZE -> 3.99 * packages.size.toDouble()
+            PricingPlan.SILVER -> 0.00
+            PricingPlan.GOLD -> 0.00
+            PricingPlan.PLATINUM -> 0.00
+            else -> 0.00
+        }
+    val total get() = tax + cost
+}
 
 open class PickupViewModel(
     date: LocalDate = LocalDate.now(),
@@ -57,6 +68,11 @@ open class PickupViewModel(
             plan = plan.value,
             packages = packages.values.toList()
         )
+
+    val isValid get() =
+        address.value != null &&
+        method.value != null &&
+        plan.value != null
 
     fun onChangeDate(value: LocalDate) {
         date.value = value
