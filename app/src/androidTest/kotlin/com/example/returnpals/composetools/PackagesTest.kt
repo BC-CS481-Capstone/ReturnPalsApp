@@ -56,11 +56,8 @@ class PackagesTest {
         assert(isClicked) { "Back button does not work." }
 
         isClicked = false
-<<<<<<< HEAD
-        packages[1] = PackageInfo(Uri.EMPTY, PackageLabelType.DIGITAL)
-=======
-        packages[1] = PackageInfo("nordstrom.png", LabelType.DIGITAL)
->>>>>>> order-backend
+
+        packages[1] = PackageInfo(Uri.EMPTY, LabelType.DIGITAL)
         next.performClick()
         assert(isClicked) { "Next button on-click event does not work." }
 
@@ -116,21 +113,14 @@ class PackagesTest {
 
         // Test next and back buttons:
 
-<<<<<<< HEAD
-        packages[1] = PackageInfo(Uri.EMPTY, PackageLabelType.DIGITAL, "Test 1")
-        rule.onNodeWithText(PackageLabelType.DIGITAL.toString()).assertIsDisplayed()
+
+        packages[1] = PackageInfo(Uri.EMPTY, LabelType.DIGITAL, "Test 1")
+        rule.onNodeWithText(LabelType.DIGITAL.toString()).assertIsDisplayed()
         rule.onNodeWithText("Test 1").assertIsDisplayed()
 
-        packages[2] = PackageInfo(Uri.EMPTY, PackageLabelType.PHYSICAL, "Test 2")
-        rule.onNodeWithText(PackageLabelType.PHYSICAL.toString()).assertIsDisplayed()
+        packages[2] = PackageInfo(Uri.EMPTY, LabelType.PHYSICAL, "Test 2")
+        rule.onNodeWithText(LabelType.PHYSICAL.toString()).assertIsDisplayed()
         rule.onNodeWithText("Test 2").assertIsDisplayed()
-=======
-        packages[1] = PackageInfo("nordstrom.png", LabelType.DIGITAL)
-        rule.onNodeWithText("nordstrom.png").assertIsDisplayed()
-
-        packages[2] = PackageInfo("jcpenny.png", LabelType.PHYSICAL)
-        rule.onNodeWithText("jcpenny.png").assertIsDisplayed()
->>>>>>> order-backend
     }
 
     /**

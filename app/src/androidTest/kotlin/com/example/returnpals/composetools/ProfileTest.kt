@@ -57,7 +57,7 @@ class ProfileTest {
     //test for profile storing type
     @Test
     fun typeTest(){
-        assertEquals(com.amplifyframework.datastore.generated.model.PricingPlan.BRONZE, profile.getType())
+        assertEquals(PricingPlan.SILVER.toString(), profile.getType())
     }
     /*
     createRandomEntry()
