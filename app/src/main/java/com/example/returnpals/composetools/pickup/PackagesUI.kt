@@ -36,9 +36,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.amplifyframework.datastore.generated.model.LabelType
 import com.example.compose.ReturnPalTheme
 import com.example.returnpals.PackageInfo
-import com.example.returnpals.PackageLabelType
+
 import com.example.returnpals.composetools.ButtonManager
 import com.example.returnpals.composetools.IconManager
 import com.example.returnpals.composetools.ScheduleReturnScaffold
@@ -64,7 +65,7 @@ fun AddPackagesScreen(
     onClickBack: () -> Unit,
 ) {
     val showDialogue: MutableState<Boolean> = remember { mutableStateOf(false) }
-    val dialogueType: MutableState<PackageLabelType?> = remember { mutableStateOf(null) }
+    val dialogueType: MutableState<LabelType?> = remember { mutableStateOf(null) }
 
     ScheduleReturnScaffold(
         step = 4,
@@ -103,7 +104,7 @@ fun AddPackagesScreen(
                     text = "Physical Label",
                     onClick = {
                         showDialogue.value = true
-                        dialogueType.value = PackageLabelType.PHYSICAL
+                        dialogueType.value = LabelType.PHYSICAL
                     },
                     modifier = Modifier.weight(1.0f)
                 )
@@ -112,7 +113,7 @@ fun AddPackagesScreen(
                     text = "Digital Label",
                     onClick = {
                         showDialogue.value = true
-                        dialogueType.value = PackageLabelType.DIGITAL
+                        dialogueType.value = LabelType.DIGITAL
                     },
                     modifier = Modifier.weight(1.0f)
                 )
@@ -121,7 +122,7 @@ fun AddPackagesScreen(
                     text = "Amazon QR Code",
                     onClick = {
                         showDialogue.value = true
-                        dialogueType.value = PackageLabelType.QRCODE
+                        dialogueType.value = LabelType.QRCODE
                     },
                     modifier = Modifier.weight(1.0f)
                 )
@@ -224,8 +225,8 @@ private fun PackagesPreview() {
     ReturnPalTheme {
         AddPackagesScreen(
             packages = mapOf(
-                0 to PackageInfo("Nordstrom.png", PackageLabelType.DIGITAL),
-                (-1) to PackageInfo("JCPenny.png", PackageLabelType.PHYSICAL)
+                0 to PackageInfo("Nordstrom.png", LabelType.DIGITAL),
+                (-1) to PackageInfo("JCPenny.png", LabelType.PHYSICAL)
             ),
             onAddLabel = {},
             onRemoveLabel = {},
@@ -237,7 +238,7 @@ private fun PackagesPreview() {
 
 @Composable
 private fun AddLabelDialogue(
-    type: PackageLabelType,
+    type: LabelType,
     onAddLabel: (PackageInfo) -> Unit,
     onCancel: () -> Unit,
 ) {

@@ -94,7 +94,7 @@ fun OrderTable(){
                 Log.i("Order", "Loading Item")
                 Row(){
                     TableCell(text = it.getStatus(), column1Weight)
-                    TableCell(text = it.getDate().substring(0, 10), column2Weight)
+                    TableCell(text = it.getDate().toString(), column2Weight)
                     TableCell(text = it.getAddress(), column3Weight)
 
                 }

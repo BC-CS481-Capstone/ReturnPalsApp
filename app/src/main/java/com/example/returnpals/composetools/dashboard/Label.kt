@@ -3,7 +3,7 @@ package com.example.returnpals.composetools.dashboard
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.example.returnpals.PackageInfo
-import com.example.returnpals.PackageLabelType
+import com.amplifyframework.datastore.generated.model.LabelType
 import com.example.returnpals.composetools.pickup.AddPackagesScreen
 
 @Composable
@@ -12,7 +12,7 @@ fun Label(navController: NavController) {
         packages = mapOf(
             1 to PackageInfo(
                 "Nordstrom.png",
-                PackageLabelType.DIGITAL,
+                LabelType.DIGITAL,
             )
         ),
         onAddLabel = {},

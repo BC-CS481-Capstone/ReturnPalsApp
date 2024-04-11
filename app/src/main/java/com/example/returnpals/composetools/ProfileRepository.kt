@@ -4,6 +4,8 @@ package com.example.returnpals.composetools
 import android.util.Log
 import com.amplifyframework.api.graphql.model.ModelQuery
 import com.amplifyframework.core.Amplify
+import com.amplifyframework.datastore.generated.model.PricingPlan
+import com.amplifyframework.datastore.generated.model.User
 import com.amplifyframework.datastore.generated.model.UsersMongoDb
 import com.example.returnpals.services.Backend
 import java.time.LocalDate
@@ -15,13 +17,13 @@ data class ProfileRepository(
     private var nameLast : String = "Doe",
     private var email : String = "JD@ReturnPal.com",
     private var expireDate : LocalDate = LocalDate.now(),
-    private var memberShipType : String = "SILVER"
+    private var memberShipType : PricingPlan = PricingPlan.SILVER
 ) {
     private val TAG = "ProfileRepo"
     fun getDataBase(){
         email = Backend.getEmail()
         Amplify.API.query(
-            ModelQuery.list(UsersMongoDb::class.java, UsersMongoDb.EMAIL.contains(email)),
+            ModelQuery.list(User::class.java, User.EMAIL.contains(email)),
             { response ->
                 Log.i("ProfileRepo", response.toString())
                 if(response.hasData()) {
@@ -42,8 +44,7 @@ data class ProfileRepository(
                         memberShipType = try {
                             user.subscription
                         } catch(except: Exception){
-
-                            "none"
+                            PricingPlan.BRONZE
                         }
                     }
                 }
@@ -60,7 +61,7 @@ data class ProfileRepository(
         return nameLast
     }
     fun getType() : String{
-        return memberShipType
+        return memberShipType.toString()
     }
     fun getExpireDate() : LocalDate{
         return expireDate
