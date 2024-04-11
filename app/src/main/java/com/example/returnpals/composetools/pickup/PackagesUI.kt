@@ -51,11 +51,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+
 import androidx.core.util.toAndroidPair
 import coil.compose.AsyncImage
+
+
+import com.amplifyframework.datastore.generated.model.LabelType
 import com.example.compose.ReturnPalTheme
 import com.example.returnpals.PackageInfo
-import com.example.returnpals.PackageLabelType
+
+import com.example.returnpals.composetools.ButtonManager
+
 import com.example.returnpals.composetools.IconManager
 import com.example.returnpals.composetools.ScheduleReturnScaffold
 import com.example.returnpals.composetools.getBackGroundColor
@@ -79,7 +85,7 @@ fun AddPackagesScreen(
     onClickBack: () -> Unit = {},
 ) {
     val showDialogue: MutableState<Boolean> = remember { mutableStateOf(false) }
-    val dialogueType: MutableState<PackageLabelType?> = remember { mutableStateOf(null) }
+    val dialogueType: MutableState<LabelType?> = remember { mutableStateOf(null) }
 
     ScheduleReturnScaffold(
         step = 4,
@@ -118,7 +124,7 @@ fun AddPackagesScreen(
                     text = "Physical Label",
                     onClick = {
                         showDialogue.value = true
-                        dialogueType.value = PackageLabelType.PHYSICAL
+                        dialogueType.value = LabelType.PHYSICAL
                     },
                     modifier = Modifier.weight(1.0f)
                 )
@@ -127,7 +133,7 @@ fun AddPackagesScreen(
                     text = "Digital Label",
                     onClick = {
                         showDialogue.value = true
-                        dialogueType.value = PackageLabelType.DIGITAL
+                        dialogueType.value = LabelType.DIGITAL
                     },
                     modifier = Modifier.weight(1.0f)
                 )
@@ -136,7 +142,7 @@ fun AddPackagesScreen(
                     text = "Amazon QR Code",
                     onClick = {
                         showDialogue.value = true
-                        dialogueType.value = PackageLabelType.QRCODE
+                        dialogueType.value = LabelType.QRCODE
                     },
                     modifier = Modifier.weight(1.0f)
                 )
@@ -174,7 +180,7 @@ fun getFilename(filepath: String): String {
 @Composable
 private fun AddLabelDialogueContent(
     label: Uri? = null,
-    type: PackageLabelType? = null,
+    type: LabelType? = null,
     onCancel: () -> Unit = {},
     onUpload: () -> Unit = {},
     onConfirm: (String) -> Unit = {}
@@ -201,9 +207,9 @@ private fun AddLabelDialogueContent(
 //        }
         Text(
             text = when (type) {
-                PackageLabelType.PHYSICAL -> "Add a Physical Label"
-                PackageLabelType.DIGITAL -> "Add a Digital Label"
-                PackageLabelType.QRCODE -> "Add a QR Code"
+                LabelType.PHYSICAL -> "Add a Physical Label"
+                LabelType.DIGITAL -> "Add a Digital Label"
+                LabelType.QRCODE -> "Add a QR Code"
                 else -> "Add a Label" },
             color = ReturnPalTheme.colorScheme.secondary,
             fontSize = 20.sp,
@@ -284,7 +290,7 @@ private fun UploadLabelContent(
 
 @Composable
 private fun AddLabelDialogue(
-    type: PackageLabelType,
+    type: LabelType,
     onAddLabel: (PackageInfo) -> Unit,
     onCancel: () -> Unit,
 ) {

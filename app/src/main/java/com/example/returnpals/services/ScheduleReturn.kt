@@ -2,6 +2,10 @@ package com.example.returnpals.services
 
 import android.util.Log
 import androidx.navigation.NavController
+import com.amplifyframework.core.model.temporal.Temporal
+import com.amplifyframework.core.model.temporal.Temporal.Timestamp.now
+
+import com.amplifyframework.datastore.generated.model.PickupStatus
 
 import com.example.returnpals.composetools.OrderRepository
 import java.time.LocalDate
@@ -24,6 +28,7 @@ class ScheduleReturnViewModel(
     val navController: NavController? = null,
     private val minDate: LocalDate = LocalDate.now().minusDays(1),
     private val maxDate: LocalDate = LocalDate.now().plusYears(1),
+
 ) : PickupViewModel(pickup) {
 
     fun isValidDate(value: LocalDate): Boolean {
@@ -35,15 +40,17 @@ class ScheduleReturnViewModel(
     }
 
     fun onSubmit() {
+
         val order = OrderRepository(
             Backend.getEmail(),
-            info.date.toString(),
+            Temporal.Date(info.date.toString()),
             info.address.toString(),
-            "Submitted"
+            listOf(1, 2, 3),
+            PickupStatus.ON_THE_WAY,
+            false,
+
+            method = info.method
         )
-        order.setNotes("address", info.address.toString())
-        order.setNotes("method", info.method.toString())
-        order.setNotes("plan", info.plan.toString())
         Backend.createOrder(order)
 
         Log.println(Log.INFO, "ScheduleReturnViewModel::onSubmit", info.toString())

@@ -6,8 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.returnpals.IdManager
 import com.example.returnpals.PackageInfo
-import com.example.returnpals.PickupMethod
-import com.example.returnpals.PricingPlan
+import com.amplifyframework.datastore.generated.model.PickupMethod
+import com.amplifyframework.datastore.generated.model.PricingPlan
 import java.time.LocalDate
 
 data class PickupInfo(
