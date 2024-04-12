@@ -1,5 +1,6 @@
 package com.example.returnpals.services
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,9 +16,15 @@ class RegisterViewModel : ViewModel(){
     val submissionSuccessful: LiveData<Boolean?> = _submissionSuccessful
     var failMessage = ""
 
+    companion object {
+        private const val TAG = "ReturnPalsApp"
+    }
+
 
     fun submitRegistration(firstName: String, lastName: String, email: String, address: String, phoneNumber: String) {
-        val model = User.builder()
+        Log.i(TAG, "Submitting registration for user: $email")
+
+        val user = User.builder()
             .email(email)
             .subscription(PricingPlan.BRONZE)
             .firstName(firstName)
@@ -25,28 +32,51 @@ class RegisterViewModel : ViewModel(){
             .phone(phoneNumber)
             .build()
 
-        var userId = ""
-        Amplify.API.mutate(ModelMutation.create(model),{
-            if (it.hasErrors()) {
-                _submissionSuccessful.postValue(false)
-                failMessage = it.errors.first().message
-            } else {
-                userId = it.data.id
+        Log.i(TAG, "User model built, starting mutation.")
 
-                val addressDefault = Address.builder().address(address).userId(userId).nickName("Default").userEmail(email).build()
-                Amplify.API.mutate(ModelMutation.create(addressDefault),
-                    { if (it.hasErrors()){
-                        failMessage = it.errors.first().message
-                    } else {
-                        _submissionSuccessful.postValue(true)
-                    } },
-                    { failMessage = it.message!! }
-                )
-            } },
+        Amplify.API.mutate(
+            ModelMutation.create(user),
+            { response ->
+                if (response.hasErrors()) {
+                    Log.e(TAG, "Error during user registration: ${response.errors.first().message}")
+                    _submissionSuccessful.postValue(false)
+                    failMessage = response.errors.first().message
+                } else {
+                    Log.i(TAG, "User registered successfully with ID: ${response.data.id}")
+                    val userId = response.data.id
+
+                    val addressModel = Address.builder()
+                        .address(address)
+                        .userId(userId)
+                        .nickName("Default")
+                        .userEmail(email)
+                        .build()
+
+                    Log.i(TAG, "Address model built, starting mutation for address.")
+
+                    Amplify.API.mutate(
+                        ModelMutation.create(addressModel),
+                        {
+                            if (it.hasErrors()) {
+                                Log.e(TAG, "Error creating address for $email: ${it.errors.first().message}")
+                                failMessage = it.errors.first().message
+                            } else {
+                                Log.i(TAG, "Address created successfully for $email")
+                                _submissionSuccessful.postValue(true)
+                            }
+                        },
+                        {
+                            Log.e(TAG, "Failed to create address due to network error: ${it.message}", it)
+                            _submissionSuccessful.postValue(false)
+                        }
+                    )
+                }
+            },
             {
-                failMessage = it.message!!
+                Log.e(TAG, "Failed to register user due to network error: ${it.message}", it)
                 _submissionSuccessful.postValue(false)
-            })
+            }
+        )
     }
 
     fun resetSubmissionSuccess() {

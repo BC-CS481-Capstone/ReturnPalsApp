@@ -54,9 +54,9 @@ fun AppNavigation(navController: NavController) {
             composable(MenuRoutes.Profile) { Profile(navController) }
             composable(MenuRoutes.Settings) { Settings(navController) }
             composable(MenuRoutes.Orders) { Orders(navController) }
-           // composable(MenuRoutes.SelectAddress) { SelectAddress(navController) }
-           // composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }
-          //  composable(MenuRoutes.Label) { Label(navController) }
+            // composable(MenuRoutes.SelectAddress) { SelectAddress(navController) }
+            // composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }
+            //  composable(MenuRoutes.Label) { Label(navController) }
         }
         composable(MenuRoutes.ConfirmNumber) { ConfirmNumber(navController) }
 

@@ -4,10 +4,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.amplifyframework.auth.AuthException
 import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.auth.options.AuthSignUpOptions
 import com.amplifyframework.auth.result.AuthSignOutResult
 import com.amplifyframework.core.Amplify
+import com.amplifyframework.datastore.generated.model.Address
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 //Login View model provides the information and function needed to login, logout, and signup.
 class LoginViewModel(): ViewModel() {
@@ -18,6 +22,10 @@ class LoginViewModel(): ViewModel() {
 
     private val _signUpSuccessful = MutableLiveData<Boolean?>()
     val signUpSuccessful: LiveData<Boolean?> = _signUpSuccessful
+
+    private val _addresses = MutableStateFlow<List<Address>>(emptyList())
+
+    val addresses: StateFlow<List<Address>> = _addresses
 
     val repository = UserRepository
     var password =  mutableStateOf<String>("Password123$")
@@ -99,6 +107,17 @@ class LoginViewModel(): ViewModel() {
         _logInSuccessful.postValue(false)
         setFailLogInMessage("")
     }
+
+
+
+    fun resetPassword(email: String, onSuccess: () -> Unit, onError: (AuthException) -> Unit) {
+        Amplify.Auth.resetPassword(
+            email,
+            { result -> onSuccess() }, // Adjust based on actual success handling
+            { error -> onError(error as AuthException) }
+        )
+    }
+
 }
 
 object UserRepository {
@@ -112,3 +131,4 @@ object UserRepository {
         emailLiveData.value = email
     }
 }
+

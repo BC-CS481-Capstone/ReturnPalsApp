@@ -1,201 +1,239 @@
 package com.example.returnpals.composetools.dashboard
 
 import DashboardMenuScaffold
+import SettingsViewModel
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-
-
-
+import com.example.returnpals.R
 
 @Composable
 fun Settings(navController: NavController) {
+    val settingsViewModel: SettingsViewModel = viewModel()
+    val operationStatus by settingsViewModel.operationStatus.collectAsState()
+    var showResetPasswordDialog by remember { mutableStateOf(false) }
+    var showConfirmResetPasswordDialog by remember { mutableStateOf(false) }
+
+    // If operation status contains a message about sending a confirmation code, show the confirm dialog
+    LaunchedEffect(operationStatus) {
+        if (operationStatus?.contains("check your email for the confirmation code") == true) {
+            showConfirmResetPasswordDialog = true
+        }
+    }
+
     DashboardMenuScaffold(navController = navController) {
-        SettingsContent(navController = navController)
+        if (showResetPasswordDialog) {
+            // Presumably, you already have logic here to handle the reset password request
+            ResetPasswordDialog(
+                onDismiss = { showResetPasswordDialog = false },
+                onConfirm = { newPassword ->
+                    settingsViewModel.resetPassword(newPassword)
+                    showResetPasswordDialog = false
+                }
+            )
+        }
+
+        if (showConfirmResetPasswordDialog) {
+            ConfirmResetPasswordDialog(
+                onDismiss = { showConfirmResetPasswordDialog = false },
+                onConfirm = { newPassword, confirmationCode ->
+                    settingsViewModel.confirmResetPassword(newPassword, confirmationCode)
+                    showConfirmResetPasswordDialog = false
+                }
+            )
+        }
+
+        PasswordField(
+            onResetPasswordClick = { showResetPasswordDialog = true },
+            onAddRemoveAddressesClick = { /* Logic for adding/removing addresses */ },
+            onBillingInfoClick = { /* Logic for billing information */ }
+        )
+
+        // Optionally display operation status
+        operationStatus?.let { status ->
+            if (status.isNotEmpty()) {
+                Text(text = status)
+            }
+        }
     }
 }
-@Composable
-fun SettingsContent(navController: NavController){
 
-    LazyColumn(
+@Composable
+fun PasswordField(
+    onResetPasswordClick: () -> Unit,
+    onAddRemoveAddressesClick: () -> Unit,
+    onBillingInfoClick: () -> Unit
+) {
+    val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
+
+    Column(
         modifier = Modifier
             .fillMaxSize()
-    ){
-        item { AccountCard()}
+            .background(Brush.verticalGradient(colors = gradientColors))
+            .padding(16.dp)
+    ) {
+        OptionItem(
+            label = "Reset Password",
+            iconResourceId = R.mipmap.lock,
+            onClick = onResetPasswordClick
+        )
 
-        item { NotificationsCard()}
+        Spacer(modifier = Modifier.height(16.dp))
 
+        OptionItem(
+            label = "Add/Remove Addresses",
+            iconResourceId = R.mipmap.address,
+            onClick = onAddRemoveAddressesClick
+        )
 
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OptionItem(
+            label = "Billing Information",
+            iconResourceId = R.mipmap.payment,
+            onClick = onBillingInfoClick
+        )
     }
 }
 
-
-@Preview
 @Composable
-fun AccountCard() {
-    val selectedBlue = Color(0xFF008BE7)
-    val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
-    val cardElevation = CardDefaults.cardElevation(
-        defaultElevation = 8.dp,   // Default elevation
-        pressedElevation = 12.dp,  // Elevation when the card is pressed
-        focusedElevation = 10.dp,  // Elevation when the card is focused
-        hoveredElevation = 10.dp,  // Elevation when the card is hovered
-        draggedElevation = 16.dp   // Elevation when the card is dragged
-    )
-
-
-    Card (
+fun OptionItem(
+    label: String,
+    iconResourceId: Int,
+    onClick: () -> Unit
+) {
+    Row(
         modifier = Modifier
-            .height(300.dp)
-            .width(400.dp)
-            .padding(16.dp),
-            elevation = cardElevation
+            .background(Color.White, RoundedCornerShape(16.dp))
+            .clickable { onClick() }
+            .padding(16.dp)
+    ) {
+        Image(
+            painter = painterResource(id = iconResourceId),
+            contentDescription = label,
+            modifier = Modifier.size(30.dp)
+        )
 
-    ){
-        Column (
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Brush.verticalGradient(colors = gradientColors))
-                .padding(16.dp)
+        Spacer(modifier = Modifier.width(8.dp))
 
-        ){
-            Text(text = "Account",
-                style = TextStyle(
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 24.sp
-                )
+        Text(
+            text = label,
+            style = TextStyle(
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp
             )
-            Spacer(modifier = Modifier.height(8.dp))
+        )
+    }
+}
 
+@Composable
+fun ResetPasswordDialog(
+    onDismiss: () -> Unit,
+    onConfirm: (String) -> Unit
+) {
+    var newPassword by remember { mutableStateOf("") }
 
-
-            Text(text = "Password",
-                style = TextStyle(
-                    fontWeight = FontWeight.SemiBold
-                )
-            )
-
-            Button(onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .padding(top = 8.dp),
-                    shape = RoundedCornerShape(15.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = selectedBlue,
-                    )
-                ){
-                Text(text = "Change Password",
-                        style = TextStyle(
-                            color = Color.White,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    )
-            }
-
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(text = "Addresses",
-                style = TextStyle(
-                    fontWeight = FontWeight.SemiBold
-                )
-            )
-
-            Button(onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .width(160.dp),
-                shape = RoundedCornerShape(15.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = selectedBlue,
-                )
-            ){
-                Text(text = "Update/Delete",
-                    style = TextStyle(
-                        color = Color.White,
-                        fontWeight = FontWeight.SemiBold
-                    )
+    AlertDialog(
+        onDismissRequest = { onDismiss() },
+        title = { Text("Reset Password") },
+        text = {
+            Column {
+                TextField(
+                    value = newPassword,
+                    onValueChange = { newPassword = it },
+                    label = { Text("New Password") }
                 )
             }
-            Spacer(modifier = Modifier.height(8.dp))
-
-
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    onConfirm(newPassword)
+                    onDismiss()
+                }
+            ) {
+                Text("Confirm")
+            }
+        },
+        dismissButton = {
+            Button(onClick = { onDismiss() }) {
+                Text("Cancel")
+            }
         }
-    }
-}
-
-@Preview
-@Composable
-fun NotificationsCard() {
-    val selectedBlue = Color(0xFF008BE7)
-    val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
-    val cardElevation = CardDefaults.cardElevation(
-        defaultElevation = 8.dp,   // Default elevation
-        pressedElevation = 12.dp,  // Elevation when the card is pressed
-        focusedElevation = 10.dp,  // Elevation when the card is focused
-        hoveredElevation = 10.dp,  // Elevation when the card is hovered
-        draggedElevation = 16.dp   // Elevation when the card is dragged
     )
-
-    Card (
-        modifier = Modifier
-            .height(300.dp)
-            .width(400.dp)
-            .padding(16.dp),
-            elevation = cardElevation
-    ){
-        Column (
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Brush.verticalGradient(colors = gradientColors))
-                .padding(16.dp)
-        ){
-            Text(text = "Notifications",
-                style = TextStyle(
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 24.sp
-                )
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-
-
-            Text(text = "Alerts",
-                style = TextStyle(
-                    fontWeight = FontWeight.SemiBold
-                )
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(text = "Location",
-                style = TextStyle(
-                    fontWeight = FontWeight.SemiBold
-                )
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-
-        }
-    }
 }
 
+@Composable
+fun ConfirmResetPasswordDialog(
+    onDismiss: () -> Unit,
+    onConfirm: (String, String) -> Unit
+) {
+    var newPassword by remember { mutableStateOf("") }
+    var confirmationCode by remember { mutableStateOf("") }
+
+    AlertDialog(
+        onDismissRequest = { onDismiss() },
+        title = { Text("Confirm Reset Password") },
+        text = {
+            Column {
+                TextField(
+                    value = newPassword,
+                    onValueChange = { newPassword = it },
+                    label = { Text("New Password") }
+                )
+                TextField(
+                    value = confirmationCode,
+                    onValueChange = { confirmationCode = it },
+                    label = { Text("Confirmation Code") }
+                )
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    onConfirm(newPassword, confirmationCode)
+                    onDismiss()
+                }
+            ) {
+                Text("Confirm")
+            }
+        },
+        dismissButton = {
+            Button(onClick = { onDismiss() }) {
+                Text("Cancel")
+            }
+        }
+    )
+}
 
 

@@ -109,7 +109,7 @@ private fun AddressHeader() {
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Normal,
 
-            )
+                )
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -154,8 +154,8 @@ private fun AddressItem(
             .border(
                 width = 2.dp,
                 color =
-                    if (isSelected) ReturnPalTheme.colorScheme.primary
-                    else ReturnPalTheme.colorScheme.background
+                if (isSelected) ReturnPalTheme.colorScheme.primary
+                else ReturnPalTheme.colorScheme.background
             )
             .background(ReturnPalTheme.colorScheme.secondaryContainer)
     ) {
@@ -258,6 +258,3 @@ private fun SelectAddressPreview() {
         }
     }
 }
-
-
-
