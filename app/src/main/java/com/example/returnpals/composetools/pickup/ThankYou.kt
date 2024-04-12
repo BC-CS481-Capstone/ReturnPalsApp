@@ -29,7 +29,6 @@ import com.example.returnpals.composetools.getBlueIconColor
 import com.example.returnpals.composetools.getConfig
 
 
-class ThankYou {
 
     @Composable
     fun drawThankYouUI(userName:String = "Guest",
@@ -159,7 +158,7 @@ class ThankYou {
             }
         }
     }
-}
+
 
 @Preview
 @Composable
@@ -168,7 +167,7 @@ private fun ThankYouPreview() {
         Surface(
             modifier = Modifier.fillMaxSize()
         ) {
-            ThankYou().drawThankYouUI(
+            drawThankYouUI(
 
             ) {
 
