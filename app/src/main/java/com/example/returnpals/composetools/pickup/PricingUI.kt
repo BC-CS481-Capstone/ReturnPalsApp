@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
-import com.example.returnpals.PricingPlan
+import com.amplifyframework.datastore.generated.model.PricingPlan
 import com.example.returnpals.composetools.ScheduleReturnScaffold
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

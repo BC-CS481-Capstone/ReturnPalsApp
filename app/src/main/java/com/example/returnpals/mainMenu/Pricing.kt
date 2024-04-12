@@ -8,7 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.example.returnpals.PricingPlan
+import com.amplifyframework.datastore.generated.model.PricingPlan
 import com.example.returnpals.composetools.pickup.PricingOptions
 import com.example.returnpals.composetools.pickup.PricingViewModel
 

@@ -3,27 +3,30 @@ package com.example.returnpals.composetools
 
 import android.util.Log
 import com.amplifyframework.core.Amplify
+
+import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.PickupMethod
 import com.amplifyframework.datastore.generated.model.PickupStatus
 import com.amplifyframework.datastore.generated.model.Returns
-import org.json.JSONObject
+import com.example.returnpals.services.Backend.getEmail
 import java.io.File
-import java.time.LocalDate
 
 
 //Data Class for everything needed in the repository
-data class OrderRepository(private val customerId : String,
+data class OrderRepository(private val customerId: String,
 
-                           private var date : String = LocalDate.now().toString(),
-                           private var address : String = "123 basic ave",
+                           private var date: Temporal.Date,
+                           private var address: String = "123 basic ave",
+                           private var labels: List<Int>,
+                           private var status: PickupStatus = PickupStatus.ON_THE_WAY,
+                           private var hasImage: Boolean = false,
+                           private var imageFile: File? = null,
+                           private var confirmation: String = "0",
+                           private var method: PickupMethod?
 
-                           private var status : String = "N/A",
-                           private var hasImage : Boolean = false,
-                           private var imageFile : File? = null,
-                           private var notes : JSONObject = JSONObject()
 )  {
     //Sets selected date
-    fun setDate(inDate : String){
+    fun setDate(inDate : Temporal.Date){
         date = inDate
     }
     //Sets their address
@@ -31,15 +34,15 @@ data class OrderRepository(private val customerId : String,
         address = inAddress;
     }
     //Sets the status
-    fun setStatus(inStatus : String){
-        status = "N/A"
+    fun setStatus(inputEnum : PickupStatus ){
+        status = inputEnum
     }
     //Gets customer ID
     fun getId() : String{
         return customerId;
     }
     //Gets Date
-    fun getDate() : String{
+    fun getDate() : Temporal.Date{
         return date;
     }
     //Gets Address
@@ -48,12 +51,12 @@ data class OrderRepository(private val customerId : String,
     }
     //Gets Status
     fun getStatus() : String{
-        return status
+        return status.toString()
     }
-    fun setNotes(string1: String, string2: String){
-        notes.put(string1, string2)
+    fun setMethod(input: PickupMethod ){
+      method = input
+    }
 
-    }
     //Sets Image and acknowledges it exists
     fun setImage(inFile : File){
         imageFile = inFile
@@ -69,15 +72,17 @@ data class OrderRepository(private val customerId : String,
     }
     //Sends the Order to database
     val order : Returns
-        get() = Returns.builder().userId("")
-            .email("test12346789@testemailtestemail.com")
-            .labelIds(listOf())
-            .method(PickupMethod.DOORSTEP)
-            .confrimationNumber("Lorem ipsum dolor sit amet")
-            .address("Lorem ipsum dolor sit amet")
-            .labelIds(listOf())
+
+        get() = Returns.Builder()
+            .address(address)
+            .email(getEmail())
+            .confrimationNumber(confirmation)
+            .date(date)
+            .labelIds(labels)
+            .method(method)
             .status(PickupStatus.ON_THE_WAY)
-            .build();
+            .build()
+
 
 //Function to upload the image
 private fun uploadFile(key: String, file: File){

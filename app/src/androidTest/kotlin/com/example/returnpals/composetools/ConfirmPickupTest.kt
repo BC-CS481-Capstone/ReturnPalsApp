@@ -6,10 +6,10 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
+import com.amplifyframework.datastore.generated.model.LabelType
+import com.amplifyframework.datastore.generated.model.PickupMethod
+import com.amplifyframework.datastore.generated.model.PricingPlan
 import com.example.returnpals.PackageInfo
-import com.example.returnpals.PackageLabelType
-import com.example.returnpals.PickupMethod
-import com.example.returnpals.PricingPlan
 import com.example.returnpals.composetools.pickup.ConfirmPickupScreen
 import com.example.returnpals.composetools.pickup.toNiceString
 import com.example.returnpals.services.PickupInfo
@@ -27,12 +27,12 @@ class ConfirmPickupTest {
         method = PickupMethod.DOORSTEP,
         plan = PricingPlan.BRONZE,
         packages = listOf(
-            PackageInfo(labelType = PackageLabelType.PHYSICAL, description = "heavy"),
-            PackageInfo(labelType = PackageLabelType.PHYSICAL, description = "fragile, handle with care"),
-            PackageInfo(labelType = PackageLabelType.PHYSICAL),
-            PackageInfo(labelType = PackageLabelType.DIGITAL),
-            PackageInfo(labelType = PackageLabelType.DIGITAL),
-            PackageInfo(labelType = PackageLabelType.QRCODE)
+            PackageInfo(labelType = LabelType.PHYSICAL, description = "heavy"),
+            PackageInfo(labelType = LabelType.PHYSICAL, description = "fragile, handle with care"),
+            PackageInfo(labelType = LabelType.PHYSICAL),
+            PackageInfo(labelType = LabelType.DIGITAL),
+            PackageInfo(labelType = LabelType.DIGITAL),
+            PackageInfo(labelType = LabelType.QRCODE)
         )
     )
 
@@ -81,19 +81,19 @@ class ConfirmPickupTest {
     fun testDigitalLabelCount() {
         rule.setContent { ConfirmPickupScreen(info = testPickupInfo) }
         rule.onNodeWithText("Digital Labels:").assertIsDisplayed()
-        rule.onNodeWithText((testPickupInfo.packages.count { it.labelType == PackageLabelType.DIGITAL }).toString()).assertIsDisplayed()
+        rule.onNodeWithText((testPickupInfo.packages.count { it.labelType == LabelType.DIGITAL }).toString()).assertIsDisplayed()
     }
     @Test
     fun testPhysicalLabelCount() {
         rule.setContent { ConfirmPickupScreen(info = testPickupInfo) }
         rule.onNodeWithText("Physical Labels:").assertIsDisplayed()
-        rule.onNodeWithText((testPickupInfo.packages.count { it.labelType == PackageLabelType.PHYSICAL }).toString()).assertIsDisplayed()
+        rule.onNodeWithText((testPickupInfo.packages.count { it.labelType == LabelType.PHYSICAL }).toString()).assertIsDisplayed()
     }
     @Test
     fun testQRCodeCount() {
         rule.setContent { ConfirmPickupScreen(info = testPickupInfo) }
         rule.onNodeWithText("Amazon QR Codes:").assertExists()
-        rule.onNodeWithText((testPickupInfo.packages.count { it.labelType == PackageLabelType.QRCODE }).toString()).assertExists()
+        rule.onNodeWithText((testPickupInfo.packages.count { it.labelType == LabelType.QRCODE }).toString()).assertExists()
     }
     @Test
     fun testIcons() {

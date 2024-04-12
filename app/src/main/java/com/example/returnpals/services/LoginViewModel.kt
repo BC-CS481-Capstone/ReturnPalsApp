@@ -8,6 +8,7 @@ import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.auth.options.AuthSignUpOptions
 import com.amplifyframework.auth.result.AuthSignOutResult
 import com.amplifyframework.core.Amplify
+import com.example.returnpals.services.Backend.accessEmail
 
 //Login View model provides the information and function needed to login, logout, and signup.
 class LoginViewModel(): ViewModel() {
@@ -84,6 +85,7 @@ class LoginViewModel(): ViewModel() {
                 _logInSuccessful.postValue(false)
                 if (it.message!!.contains("User not confirmed in the system.")) {
                     _signUpSuccessful.postValue(true)
+                    accessEmail()
                 }
             }
         )

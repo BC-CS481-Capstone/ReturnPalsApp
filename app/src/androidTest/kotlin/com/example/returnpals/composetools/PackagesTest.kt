@@ -7,7 +7,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import com.example.returnpals.PackageInfo
-import com.example.returnpals.PackageLabelType
+import com.amplifyframework.datastore.generated.model.LabelType
 import com.example.returnpals.composetools.pickup.AddPackagesScreen
 import org.junit.Rule
 import org.junit.Test
@@ -56,7 +56,8 @@ class PackagesTest {
         assert(isClicked) { "Back button does not work." }
 
         isClicked = false
-        packages[1] = PackageInfo(Uri.EMPTY, PackageLabelType.DIGITAL)
+
+        packages[1] = PackageInfo(Uri.EMPTY, LabelType.DIGITAL)
         next.performClick()
         assert(isClicked) { "Next button on-click event does not work." }
 
@@ -112,12 +113,13 @@ class PackagesTest {
 
         // Test next and back buttons:
 
-        packages[1] = PackageInfo(Uri.EMPTY, PackageLabelType.DIGITAL, "Test 1")
-        rule.onNodeWithText(PackageLabelType.DIGITAL.toString()).assertIsDisplayed()
+
+        packages[1] = PackageInfo(Uri.EMPTY, LabelType.DIGITAL, "Test 1")
+        rule.onNodeWithText(LabelType.DIGITAL.toString()).assertIsDisplayed()
         rule.onNodeWithText("Test 1").assertIsDisplayed()
 
-        packages[2] = PackageInfo(Uri.EMPTY, PackageLabelType.PHYSICAL, "Test 2")
-        rule.onNodeWithText(PackageLabelType.PHYSICAL.toString()).assertIsDisplayed()
+        packages[2] = PackageInfo(Uri.EMPTY, LabelType.PHYSICAL, "Test 2")
+        rule.onNodeWithText(LabelType.PHYSICAL.toString()).assertIsDisplayed()
         rule.onNodeWithText("Test 2").assertIsDisplayed()
     }
 

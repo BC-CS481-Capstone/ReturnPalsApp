@@ -34,11 +34,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.amplifyframework.datastore.generated.model.LabelType
+import com.amplifyframework.datastore.generated.model.PricingPlan
+import com.amplifyframework.datastore.generated.model.PickupMethod
 import com.example.compose.ReturnPalTheme
 import com.example.returnpals.PackageInfo
-import com.example.returnpals.PackageLabelType
-import com.example.returnpals.PickupMethod
-import com.example.returnpals.PricingPlan
 import com.example.returnpals.composetools.IconManager
 import com.example.returnpals.composetools.ScheduleReturnScaffold
 import com.example.returnpals.composetools.getBackGroundColor
@@ -118,12 +118,12 @@ private fun ConfirmPickupPreview() {
             method = PickupMethod.HANDOFF,
             address = "something something address",
             packages = listOf(
-                PackageInfo(labelType = PackageLabelType.PHYSICAL),
-                PackageInfo(labelType = PackageLabelType.PHYSICAL),
-                PackageInfo(labelType = PackageLabelType.PHYSICAL),
-                PackageInfo(labelType = PackageLabelType.DIGITAL),
-                PackageInfo(labelType = PackageLabelType.DIGITAL),
-                PackageInfo(labelType = PackageLabelType.QRCODE)
+                PackageInfo(labelType = LabelType.PHYSICAL),
+                PackageInfo(labelType = LabelType.PHYSICAL),
+                PackageInfo(labelType = LabelType.PHYSICAL),
+                PackageInfo(labelType = LabelType.DIGITAL),
+                PackageInfo(labelType = LabelType.DIGITAL),
+                PackageInfo(labelType = LabelType.QRCODE)
             )
         )
     )
@@ -316,9 +316,9 @@ private fun AddressText(address: String) {
 
 @Composable
 private fun PackagesText(info: PickupInfo) {
-    val numberOfPhysical = info.packages.count { it.labelType == PackageLabelType.PHYSICAL }
-    val numberOfDigital = info.packages.count { it.labelType == PackageLabelType.DIGITAL }
-    val numberOfQRCodes = info.packages.count { it.labelType == PackageLabelType.QRCODE }
+    val numberOfPhysical = info.packages.count { it.labelType == LabelType.PHYSICAL }
+    val numberOfDigital = info.packages.count { it.labelType == LabelType.DIGITAL }
+    val numberOfQRCodes = info.packages.count { it.labelType == LabelType.QRCODE }
     val iconHeight = ReturnPalTheme.typography.bodyLarge.fontSize.value.dp + 4.dp
 
     SubtitleRow(name = "Packages")

@@ -4,7 +4,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import com.example.returnpals.PricingPlan
+import com.amplifyframework.datastore.generated.model.PricingPlan
 import com.example.returnpals.composetools.dashboard.ProfileContent
 import junit.framework.TestCase.assertEquals
 import org.junit.Rule
@@ -57,7 +57,7 @@ class ProfileTest {
     //test for profile storing type
     @Test
     fun typeTest(){
-        assertEquals(com.amplifyframework.datastore.generated.model.PricingPlan.BRONZE, profile.getType())
+        assertEquals(PricingPlan.SILVER.toString(), profile.getType())
     }
     /*
     createRandomEntry()

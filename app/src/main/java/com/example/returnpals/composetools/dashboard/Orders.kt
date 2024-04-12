@@ -59,9 +59,9 @@ fun RowScope.TableCell(
 //This function creates the OrderTable that will be displayed, listing the information of the order. Ideally, there will be a click option to show the uploaded image.
 fun OrderTable(){
     val orderList = Backend.orderList
-    val column1Weight = .2f
+    val column1Weight = .25f
     val column2Weight = .25f
-    val column3Weight = .4f
+    val column3Weight = .35f
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
     LazyColumn(
         Modifier
@@ -94,7 +94,7 @@ fun OrderTable(){
                 Log.i("Order", "Loading Item")
                 Row(){
                     TableCell(text = it.getStatus(), column1Weight)
-                    TableCell(text = it.getDate().substring(0, 10), column2Weight)
+                    TableCell(text = it.getDate().toString(), column2Weight)
                     TableCell(text = it.getAddress(), column3Weight)
 
                 }
