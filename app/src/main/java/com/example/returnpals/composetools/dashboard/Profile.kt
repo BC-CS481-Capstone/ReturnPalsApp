@@ -166,8 +166,8 @@ class ProfileViewModel(): ViewModel() {
     val hasUserInfo: LiveData<Boolean?> = _hasUserInfo
 
 
-    var userNameFirst  = mutableStateOf("Guest")
-    var userNameLast = mutableStateOf("")
+    var userNameFirst  = mutableStateOf("John")
+    var userNameLast = mutableStateOf("Doe")
     var userPlan = mutableStateOf(PricingPlan.BRONZE)
     var expireDate = mutableStateOf("Never")
 
