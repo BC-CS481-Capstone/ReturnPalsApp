@@ -2,7 +2,6 @@ package com.example.returnpals.composetools
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.example.returnpals.mainMenu.MenuRoutes
 
 fun goto(
     controller: NavController,
