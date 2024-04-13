@@ -24,6 +24,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import com.amplifyframework.core.Amplify
 import com.example.returnpals.mainMenu.MenuRoutes
 import com.example.returnpals.mainMenu.viewModelLogin
 import com.example.returnpals.services.LoginViewModel
@@ -238,13 +239,12 @@ class ConfirmNumberViewModel(): ViewModel() {
     }
     fun confirmNumber() {
 
-       // Amplify.Auth.confirmSignUp(
-           // getEmail(), code.value,
-           // { _confirmSuccessful.postValue(true) },
-            //{ _confirmSuccessful.postValue(false)
-          //      setMessage(it.message.toString()) }
-       // )
-        _confirmSuccessful.postValue(true)
+        Amplify.Auth.confirmSignUp(
+            getEmail(), code.value,
+            { _confirmSuccessful.postValue(true) },
+            { _confirmSuccessful.postValue(false)
+                setMessage(it.message.toString()) }
+        )
     }
 }
 
