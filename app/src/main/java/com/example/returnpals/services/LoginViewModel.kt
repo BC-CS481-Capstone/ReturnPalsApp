@@ -60,7 +60,7 @@ class LoginViewModel(): ViewModel() {
             { _signUpSuccessful.postValue(true) }
         ) {
             _signUpSuccessful.postValue(false)
-            setFailLogInMessage(it.message!!)
+            setFailLogInMessage(it.message!! + it.recoverySuggestion)
         }
     }
 
@@ -81,7 +81,7 @@ class LoginViewModel(): ViewModel() {
             getEmail(),
             password.value,
             { _logInSuccessful.postValue(true) },{
-                setFailLogInMessage(it.message!!)
+                setFailLogInMessage(it.message!! + it.recoverySuggestion)
                 _logInSuccessful.postValue(false)
                 if (it.message!!.contains("User not confirmed in the system.")) {
                     _signUpSuccessful.postValue(true)
