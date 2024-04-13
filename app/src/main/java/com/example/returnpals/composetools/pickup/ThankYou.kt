@@ -27,6 +27,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.amplifyframework.api.graphql.model.ModelQuery
 import com.amplifyframework.core.Amplify
+import com.amplifyframework.datastore.generated.model.Returns
 import com.amplifyframework.datastore.generated.model.User
 import com.example.returnpals.composetools.ButtonManager
 import com.example.returnpals.composetools.IconManager
@@ -39,8 +40,9 @@ fun ThankYouScreen(dashBoardButton: () -> Unit) {
     //This function uses a thankyou view model to display info
     thankYouVM.init()
     val hasUserNames by thankYouVM.hasUserNames.observeAsState()
-    if (hasUserNames == true) {
-        drawThankYouUI(userName = thankYouVM.userName.value, email = thankYouVM.userEmail.value, dashBoardButton = dashBoardButton)
+    val hasConfirmNumber by thankYouVM.hasConfirmNumber.observeAsState()
+    if (hasUserNames == true && hasConfirmNumber == true) {
+        drawThankYouUI(confirmNumber=thankYouVM.confirmNumber.value ,userName = thankYouVM.userName.value, email = thankYouVM.userEmail.value, dashBoardButton = dashBoardButton)
     }
 
 }
@@ -180,10 +182,12 @@ fun ThankYouScreen(dashBoardButton: () -> Unit) {
 class ThankYouViewModel(): ViewModel() {
     private val _hasUserNames = MutableLiveData<Boolean>()
     val hasUserNames: LiveData<Boolean> = _hasUserNames
-
+    private val _hasConfirmNumber = MutableLiveData<Boolean>()
+    val hasConfirmNumber: LiveData<Boolean> = _hasConfirmNumber
 
     var userName  = mutableStateOf("Guest")
     var userEmail = mutableStateOf("")
+    var confirmNumber = mutableStateOf("")
 
     fun init() {
         Amplify.API.query(
@@ -196,8 +200,21 @@ class ThankYouViewModel(): ViewModel() {
                 }
             },
             {
-            }
-        );
-    } //_hasUserNames.postValue(true)
+            });
+        Amplify.API.query(
+            ModelQuery.list(Returns::class.java), {
+                if (it.hasData() && it.data.items.count() > 0) {
+                    confirmNumber.value = it.data.items.first().confrimationNumber
+                    userEmail.value = it.data.items.first().email
+                    //OR something like this
+                    _hasConfirmNumber.postValue(true)
+                } else {
+                    confirmNumber.value = "TODO Get # from returns view model"
+                    _hasConfirmNumber.postValue(true) //TODO set to False
+                }
+            },
+            {
+            });
+    }
 
 }
