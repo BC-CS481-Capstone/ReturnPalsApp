@@ -200,11 +200,15 @@ fun ConfirmNumber(navController: NavController) {
     }
 
 private class ConfirmNumberViewModel(): ViewModel() {
+    //View model for confirm number. Sends data to amplify (confirm number)
 
+    // Condition variable
     private val _confirmSuccessful = MutableLiveData<Boolean?>()
     val confirmSuccessful: LiveData<Boolean?> = _confirmSuccessful
 
+    //Get email from login
     private var repository = UserRepository
+
     var code =  mutableStateOf<String>("")
         private set
     var message = mutableStateOf<String>("")
@@ -218,7 +222,9 @@ private class ConfirmNumberViewModel(): ViewModel() {
     fun setMessage(value:String){
         message.value = value
     }
-
+    fun setCode(codeValue:String) {
+        code.value = codeValue
+    }
     fun confirmNumber() {
         Amplify.Auth.confirmSignUp(
             getEmail(), code.value,
@@ -227,10 +233,6 @@ private class ConfirmNumberViewModel(): ViewModel() {
                 setMessage(it.message.toString()) }
         )
     }
-    fun setCode(codeValue:String) {
-        code.value = codeValue
-    }
-
 }
 
 
