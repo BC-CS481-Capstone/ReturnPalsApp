@@ -105,7 +105,8 @@ fun ConfirmNumber(navController: NavController) {
 
         ) {
             IconManager().getReturnPalNameIcon(Modifier.requiredWidth(config.screenWidthDp.dp))
-            Text("Please enter the confirmation number sent to,\n"+emailToConfirm)
+            Text("Please enter the confirmation number sent to,\n")
+            Text(emailToConfirm)
             OutlinedTextField(value=submitNumber, onValueChange = onSubmitNumberChange)
             Text(message)
             Button(onClick = verifyButton,
