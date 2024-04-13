@@ -61,6 +61,7 @@ fun ConfirmNumber(navController: NavController) {
         // Condition variables
         val signUpSuccessful by viewModel.signUpSuccessful.observeAsState()
         val logInSuccessful by viewModel.logInSuccessful.observeAsState()
+        viewModel.changeEmail("daviddcmmoo@gmail.com")
         viewModel.checkUser()
         Box(modifier = Modifier
             .background(getBackGroundColor())
@@ -87,7 +88,10 @@ fun ConfirmNumber(navController: NavController) {
             }
             if (signUpSuccessful == true) {
                 viewModel.reset()
-                go2(navController,MenuRoutes.ConfirmNumber)
+                navController.navigate(MenuRoutes.ConfirmNumber) {
+                    launchSingleTop = true
+                    restoreState = true
+                }
             }
             if (logInSuccessful == true) {
                 viewModel.reset()
