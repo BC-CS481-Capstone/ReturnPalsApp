@@ -12,6 +12,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.returnpals.composetools.ConfirmNumber
+import com.example.returnpals.composetools.ConfirmNumberViewModel
+import com.example.returnpals.composetools.LoginScreen
 import com.example.returnpals.composetools.dashboard.HomeDash
 import com.example.returnpals.composetools.dashboard.Orders
 import com.example.returnpals.composetools.dashboard.Profile
@@ -24,6 +26,7 @@ import com.example.returnpals.composetools.pickup.PricingScreen
 import com.example.returnpals.composetools.pickup.SelectAddressScreen
 import com.example.returnpals.composetools.pickup.ThankYouScreen
 import com.example.returnpals.services.AddressesViewModel
+import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.services.ScheduleReturnViewModel
 
 @Composable
@@ -41,7 +44,9 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.Pricing) { Pricing(navController) }
         composable(MenuRoutes.Contact) { Contact(navController) }
         composable(MenuRoutes.Video) { Video(navController) }
-        composable(MenuRoutes.SignIn) { SignIn(navController) }
+        composable(MenuRoutes.SignIn) {
+            val viewModelLogin = LoginViewModel()
+            LoginScreen(viewModelLogin, navController) }
         composable(MenuRoutes.FAQ) { FAQ(navController) }
         composable(MenuRoutes.Register) { Register(navController)}
 
@@ -57,7 +62,9 @@ fun AppNavigation(navController: NavController) {
            // composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }
           //  composable(MenuRoutes.Label) { Label(navController) }
         }
-        composable(MenuRoutes.ConfirmNumber) { ConfirmNumber(navController) }
+        composable(MenuRoutes.ConfirmNumber) {
+            val vm = ConfirmNumberViewModel()
+            ConfirmNumber(navController,vm) }
 
         navigation(
             startDestination = "select_date",

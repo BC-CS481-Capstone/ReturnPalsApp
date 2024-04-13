@@ -24,7 +24,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.amplifyframework.core.Amplify
 import com.example.returnpals.mainMenu.MenuRoutes
 import com.example.returnpals.mainMenu.viewModelLogin
 import com.example.returnpals.services.LoginViewModel
@@ -35,9 +34,9 @@ import com.example.returnpals.services.UserRepository
 
 
 
-private var confirmviewMd = ConfirmNumberViewModel()
+
 @Composable
-fun ConfirmNumber(navController: NavController) {
+fun ConfirmNumber(navController: NavController,confirmviewMd:ConfirmNumberViewModel ) {
     val confirmSuccessful by confirmviewMd.confirmSuccessful.observeAsState()
     Box(modifier = Modifier
         .background(getBackGroundColor())
@@ -52,7 +51,13 @@ fun ConfirmNumber(navController: NavController) {
     }
     if (confirmSuccessful == true) {
         viewModelLogin.logIn()
-        go2(navController, MenuRoutes.Register)
+        navController.navigate(MenuRoutes.Register) {
+            popUpTo(MenuRoutes.Home) {
+               // saveState = true
+            }
+            launchSingleTop = true
+            //restoreState = true
+        }
     }
 }
 
@@ -89,6 +94,7 @@ fun ConfirmNumber(navController: NavController) {
             if (signUpSuccessful == true) {
                 viewModel.reset()
                 navController.navigate(MenuRoutes.ConfirmNumber) {
+                    popUpTo(MenuRoutes.SignIn)
                     launchSingleTop = true
                     restoreState = true
                 }
@@ -204,7 +210,7 @@ fun ConfirmNumber(navController: NavController) {
         }
     }
 
-private class ConfirmNumberViewModel(): ViewModel() {
+class ConfirmNumberViewModel(): ViewModel() {
     //View model for confirm number. Sends data to amplify (confirm number)
 
     // Condition variable
@@ -231,12 +237,14 @@ private class ConfirmNumberViewModel(): ViewModel() {
         code.value = codeValue
     }
     fun confirmNumber() {
-        Amplify.Auth.confirmSignUp(
-            getEmail(), code.value,
-            { _confirmSuccessful.postValue(true) },
-            { _confirmSuccessful.postValue(false)
-                setMessage(it.message.toString()) }
-        )
+
+       // Amplify.Auth.confirmSignUp(
+           // getEmail(), code.value,
+           // { _confirmSuccessful.postValue(true) },
+            //{ _confirmSuccessful.postValue(false)
+          //      setMessage(it.message.toString()) }
+       // )
+        _confirmSuccessful.postValue(true)
     }
 }
 
