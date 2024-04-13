@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
@@ -18,20 +20,34 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.compose.ReturnPalTheme
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.amplifyframework.api.graphql.model.ModelQuery
+import com.amplifyframework.core.Amplify
+import com.amplifyframework.datastore.generated.model.User
 import com.example.returnpals.composetools.ButtonManager
 import com.example.returnpals.composetools.IconManager
 import com.example.returnpals.composetools.ScheduleReturnProgressBar
 import com.example.returnpals.composetools.getBlueIconColor
 import com.example.returnpals.composetools.getConfig
+var thankYouVM = ThankYouViewModel()
+@Composable
+fun ThankYouScreen(dashBoardButton: () -> Unit) {
+    //This function uses a thankyou view model to display info
+    thankYouVM.init()
+    val hasUserNames by thankYouVM.hasUserNames.observeAsState()
+    if (hasUserNames == true) {
+        drawThankYouUI(userName = thankYouVM.userName.value, email = thankYouVM.userEmail.value, dashBoardButton = dashBoardButton)
+    }
 
-
+}
 
     @Composable
-    fun drawThankYouUI(userName:String = "Guest",
+    fun drawThankYouUI(
+        userName:String = "Guest",
                        confirmNumber:String = "#",
                        email:String = "johndoe2394@gmail.com",
                        dashBoardButton: () -> Unit)
@@ -40,13 +56,14 @@ import com.example.returnpals.composetools.getConfig
         val iconSize = configsWidth/2
         val fontSize = configsWidth/14
         val lineLength = configsWidth-20
-
         Scaffold(
             topBar = { ScheduleReturnProgressBar(step=100) },
             bottomBar = {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxWidth().padding(10.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp)
                 ) {
                     ButtonManager.NextButton(
                         onClick = dashBoardButton,
@@ -59,11 +76,12 @@ import com.example.returnpals.composetools.getConfig
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(padding)
-                    .padding(20.dp,20.dp)
+                    .padding(20.dp, 20.dp)
             ) {
                 IconManager().getTruckIcon(
-                    modifier = Modifier.width(iconSize.dp)
-                        .padding(vertical=20.dp)
+                    modifier = Modifier
+                        .width(iconSize.dp)
+                        .padding(vertical = 20.dp)
                 )
                 //Thank you text
                 Text(
@@ -159,19 +177,27 @@ import com.example.returnpals.composetools.getConfig
         }
     }
 
+class ThankYouViewModel(): ViewModel() {
+    private val _hasUserNames = MutableLiveData<Boolean>()
+    val hasUserNames: LiveData<Boolean> = _hasUserNames
 
-@Preview
-@Composable
-private fun ThankYouPreview() {
-    ReturnPalTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            drawThankYouUI(
 
-            ) {
+    var userName  = mutableStateOf("Guest")
+    var userEmail = mutableStateOf("")
 
+    fun init() {
+        Amplify.API.query(
+            ModelQuery.list(User::class.java), {
+                if (it.hasData()) {
+                    userName.value = it.data.items.first().firstName
+                    userEmail.value = it.data.items.first().email
+                    //OR something like this
+                    _hasUserNames.postValue(true)
+                }
+            },
+            {
             }
-        }
-    }
+        );
+    } //_hasUserNames.postValue(true)
+
 }

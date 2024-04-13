@@ -21,7 +21,7 @@ import com.example.returnpals.composetools.pickup.PickupDateScreen
 import com.example.returnpals.composetools.pickup.PickupMethodScreen
 import com.example.returnpals.composetools.pickup.PricingScreen
 import com.example.returnpals.composetools.pickup.SelectAddressScreen
-import com.example.returnpals.composetools.pickup.drawThankYouUI
+import com.example.returnpals.composetools.pickup.ThankYouScreen
 import com.example.returnpals.services.AddressesViewModel
 import com.example.returnpals.services.ScheduleReturnViewModel
 
@@ -130,7 +130,7 @@ fun AppNavigation(navController: NavController) {
             }
             composable("thanks") { entry ->
                 val pickupVM = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
-                drawThankYouUI(
+                ThankYouScreen(
                     dashBoardButton = {
                         navController.navigate("dashboard home") {
                             popUpTo(MenuRoutes.PickupProcess) {
