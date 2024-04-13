@@ -1,10 +1,6 @@
 package com.example.returnpals.composetools.dashboard
 
 import DashboardMenuScaffold
-import android.net.Uri
-
-import android.util.Log
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -15,6 +11,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -24,32 +23,38 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import com.amplifyframework.api.graphql.model.ModelQuery
+import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.generated.model.PricingPlan
-
+import com.amplifyframework.datastore.generated.model.User
 import com.example.returnpals.R
 import com.example.returnpals.composetools.pickup.PricingPlanText
-import com.example.returnpals.composetools.ProfileRepository
-import com.example.returnpals.email
-import com.example.returnpals.services.Backend
 
+val profileVM = ProfileViewModel()
 @Composable
 fun Profile(navController: NavController) {
     DashboardMenuScaffold(navController = navController) {
-        ProfileContent()
+        val hasUserInfo by profileVM.hasUserInfo.observeAsState()
+        profileVM.init()
+        if (hasUserInfo == true) {
+            ProfileContent(profileVM)
+        }
     }
 
 }
 
-@Preview
-@Composable
-fun ProfileContent() {
-    val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
-    val profile = Backend.Profile
 
+
+@Composable
+fun ProfileContent(vm:ProfileViewModel) {
+    val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
+    val profile = vm
 
 
     Column(
@@ -152,5 +157,48 @@ fun CancelPlanButton(){
 
 private fun cancel(){
 
+}
+
+
+
+class ProfileViewModel(): ViewModel() {
+    private val _hasUserInfo = MutableLiveData<Boolean?>()
+    val hasUserInfo: LiveData<Boolean?> = _hasUserInfo
+
+
+    var userNameFirst  = mutableStateOf("Guest")
+    var userNameLast = mutableStateOf("")
+    var userPlan = mutableStateOf(PricingPlan.BRONZE)
+    var expireDate = mutableStateOf("Never")
+
+    fun getFirstName() :String{
+        return userNameFirst.value
+    }
+    fun getLastName() :String{
+        return userNameLast.value
+    }
+    fun getExpireDate() :String{
+        return expireDate.value
+    }
+    fun getType ():String {
+        return userPlan.value.toString()
+    }
+    fun init() {
+        Amplify.API.query(
+            ModelQuery.list(User::class.java), {
+                if (it.hasData()) {
+                    val first = it.data.items.first()
+                    userNameFirst.value = first.firstName
+                    userNameLast.value = first.lastName
+                    userPlan.value = first.subscription
+                    _hasUserInfo.postValue(true)
+                } else {
+                    _hasUserInfo.postValue(false)
+                }
+            },
+            {
+            }
+        );
+    }
 }
 
