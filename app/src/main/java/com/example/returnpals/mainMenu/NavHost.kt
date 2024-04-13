@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -69,7 +70,11 @@ fun AppNavigation(navController: NavController) {
                     onChangeDate = pickupVM::onChangeDate,
                     isValidDate = pickupVM::isValidDate,
                     onClickNext = { navController.navigate("select_address") },
-                    onClickBack = { navController.navigate(MenuRoutes.HomeDash) },
+                    onClickBack = { navController.navigate(MenuRoutes.HomeDash) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                    } },
                 )
             }
             composable("select_address") { entry ->
