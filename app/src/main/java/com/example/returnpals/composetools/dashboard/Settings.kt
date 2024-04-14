@@ -13,7 +13,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -41,19 +43,17 @@ import com.example.returnpals.R
 fun Settings(navController: NavController) {
     val settingsViewModel: SettingsViewModel = viewModel()
     val operationStatus by settingsViewModel.operationStatus.collectAsState()
+    val userAddresses by settingsViewModel.userAddresses.collectAsState()
     var showResetPasswordDialog by remember { mutableStateOf(false) }
     var showConfirmResetPasswordDialog by remember { mutableStateOf(false) }
+    var showAddressesDialog by remember { mutableStateOf(false) }
 
-    // If operation status contains a message about sending a confirmation code, show the confirm dialog
-    LaunchedEffect(operationStatus) {
-        if (operationStatus?.contains("check your email for the confirmation code") == true) {
-            showConfirmResetPasswordDialog = true
-        }
+    LaunchedEffect(key1 = true) {
+        settingsViewModel.fetchAddresses()
     }
 
     DashboardMenuScaffold(navController = navController) {
         if (showResetPasswordDialog) {
-            // Presumably, you already have logic here to handle the reset password request
             ResetPasswordDialog(
                 onDismiss = { showResetPasswordDialog = false },
                 onConfirm = { newPassword ->
@@ -73,13 +73,18 @@ fun Settings(navController: NavController) {
             )
         }
 
+        if (showAddressesDialog) {
+            AddressesDialog(
+                addresses = userAddresses.map { it.toString() }
+            ) { showAddressesDialog = false }
+        }
+
         PasswordField(
             onResetPasswordClick = { showResetPasswordDialog = true },
-            onAddRemoveAddressesClick = { /* Logic for adding/removing addresses */ },
+            onAddRemoveAddressesClick = { showAddressesDialog = true },
             onBillingInfoClick = { /* Logic for billing information */ }
         )
 
-        // Optionally display operation status
         operationStatus?.let { status ->
             if (status.isNotEmpty()) {
                 Text(text = status)
@@ -120,7 +125,7 @@ fun PasswordField(
 
         OptionItem(
             label = "Billing Information",
-            iconResourceId = R.mipmap.payment,
+            iconResourceId = R.mipmap.address,
             onClick = onBillingInfoClick
         )
     }
@@ -236,4 +241,33 @@ fun ConfirmResetPasswordDialog(
     )
 }
 
-
+@Composable
+fun AddressesDialog(
+    addresses: List<String>,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = { onDismiss() },
+        title = { Text("Manage Addresses") },
+        text = {
+            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                if (addresses.isEmpty()) {
+                    Text("No addresses available.")
+                } else {
+                    addresses.forEach { address ->
+                        // Assuming address components are separated by commas
+                        address.split(",").forEach { part ->
+                            Text(text = part.trim())
+                        }
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            Button(onClick = { onDismiss() }) {
+                Text("Close")
+            }
+        }
+    )
+}
