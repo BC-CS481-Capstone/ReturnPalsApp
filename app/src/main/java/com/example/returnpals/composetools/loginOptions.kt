@@ -67,7 +67,6 @@ fun ConfirmNumber(navController: NavController,confirmviewMd:ConfirmNumberViewMo
         // Condition variables
         val signUpSuccessful by viewModel.signUpSuccessful.observeAsState()
         val logInSuccessful by viewModel.logInSuccessful.observeAsState()
-        viewModel.changeEmail("daviddcmmoo@gmail.com")
         viewModel.checkUser()
         Box(modifier = Modifier
             .background(getBackGroundColor())
