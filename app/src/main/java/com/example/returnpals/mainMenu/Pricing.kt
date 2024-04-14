@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.returnpals.PricingPlan
+import com.amplifyframework.datastore.generated.model.PricingPlan
 import com.example.returnpals.composetools.pickup.PricingOptions
 import com.example.returnpals.composetools.pickup.PricingViewModel
 

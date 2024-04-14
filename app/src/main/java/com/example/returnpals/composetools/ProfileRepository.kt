@@ -17,7 +17,9 @@ data class ProfileRepository(
     private var nameLast : String = "Doe",
     private var email : String = "JD@ReturnPal.com",
     private var expireDate : LocalDate = LocalDate.now(),
-    private var memberShipType : PricingPlan = PricingPlan.BRONZE
+
+    private var memberShipType : PricingPlan = PricingPlan.SILVER
+
 ) {
     private val TAG = "ProfileRepo"
     fun getDataBase(){
@@ -29,22 +31,24 @@ data class ProfileRepository(
                 if(response.hasData()) {
                     response.data.forEach { user ->
                         Log.i("ProfileRepo", user.firstName)
-                        try {
-                            nameLast = user.lastName
+                        nameLast = try {
+                            user.lastName
                         }   catch(except: Exception){
-                            throw Exception(except)
+                            "Name"
                         }
 
 
-                        try {
-                            nameFirst = user.firstName
+                        nameFirst = try {
+                            user.firstName
                         }   catch(except: Exception){
-                            throw Exception(except)
+                            "User"
                         }
-                        try {
-                            memberShipType = user.subscription
+                        memberShipType = try {
+                            user.subscription
                         } catch(except: Exception){
-                            //memberShipType = "none"
+
+                            PricingPlan.BRONZE
+
                         }
                     }
                 }
@@ -60,8 +64,10 @@ data class ProfileRepository(
     fun getLastName() : String{
         return nameLast
     }
-    fun getType() : PricingPlan{
-        return memberShipType
+
+    fun getType() : String{
+        return memberShipType.toString()
+
     }
     fun getExpireDate() : LocalDate{
         return expireDate

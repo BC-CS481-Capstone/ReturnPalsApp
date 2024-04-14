@@ -4,8 +4,9 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import com.example.returnpals.PricingPlan
+import com.amplifyframework.datastore.generated.model.PricingPlan
 import com.example.returnpals.composetools.dashboard.ProfileContent
+import com.example.returnpals.composetools.dashboard.ProfileViewModel
 import junit.framework.TestCase.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -17,47 +18,47 @@ class ProfileTest {
     //test YourPlan is displayed
     @Test
     fun yourPlanTest(){
-        rule.setContent{ ProfileContent() }
+        rule.setContent{ ProfileContent(ProfileViewModel()) }
         rule.onNodeWithText("Your Plan:").assertIsDisplayed()
     }
     //Test Silver is displayed
     @Test
     fun planTest(){
-        rule.setContent{ ProfileContent() }
-        rule.onNodeWithTag(PricingPlan.SILVER.toString()).assertIsDisplayed()
+        rule.setContent{ ProfileContent(ProfileViewModel()) }
+        rule.onNodeWithTag(PricingPlan.BRONZE.toString()).assertIsDisplayed()
     }
     //Test welcome, will be updated once a continuous profile presence is established.
     @Test
     fun welcomeTest(){
-        rule.setContent{ ProfileContent() }
+        rule.setContent{ ProfileContent(ProfileViewModel()) }
         rule.onNodeWithText("Welcome, John Doe").assertIsDisplayed()
     }
     //Test expired date shows
     @Test
     fun expireTest(){
-        rule.setContent{ ProfileContent() }
+        rule.setContent{ ProfileContent(ProfileViewModel()) }
         rule.onNodeWithText("Plan Expires On:").assertIsDisplayed()
     }
     //Test cancel button is shown
     @Test
     fun cancelTest(){
-        rule.setContent{ ProfileContent() }
+        rule.setContent{ ProfileContent(ProfileViewModel()) }
         rule.onNodeWithText("Cancel").assertIsDisplayed()
     }
-    //Test for profile storing first name
+    //Test for profile view model
     @Test
     fun firstNameTest(){
-        assertEquals("John", profile.getFirstName())
+        assertEquals("John", ProfileViewModel().getFirstName())
     }
     //Test for profile storing last name
     @Test
     fun lastNameTest(){
-        assertEquals("Doe", profile.getLastName())
+        assertEquals("Doe", ProfileViewModel().getLastName())
     }
     //test for profile storing type
     @Test
     fun typeTest(){
-        assertEquals(com.amplifyframework.datastore.generated.model.PricingPlan.BRONZE, profile.getType())
+        assertEquals(PricingPlan.BRONZE.toString(), ProfileViewModel().getType())
     }
     /*
     createRandomEntry()

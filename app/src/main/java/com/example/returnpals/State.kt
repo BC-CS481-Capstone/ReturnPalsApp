@@ -1,49 +1,16 @@
 package com.example.returnpals
 
-import android.location.Address
-import java.time.LocalDate
 
+import android.location.Address
+import android.net.Uri
+import java.time.LocalDate
+import com.amplifyframework.datastore.generated.model.LabelType
 // TODO: develop backend
 
-enum class PricingPlan {
-    BRONZE {
-        override fun toString(): String { return "BRONZE" }
-    },
-    SILVER {
-        override fun toString(): String { return "SILVER" }
-    },
-    GOLD {
-        override fun toString(): String { return "GOLD" }
-    },
-    PLATINUM {
-        override fun toString(): String { return "PLATINUM" }
-    }
-}
-
-enum class PickupMethod {
-    HANDOFF {
-        override fun toString(): String { return "HANDOFF" }
-    },
-    DOORSTEP {
-        override fun toString(): String { return "DOORSTEP" }
-    }
-}
-
-enum class PackageLabelType {
-    PHYSICAL {
-        override fun toString(): String { return "PHYSICAL" }
-    },
-    DIGITAL  {
-        override fun toString(): String { return "DIGITAL" }
-    },
-    QRCODE  {
-        override fun toString(): String { return "QR CODE" }
-    }
-}
 
 data class PackageInfo(
-    val label: String, // label is a filename
-    val labelType: PackageLabelType,
+    val label: Uri = Uri.EMPTY, // label is a filename
+    val labelType: LabelType,
     var description: String? = null, // additional info provided by user
 )
 

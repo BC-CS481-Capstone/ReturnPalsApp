@@ -11,7 +11,7 @@ import com.amplifyframework.datastore.AWSDataStorePlugin
 import com.amplifyframework.datastore.generated.model.Returns
 import com.example.returnpals.composetools.OrderRepository
 import com.example.returnpals.composetools.ProfileRepository
-import org.json.JSONObject
+
 
 /**Adds amplify backend on create code as tutorial examples provided.**/
 object Backend {
@@ -86,21 +86,27 @@ object Backend {
     private fun orderRetrieval() {
         Log.i(TAG, "Order Retrieval Called")
         Amplify.API.query(
-            ModelQuery.list(Returns::class.java, Returns.ID.contains("9")),
+
+            ModelQuery.list(Returns::class.java, Returns.EMAIL.contains(email)),
+
             { response ->
                 Log.i(TAG, response.toString())
                 if (response.hasData()) {
                     response.data.forEach() { orderData ->
-                        if (orderData.email.contains(email)) {
-                            Log.i(TAG, "Order Added ${orderData.method.toString()}")
+
+
+                            val list = listOf(1, 2, 3)
+
                             val order = OrderRepository(
                                 email,
-                                status = orderData.status.toString(),
-                                date = orderData.date.toString(),
-                                notes = JSONObject(orderData.method.toString())
-                            )
+                                status = orderData.status,
+                                date =  orderData.date,
+                                method = orderData.method,
+                                labels = list,
+                                address = orderData.address
+                                                            )
                             orderList.add(order)
-                        }
+
 
 
                     }

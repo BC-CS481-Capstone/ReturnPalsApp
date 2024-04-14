@@ -17,6 +17,9 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -27,20 +30,34 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import com.amplifyframework.api.graphql.model.ModelQuery
+import com.amplifyframework.core.Amplify
+import com.amplifyframework.datastore.generated.model.User
 import com.example.returnpals.R
+import com.example.returnpals.composetools.go2
 import com.example.returnpals.mainMenu.MenuRoutes
 
-
+val vm = DashHomeViewModel()
 @Composable
 fun HomeDash(navController: NavController) {
-    DashboardMenuScaffold(navController = navController) {
-        HomeDashContent(navController = navController)
+    val hasName by vm.hasUserName.observeAsState()
+    vm.init()
+    if (hasName == true) {
+        DashboardMenuScaffold(navController = navController) {
+            HomeDashContent(navController = navController, firstName = vm.getFirstName())
+        }
+    } else if (hasName == false) {
+        go2(navController,MenuRoutes.Register)
     }
+
 }
 @Composable
-fun HomeDashContent(navController: NavController) {
+fun HomeDashContent(navController: NavController,firstName: String) {
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
 
     LazyColumn( modifier = Modifier
@@ -49,14 +66,14 @@ fun HomeDashContent(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
 
     ){
-        item{ Welcome() }
+        item{ Welcome(firstName = firstName) }
         item{ DashCard(navController = navController) }
 
     }
 }
 
 @Composable
-fun Welcome() {
+fun Welcome(firstName:String) {
     Column (
         modifier = Modifier
             .padding(8.dp),
@@ -64,7 +81,7 @@ fun Welcome() {
     ){
 
         Text(
-            text = "Welcome Back, user", // Needs to get user's name
+            text = "Welcome Back, $firstName", // Needs to get user's name
             style = TextStyle(
                 color = Color.Black,
                 fontSize = 30.sp,
@@ -154,5 +171,29 @@ fun DashCard(navController: NavController) {
                 )
             }
         }
+    }
+}
+
+class DashHomeViewModel(): ViewModel() {
+    private val _hasUserName = MutableLiveData<Boolean?>()
+    val hasUserName: LiveData<Boolean?> = _hasUserName
+    var userNameFirst  = mutableStateOf("Guest")
+    fun getFirstName() :String{
+        return userNameFirst.value
+    }
+    fun init() {
+        Amplify.API.query(
+            ModelQuery.list(User::class.java), {
+                if (!it.hasErrors() && it.hasData() && it.data.items.count() != 0) {
+                    val first = it.data.items.first()
+                    userNameFirst.value = first.firstName
+                    _hasUserName.postValue(true)
+                } else {
+                    _hasUserName.postValue(false)
+                }
+            },
+            {
+            }
+        );
     }
 }
