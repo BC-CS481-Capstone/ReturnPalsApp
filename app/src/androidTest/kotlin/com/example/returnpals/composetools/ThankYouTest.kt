@@ -6,9 +6,8 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import com.example.returnpals.composetools.pickup.ThankYou
+import com.example.returnpals.composetools.pickup.drawThankYouUI
 import org.junit.Rule
-
 import org.junit.Test
 
 class ThankYouTest {
@@ -20,42 +19,42 @@ class ThankYouTest {
     @Test
     fun progressBarChecks() {
         rule.setContent {
-            ThankYou().drawThankYouUI {}
+            drawThankYouUI {}
         }
         rule.onNodeWithText("Pay & Confirm").assertIsDisplayed()
     }
     @Test
     fun truckIcon() {
         rule.setContent {
-            ThankYou().drawThankYouUI {}
+            drawThankYouUI {}
         }
         rule.onNodeWithContentDescription("Truck Icon").assertIsDisplayed()
     }
     @Test
     fun thankYouText() {
         rule.setContent {
-            ThankYou().drawThankYouUI {}
+            drawThankYouUI {}
         }
         rule.onNodeWithText("Thank you for scheduling a return with us!").assertIsDisplayed()
     }
     @Test
     fun confirmText() {
         rule.setContent {
-            ThankYou().drawThankYouUI(userName ="David", confirmNumber = "#TEST45873231997") {}
+            drawThankYouUI(userName ="David", confirmNumber = "#TEST45873231997") {}
         }
         rule.onNodeWithText("David, your pickup order #TEST45873231997 is confirmed.").assertIsDisplayed()
     }
     @Test
     fun emailText() {
         rule.setContent {
-            ThankYou().drawThankYouUI(email = "david.caldwell@returnpal.ham") {}
+            drawThankYouUI(email = "david.caldwell@returnpal.ham") {}
         }
         rule.onNodeWithText("A confirmation email will be sent to: david.caldwell@returnpal.ham").assertIsDisplayed()
     }
     @Test
     fun dashBoardButton() {
         rule.setContent {
-            ThankYou().drawThankYouUI {}
+            drawThankYouUI {}
         }
         rule.onNode(hasText("Return to Dashboard") and hasClickAction()).assertIsDisplayed()
     }
