@@ -6,28 +6,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.returnpals.IdManager
 import com.example.returnpals.PackageInfo
+import com.example.returnpals.PickupInfo
 import com.amplifyframework.datastore.generated.model.PickupMethod
 import com.amplifyframework.datastore.generated.model.PricingPlan
 import java.time.LocalDate
-
-data class PickupInfo(
-    var date: LocalDate = LocalDate.now(),
-    var address: String? = null,
-    var method: PickupMethod? = null,
-    var plan: PricingPlan? = null,
-    var packages: List<PackageInfo> = listOf()
-) {
-    val tax get() = 0.00
-    val cost get() =
-        when (plan) {
-            PricingPlan.BRONZE -> 3.99 * packages.size.toDouble()
-            PricingPlan.SILVER -> 0.00
-            PricingPlan.GOLD -> 0.00
-            PricingPlan.PLATINUM -> 0.00
-            else -> 0.00
-        }
-    val total get() = tax + cost
-}
 
 open class PickupViewModel(
     date: LocalDate = LocalDate.now(),
@@ -66,7 +48,7 @@ open class PickupViewModel(
             address = address.value,
             method = method.value,
             plan = plan.value,
-            packages = packages.values.toList()
+            packages = packages.values.toList(),
         )
 
     val isValid get() =

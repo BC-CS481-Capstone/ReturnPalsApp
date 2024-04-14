@@ -11,7 +11,7 @@ import com.amplifyframework.datastore.generated.model.PickupMethod
 import com.amplifyframework.datastore.generated.model.PricingPlan
 import com.example.returnpals.PackageInfo
 import com.example.returnpals.composetools.pickup.ConfirmPickupScreen
-import com.example.returnpals.composetools.pickup.toNiceString
+import com.example.returnpals.toNiceString
 import com.example.returnpals.services.PickupInfo
 import org.junit.Rule
 import org.junit.Test

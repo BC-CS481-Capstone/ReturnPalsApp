@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -51,20 +50,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-
-import androidx.core.util.toAndroidPair
 import coil.compose.AsyncImage
-
-
 import com.amplifyframework.datastore.generated.model.LabelType
 import com.example.compose.ReturnPalTheme
 import com.example.returnpals.PackageInfo
-
-import com.example.returnpals.composetools.ButtonManager
-
 import com.example.returnpals.composetools.IconManager
 import com.example.returnpals.composetools.ScheduleReturnScaffold
 import com.example.returnpals.composetools.getBackGroundColor
+import com.example.returnpals.toNiceString
 
 // TODO: RemoveLabelButton
 // TODO: EditDescriptionButton
@@ -75,7 +68,6 @@ import com.example.returnpals.composetools.getBackGroundColor
 // PUBLIC API
 ////////////////////
 
-@Preview
 @Composable
 fun AddPackagesScreen(
     packages: Map<Int, PackageInfo> = mapOf(),
@@ -166,15 +158,21 @@ fun AddPackagesScreen(
     }
 }
 
-fun getFilename(filepath: String): String {
-    val i = filepath.lastIndexOf('/')
-    return if (i == -1) ""
-        else filepath.substring(i + 1)
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // PRIVATE API
 ////////////////////
+
+@Preview
+@Composable
+fun AddPackagesPreview() {
+    AddPackagesScreen(
+        packages = mapOf(
+            1 to PackageInfo(labelType = LabelType.PHYSICAL, description = "fragile"),
+            2 to PackageInfo(labelType = LabelType.QRCODE, description = "heavy"),
+            3 to PackageInfo(labelType = LabelType.DIGITAL),
+        )
+    )
+}
 
 @Preview
 @Composable
@@ -266,7 +264,10 @@ private fun UploadLabelContent(
                         color = borderColor,
                         style = Stroke(
                             width = 4f,
-                            pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), phase = 0f)
+                            pathEffect = PathEffect.dashPathEffect(
+                                floatArrayOf(10f, 10f),
+                                phase = 0f
+                            )
                         )
                     )
                 }
@@ -373,11 +374,14 @@ private fun PackagesTable(
             val packageInfo = it.second
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.requiredHeight(60.dp)
+                modifier = Modifier
+                    .requiredHeight(60.dp)
                     .clickable(onClick = { onClickItem(it.first, it.second) })
             ) {
                 Cell( // Label
-                    modifier = Modifier.weight(columnWeights[0]).fillMaxSize(),
+                    modifier = Modifier
+                        .weight(columnWeights[0])
+                        .fillMaxSize(),
                 ) {
                     AsyncImage(
                         model = packageInfo.label,
@@ -389,7 +393,7 @@ private fun PackagesTable(
                 Cell( // Label Type
                     modifier = Modifier.weight(columnWeights[1]),
                 ) {
-                    CellText(packageInfo.labelType.toString())
+                    CellText(packageInfo.labelType.toNiceString())
                 }
                 Cell( // Description
                     modifier = Modifier.weight(columnWeights[2]),

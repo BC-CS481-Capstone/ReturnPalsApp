@@ -1,55 +1,34 @@
 package com.example.returnpals
 
-
-import android.location.Address
 import android.net.Uri
-import java.time.LocalDate
 import com.amplifyframework.datastore.generated.model.LabelType
-// TODO: develop backend
-
+import com.amplifyframework.datastore.generated.model.PickupMethod
+import com.amplifyframework.datastore.generated.model.PickupStatus
+import com.amplifyframework.datastore.generated.model.PricingPlan
+import java.time.LocalDate
 
 data class PackageInfo(
     val label: Uri = Uri.EMPTY, // label is a filename
     val labelType: LabelType,
-    var description: String? = null, // additional info provided by user
+    val description: String? = null, // additional info provided by user
 )
 
-/**
- * Used to generate unique IDs by marking them as free or in-use and only giving freed ids.
- * Currently used to generate reference ids for items in a table.
- */
-class IdManager {
-
-    private var _next: Int = 1
-    private var _freed: ArrayDeque<Int> = ArrayDeque()
-
-    /**
-     * Gets a unique ID and marks said ID as in-use.
-     * If there are no more available ids then 0 is returned.
-     */
-    fun allot(): Int {
-        var id = _next
-        if (_freed.size > 0) {
-            id = _freed.last()
-            _freed.removeLast()
-        } else if (_next != 0) {
-            _next++
+data class PickupInfo(
+    val date: LocalDate = LocalDate.now(),
+    val address: String? = null,
+    val method: PickupMethod? = null,
+    val plan: PricingPlan? = null,
+    val packages: List<PackageInfo> = listOf(),
+    val status: PickupStatus? = null,
+) {
+    val tax get() = 0.00
+    val cost get() =
+        when (plan) {
+            PricingPlan.BRONZE -> 3.99 * packages.size.toDouble()
+            PricingPlan.SILVER -> 0.00
+            PricingPlan.GOLD -> 0.00
+            PricingPlan.PLATINUM -> 0.00
+            else -> 0.00
         }
-        return id
-    }
-
-    /**
-     * Returns a list with unique IDs assigned to all the items.
-     */
-    fun <T> allot(items: List<T>): List<Pair<Int, T>> {
-        return items.associateBy { allot() }.toList()
-    }
-
-    /**
-     * Marks the ID as no longer in-use and allows it to be allotted again.
-     */
-    fun free(id: Int) {
-        _freed.add(id)
-    }
-
+    val total get() = tax + cost
 }

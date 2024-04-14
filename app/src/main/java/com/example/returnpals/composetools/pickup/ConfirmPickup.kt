@@ -1,6 +1,5 @@
 package com.example.returnpals.composetools.pickup
 
-import android.location.Address
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,33 +19,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.capitalize
-import androidx.compose.ui.text.decapitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.amplifyframework.datastore.generated.model.LabelType
-import com.amplifyframework.datastore.generated.model.PricingPlan
 import com.amplifyframework.datastore.generated.model.PickupMethod
+import com.amplifyframework.datastore.generated.model.PricingPlan
 import com.example.compose.ReturnPalTheme
 import com.example.returnpals.PackageInfo
 import com.example.returnpals.composetools.IconManager
 import com.example.returnpals.composetools.ScheduleReturnScaffold
 import com.example.returnpals.composetools.getBackGroundColor
-import com.example.returnpals.composetools.getBlueIconColor
-import com.example.returnpals.composetools.getConfig
-import com.example.returnpals.services.PickupInfo
-import java.time.LocalDate
-import java.util.Locale
+import com.example.returnpals.PickupInfo
+import com.example.returnpals.toNiceString
 
 @Preview
 @Composable
@@ -103,12 +92,6 @@ fun ConfirmPickupScreen(
     }
 }
 
-fun LocalDate.toNiceString(): String {
-    return this.month.name.lowercase().replaceFirstChar { it.uppercase() } + " " +
-            this.dayOfMonth.toString() + ", " +
-            this.year.toString()
-}
-
 @Preview
 @Composable
 private fun ConfirmPickupPreview() {
@@ -163,7 +146,7 @@ private fun ConfirmPickupContent(
         )
         SummaryRow(
             name = "Pickup by:",
-            value = info.method?.toString() ?: ""
+            value = info.method?.toNiceString() ?: ""
         )
         SummaryRow(
             name = "Address:",
@@ -184,7 +167,7 @@ private fun PricingContent(
     SubtitleRow()
     SummaryRow(
         name = "Pricing Plan:",
-        value = info.plan?.toString() ?: ""
+        value = info.plan?.toNiceString() ?: ""
     )
     if (info.plan == PricingPlan.BRONZE) {
         BronzePricingText(

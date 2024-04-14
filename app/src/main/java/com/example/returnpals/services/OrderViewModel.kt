@@ -3,10 +3,8 @@ package com.example.returnpals.services
 import android.util.Log
 import androidx.navigation.NavController
 import com.amplifyframework.core.model.temporal.Temporal
-import com.amplifyframework.core.model.temporal.Temporal.Timestamp.now
-
 import com.amplifyframework.datastore.generated.model.PickupStatus
-
+import com.example.returnpals.PickupInfo
 import com.example.returnpals.composetools.OrderRepository
 import java.time.LocalDate
 
@@ -23,12 +21,11 @@ import java.time.LocalDate
  * https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-apis
  */
 
-class ScheduleReturnViewModel(
+class OrderViewModel(
     pickup: PickupInfo = PickupInfo(),
     val navController: NavController? = null,
     private val minDate: LocalDate = LocalDate.now().minusDays(1),
-    private val maxDate: LocalDate = LocalDate.now().plusYears(1),
-
+    private val maxDate: LocalDate = LocalDate.now().plusYears(1)
 ) : PickupViewModel(pickup) {
 
     fun isValidDate(value: LocalDate): Boolean {
@@ -48,13 +45,13 @@ class ScheduleReturnViewModel(
             listOf(1, 2, 3),
             PickupStatus.ON_THE_WAY,
             false,
-
             method = info.method
         )
         Backend.createOrder(order)
 
         Log.println(Log.INFO, "ScheduleReturnViewModel::onSubmit", info.toString())
     }
+
 //    companion object {
 //
 //        // This determines the default value for the view-model that gets instantiated in navigation.
