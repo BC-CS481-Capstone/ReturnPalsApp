@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.amplifyframework.datastore.generated.model.Address
 import com.example.returnpals.R
 
 @Composable
@@ -75,7 +76,7 @@ fun Settings(navController: NavController) {
 
         if (showAddressesDialog) {
             AddressesDialog(
-                addresses = userAddresses.map { it.toString() }
+                addresses = userAddresses  // Assuming this is a List<Address>
             ) { showAddressesDialog = false }
         }
 
@@ -243,23 +244,24 @@ fun ConfirmResetPasswordDialog(
 
 @Composable
 fun AddressesDialog(
-    addresses: List<String>,
+    addresses: List<SettingsViewModel.SimpleAddress>,
     onDismiss: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = { onDismiss() },
         title = { Text("Manage Addresses") },
         text = {
-            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+            Column(modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+            ) {
                 if (addresses.isEmpty()) {
                     Text("No addresses available.")
                 } else {
                     addresses.forEach { address ->
-                        // Assuming address components are separated by commas
-                        address.split(",").forEach { part ->
-                            Text(text = part.trim())
-                        }
-                        Spacer(modifier = Modifier.height(16.dp))
+                        // Display each address with its nickname, if it has one.
+                        Text(text = address.address)
+                        Spacer(modifier = Modifier.height(16.dp)) // Add space between each address
                     }
                 }
             }
@@ -271,3 +273,4 @@ fun AddressesDialog(
         }
     )
 }
+

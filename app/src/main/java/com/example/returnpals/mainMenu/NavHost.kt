@@ -1,6 +1,9 @@
 package com.example.returnpals.mainMenu
 
+import SettingsViewModel
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -85,20 +88,11 @@ fun AppNavigation(navController: NavController) {
                 )
             }
             composable("select_address") { entry ->
-                val pickupVM = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
-                val addressesVM = entry.sharedViewModel<AddressesViewModel>(navController)
-                // TODO: retrieve addresses from user account
-                // TODO: send added addresses to user account
+                val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
                 SelectAddressScreen(
-                    selectedAddressId = addressesVM.selectedId.value,
-                    addresses = addressesVM.addresses,
-                    onSelectAddress = { id ->
-                        addressesVM.onSelectAddress(id)
-                        addressesVM.selectedAddress?.let { pickupVM.onChangeAddress(it) }
-                    },
-                    onAddAddress = addressesVM::onAddAddress,
+                    viewModel = settingsVM,
                     onClickNext = { navController.navigate("select_method") },
-                    onClickBack = { navController.navigate(("select_date")) }
+                    onClickBack = { navController.navigate("select_date") }
                 )
             }
             composable("select_method") { entry ->

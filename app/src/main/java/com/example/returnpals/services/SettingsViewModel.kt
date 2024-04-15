@@ -11,6 +11,10 @@ import com.amplifyframework.datastore.generated.model.Address
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import com.amplifyframework.api.graphql.GraphQLResponse
+import com.amplifyframework.core.Consumer
+import com.amplifyframework.api.ApiException
+import com.amplifyframework.api.graphql.PaginatedResult
 
 
 class SettingsViewModel : ViewModel() {
@@ -21,11 +25,28 @@ class SettingsViewModel : ViewModel() {
     private val _userEmail = MutableStateFlow<String?>(null)
     val userEmail: StateFlow<String?> = _userEmail
 
-    private val _userAddresses = MutableStateFlow<List<Address>>(emptyList())
-    val userAddresses: StateFlow<List<Address>> = _userAddresses
+    private val _userAddresses = MutableStateFlow<List<SimpleAddress>>(emptyList())
+    val userAddresses: StateFlow<List<SimpleAddress>> = _userAddresses
+
+    private val _addresses = MutableStateFlow<Map<Int, String>>(mapOf())
+    val addresses: StateFlow<Map<Int, String>> = _addresses
+
+    private val _selectedAddressId = MutableStateFlow<Int?>(null)
+    val selectedAddressId: StateFlow<Int?> = _selectedAddressId
+
+    fun selectAddress(id: Int) {
+        _selectedAddressId.value = id
+    }
+
+    fun addAddress(id: Int, address: String) {
+        _addresses.value = _addresses.value.toMutableMap().apply {
+            put(id, address)
+        }
+    }
 
     init {
         fetchUserEmail()
+        fetchAddresses()
     }
 
     private fun fetchUserEmail() {
@@ -118,24 +139,31 @@ class SettingsViewModel : ViewModel() {
     }
 
     fun fetchAddresses() {
-        Log.d("MyAmplifyApp", "Attempting to fetch addresses...")
         viewModelScope.launch {
             Amplify.API.query(
-                ModelQuery.list(Address::class.java),
-                { response ->
+                ModelQuery.list(Address::class.java),  // Correct Model class reference
+                { response: GraphQLResponse<PaginatedResult<Address>> ->  // Correct lambda parameter type
                     if (response.hasData()) {
                         Log.d("MyAmplifyApp", "Addresses fetched: ${response.data.items} found")
-                        _userAddresses.value = response.data.items as List<Address>
+                        val filteredAddresses = response.data.items.map { address ->
+                            SimpleAddress(address.address)
+                        }
+                        _userAddresses.value = filteredAddresses
                     } else if (response.hasErrors()) {
                         Log.e("MyAmplifyApp", "Error fetching addresses: ${response.errors.first().message}")
                     }
                 },
-                { error ->
+                { error: ApiException ->  // Correct error handling lambda parameter type
                     Log.e("MyAmplifyApp", "Query failed: ${error.localizedMessage}", error)
                 }
             )
         }
     }
+
+
+
+    data class SimpleAddress(val address: String,)
+
 }
 
 
