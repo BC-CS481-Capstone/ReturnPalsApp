@@ -9,12 +9,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -30,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -48,6 +51,8 @@ fun Settings(navController: NavController) {
     var showResetPasswordDialog by remember { mutableStateOf(false) }
     var showConfirmResetPasswordDialog by remember { mutableStateOf(false) }
     var showAddressesDialog by remember { mutableStateOf(false) }
+    var showAddAddressDialog by remember { mutableStateOf(false) }
+
 
     LaunchedEffect(key1 = true) {
         settingsViewModel.fetchAddresses()
@@ -76,9 +81,22 @@ fun Settings(navController: NavController) {
 
         if (showAddressesDialog) {
             AddressesDialog(
-                addresses = userAddresses  // Assuming this is a List<Address>
-            ) { showAddressesDialog = false }
+                addresses = userAddresses,
+                onDismiss = { showAddressesDialog = false },
+                onAddAddress = {
+                    showAddressesDialog = false
+                    showAddAddressDialog = true
+                }
+            )
         }
+
+        if (showAddAddressDialog) {
+            AddAddressDialog(
+                settingsViewModel = settingsViewModel,
+                onDismiss = { showAddAddressDialog = false }
+            )
+        }
+
 
         PasswordField(
             onResetPasswordClick = { showResetPasswordDialog = true },
@@ -91,6 +109,8 @@ fun Settings(navController: NavController) {
                 Text(text = status)
             }
         }
+
+
     }
 }
 
@@ -245,30 +265,78 @@ fun ConfirmResetPasswordDialog(
 @Composable
 fun AddressesDialog(
     addresses: List<SettingsViewModel.SimpleAddress>,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    onAddAddress: () -> Unit // Adding a callback to trigger the address addition form
 ) {
     AlertDialog(
         onDismissRequest = { onDismiss() },
         title = { Text("Manage Addresses") },
         text = {
-            Column(modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(16.dp)
             ) {
                 if (addresses.isEmpty()) {
                     Text("No addresses available.")
                 } else {
                     addresses.forEach { address ->
-                        // Display each address with its nickname, if it has one.
                         Text(text = address.address)
-                        Spacer(modifier = Modifier.height(16.dp)) // Add space between each address
+                        Spacer(modifier = Modifier.height(16.dp))
                     }
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Button(
+                    onClick = { onAddAddress() }, // This button will trigger the addition form
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Add New Address")
                 }
             }
         },
         confirmButton = {
             Button(onClick = { onDismiss() }) {
                 Text("Close")
+            }
+        }
+    )
+}
+
+@Composable
+fun AddAddressDialog(settingsViewModel: SettingsViewModel, onDismiss: () -> Unit) {
+    var address by remember { mutableStateOf("") }
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    AlertDialog(
+        onDismissRequest = { onDismiss() },
+        title = { Text("Add New Address") },
+        text = {
+            Column(modifier = Modifier.fillMaxWidth()) {
+                TextField(
+                    value = address,
+                    onValueChange = { address = it },
+                    label = { Text("Address") },
+                    singleLine = true,
+                    keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() })
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    settingsViewModel.addNewAddress(address)
+                    onDismiss()
+                }
+            ) {
+                Text("Add")
+            }
+        },
+        dismissButton = {
+            Button(onClick = { onDismiss() }) {
+                Text("Cancel")
             }
         }
     )

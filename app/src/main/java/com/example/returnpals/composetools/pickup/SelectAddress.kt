@@ -72,8 +72,7 @@ fun SelectAddressScreen(
             userAddresses = userAddresses,
             onSelectAddress = viewModel::selectAddress,
             onAddAddress = { newAddress ->
-                val newId = userAddresses.size + 1  // Assuming unique IDs as simple increment
-                viewModel.addAddress(newId, newAddress)
+                viewModel.addNewAddress(newAddress)
             },
             onClickNext = onClickNext,
             onClickBack = onClickBack,
@@ -163,9 +162,10 @@ private fun AddressInfo(){
 
 
 @Composable
-private fun AddAddressField(onAddAddress: (String) -> Unit) {
-    val selectedBlue = Color(0xFF008BE7)
-    var text by remember { mutableStateOf("") }
+fun AddAddressField(onAddAddress: (String) -> Unit) {
+    var address by remember { mutableStateOf("") }
+
+
 
     Column(
         modifier = Modifier
@@ -173,22 +173,24 @@ private fun AddAddressField(onAddAddress: (String) -> Unit) {
             .fillMaxWidth()
     ) {
         TextField(
-            value = text,
-            onValueChange = { text = it },
+            value = address,
+            onValueChange = { address = it },
             label = { Text("Enter new address") },
             modifier = Modifier.fillMaxWidth()
         )
 
+
         Button(
             onClick = {
-                if (text.isNotBlank()) {
-                    onAddAddress(text)
-                    text = "" // Clear the text field
+                if (address.isNotBlank()) {
+                    onAddAddress(address)
+                    address = ""
+
                 }
             },
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = selectedBlue,
+                backgroundColor = Color(0xFF008BE7),
                 contentColor = Color.White
             ),
             modifier = Modifier

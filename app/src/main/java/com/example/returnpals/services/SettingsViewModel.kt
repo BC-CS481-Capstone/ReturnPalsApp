@@ -15,6 +15,8 @@ import com.amplifyframework.api.graphql.GraphQLResponse
 import com.amplifyframework.core.Consumer
 import com.amplifyframework.api.ApiException
 import com.amplifyframework.api.graphql.PaginatedResult
+import com.amplifyframework.api.graphql.model.ModelMutation
+import kotlin.random.Random
 
 
 class SettingsViewModel : ViewModel() {
@@ -160,9 +162,40 @@ class SettingsViewModel : ViewModel() {
         }
     }
 
-
-
     data class SimpleAddress(val address: String,)
+
+
+    fun addNewAddress(address: String) {
+        val userId = generateRandomUserId()
+        viewModelScope.launch {
+            val newAddress = Address.builder()
+                .address(address)
+                .userId(userId)
+                .build()
+
+            try {
+                Amplify.API.mutate(
+                    ModelMutation.create(newAddress),
+                    { response ->
+                        Log.i("MyAmplifyApp", "Address created: ${response.data.id}")
+                        fetchAddresses()  // Optionally refresh addresses after adding
+                        _operationStatus.value = "Address added successfully with ID: ${response.data.id}"
+                    },
+                    { error ->
+                        Log.e("MyAmplifyApp", "Failed to add address", error)
+                        _operationStatus.value = "Error adding address: ${error.localizedMessage}"
+                    }
+                )
+            } catch (e: ApiException) {
+                Log.e("MyAmplifyApp", "API Exception when trying to add address", e)
+                _operationStatus.value = "Exception when adding address: ${e.localizedMessage}"
+            }
+        }
+    }
+
+    fun generateRandomUserId(): String {
+        return Random.nextInt(100000, 999999).toString()  // Generate a random number between 100000 and 999999
+    }
 
 }
 
