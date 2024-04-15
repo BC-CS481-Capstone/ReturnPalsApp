@@ -1,31 +1,36 @@
 package com.example.returnpals.mainMenu
 
-import android.location.Address
+import SettingsViewModel
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.returnpals.composetools.pickup.AddPackagesScreen
-import com.example.returnpals.composetools.pickup.PickupDateScreen
-import com.example.returnpals.composetools.pickup.PickupMethodScreen
-import com.example.returnpals.composetools.pickup.PricingScreen
-import com.example.returnpals.composetools.pickup.ThankYou
 import com.example.returnpals.composetools.ConfirmNumber
+import com.example.returnpals.composetools.ConfirmNumberViewModel
+import com.example.returnpals.composetools.LoginScreen
 import com.example.returnpals.composetools.dashboard.HomeDash
 import com.example.returnpals.composetools.dashboard.Orders
 import com.example.returnpals.composetools.dashboard.Profile
 import com.example.returnpals.composetools.dashboard.Settings
+import com.example.returnpals.composetools.pickup.AddPackagesScreen
 import com.example.returnpals.composetools.pickup.ConfirmPickupScreen
+import com.example.returnpals.composetools.pickup.PickupDateScreen
+import com.example.returnpals.composetools.pickup.PickupMethodScreen
+import com.example.returnpals.composetools.pickup.PricingScreen
 import com.example.returnpals.composetools.pickup.SelectAddressScreen
+import com.example.returnpals.composetools.pickup.ThankYouScreen
 import com.example.returnpals.services.AddressesViewModel
+import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.services.ScheduleReturnViewModel
-import java.util.Locale
 
 @Composable
 fun AppNavigation(navController: NavController) {
@@ -42,7 +47,9 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.Pricing) { Pricing(navController) }
         composable(MenuRoutes.Contact) { Contact(navController) }
         composable(MenuRoutes.Video) { Video(navController) }
-        composable(MenuRoutes.SignIn) { SignIn(navController) }
+        composable(MenuRoutes.SignIn) {
+            val viewModelLogin = LoginViewModel()
+            LoginScreen(viewModelLogin, navController) }
         composable(MenuRoutes.FAQ) { FAQ(navController) }
         composable(MenuRoutes.Register) { Register(navController)}
 
@@ -54,11 +61,13 @@ fun AppNavigation(navController: NavController) {
             composable(MenuRoutes.Profile) { Profile(navController) }
             composable(MenuRoutes.Settings) { Settings(navController) }
             composable(MenuRoutes.Orders) { Orders(navController) }
-           // composable(MenuRoutes.SelectAddress) { SelectAddress(navController) }
-           // composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }
-          //  composable(MenuRoutes.Label) { Label(navController) }
+            // composable(MenuRoutes.SelectAddress) { SelectAddress(navController) }
+            // composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }
+            //  composable(MenuRoutes.Label) { Label(navController) }
         }
-        composable(MenuRoutes.ConfirmNumber) { ConfirmNumber(navController) }
+        composable(MenuRoutes.ConfirmNumber) {
+            val vm = ConfirmNumberViewModel()
+            ConfirmNumber(navController,vm) }
 
         navigation(
             startDestination = "select_date",
@@ -71,24 +80,19 @@ fun AppNavigation(navController: NavController) {
                     onChangeDate = pickupVM::onChangeDate,
                     isValidDate = pickupVM::isValidDate,
                     onClickNext = { navController.navigate("select_address") },
-                    onClickBack = { navController.navigate(MenuRoutes.HomeDash) },
+                    onClickBack = { navController.navigate(MenuRoutes.HomeDash) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                    } },
                 )
             }
             composable("select_address") { entry ->
-                val pickupVM = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
-                val addressesVM = entry.sharedViewModel<AddressesViewModel>(navController)
-                // TODO: retrieve addresses from user account
-                // TODO: send added addresses to user account
+                val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
                 SelectAddressScreen(
-                    selectedAddressId = addressesVM.selectedId.value,
-                    addresses = addressesVM.addresses,
-                    onSelectAddress = { id ->
-                        addressesVM.onSelectAddress(id)
-                        addressesVM.selectedAddress?.let { pickupVM.onChangeAddress(it) }
-                    },
-                    onAddAddress = addressesVM::onAddAddress,
+                    viewModel = settingsVM,
                     onClickNext = { navController.navigate("select_method") },
-                    onClickBack = { navController.navigate(("select_date")) }
+                    onClickBack = { navController.navigate("select_date") }
                 )
             }
             composable("select_method") { entry ->
@@ -132,7 +136,7 @@ fun AppNavigation(navController: NavController) {
             }
             composable("thanks") { entry ->
                 val pickupVM = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
-                ThankYou().drawThankYouUI(
+                ThankYouScreen(
                     dashBoardButton = {
                         navController.navigate("dashboard home") {
                             popUpTo(MenuRoutes.PickupProcess) {

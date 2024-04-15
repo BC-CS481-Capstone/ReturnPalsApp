@@ -7,10 +7,12 @@ import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
 
 class loginOptionsTest {
+    //Test Login screen for user and guest display elements. Also check confirmNumber for user registration process.
     @get:Rule
     val rule = createComposeRule()
 
@@ -81,6 +83,55 @@ class loginOptionsTest {
     fun guestEmailTextDisplayed() {
         rule.setContent { GuestLoginUIContent(userSignIn = { /*TODO*/ }, signin = { /*TODO*/ }, signup = { /*TODO*/ }, email = {})}
         rule.onNode(hasText("Email") and hasSetTextAction()).assertIsDisplayed()
+    }
+
+    @Test
+    fun confirmNumberEmailDisplayed() {
+        rule.setContent{ ConfirmNumberContent(
+            emailToConfirm = "test@test.com",
+            message = "help test",
+            submitNumber = "",
+            onSubmitNumberChange = {}
+        ) {
+
+        } }
+        rule.onNodeWithText("test@test.com").assertIsDisplayed()
+    }
+    @Test
+    fun confirmNumberMessageDisplayed() {
+        rule.setContent{ ConfirmNumberContent(
+            emailToConfirm = "test@test.com",
+            message = "help test",
+            submitNumber = "",
+            onSubmitNumberChange = {}
+        ) {
+
+        } }
+        rule.onNodeWithText("help test").assertIsDisplayed()
+    }
+    @Test
+    fun confirmNumberPromptDisplayed() {
+        rule.setContent{ ConfirmNumberContent(
+            emailToConfirm = "test@test.com",
+            message = "help test",
+            submitNumber = "",
+            onSubmitNumberChange = {}
+        ) {
+
+        } }
+        rule.onNodeWithText("Please enter the confirmation number sent to,\n").assertIsDisplayed()
+    }
+    @Test
+    fun confirmNumberButtonTest() {
+        rule.setContent{ ConfirmNumberContent(
+            emailToConfirm = "test@test.com",
+            message = "help test",
+            submitNumber = "",
+            onSubmitNumberChange = {}
+        ) {
+
+        } }
+        rule.onNode(hasText("Verify") and hasClickAction()).assertIsDisplayed()
     }
     /* REMOVE test that use Amplify commands.  This uses amplify command in the backend.
     @Test

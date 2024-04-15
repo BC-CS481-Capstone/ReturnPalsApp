@@ -7,9 +7,7 @@ import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.api.graphql.model.ModelQuery
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin
 import com.amplifyframework.core.Amplify
-
-import com.amplifyframework.core.model.temporal.Temporal
-import com.amplifyframework.datastore.generated.model.PickupMethod
+import com.amplifyframework.datastore.AWSDataStorePlugin
 import com.amplifyframework.datastore.generated.model.Returns
 import com.example.returnpals.composetools.OrderRepository
 import com.example.returnpals.composetools.ProfileRepository
@@ -18,20 +16,25 @@ import com.example.returnpals.composetools.ProfileRepository
 /**Adds amplify backend on create code as tutorial examples provided.**/
 object Backend {
 
-     private const val TAG = "Backend"
+    private const val TAG = "Backend"
     private var email = "";
     var Profile = ProfileRepository()
     var orderList = mutableSetOf <OrderRepository>()
 
+
     fun initialize(applicationContext: Context) : Backend {
         /**Adds amplify backend on create code as tutorial examples provided.**/
+        Log.i(TAG, "Initializing Amplify plugins.")
         try {
             Amplify.addPlugin(AWSCognitoAuthPlugin())
             Amplify.addPlugin(AWSApiPlugin()) // Initialize AWS API plugin
+            Amplify.addPlugin(AWSDataStorePlugin())
             Amplify.configure(applicationContext) // Configure Amplify
+
             println("Amplify configuration successful.")
         } catch (error: AmplifyException) {
             error.printStackTrace() // Log the error if configuration fails
+            println("Error configuring Amplify: ${error.message}")
         }
         return this
     }
@@ -57,7 +60,7 @@ object Backend {
     }
     fun resetEmail(){
         email = ""
-        Log.i(TAG, "email reset" + email)
+        Log.i(TAG, "email reset$email")
     }
     fun accessEmail(){
         Log.i(TAG, "Email Accessed $email")
