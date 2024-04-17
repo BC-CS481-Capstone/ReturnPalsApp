@@ -2,8 +2,8 @@ package com.example.returnpals.mainMenu
 
 import SettingsViewModel
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -28,7 +28,6 @@ import com.example.returnpals.composetools.pickup.PickupMethodScreen
 import com.example.returnpals.composetools.pickup.PricingScreen
 import com.example.returnpals.composetools.pickup.SelectAddressScreen
 import com.example.returnpals.composetools.pickup.ThankYouScreen
-import com.example.returnpals.services.AddressesViewModel
 import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.services.ScheduleReturnViewModel
 
@@ -125,14 +124,22 @@ fun AppNavigation(navController: NavController) {
             }
             composable("confirm") { entry ->
                 val pickupVM = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
+                val createReturnSuccessful by pickupVM.createReturnSuccessful.observeAsState()
+                val createLabelsSuccessful by pickupVM.createLabelsSuccessful.observeAsState()
                 ConfirmPickupScreen(
                     info = pickupVM.info,
                     onClickNext = {
                         pickupVM.onSubmit()
-                        navController.navigate("thanks") },
+                         },
                     onClickBack = { navController.navigate("add_labels") },
                     onClickPromoButton = {}
                 )
+                if (createReturnSuccessful == true) {
+                    pickupVM.submitLabels()
+                    if (createLabelsSuccessful == true) {
+                        navController.navigate("thanks")
+                    }
+                }
             }
             composable("thanks") { entry ->
                 val pickupVM = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
