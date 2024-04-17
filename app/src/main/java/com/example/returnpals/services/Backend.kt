@@ -1,6 +1,7 @@
 package com.example.returnpals.services
 import android.content.Context
 import android.util.Log
+import androidx.core.net.toFile
 import com.amplifyframework.AmplifyException
 import com.amplifyframework.api.aws.AWSApiPlugin
 import com.amplifyframework.api.graphql.model.ModelMutation
@@ -9,8 +10,10 @@ import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.AWSDataStorePlugin
 import com.amplifyframework.datastore.generated.model.Returns
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin
 import com.example.returnpals.composetools.OrderRepository
 import com.example.returnpals.composetools.ProfileRepository
+import java.io.File
 
 
 /**Adds amplify backend on create code as tutorial examples provided.**/
@@ -29,6 +32,7 @@ object Backend {
             Amplify.addPlugin(AWSCognitoAuthPlugin())
             Amplify.addPlugin(AWSApiPlugin()) // Initialize AWS API plugin
             Amplify.addPlugin(AWSDataStorePlugin())
+            Amplify.addPlugin(AWSS3StoragePlugin())
             Amplify.configure(applicationContext) // Configure Amplify
 
             println("Amplify configuration successful.")
@@ -38,20 +42,37 @@ object Backend {
         }
         return this
     }
-    fun createOrder(order: OrderRepository){
+    fun createOrder(returns: OrderRepository){
 
         Amplify.API.mutate(
-            ModelMutation.create(order.order),
+            ModelMutation.create(returns.order),
             {response ->
                 Log.i(TAG, "created")
                 if(response.hasErrors()) {
                     Log.e(TAG, response.errors.first().message)
                 } else {
                     Log.i(TAG, "Created Order with id: " + response.data.id)
-                    orderList.add(order)
-                    //if(order.getHasImage()){
+                    orderList.add(returns)
+/*
+                    if(returns.getHasImage()){
+                        Log.i(TAG, "True checked")
+                        returns.getImages().forEach {
+                            uri ->
+                            val file = uri.path?.let { File(it) }
+                            if (file != null) {
+                                Amplify.Storage.uploadFile(
+                                    uri.toString(), file,
+                                    { Log.i("MyAmplifyApp", "Successfully uploaded: $uri" ) },
+                                    { error -> Log.e("MyAmplifyApp", "Upload failed", error) }
+                                )
+                            }
+                        }
 
-                    //}
+
+
+
+                    }*/
+
                 }
             },
             {error ->
@@ -98,6 +119,7 @@ object Backend {
                             val list = listOf(1, 2, 3)
 
                             val order = OrderRepository(
+                                orderData.userId,
                                 email,
                                 status = orderData.status,
                                 date =  orderData.date,

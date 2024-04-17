@@ -1,6 +1,7 @@
 package com.example.returnpals.composetools
 
 
+import android.net.Uri
 import android.util.Log
 import com.amplifyframework.core.Amplify
 
@@ -10,17 +11,19 @@ import com.amplifyframework.datastore.generated.model.PickupStatus
 import com.amplifyframework.datastore.generated.model.Returns
 import com.example.returnpals.services.Backend.getEmail
 import java.io.File
+import java.net.URI
 
 
 //Data Class for everything needed in the repository
 data class OrderRepository(private val customerId: String,
+                           private val email: String,
 
                            private var date: Temporal.Date,
                            private var address: String = "123 basic ave",
                            private var labels: List<Int>,
                            private var status: PickupStatus = PickupStatus.ON_THE_WAY,
                            private var hasImage: Boolean = false,
-                           private var imageFile: File? = null,
+                           private var images: List<Uri>? = listOf(),
                            private var confirmation: String = "0",
                            private var method: PickupMethod?
 
@@ -58,29 +61,28 @@ data class OrderRepository(private val customerId: String,
     }
 
     //Sets Image and acknowledges it exists
-    fun setImage(inFile : File){
-        imageFile = inFile
-        hasImage = true
-    }
-    //Gets the image if it exists
-    fun getImage() : File? {
-        return imageFile
-    }
+
     //Gets value of hasImage
     fun getHasImage(): Boolean{
         return hasImage
+    }
+    fun getImages(): List<Uri>{
+        return images!!
     }
     //Sends the Order to database
     val order : Returns
 
         get() = Returns.Builder()
+            .userId(customerId)
             .address(address)
             .email(getEmail())
             .confrimationNumber(confirmation)
             .date(date)
             .labelIds(labels)
             .method(method)
+
             .status(PickupStatus.ON_THE_WAY)
+
             .build()
 
 

@@ -86,6 +86,7 @@ dependencies {
     // Amplify core dependency
     implementation("com.amplifyframework:core:2.14.11")
     implementation("com.amplifyframework:aws-auth-cognito:2.14.11")
+    implementation("com.amplifyframework:aws-storage-s3:2.14.11")
     implementation("com.amplifyframework:aws-datastore:2.14.11")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
     implementation("com.amplifyframework:aws-api:2.14.11")
