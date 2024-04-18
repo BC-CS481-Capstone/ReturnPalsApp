@@ -1,5 +1,6 @@
 package com.example.returnpals.services
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -50,14 +51,28 @@ class ScheduleReturnViewModel(
     }
 
     fun onSubmit() {
+
         /*
+
+        val uris = mutableListOf<Uri>()
+        info.packages.forEach {
+            thing -> uris.add(thing.label)
+        }
+        val hasImage = info.packages.isNotEmpty()
+
+
+
+
         val order = OrderRepository(
+            Backend.Profile.getID(),
             Backend.getEmail(),
             Temporal.Date(info.date.toString()),
             info.address.toString(),
             listOf(1, 2, 3),
             PickupStatus.ON_THE_WAY,
-            false,
+            hasImage,
+            uris,
+
             method = info.method
         )
         */

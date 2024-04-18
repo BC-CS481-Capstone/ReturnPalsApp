@@ -17,6 +17,7 @@ data class ProfileRepository(
     private var nameLast : String = "Doe",
     private var email : String = "JD@ReturnPal.com",
     private var expireDate : LocalDate = LocalDate.now(),
+    private var ID :String = "N/A",
 
     private var memberShipType : PricingPlan = PricingPlan.SILVER
 
@@ -35,6 +36,11 @@ data class ProfileRepository(
                             user.lastName
                         }   catch(except: Exception){
                             "Name"
+                        }
+                        ID = try {
+                            user.id
+                        } catch(except: Exception){
+                            "ID"
                         }
 
 
@@ -57,6 +63,9 @@ data class ProfileRepository(
             { Log.e(TAG, "Query failed", it) }
         )
         Log.i(TAG, "$nameLast $nameFirst")
+    }
+    fun getID() : String {
+        return ID
     }
     fun getFirstName() :String{
         return nameFirst
