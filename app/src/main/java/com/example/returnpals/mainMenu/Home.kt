@@ -3,7 +3,6 @@ package com.example.returnpals.mainMenu
 import MainMenuScaffold
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -34,10 +33,6 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.R
 import com.example.returnpals.composetools.BenefitCards
 import com.example.returnpals.composetools.ProcessCards
-import com.example.returnpals.services.AmplifyOperations.isLoggedIn
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 
 @Composable
@@ -110,22 +105,15 @@ fun HomeContent(navController: NavController) {
         Button(
             onClick = {
                 // Navigate to the DashboardMenu screen
-                isLoggedIn {
-                    var route = MenuRoutes.SignIn
-                    if (it.isSignedIn) { route = MenuRoutes.HomeDash}
-                    GlobalScope.launch(Dispatchers.Main) {
-                        navController.navigate(route) {
-                        // Clear all the back stack up to the start destination and save state
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                        // Avoid multiple copies of the same destination when reselecting the same item
-                        launchSingleTop = true
-                        // Restore state when navigating back to the composable
-                        restoreState = true
-                    } }
+                navController.navigate(MenuRoutes.SignIn) { // Clear all the back stack up to the start destination and save state
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
                     }
-
+                    // Avoid multiple copies of the same destination when reselecting the same item
+                    launchSingleTop = true
+                    // Restore state when navigating back to the composable
+                    restoreState = true
+                }
             },
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(

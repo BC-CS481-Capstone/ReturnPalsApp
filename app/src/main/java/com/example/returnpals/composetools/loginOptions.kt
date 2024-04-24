@@ -35,9 +35,9 @@ import com.example.returnpals.services.UserRepository
 
 
 
-private var confirmviewMd = ConfirmNumberViewModel()
+
 @Composable
-fun ConfirmNumber(navController: NavController) {
+fun ConfirmNumber(navController: NavController,confirmviewMd:ConfirmNumberViewModel ) {
     val confirmSuccessful by confirmviewMd.confirmSuccessful.observeAsState()
     Box(modifier = Modifier
         .background(getBackGroundColor())
@@ -52,7 +52,13 @@ fun ConfirmNumber(navController: NavController) {
     }
     if (confirmSuccessful == true) {
         viewModelLogin.logIn()
-        go2(navController, MenuRoutes.Register)
+        navController.navigate(MenuRoutes.Register) {
+            popUpTo(MenuRoutes.Home) {
+               // saveState = true
+            }
+            launchSingleTop = true
+            //restoreState = true
+        }
     }
 }
 
@@ -87,7 +93,11 @@ fun ConfirmNumber(navController: NavController) {
             }
             if (signUpSuccessful == true) {
                 viewModel.reset()
-                go2(navController,MenuRoutes.ConfirmNumber)
+                navController.navigate(MenuRoutes.ConfirmNumber) {
+                    popUpTo(MenuRoutes.SignIn)
+                    launchSingleTop = true
+                    restoreState = true
+                }
             }
             if (logInSuccessful == true) {
                 viewModel.reset()
@@ -105,7 +115,8 @@ fun ConfirmNumber(navController: NavController) {
 
         ) {
             IconManager().getReturnPalNameIcon(Modifier.requiredWidth(config.screenWidthDp.dp))
-            Text("Please enter the confirmation number sent to,\n"+emailToConfirm)
+            Text("Please enter the confirmation number sent to,\n")
+            Text(emailToConfirm)
             OutlinedTextField(value=submitNumber, onValueChange = onSubmitNumberChange)
             Text(message)
             Button(onClick = verifyButton,
@@ -199,12 +210,16 @@ fun ConfirmNumber(navController: NavController) {
         }
     }
 
-private class ConfirmNumberViewModel(): ViewModel() {
+class ConfirmNumberViewModel(): ViewModel() {
+    //View model for confirm number. Sends data to amplify (confirm number)
 
+    // Condition variable
     private val _confirmSuccessful = MutableLiveData<Boolean?>()
     val confirmSuccessful: LiveData<Boolean?> = _confirmSuccessful
 
+    //Get email from login
     private var repository = UserRepository
+
     var code =  mutableStateOf<String>("")
         private set
     var message = mutableStateOf<String>("")
@@ -218,8 +233,11 @@ private class ConfirmNumberViewModel(): ViewModel() {
     fun setMessage(value:String){
         message.value = value
     }
-
+    fun setCode(codeValue:String) {
+        code.value = codeValue
+    }
     fun confirmNumber() {
+
         Amplify.Auth.confirmSignUp(
             getEmail(), code.value,
             { _confirmSuccessful.postValue(true) },
@@ -227,10 +245,6 @@ private class ConfirmNumberViewModel(): ViewModel() {
                 setMessage(it.message.toString()) }
         )
     }
-    fun setCode(codeValue:String) {
-        code.value = codeValue
-    }
-
 }
 
 
