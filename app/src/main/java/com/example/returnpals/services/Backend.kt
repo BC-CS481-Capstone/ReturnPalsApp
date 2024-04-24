@@ -44,48 +44,12 @@ object Backend {
         }
         return this
     }
-    fun createOrder(returns: OrderRepository){
-
-        Amplify.API.mutate(
-            ModelMutation.create(returns.order),
-            {response ->
-                Log.i(TAG, "created")
-                if(response.hasErrors()) {
-                    Log.e(TAG, response.errors.first().message)
-                } else {
-                    Log.i(TAG, "Created Order with id: " + response.data.id)
-                    orderList.add(returns)
-/*
-                    if(returns.getHasImage()){
-                        Log.i(TAG, "True checked")
-                        returns.getImages().forEach {
-                            uri ->
-                            val file = uri.path?.let { File(it) }
-                            if (file != null) {
-                                Amplify.Storage.uploadFile(
-                                    uri.toString(), file,
-                                    { Log.i("MyAmplifyApp", "Successfully uploaded: $uri" ) },
-                                    { error -> Log.e("MyAmplifyApp", "Upload failed", error) }
-                                )
-                            }
-                        }
-
-
-
-
-                    }*/
-
-                }
-            },
-            {error ->
-                Log.e(TAG, "Create failed", error)}
-        )
-    }
     fun resetEmail(){
         email = ""
         Log.i(TAG, "email reset$email")
     }
     fun accessEmail(){
+
         Log.i(TAG, "Email Accessed $email")
         if(email == "") {
             Log.i(TAG, "It worked")

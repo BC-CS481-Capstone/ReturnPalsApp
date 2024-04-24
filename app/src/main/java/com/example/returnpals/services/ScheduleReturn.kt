@@ -55,8 +55,6 @@ class ScheduleReturnViewModel(
 
     fun onSubmit() {
 
-
-
         val uris = mutableListOf<String>()
         info.packages.forEach {
             thing -> uris.add(thing.label)
@@ -79,6 +77,7 @@ class ScheduleReturnViewModel(
             method = info.method
         )
         createOrder(order)
+
         Log.println(Log.INFO, "ScheduleReturnViewModel::onSubmit", info.toString())
     }
     fun submitLabels() {

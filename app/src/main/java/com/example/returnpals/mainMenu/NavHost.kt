@@ -28,6 +28,7 @@ import com.example.returnpals.composetools.pickup.PickupMethodScreen
 import com.example.returnpals.composetools.pickup.PricingScreen
 import com.example.returnpals.composetools.pickup.SelectAddressScreen
 import com.example.returnpals.composetools.pickup.ThankYouScreen
+import com.example.returnpals.composetools.pickup.ThankYouViewModel
 import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.services.ScheduleReturnViewModel
 
@@ -124,12 +125,17 @@ fun AppNavigation(navController: NavController) {
             }
             composable("confirm") { entry ->
                 val pickupVM = entry.sharedViewModel<ScheduleReturnViewModel>(navController)
+                val thankyouVM = ThankYouViewModel()
+                val hasUserName by thankyouVM.hasUserNames.observeAsState()
                 val createReturnSuccessful by pickupVM.createReturnSuccessful.observeAsState()
                 val createLabelsSuccessful by pickupVM.createLabelsSuccessful.observeAsState()
                 ConfirmPickupScreen(
                     info = pickupVM.info,
                     onClickNext = {
-                        pickupVM.onSubmit()
+                        thankyouVM.init()
+                        if (hasUserName == true) {
+                            pickupVM.onSubmit()
+                        }
                          },
                     onClickBack = { navController.navigate("add_labels") },
                     onClickPromoButton = {}
