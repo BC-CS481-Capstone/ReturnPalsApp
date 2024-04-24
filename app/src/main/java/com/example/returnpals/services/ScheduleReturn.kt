@@ -49,7 +49,7 @@ class ScheduleReturnViewModel(
         }
     }
 
-    fun onSubmit() {
+    fun onSubmit(email:String) {
         /*
         val order = OrderRepository(
             Backend.getEmail(),
@@ -62,9 +62,9 @@ class ScheduleReturnViewModel(
         )
         */
         val returns = Returns.builder()
-            .userId(Backend.getEmail())
+            .userId(email)
             .address(info.address.toString())
-            .email(Backend.getEmail())
+            .email(email)
             .confrimationNumber("")
             .method(PickupMethod.valueOf(info.method.toString()))
             .status(PickupStatus.ON_THE_WAY)
