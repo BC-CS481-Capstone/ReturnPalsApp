@@ -9,7 +9,7 @@ import com.amplifyframework.datastore.generated.model.LabelType
 
 
 data class PackageInfo(
-    val label: Uri = Uri.EMPTY, // label is a filename
+    val label: String ="", // label is an absolute file path
     val labelType: LabelType,
     var description: String? = null, // additional info provided by user
 )

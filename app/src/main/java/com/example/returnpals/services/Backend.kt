@@ -14,6 +14,8 @@ import com.amplifyframework.storage.s3.AWSS3StoragePlugin
 import com.example.returnpals.composetools.OrderRepository
 import com.example.returnpals.composetools.ProfileRepository
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 
 /**Adds amplify backend on create code as tutorial examples provided.**/
@@ -137,5 +139,20 @@ object Backend {
             },
             { Log.e(TAG, "Query failed", it) }
         )
+    }
+    fun copyStreamToFile(inputStream: InputStream, outputFile: File) {
+        inputStream.use { input ->
+            val outputStream = FileOutputStream(outputFile)
+            outputStream.use { output ->
+                val buffer = ByteArray(4 * 1024) // buffer size
+                while (true) {
+                    val byteCount = input.read(buffer)
+                    if (byteCount < 0) break
+                    output.write(buffer, 0, byteCount)
+                }
+                output.flush()
+                output.close()
+            }
+        }
     }
 }
