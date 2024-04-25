@@ -29,7 +29,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.returnpals.composetools.CustomTextField
 import com.example.returnpals.services.RegisterViewModel
-import com.example.returnpals.services.UserRepository
+import com.example.returnpals.services.UserEmail
 
 @Composable
 fun Register(navController: NavController) {
@@ -70,7 +70,7 @@ fun RegisterTitle() {
 
 @Composable
 fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel()) {
-    var repository = UserRepository
+    var repository = UserEmail
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }

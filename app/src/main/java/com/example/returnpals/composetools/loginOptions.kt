@@ -28,7 +28,7 @@ import com.amplifyframework.core.Amplify
 import com.example.returnpals.mainMenu.MenuRoutes
 import com.example.returnpals.mainMenu.viewModelLogin
 import com.example.returnpals.services.LoginViewModel
-import com.example.returnpals.services.UserRepository
+import com.example.returnpals.services.UserEmail
 
 
 /* This is the login options class used to create the two login UI for guest and user.*/
@@ -218,7 +218,7 @@ class ConfirmNumberViewModel(): ViewModel() {
     val confirmSuccessful: LiveData<Boolean?> = _confirmSuccessful
 
     //Get email from login
-    private var repository = UserRepository
+    private var repository = UserEmail
 
     var code =  mutableStateOf<String>("")
         private set

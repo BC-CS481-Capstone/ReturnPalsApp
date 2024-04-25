@@ -20,7 +20,7 @@ class LoginViewModel(): ViewModel() {
     private val _signUpSuccessful = MutableLiveData<Boolean?>()
     val signUpSuccessful: LiveData<Boolean?> = _signUpSuccessful
 
-    val repository = UserRepository
+    val repository = UserEmail
     var password =  mutableStateOf<String>("Password123$")
         private set
 
@@ -103,7 +103,7 @@ class LoginViewModel(): ViewModel() {
     }
 }
 
-object UserRepository {
+object UserEmail {
     private var emailLiveData = mutableStateOf("test@bellevue.college")
 
     fun getEmail(): String {
