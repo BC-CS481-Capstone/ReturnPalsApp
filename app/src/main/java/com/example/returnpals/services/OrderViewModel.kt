@@ -49,8 +49,7 @@ class OrderViewModel(
         }
     }
 
-    fun onSubmit() {
-
+    fun onSubmit(email:String) {
         /*
         val uris = mutableListOf<Uri>()
         info.packages.forEach {
@@ -72,9 +71,9 @@ class OrderViewModel(
         */
 
         val returns = Returns.builder()
-            .userId(Backend.getEmail())
+            .userId(email)
             .address(info.address.toString())
-            .email(Backend.getEmail())
+            .email(email)
             .confrimationNumber("")
             .method(PickupMethod.valueOf(info.method.toString()))
             .status(PickupStatus.ON_THE_WAY)

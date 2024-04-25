@@ -84,6 +84,7 @@ object Backend {
         Log.i(TAG, "email reset$email")
     }
     fun accessEmail(){
+        /*
         Log.i(TAG, "Email Accessed $email")
         if(email == "") {
             Log.i(TAG, "It worked")
@@ -98,7 +99,7 @@ object Backend {
                 { Log.e("AuthDemo", "Failed to fetch user attributes", it) }
             )
         }
-
+*/
     }
     fun getEmail(): String{
         Log.i(TAG, "Email Retrieved $email")
