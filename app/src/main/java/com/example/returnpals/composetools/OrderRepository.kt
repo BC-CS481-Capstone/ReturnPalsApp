@@ -23,7 +23,7 @@ data class OrderRepository(private val customerId: String,
                            private var labels: List<Int>,
                            private var status: PickupStatus = PickupStatus.ON_THE_WAY,
                            private var hasImage: Boolean = false,
-                           private var images: List<Uri>? = listOf(),
+                           private var images: List<String>? = listOf(),
                            private var confirmation: String = "0",
                            private var method: PickupMethod?
 
@@ -66,7 +66,7 @@ data class OrderRepository(private val customerId: String,
     fun getHasImage(): Boolean{
         return hasImage
     }
-    fun getImages(): List<Uri>{
+    fun getImages(): List<String>{
         return images!!
     }
     //Sends the Order to database
