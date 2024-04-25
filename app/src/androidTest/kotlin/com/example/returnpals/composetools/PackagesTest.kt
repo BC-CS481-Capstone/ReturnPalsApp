@@ -1,6 +1,5 @@
 package com.example.returnpals.composetools
 
-import android.net.Uri
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -58,7 +57,7 @@ class PackagesTest {
 
         isClicked = false
 
-        packages[1] = PackageInfo(label=Uri.EMPTY, labelType=LabelType.DIGITAL)
+        packages[1] = PackageInfo(labelType=LabelType.DIGITAL)
         next.performClick()
         assert(isClicked) { "Next button on-click event does not work." }
 
@@ -115,11 +114,11 @@ class PackagesTest {
         // Test next and back buttons:
 
 
-        packages[1] = PackageInfo(label=Uri.EMPTY, labelType=LabelType.DIGITAL, description="Test 1")
+        packages[1] = PackageInfo(labelType=LabelType.DIGITAL, description="Test 1")
         rule.onNodeWithText(LabelType.DIGITAL.toNiceString()).assertIsDisplayed()
         rule.onNodeWithText("Test 1").assertIsDisplayed()
 
-        packages[2] = PackageInfo(label=Uri.EMPTY, labelType=LabelType.PHYSICAL, description="Test 2")
+        packages[2] = PackageInfo(labelType=LabelType.PHYSICAL, description="Test 2")
         rule.onNodeWithText(LabelType.PHYSICAL.toNiceString()).assertIsDisplayed()
         rule.onNodeWithText("Test 2").assertIsDisplayed()
     }
