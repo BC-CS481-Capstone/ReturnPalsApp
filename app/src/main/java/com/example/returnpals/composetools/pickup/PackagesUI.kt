@@ -309,7 +309,7 @@ private fun AddLabelDialogue(
                 imagePicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             },
             onConfirm = { description ->
-                if (image != null) onAddLabel(PackageInfo(image!!, type, description))
+                if (image != null) onAddLabel(PackageInfo(label=image!!, labelType=type, description=description))
                 else onCancel()
             }
         )
@@ -393,7 +393,7 @@ private fun PackagesTable(
                 Cell( // Label Type
                     modifier = Modifier.weight(columnWeights[1]),
                 ) {
-                    CellText(packageInfo.labelType.toNiceString())
+                    CellText(packageInfo.labelType?.toNiceString() ?: "Unspecified")
                 }
                 Cell( // Description
                     modifier = Modifier.weight(columnWeights[2]),

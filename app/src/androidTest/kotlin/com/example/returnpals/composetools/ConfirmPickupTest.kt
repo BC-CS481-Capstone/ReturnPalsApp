@@ -10,9 +10,9 @@ import com.amplifyframework.datastore.generated.model.LabelType
 import com.amplifyframework.datastore.generated.model.PickupMethod
 import com.amplifyframework.datastore.generated.model.PricingPlan
 import com.example.returnpals.PackageInfo
+import com.example.returnpals.PickupInfo
 import com.example.returnpals.composetools.pickup.ConfirmPickupScreen
 import com.example.returnpals.toNiceString
-import com.example.returnpals.services.PickupInfo
 import org.junit.Rule
 import org.junit.Test
 import java.time.LocalDate
@@ -40,7 +40,7 @@ class ConfirmPickupTest {
     fun testPricingPlan() {
         rule.setContent { ConfirmPickupScreen(info = testPickupInfo) }
         rule.onNodeWithText("Pricing Plan:").assertIsDisplayed()
-        rule.onNodeWithText(testPickupInfo.plan.toString()).assertIsDisplayed()
+        rule.onNodeWithText(testPickupInfo.plan?.toNiceString() ?: "Unspecified").assertIsDisplayed()
     }
     @Test
     fun testProgressBar() {
@@ -67,7 +67,7 @@ class ConfirmPickupTest {
     fun testPickupMethod() {
         rule.setContent { ConfirmPickupScreen(info = testPickupInfo) }
         rule.onNodeWithText("Pickup by:").assertIsDisplayed()
-        rule.onNodeWithText(testPickupInfo.method.toString()).assertIsDisplayed()
+        rule.onNodeWithText(testPickupInfo.method?.toNiceString() ?: "Unspecified").assertIsDisplayed()
     }
     @Test
     fun testAddress() {
