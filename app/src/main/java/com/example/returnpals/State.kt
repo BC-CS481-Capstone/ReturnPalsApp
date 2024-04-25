@@ -1,6 +1,5 @@
 package com.example.returnpals
 
-import android.net.Uri
 import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.LabelType
 import com.amplifyframework.datastore.generated.model.Labels
@@ -43,7 +42,7 @@ data class UserInfo(
 data class PackageInfo(
     val id: String? = null,
     val returnId: String? = null,
-    val label: Uri = Uri.EMPTY, // label is a filename
+    val label: String ="", // label is an absolute file path
     val labelType: LabelType? = null,
     val description: String? = null, // additional info provided by user
 ) {

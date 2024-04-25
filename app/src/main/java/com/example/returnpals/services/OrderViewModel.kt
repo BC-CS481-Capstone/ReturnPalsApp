@@ -8,9 +8,10 @@ import com.amplifyframework.datastore.generated.model.PickupStatus
 import com.example.returnpals.PickupInfo
 import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.core.Amplify
+import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.Labels
-import com.amplifyframework.datastore.generated.model.PickupMethod
-import com.amplifyframework.datastore.generated.model.Returns
+import com.example.returnpals.composetools.OrderRepository
+import java.io.File
 import java.time.LocalDate
 
 /**
@@ -49,9 +50,9 @@ class OrderViewModel(
         }
     }
 
-    fun onSubmit(email:String) {
-        /*
-        val uris = mutableListOf<Uri>()
+    fun onSubmit() {
+
+        val uris = mutableListOf<String>()
         info.packages.forEach {
             thing -> uris.add(thing.label)
         }
@@ -68,25 +69,8 @@ class OrderViewModel(
             uris,
             method = info.method
         )
-        */
+        createOrder(order)
 
-        val returns = Returns.builder()
-            .userId(email)
-            .address(info.address.toString())
-            .email(email)
-            .confrimationNumber("")
-            .method(PickupMethod.valueOf(info.method.toString()))
-            .status(PickupStatus.ON_THE_WAY)
-            .build()
-        Amplify.API.mutate(ModelMutation.create(returns),{
-            Log.i("backend",it.toString())
-            if (!it.hasErrors()) {
-                returnId = it.data.id
-                _createReturnSuccessful.postValue(true)
-            }
-        },{
-            _createReturnSuccessful.postValue(false)
-        })
         Log.println(Log.INFO, "ScheduleReturnViewModel::onSubmit", info.toString())
     }
 
@@ -95,7 +79,7 @@ class OrderViewModel(
         // Post when successful
         var uploaded = true
         info.packages.forEach {
-            val record = Labels.builder().type(it.labelType).returnsId(returnId).image(it.label.toString()).build()
+            val record = Labels.builder().type(it.labelType).returnsId(returnId).image(it.label).build()
             Amplify.API.mutate(ModelMutation.create(record),{
                 Log.i("backend",it.toString())
                 if(it.hasData() && !it.hasErrors()) {
@@ -110,6 +94,33 @@ class OrderViewModel(
         } else {
             _createLabelsSuccessful.postValue(false)
         }
+    }
+    private fun createOrder(returns: OrderRepository){
+        Amplify.API.mutate(ModelMutation.create(returns.order),{
+            Log.i("backend",it.toString())
+            if (!it.hasErrors()) {
+                returnId = it.data.id
+                _createReturnSuccessful.postValue(true)
+                Backend.orderList.add(returns)
+                if(returns.getHasImage()) {
+                    Log.i("Backend", "True checked")
+                    returns.getImages().forEach { uri ->
+                        val file = File(uri)
+                        Amplify.Storage.uploadFile(
+                            uri, file,
+                            { Log.i("Backend", "Successfully uploaded: $uri") },
+                            { error -> Log.e("Backend", "Upload failed", error) }
+                        )
+
+                    }
+                }
+            } else {
+                Log.e("Backend", it.errors.first().message)
+            }
+        },{
+            _createReturnSuccessful.postValue(false)
+        })
+
     }
 
 //    companion object {

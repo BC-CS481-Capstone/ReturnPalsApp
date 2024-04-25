@@ -43,6 +43,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -58,6 +59,8 @@ import com.example.returnpals.composetools.IconManager
 import com.example.returnpals.composetools.ScheduleReturnScaffold
 import com.example.returnpals.composetools.getBackGroundColor
 import com.example.returnpals.toNiceString
+import com.example.returnpals.services.Backend
+import java.io.File
 
 // TODO: RemoveLabelButton
 // TODO: EditDescriptionButton
@@ -161,7 +164,39 @@ fun AddPackagesScreen(
 /////////////////////////////////////////////////////////////////////////////
 // PRIVATE API
 ////////////////////
-
+@Composable
+private fun AddLabelDialogue(
+    type: LabelType,
+    onAddLabel: (PackageInfo) -> Unit,
+    onCancel: () -> Unit,
+) {
+    var image by remember { mutableStateOf<String?>(null) }
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    val context = LocalContext.current
+    val imagePicker = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri ->
+            val imageStream = context.contentResolver.openInputStream(uri!!)
+            val tempFile = File.createTempFile("image", ".image")
+            Backend.copyStreamToFile(imageStream!!, tempFile)
+            image = tempFile.absolutePath
+            imageUri = uri}
+    )
+    Dialog(onDismissRequest = onCancel) {
+        AddLabelDialogueContent(
+            label = imageUri,
+            type = type,
+            onCancel = onCancel,
+            onUpload = {
+                imagePicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            },
+            onConfirm = { description ->
+                if (image != null) onAddLabel(PackageInfo(label=image!!, labelType=type, description=description))
+                else onCancel()
+            }
+        )
+    }
+}
 @Preview
 @Composable
 fun AddPackagesPreview() {
@@ -286,33 +321,6 @@ private fun UploadLabelContent(
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun AddLabelDialogue(
-    type: LabelType,
-    onAddLabel: (PackageInfo) -> Unit,
-    onCancel: () -> Unit,
-) {
-    var image by remember { mutableStateOf<Uri?>(null) }
-    val imagePicker = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = { uri -> image = uri }
-    )
-    Dialog(onDismissRequest = onCancel) {
-        AddLabelDialogueContent(
-            label = image,
-            type = type,
-            onCancel = onCancel,
-            onUpload = {
-                imagePicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-            },
-            onConfirm = { description ->
-                if (image != null) onAddLabel(PackageInfo(label=image!!, labelType=type, description=description))
-                else onCancel()
-            }
-        )
     }
 }
 

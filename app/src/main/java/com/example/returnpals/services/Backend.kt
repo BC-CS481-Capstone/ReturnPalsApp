@@ -14,6 +14,8 @@ import com.amplifyframework.storage.s3.AWSS3StoragePlugin
 import com.example.returnpals.composetools.OrderRepository
 import com.example.returnpals.composetools.ProfileRepository
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 
 /**Adds amplify backend on create code as tutorial examples provided.**/
@@ -42,49 +44,12 @@ object Backend {
         }
         return this
     }
-    fun createOrder(returns: OrderRepository){
-
-        Amplify.API.mutate(
-            ModelMutation.create(returns.order),
-            {response ->
-                Log.i(TAG, "created")
-                if(response.hasErrors()) {
-                    Log.e(TAG, response.errors.first().message)
-                } else {
-                    Log.i(TAG, "Created Order with id: " + response.data.id)
-                    orderList.add(returns)
-/*
-                    if(returns.getHasImage()){
-                        Log.i(TAG, "True checked")
-                        returns.getImages().forEach {
-                            uri ->
-                            val file = uri.path?.let { File(it) }
-                            if (file != null) {
-                                Amplify.Storage.uploadFile(
-                                    uri.toString(), file,
-                                    { Log.i("MyAmplifyApp", "Successfully uploaded: $uri" ) },
-                                    { error -> Log.e("MyAmplifyApp", "Upload failed", error) }
-                                )
-                            }
-                        }
-
-
-
-
-                    }*/
-
-                }
-            },
-            {error ->
-                Log.e(TAG, "Create failed", error)}
-        )
-    }
     fun resetEmail(){
         email = ""
         Log.i(TAG, "email reset$email")
     }
     fun accessEmail(){
-        /*
+
         Log.i(TAG, "Email Accessed $email")
         if(email == "") {
             Log.i(TAG, "It worked")
@@ -99,7 +64,7 @@ object Backend {
                 { Log.e("AuthDemo", "Failed to fetch user attributes", it) }
             )
         }
-*/
+
     }
     fun getEmail(): String{
         Log.i(TAG, "Email Retrieved $email")
@@ -138,5 +103,20 @@ object Backend {
             },
             { Log.e(TAG, "Query failed", it) }
         )
+    }
+    fun copyStreamToFile(inputStream: InputStream, outputFile: File) {
+        inputStream.use { input ->
+            val outputStream = FileOutputStream(outputFile)
+            outputStream.use { output ->
+                val buffer = ByteArray(4 * 1024) // buffer size
+                while (true) {
+                    val byteCount = input.read(buffer)
+                    if (byteCount < 0) break
+                    output.write(buffer, 0, byteCount)
+                }
+                output.flush()
+                output.close()
+            }
+        }
     }
 }

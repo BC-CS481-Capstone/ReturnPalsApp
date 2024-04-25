@@ -138,7 +138,7 @@ fun AppNavigation(navController: NavController) {
                     onClickNext = {
                         thankyouVM.init()
                         if (hasUserName == true) {
-                            pickupVM.onSubmit(thankyouVM.userEmail.value)
+                            pickupVM.onSubmit()
                         }
                          },
                     onClickBack = { navController.navigate("add_labels") },
