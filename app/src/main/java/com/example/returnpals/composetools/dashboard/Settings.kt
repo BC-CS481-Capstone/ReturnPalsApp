@@ -29,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -63,8 +64,10 @@ fun Settings(navController: NavController) {
             ResetPasswordDialog(
                 onDismiss = { showResetPasswordDialog = false },
                 onConfirm = { newPassword ->
+                    // Assuming you want to confirm reset immediately after setting a new password
                     settingsViewModel.resetPassword(newPassword)
                     showResetPasswordDialog = false
+                    showConfirmResetPasswordDialog = true // Set this to true to show the next dialog
                 }
             )
         }
@@ -83,10 +86,8 @@ fun Settings(navController: NavController) {
             AddressesDialog(
                 addresses = userAddresses,
                 onDismiss = { showAddressesDialog = false },
-                onAddAddress = {
-                    showAddressesDialog = false
-                    showAddAddressDialog = true
-                }
+                onAddAddress = { showAddressesDialog = false; showAddAddressDialog = true },
+                onDeleteAddress = { address -> settingsViewModel.deleteAddress(address) } // Callback for address deletion
             )
         }
 
@@ -235,7 +236,7 @@ fun ConfirmResetPasswordDialog(
                 TextField(
                     value = newPassword,
                     onValueChange = { newPassword = it },
-                    label = { Text("New Password") }
+                    label = { Text("Confirm Password") }
                 )
                 TextField(
                     value = confirmationCode,
@@ -266,7 +267,8 @@ fun ConfirmResetPasswordDialog(
 fun AddressesDialog(
     addresses: List<SettingsViewModel.SimpleAddress>,
     onDismiss: () -> Unit,
-    onAddAddress: () -> Unit // Adding a callback to trigger the address addition form
+    onAddAddress: () -> Unit, // Adding a callback to trigger the address addition form
+    onDeleteAddress: (SettingsViewModel.SimpleAddress) -> Unit // Callback to delete an address
 ) {
     AlertDialog(
         onDismissRequest = { onDismiss() },
@@ -282,7 +284,18 @@ fun AddressesDialog(
                     Text("No addresses available.")
                 } else {
                     addresses.forEach { address ->
-                        Text(text = address.address)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(text = address.address)
+                            Spacer(modifier = Modifier.weight(1f))
+                            Button(
+                                onClick = { onDeleteAddress(address) },
+                                modifier = Modifier.padding(start = 8.dp)
+                            ) {
+                                Text("Delete")
+                            }
+                        }
                         Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
@@ -302,6 +315,7 @@ fun AddressesDialog(
         }
     )
 }
+
 
 @Composable
 fun AddAddressDialog(settingsViewModel: SettingsViewModel, onDismiss: () -> Unit) {

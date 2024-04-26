@@ -49,7 +49,7 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.Video) { Video(navController) }
         composable(MenuRoutes.SignIn) {
             val viewModelLogin = LoginViewModel()
-            LoginScreen(viewModelLogin, navController) }
+            LoginScreen(viewModelLogin, SettingsViewModel(), navController) }
         composable(MenuRoutes.FAQ) { FAQ(navController) }
         composable(MenuRoutes.Register) { Register(navController)}
 

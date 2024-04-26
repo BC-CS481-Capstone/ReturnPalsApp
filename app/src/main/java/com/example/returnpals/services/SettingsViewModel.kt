@@ -16,7 +16,10 @@ import com.amplifyframework.core.Consumer
 import com.amplifyframework.api.ApiException
 import com.amplifyframework.api.graphql.PaginatedResult
 import com.amplifyframework.api.graphql.model.ModelMutation
+import com.amplifyframework.core.model.Model
 import kotlin.random.Random
+import androidx.compose.runtime.livedata.observeAsState
+
 
 
 class SettingsViewModel : ViewModel() {
@@ -162,7 +165,7 @@ class SettingsViewModel : ViewModel() {
         }
     }
 
-    data class SimpleAddress(val address: String,)
+    data class SimpleAddress(val address: String,) : Model
 
 
     fun addNewAddress(address: String) {
@@ -197,6 +200,31 @@ class SettingsViewModel : ViewModel() {
         return Random.nextInt(100000, 999999).toString()  // Generate a random number between 100000 and 999999
     }
 
+    fun deleteAddress(address: SimpleAddress) {
+        viewModelScope.launch {
+            try {
+                Amplify.API.mutate(
+                    ModelMutation.delete(address),
+                    { response ->
+                        Log.i("MyAmplifyApp", "Successfully deleted address with ID: ${response.data}")
+                        fetchAddresses()  // Refresh the list of addresses if needed
+                        _operationStatus.value = "Address deleted successfully."
+                    },
+                    { error ->
+                        Log.e("MyAmplifyApp", "Deletion failed: ${error.localizedMessage}", error)
+                        _operationStatus.value = "Error deleting address: ${error.localizedMessage}"
+                    }
+                )
+            } catch (e: ApiException) {
+                Log.e("MyAmplifyApp", "API Exception when trying to delete address", e)
+                _operationStatus.value = "Exception when deleting address: ${e.localizedMessage}"
+            }
+        }
+    }
+
+
 }
+
+
 
 

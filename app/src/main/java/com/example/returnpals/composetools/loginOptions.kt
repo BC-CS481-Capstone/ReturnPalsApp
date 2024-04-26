@@ -1,4 +1,5 @@
 package com.example.returnpals.composetools
+import SettingsViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,10 +28,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.amplifyframework.core.Amplify
+import com.example.returnpals.composetools.dashboard.ConfirmResetPasswordDialog
+import com.example.returnpals.composetools.dashboard.ResetPasswordDialog
 import com.example.returnpals.mainMenu.MenuRoutes
 import com.example.returnpals.mainMenu.viewModelLogin
 import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.services.UserRepository
+import androidx.compose.runtime.livedata.observeAsState
+
 
 
 /* This is the login options class used to create the two login UI for guest and user.*/
@@ -63,7 +70,7 @@ fun ConfirmNumber(navController: NavController,confirmviewMd:ConfirmNumberViewMo
 }
 
     @Composable
-    fun LoginScreen(viewModel:LoginViewModel, navController: NavController) {
+    fun LoginScreen(viewModel:LoginViewModel, settingsViewModel: SettingsViewModel, navController: NavController) {
         // Condition variables
         val signUpSuccessful by viewModel.signUpSuccessful.observeAsState()
         val logInSuccessful by viewModel.logInSuccessful.observeAsState()
@@ -88,6 +95,7 @@ fun ConfirmNumber(navController: NavController,confirmviewMd:ConfirmNumberViewMo
                     reset = { /*TODO*/ },
                     signin = {viewModel.logIn()},
                     signup = {viewModel.signUp()},
+                    settingsViewModel = settingsViewModel,
                     emailString = viewModel.getEmail(),
                     passString =  viewModel.password.value)
             }
@@ -129,8 +137,14 @@ fun ConfirmNumber(navController: NavController,confirmviewMd:ConfirmNumberViewMo
         }
     }
     @Composable
-    fun LoginUIContent(failMessage:String,user:(String) -> Unit, pass:(String) -> Unit, guest: () -> Unit, reset: () -> Unit, signin:() -> Unit, signup: () -> Unit, emailString:String = "Email",passString:String="Password") {
+    fun LoginUIContent(failMessage:String,user:(String) -> Unit, pass:(String) -> Unit, guest: () -> Unit, reset: () -> Unit, signin:() -> Unit, signup: () -> Unit, settingsViewModel: SettingsViewModel, emailString:String = "Email",passString:String="Password") {
         val config = getConfig()
+
+        var showResetDialog by remember { mutableStateOf(false) }
+        var showConfirmResetDialog by remember { mutableStateOf(false) }
+
+
+
         // get screen size for image size
             Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceBetween) {
                 //Column center top
@@ -138,9 +152,9 @@ fun ConfirmNumber(navController: NavController,confirmviewMd:ConfirmNumberViewMo
 
                 //Set User or Guest options
                 Row() {
-                    Text(text = "Sign In |",Modifier.align(Alignment.CenterVertically))
-                    TextButton(onClick = guest){
-                        Text("Guest",color = Color(0xFF008BE7))
+                    Text(text = "Sign In |", Modifier.align(Alignment.CenterVertically))
+                    TextButton(onClick = guest) {
+                        Text("Guest", color = Color(0xFF008BE7))
                     }
                 }
 
@@ -148,27 +162,59 @@ fun ConfirmNumber(navController: NavController,confirmviewMd:ConfirmNumberViewMo
 
 
                 //set text fields for users
-                OutlinedTextField(value = emailString,
+                OutlinedTextField(
+                    value = emailString,
                     onValueChange = user
                 )
-                OutlinedTextField(value = passString, onValueChange = pass,
+                OutlinedTextField(
+                    value = passString, onValueChange = pass,
                     visualTransformation = PasswordVisualTransformation()
                 )
                 Text(failMessage)
                 //Forgot your password button
-                TextButton(onClick = reset){
-                    Text("Forgot your password?",color = Color(0xFF008BE7))
+                TextButton(onClick = {showResetDialog = true}) {
+                    Text("Forgot your password?", color = Color(0xFF008BE7))
                 }
                 // Big Sign in button
-                Button(onClick = signin,colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008BE7), contentColor = Color.White)) {
+                Button(
+                    onClick = signin,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF008BE7),
+                        contentColor = Color.White
+                    )
+                ) {
                     Text("Sign In")
                 }
                 // Sign up options
                 Row() {
-                    Text(text = "Don't have an account yet?",Modifier.align(Alignment.CenterVertically))
+                    Text(
+                        text = "Don't have an account yet?",
+                        Modifier.align(Alignment.CenterVertically)
+                    )
                     TextButton(onClick = signup) {
-                        Text("Sign up",color = Color(0xFF008BE7))
+                        Text("Sign up", color = Color(0xFF008BE7))
                     }
+                }
+
+                if (showResetDialog) {
+                    ResetPasswordDialog(
+                        onDismiss = { showResetDialog = false },
+                        onConfirm = { newPassword ->
+                            settingsViewModel.resetPassword(newPassword)
+                            showResetDialog = false
+                            showConfirmResetDialog = true
+                        }
+                    )
+                }
+
+                if (showConfirmResetDialog) {
+                    ConfirmResetPasswordDialog(
+                        onDismiss = { showConfirmResetDialog = false },
+                        onConfirm = { newPassword, confirmationCode ->
+                            settingsViewModel.confirmResetPassword(newPassword, confirmationCode)
+                            showConfirmResetDialog = false
+                        }
+                    )
                 }
             }
     }
