@@ -8,11 +8,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,9 +20,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,25 +36,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose.ReturnPalTheme
 import com.example.returnpals.composetools.ScheduleReturnScaffold
-import kotlinx.coroutines.flow.StateFlow
 
 // A view model is necessary here to remember which address option was selected across screens.
 
+@Preview
 @Composable
 fun SelectAddressScreen(
-    viewModel: SettingsViewModel,
-    onClickNext: () -> Unit,
-    onClickBack: () -> Unit,
+    addresses: List<SettingsViewModel.SimpleAddress> = listOf(),
+    selectedAddressId: Int? = null,
+    onClickNext: () -> Unit = {},
+    onClickBack: () -> Unit = {},
+    onSelectAddress: (Int) -> Unit = {},
+    onAddAddress: (String) -> Unit = {},
     isGuest: Boolean = false,
 ) {
-    val customBlue = Color(0xFFE1F6FF)
-    val userAddresses by viewModel.userAddresses.collectAsState()  // Using SimpleAddress now
-    val selectedAddressId by viewModel.selectedAddressId.collectAsState()
 
-    if (userAddresses.isEmpty()) {
+    if (addresses.isEmpty()) {
         Log.d("SelectAddressScreen", "No addresses available")
     } else {
-        Log.d("SelectAddressScreen", "Addresses loaded: ${userAddresses.size}")
+        Log.d("SelectAddressScreen", "Addresses loaded: ${addresses.size}")
     }
 
     ScheduleReturnScaffold(
@@ -69,14 +65,15 @@ fun SelectAddressScreen(
     ) { padding ->
         SelectAddressContent(
             selected = selectedAddressId,
-            userAddresses = userAddresses,
-            onSelectAddress = viewModel::selectAddress,
-            onAddAddress = { newAddress ->
-                viewModel.addNewAddress(newAddress)
-            },
+            userAddresses = addresses,
+            onSelectAddress = onSelectAddress,
+            onAddAddress = onAddAddress,
             onClickNext = onClickNext,
             onClickBack = onClickBack,
-            isGuest = false
+            isGuest = false,
+            modifier = Modifier
+                .padding(padding)
+                .padding(20.dp)
         )
     }
 }

@@ -2,6 +2,7 @@ package com.example.returnpals.mainMenu
 
 import SettingsViewModel
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
@@ -94,7 +95,10 @@ fun AppNavigation(navController: NavController) {
                 // TODO: send added addresses to user account
                 val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
                 SelectAddressScreen(
-                    viewModel = settingsVM,
+                    addresses = settingsVM.userAddresses.collectAsState().value,
+                    selectedAddressId = settingsVM.selectedAddressId.collectAsState().value,
+                    onSelectAddress = settingsVM::selectAddress,
+                    onAddAddress = settingsVM::addNewAddress,
                     onClickNext = { navController.navigate("select_method") },
                     onClickBack = { navController.navigate("select_date") }
                 )
