@@ -27,10 +27,10 @@ import com.example.returnpals.composetools.pickup.PickupDateScreen
 import com.example.returnpals.composetools.pickup.PickupMethodScreen
 import com.example.returnpals.composetools.pickup.PricingScreen
 import com.example.returnpals.composetools.pickup.SelectAddressScreen
-import com.example.returnpals.services.OrderViewModel
 import com.example.returnpals.composetools.pickup.ThankYouScreen
 import com.example.returnpals.composetools.pickup.ThankYouViewModel
 import com.example.returnpals.services.LoginViewModel
+import com.example.returnpals.services.OrderViewModel
 
 @Composable
 fun AppNavigation(navController: NavController) {
@@ -123,6 +123,7 @@ fun AppNavigation(navController: NavController) {
                     packages = pickupVM.packages.toMap(),
                     onAddLabel = pickupVM::onAddLabel,
                     onRemoveLabel = pickupVM::onRemoveLabel,
+                    onUpdateLabel = pickupVM::onUpdateLabel,
                     onClickNext = { navController.navigate("confirm") },
                     onClickBack = { navController.navigate("select_pricing") },
                 )

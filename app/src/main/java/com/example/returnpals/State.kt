@@ -40,10 +40,10 @@ data class UserInfo(
 }
 
 data class PackageInfo(
+    val labelType: LabelType,
     val id: String? = null,
     val returnId: String? = null,
     val label: String ="", // label is an absolute file path
-    val labelType: LabelType? = null,
     val description: String? = null, // additional info provided by user
 ) {
     val model: Labels get() =
