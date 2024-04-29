@@ -61,10 +61,7 @@ import com.example.returnpals.services.Backend
 import com.example.returnpals.toNiceString
 import java.io.File
 
-// TODO: RemoveLabelButton
-// TODO: EditDescriptionButton
 // TODO: put icons in add-label buttons
-// TODO: implement upload photo functionality
 
 /////////////////////////////////////////////////////////////////////////////
 // PUBLIC API
@@ -183,10 +180,15 @@ private fun AddLabelDialogue(
     val imagePicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
-            val imageStream = context.contentResolver.openInputStream(uri!!)
-            val tempFile = File.createTempFile("image", ".image")
-            Backend.copyStreamToFile(imageStream!!, tempFile)
-            image = tempFile.absolutePath
+            uri?.let {
+                val inputStream = context.contentResolver.openInputStream(uri)
+                inputStream?.let {
+                    val tempFile = File.createTempFile("image", ".image")
+                    Backend.copyStreamToFile(inputStream, tempFile)
+                    image = tempFile.absolutePath
+                    inputStream.close()
+                }
+            }
         }
     )
     Dialog(onDismissRequest = onCancel) {
@@ -226,10 +228,15 @@ private fun UpdateLabelDialogue(
     val imagePicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
-            val imageStream = context.contentResolver.openInputStream(uri!!)
-            val tempFile = File.createTempFile("image", ".image")
-            Backend.copyStreamToFile(imageStream!!, tempFile)
-            image = tempFile.absolutePath
+            uri?.let {
+                val inputStream = context.contentResolver.openInputStream(uri)
+                inputStream?.let {
+                    val tempFile = File.createTempFile("image", ".image")
+                    Backend.copyStreamToFile(inputStream, tempFile)
+                    image = tempFile.absolutePath
+                    inputStream.close()
+                }
+            }
         }
     )
     Dialog(onDismissRequest = onCancel) {
