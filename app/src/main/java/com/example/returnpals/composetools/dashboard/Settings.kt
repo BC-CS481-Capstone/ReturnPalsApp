@@ -5,6 +5,7 @@ import SettingsViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -37,6 +38,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -274,9 +276,10 @@ fun AddressesDialog(
         onDismissRequest = { onDismiss() },
         title = { Text("Manage Addresses") },
         text = {
+
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .verticalScroll(rememberScrollState())
                     .padding(16.dp)
             ) {
@@ -285,16 +288,22 @@ fun AddressesDialog(
                 } else {
                     addresses.forEach { address ->
                         Row(
-                            verticalAlignment = Alignment.CenterVertically
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text(text = address.address)
-                            Spacer(modifier = Modifier.weight(1f))
-                            Button(
-                                onClick = { onDeleteAddress(address) },
-                                modifier = Modifier.padding(start = 8.dp)
-                            ) {
-                                Text("Delete")
-                            }
+                            Text(
+                                text = address.address,
+                                modifier = Modifier.weight(1f).padding(end = 8.dp),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                            Text(
+                                text = "Delete",
+                                modifier = Modifier
+                                    .clickable { onDeleteAddress(address) },
+                                color = Color.Red,
+                                fontWeight = FontWeight.Bold
+                            )
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                     }

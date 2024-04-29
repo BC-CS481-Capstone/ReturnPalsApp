@@ -168,7 +168,6 @@ class SettingsViewModel : ViewModel() {
 
     data class SimpleAddress(val id: String, val address: String,) : Model
 
-
     fun addNewAddress(address: String) {
         val userId = generateRandomUserId()
         viewModelScope.launch {
@@ -182,7 +181,11 @@ class SettingsViewModel : ViewModel() {
                     ModelMutation.create(newAddress),
                     { response ->
                         Log.i("MyAmplifyApp", "Address created: ${response.data.id}")
-                        fetchAddresses()  // Optionally refresh addresses after adding
+                        // Here, add the new address directly to _userAddresses
+                        val simpleAddress = SimpleAddress(response.data.id, address)
+                        _userAddresses.value = _userAddresses.value.toMutableList().apply {
+                            add(simpleAddress)
+                        }
                         _operationStatus.value = "Address added successfully with ID: ${response.data.id}"
                     },
                     { error ->
