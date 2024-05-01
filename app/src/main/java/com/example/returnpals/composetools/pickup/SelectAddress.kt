@@ -203,7 +203,7 @@ fun AddAddressField(onAddAddress: (String) -> Unit) {
 private fun AddressItem(
     address: String,
     isSelected: Boolean,
-    onSelect: () -> Unit
+    onSelect: () -> Unit,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
