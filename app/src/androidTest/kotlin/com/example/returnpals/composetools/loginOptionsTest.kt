@@ -1,5 +1,6 @@
 package com.example.returnpals.composetools
 
+import SettingsViewModel
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasNoClickAction
@@ -19,47 +20,47 @@ class loginOptionsTest {
     @Test
     fun signInTextDisplay() {
         //SignInText
-        rule.setContent { LoginUIContent(user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
+        rule.setContent { LoginUIContent(settingsViewModel = SettingsViewModel(), user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
         rule.onNode(hasText("Sign In |") and hasNoClickAction()).assertIsDisplayed()
     }
     @Test
     fun signInButtonDisplay() {
-        rule.setContent { LoginUIContent(user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
+        rule.setContent { LoginUIContent(settingsViewModel = SettingsViewModel(), user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
         rule.onNode(hasText("Sign In") and hasClickAction()).assertIsDisplayed()
     }
     @Test
     fun guestButtonDisplay() {
-        rule.setContent { LoginUIContent(user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
+        rule.setContent { LoginUIContent(settingsViewModel = SettingsViewModel(), user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
         rule.onNode(hasText("Guest") and hasClickAction()).assertIsDisplayed()
     }
     @Test
     fun textFieldEmailDisplay() {
-        rule.setContent { LoginUIContent(user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
+        rule.setContent { LoginUIContent(settingsViewModel = SettingsViewModel(), user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
         rule.onNode(hasText("Email") and hasSetTextAction()).assertIsDisplayed()
     }
     @Test
     fun textFieldPasswordDisplay() {
-        rule.setContent { LoginUIContent(user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
+        rule.setContent { LoginUIContent(settingsViewModel = SettingsViewModel(), user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
         rule.onNode(!hasText("Email") and hasSetTextAction()).assertIsDisplayed()
     }
     @Test
     fun forgotPasswordButtonDisplay() {
-        rule.setContent { LoginUIContent(user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
+        rule.setContent { LoginUIContent(settingsViewModel = SettingsViewModel(), user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
         rule.onNode(hasText("Forgot your password?") and hasClickAction()).assertIsDisplayed()
     }
     @Test
     fun signUpButtonDisplay() {
-        rule.setContent { LoginUIContent(user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
+        rule.setContent { LoginUIContent(settingsViewModel = SettingsViewModel(), user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
         rule.onNode(hasText("Sign up") and hasClickAction()).assertIsDisplayed()
     }
     @Test
     fun dontHaveAccountTextDisplay() {
-        rule.setContent { LoginUIContent(user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
+        rule.setContent { LoginUIContent(settingsViewModel = SettingsViewModel(), user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
         rule.onNode(hasText("Don't have an account yet?") and hasNoClickAction()).assertIsDisplayed()
     }
     @Test
     fun returnPalImageDisplay() {
-        rule.setContent { LoginUIContent(user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
+        rule.setContent { LoginUIContent(settingsViewModel = SettingsViewModel(), user = {}, pass = { } , guest = { } , reset = { } , signin = { } , signup = { }, failMessage = "Fail Message" ) }
         rule.onNodeWithContentDescription("ReturnPalName Image").assertIsDisplayed()
     }
     @Test

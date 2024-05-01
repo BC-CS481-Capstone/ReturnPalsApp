@@ -1,55 +1,90 @@
 package com.example.returnpals
 
-
-import android.location.Address
-import android.net.Uri
-import java.time.LocalDate
+import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.LabelType
-// TODO: develop backend
+import com.amplifyframework.datastore.generated.model.Labels
+import com.amplifyframework.datastore.generated.model.PickupMethod
+import com.amplifyframework.datastore.generated.model.PickupStatus
+import com.amplifyframework.datastore.generated.model.PricingPlan
+import com.amplifyframework.datastore.generated.model.Returns
+import com.amplifyframework.datastore.generated.model.User
+import java.time.LocalDate
 
+data class UserInfo(
+    val email: String? = null,
+    val id: String? = null,
+    val plan: PricingPlan = PricingPlan.BRONZE,
+    val nameFirst: String? = null,
+    val nameLast: String? = null,
+    val phone: String? = null
+) {
+    constructor(
+        model: User
+    ) : this(
+        email=model.email,
+        id=model.id,
+        plan=model.subscription,
+        nameFirst=model.firstName,
+        nameLast=model.lastName,
+        phone=model.phone
+    )
+    val model: User get() =
+        User.builder()
+            .email(email)
+            .subscription(plan)
+            .firstName(nameFirst)
+            .lastName(nameLast)
+            .phone(phone)
+            .id(id)
+            .build()
+}
 
 data class PackageInfo(
-    val label: String ="", // label is an absolute file path
     val labelType: LabelType,
-    var description: String? = null, // additional info provided by user
-)
+    val id: String? = null,
+    val returnId: String? = null,
+    val label: String ="", // label is an absolute file path
+    val description: String? = null, // additional info provided by user
+) {
+    val model: Labels get() =
+        Labels.builder()
+            .type(labelType)
+            .returnsId(returnId)
+            .id(id)
+            .image(label.toString())
+            .build()
+}
 
-/**
- * Used to generate unique IDs by marking them as free or in-use and only giving freed ids.
- * Currently used to generate reference ids for items in a table.
- */
-class IdManager {
-
-    private var _next: Int = 1
-    private var _freed: ArrayDeque<Int> = ArrayDeque()
-
-    /**
-     * Gets a unique ID and marks said ID as in-use.
-     * If there are no more available ids then 0 is returned.
-     */
-    fun allot(): Int {
-        var id = _next
-        if (_freed.size > 0) {
-            id = _freed.last()
-            _freed.removeLast()
-        } else if (_next != 0) {
-            _next++
+data class PickupInfo(
+    val userId: String? = null,
+    val date: LocalDate = LocalDate.now(),
+    val packages: List<PackageInfo> = listOf(),
+    val id: String? = null,
+    val address: String? = null,
+    val method: PickupMethod? = null,
+    val plan: PricingPlan? = null,
+    val status: PickupStatus? = null,
+    val confirmationNumber: String? = null,
+) {
+    val tax get() = 0.00
+    val cost get() =
+        when (plan) {
+            PricingPlan.BRONZE -> 3.99 * packages.size.toDouble()
+            PricingPlan.SILVER -> 0.00
+            PricingPlan.GOLD -> 0.00
+            PricingPlan.PLATINUM -> 0.00
+            else -> 0.00
         }
-        return id
-    }
+    val total get() = tax + cost
 
-    /**
-     * Returns a list with unique IDs assigned to all the items.
-     */
-    fun <T> allot(items: List<T>): List<Pair<Int, T>> {
-        return items.associateBy { allot() }.toList()
-    }
-
-    /**
-     * Marks the ID as no longer in-use and allows it to be allotted again.
-     */
-    fun free(id: Int) {
-        _freed.add(id)
-    }
-
+    val model: Returns get() =
+        Returns.builder()
+            .userId(userId)
+            .date(Temporal.Date(date.toString()))
+            .method(method)
+            .address(address)
+            .confrimationNumber(confirmationNumber)
+            .status(status)
+            .id(id)
+            .build()
 }

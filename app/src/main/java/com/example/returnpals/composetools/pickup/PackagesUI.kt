@@ -1,6 +1,5 @@
 package com.example.returnpals.composetools.pickup
 
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -11,10 +10,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -32,7 +31,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,43 +50,34 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-
-import androidx.core.util.toAndroidPair
 import coil.compose.AsyncImage
-
-
 import com.amplifyframework.datastore.generated.model.LabelType
 import com.example.compose.ReturnPalTheme
 import com.example.returnpals.PackageInfo
-
-import com.example.returnpals.composetools.ButtonManager
-
 import com.example.returnpals.composetools.IconManager
 import com.example.returnpals.composetools.ScheduleReturnScaffold
 import com.example.returnpals.composetools.getBackGroundColor
 import com.example.returnpals.services.Backend
+import com.example.returnpals.toNiceString
 import java.io.File
 
-// TODO: RemoveLabelButton
-// TODO: EditDescriptionButton
 // TODO: put icons in add-label buttons
-// TODO: implement upload photo functionality
 
 /////////////////////////////////////////////////////////////////////////////
 // PUBLIC API
 ////////////////////
 
-@Preview
 @Composable
 fun AddPackagesScreen(
     packages: Map<Int, PackageInfo> = mapOf(),
     onAddLabel: (PackageInfo) -> Unit = {},
     onRemoveLabel: (Int) -> Unit = {},
+    onUpdateLabel: (Int, PackageInfo) -> Unit = {_,_->},
     onClickNext: () -> Unit = {},
     onClickBack: () -> Unit = {},
 ) {
-    val showDialogue: MutableState<Boolean> = remember { mutableStateOf(false) }
-    val dialogueType: MutableState<LabelType?> = remember { mutableStateOf(null) }
+    var showDialogueType by remember { mutableStateOf<LabelType?>(null) }
+    var selectedRow by remember { mutableStateOf<Int?>(null) }
 
     ScheduleReturnScaffold(
         step = 4,
@@ -125,54 +114,55 @@ fun AddPackagesScreen(
             ) {
                 AddLabelButton(
                     text = "Physical Label",
-                    onClick = {
-                        showDialogue.value = true
-                        dialogueType.value = LabelType.PHYSICAL
-                    },
+                    onClick = { showDialogueType = LabelType.PHYSICAL },
                     modifier = Modifier.weight(1.0f)
                 )
                 Spacer(Modifier.width(15.dp))
                 AddLabelButton(
                     text = "Digital Label",
-                    onClick = {
-                        showDialogue.value = true
-                        dialogueType.value = LabelType.DIGITAL
-                    },
+                    onClick = { showDialogueType = LabelType.DIGITAL },
                     modifier = Modifier.weight(1.0f)
                 )
                 Spacer(Modifier.width(15.dp))
                 AddLabelButton(
                     text = "Amazon QR Code",
-                    onClick = {
-                        showDialogue.value = true
-                        dialogueType.value = LabelType.QRCODE
-                    },
+                    onClick = { showDialogueType = LabelType.QRCODE },
                     modifier = Modifier.weight(1.0f)
                 )
             }
+            // onClickItem = { id, _ -> onRemoveLabel(id) },
             PackagesTable(
                 packages = packages,
-                onClickItem = { id, _ -> onRemoveLabel(id) },
+                onClickItem = { rowId, _ -> selectedRow = rowId },
                 modifier = Modifier.fillMaxSize()
             )
-            if (showDialogue.value && dialogueType.value != null) {
+            if (showDialogueType != null) {
                 AddLabelDialogue(
-                    type = dialogueType.value!!,
-                    onAddLabel = { label ->
-                        showDialogue.value = false
+                    type = showDialogueType!!,
+                    onConfirm = { label ->
+                        showDialogueType = null
                         onAddLabel(label)
                     },
-                    onCancel = { showDialogue.value = false }
+                    onCancel = { showDialogueType = null },
                 )
+            } else if (selectedRow != null) {
+                packages[selectedRow!!]?.let { info ->
+                    UpdateLabelDialogue(
+                        info = info,
+                        onUpdate = { updatedInfo ->
+                            onUpdateLabel(selectedRow!!, updatedInfo)
+                            selectedRow = null
+                        },
+                        onRemove = {
+                            onRemoveLabel(selectedRow!!)
+                            selectedRow = null
+                        },
+                        onCancel = { selectedRow = null },
+                    )
+                }
             }
         }
     }
-}
-
-fun getFilename(filepath: String): String {
-    val i = filepath.lastIndexOf('/')
-    return if (i == -1) ""
-        else filepath.substring(i + 1)
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -181,46 +171,133 @@ fun getFilename(filepath: String): String {
 @Composable
 private fun AddLabelDialogue(
     type: LabelType,
-    onAddLabel: (PackageInfo) -> Unit,
+    onConfirm: (PackageInfo) -> Unit,
     onCancel: () -> Unit,
 ) {
-    var image by remember { mutableStateOf<String?>(null) }
-    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    var image by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
     val context = LocalContext.current
     val imagePicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
-            val imageStream = context.contentResolver.openInputStream(uri!!)
-            val tempFile = File.createTempFile("image", ".image")
-            Backend.copyStreamToFile(imageStream!!, tempFile)
-            image = tempFile.absolutePath
-            imageUri = uri}
+            uri?.let {
+                val inputStream = context.contentResolver.openInputStream(uri)
+                inputStream?.let {
+                    val tempFile = File.createTempFile("image", ".image")
+                    Backend.copyStreamToFile(inputStream, tempFile)
+                    image = tempFile.absolutePath
+                    inputStream.close()
+                }
+            }
+        }
     )
     Dialog(onDismissRequest = onCancel) {
-        AddLabelDialogueContent(
-            label = imageUri,
+        LabelDialogueContent(
+            title = when (type) {
+                LabelType.PHYSICAL -> "Add a Physical Label"
+                LabelType.DIGITAL -> "Add a Digital Label"
+                LabelType.QRCODE -> "Add a QR Code" },
+            label = image,
             type = type,
-            onCancel = onCancel,
-            onUpload = {
+            description = description,
+            onChangeDescription = { description = it },
+            onUploadImage = {
                 imagePicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             },
-            onConfirm = { description ->
-                if (image != null) onAddLabel(PackageInfo(image!!, type, description))
-                else onCancel()
+        ) {
+            Row(modifier = Modifier.padding(0.dp, 10.dp)) {
+                OutlinedButton(onClick = onCancel) { Text("Cancel") }
+                Spacer(Modifier.weight(1f))
+                Button(
+                    onClick = { if (image != "") onConfirm(PackageInfo(label=image, labelType=type, description=description)) }
+                ) { Text("Add") }
             }
-        )
+        }
     }
+}
+@Composable
+private fun UpdateLabelDialogue(
+    info: PackageInfo,
+    onUpdate: (PackageInfo) -> Unit,
+    onRemove: () -> Unit,
+    onCancel: () -> Unit,
+) {
+    var image by remember { mutableStateOf(info.label) }
+    var description by remember { mutableStateOf(info.description) }
+    val context = LocalContext.current
+    val imagePicker = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri ->
+            uri?.let {
+                val inputStream = context.contentResolver.openInputStream(uri)
+                inputStream?.let {
+                    val tempFile = File.createTempFile("image", ".image")
+                    Backend.copyStreamToFile(inputStream, tempFile)
+                    image = tempFile.absolutePath
+                    inputStream.close()
+                }
+            }
+        }
+    )
+    Dialog(onDismissRequest = onCancel) {
+        LabelDialogueContent(
+            title = when (info.labelType) {
+                LabelType.PHYSICAL -> "Update Physical Label"
+                LabelType.DIGITAL -> "Update Digital Label"
+                LabelType.QRCODE -> "Update QR Code" },
+            label = image,
+            type = info.labelType,
+            description = description,
+            onChangeDescription = { description = it },
+            onUploadImage = {
+                imagePicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            },
+        ) {
+            Row(modifier = Modifier.padding(0.dp, 10.dp)) {
+                OutlinedButton(
+                    onClick = onCancel,
+                    contentPadding = PaddingValues(13.dp,10.dp),
+                    shape = RoundedCornerShape(20)
+                ) { Text("Cancel") }
+                Spacer(Modifier.weight(1f))
+                Button(
+                    onClick = onRemove,
+                    contentPadding = PaddingValues(13.dp,10.dp),
+                    shape = RoundedCornerShape(20)
+                ) { Text("Remove") }
+                Spacer(Modifier.weight(1f))
+                Button(
+                    contentPadding = PaddingValues(13.dp,10.dp),
+                    shape = RoundedCornerShape(20),
+                    onClick = { if (image != "") onUpdate(info.copy(label=image, description=description)) }
+                ) { Text("Update") }
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun AddPackagesPreview() {
+    AddPackagesScreen(
+        packages = mapOf(
+            1 to PackageInfo(labelType = LabelType.PHYSICAL, description = "fragile"),
+            2 to PackageInfo(labelType = LabelType.QRCODE, description = "heavy"),
+            3 to PackageInfo(labelType = LabelType.DIGITAL),
+        )
+    )
 }
 @Preview
 @Composable
-private fun AddLabelDialogueContent(
-    label: Uri? = null,
+private fun LabelDialogueContent(
+    title: String = "Add a Package",
+    label: String? = null,
     type: LabelType? = null,
-    onCancel: () -> Unit = {},
-    onUpload: () -> Unit = {},
-    onConfirm: (String) -> Unit = {}
+    description: String? = null,
+    onChangeDescription: (String) -> Unit = {},
+    onUploadImage: () -> Unit = {},
+    options: @Composable ColumnScope.() -> Unit = {}
 ) {
-    var description by remember { mutableStateOf("") }
     Column(
         Modifier
             .padding(12.dp, 50.dp)
@@ -228,30 +305,14 @@ private fun AddLabelDialogueContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-//        Row(
-//            Modifier
-//                .fillMaxWidth()
-//                .padding(20.dp), horizontalArrangement = Arrangement.End
-//        ) {
-//            Text(
-//                text = "X",
-//                color = getBlueIconColor(),
-//                fontWeight = FontWeight.Bold, fontSize = 16.sp,
-//                modifier = Modifier.clickable(onClick = onCancel)
-//            )
-//        }
         Text(
-            text = when (type) {
-                LabelType.PHYSICAL -> "Add a Physical Label"
-                LabelType.DIGITAL -> "Add a Digital Label"
-                LabelType.QRCODE -> "Add a QR Code"
-                else -> "Add a Label" },
+            text = title,
             color = ReturnPalTheme.colorScheme.secondary,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(20.dp)
         )
-        UploadLabelContent(label, onUpload)
+        UploadLabelContent(label, onUploadImage)
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween,
@@ -260,24 +321,20 @@ private fun AddLabelDialogueContent(
                 .padding(30.dp, 10.dp)
         ) {
             OutlinedTextField(
-                value = description,
+                value = description ?: "",
                 label = { Text("Description") },
                 placeholder = { Text("Label the item(s) inside: i.e 'laptop covers'") },
-                onValueChange = { description = it },
+                onValueChange = onChangeDescription,
                 modifier = Modifier.fillMaxWidth()
             )
-            Row(modifier = Modifier.padding(0.dp, 10.dp)) {
-                OutlinedButton(onClick = onCancel) { Text("Cancel") }
-                Spacer(Modifier.weight(1f))
-                Button(onClick = { onConfirm(description) }) { Text("Add Package") }
-            }
+            options()
         }
     }
 }
 
 @Composable
 private fun UploadLabelContent(
-    label: Uri? = null,
+    label: String? = null,
     onClick: () -> Unit = {}
 ) {
     Column(
@@ -301,12 +358,15 @@ private fun UploadLabelContent(
                         color = borderColor,
                         style = Stroke(
                             width = 4f,
-                            pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), phase = 0f)
+                            pathEffect = PathEffect.dashPathEffect(
+                                floatArrayOf(10f, 10f),
+                                phase = 0f
+                            )
                         )
                     )
                 }
         ) {
-            if (label == null) {
+            if (label == "" || label == null) {
                 IconManager().getFileIcon(Modifier.size(width=100.dp,height=100.dp))
                 Text(
                     text = "Drag label here or browse files",
@@ -322,8 +382,6 @@ private fun UploadLabelContent(
         }
     }
 }
-
-
 
 @Composable
 private fun AddLabelButton(
@@ -380,14 +438,18 @@ private fun PackagesTable(
             items = packages.toList(),
             key = { it.first }
         ) {
+            val rowId = it.first
             val packageInfo = it.second
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.requiredHeight(60.dp)
-                    .clickable(onClick = { onClickItem(it.first, it.second) })
+                modifier = Modifier
+                    .requiredHeight(60.dp)
+                    .clickable(onClick = { onClickItem(rowId, packageInfo) })
             ) {
                 Cell( // Label
-                    modifier = Modifier.weight(columnWeights[0]).fillMaxSize(),
+                    modifier = Modifier
+                        .weight(columnWeights[0])
+                        .fillMaxSize(),
                 ) {
                     AsyncImage(
                         model = packageInfo.label,
@@ -399,7 +461,7 @@ private fun PackagesTable(
                 Cell( // Label Type
                     modifier = Modifier.weight(columnWeights[1]),
                 ) {
-                    CellText(packageInfo.labelType.toString())
+                    CellText(packageInfo.labelType.toNiceString())
                 }
                 Cell( // Description
                     modifier = Modifier.weight(columnWeights[2]),

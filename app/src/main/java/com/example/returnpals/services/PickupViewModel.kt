@@ -4,30 +4,12 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.returnpals.IdManager
-import com.example.returnpals.PackageInfo
 import com.amplifyframework.datastore.generated.model.PickupMethod
 import com.amplifyframework.datastore.generated.model.PricingPlan
+import com.example.returnpals.IdManager
+import com.example.returnpals.PackageInfo
+import com.example.returnpals.PickupInfo
 import java.time.LocalDate
-
-data class PickupInfo(
-    var date: LocalDate = LocalDate.now(),
-    var address: String? = null,
-    var method: PickupMethod? = null,
-    var plan: PricingPlan? = null,
-    var packages: List<PackageInfo> = listOf()
-) {
-    val tax get() = 0.00
-    val cost get() =
-        when (plan) {
-            PricingPlan.BRONZE -> 3.99 * packages.size.toDouble()
-            PricingPlan.SILVER -> 0.00
-            PricingPlan.GOLD -> 0.00
-            PricingPlan.PLATINUM -> 0.00
-            else -> 0.00
-        }
-    val total get() = tax + cost
-}
 
 open class PickupViewModel(
     date: LocalDate = LocalDate.now(),
@@ -47,7 +29,11 @@ open class PickupViewModel(
         packages=pickup.packages
     )
 
-    private val _packageIdManager: IdManager = IdManager()
+    // Row ID is not the same as a package ID, package ID is what you use to reference the label in the remote amplify database.
+    // Row ID is what you use to reference the package info object in the local map/table stored in this view model.
+    // Row ID is needed so that the user can click on a label in the labels table and update or remove that specific label.
+    // This is confusing and needs rework.
+    private val _packageRowIdManager: IdManager = IdManager()
 
     // https://developer.android.com/topic/libraries/architecture/livedata
 
@@ -55,7 +41,7 @@ open class PickupViewModel(
     val address = mutableStateOf(address)
     val method = mutableStateOf(method)
     val plan = mutableStateOf(pricing)
-    val packages = mutableStateMapOf(*_packageIdManager.allot(packages).toTypedArray())
+    val packages = mutableStateMapOf(*_packageRowIdManager.allot(packages).toTypedArray())
 
     /**
      * Constructs a PickupInfo object from mutable state.
@@ -66,7 +52,7 @@ open class PickupViewModel(
             address = address.value,
             method = method.value,
             plan = plan.value,
-            packages = packages.values.toList()
+            packages = packages.values.toList(),
         )
 
     val isValid get() =
@@ -95,15 +81,21 @@ open class PickupViewModel(
     }
 
     fun onAddLabel(value: PackageInfo) {
-        val id = _packageIdManager.allot()
-        packages[id] = value
-        Log.println(Log.INFO, "PickupViewModel::onAddLabel", "Inserted key-value pair: { $id , ${packages[id]} }")
+        val rowId = _packageRowIdManager.allot()
+        packages[rowId] = value
+        Log.println(Log.INFO, "PickupViewModel::onAddLabel", "Inserted key-value pair: { $rowId , ${packages[rowId]} }")
     }
 
-    fun onRemoveLabel(id: Int) {
-        packages.remove(id)
-        _packageIdManager.free(id)
-        Log.println(Log.INFO, "PickupViewModel::onRemoveLabel", "Removed entry with key $id")
+    // The row
+    fun onRemoveLabel(rowId: Int) {
+        packages.remove(rowId)
+        _packageRowIdManager.free(rowId)
+        Log.println(Log.INFO, "PickupViewModel::onRemoveLabel", "Removed entry with key $rowId")
+    }
+
+    fun onUpdateLabel(rowId: Int, info: PackageInfo) {
+        packages[rowId] = info
+        Log.println(Log.INFO, "PickupViewModel::onUpdateLabel", "Updated entry with key $rowId")
     }
 
 }

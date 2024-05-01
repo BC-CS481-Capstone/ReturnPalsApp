@@ -10,8 +10,6 @@ import com.example.compose.ReturnPalTheme
 import com.example.returnpals.mainMenu.AppNavigation
 import com.example.returnpals.services.Backend
 
-var email : String = ""
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 

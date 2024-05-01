@@ -1,17 +1,15 @@
 package com.example.returnpals.services
 
-import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
+import com.amplifyframework.datastore.generated.model.PickupStatus
+import com.example.returnpals.PickupInfo
 import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.Labels
-import com.amplifyframework.datastore.generated.model.PickupMethod
-import com.amplifyframework.datastore.generated.model.PickupStatus
-import com.amplifyframework.datastore.generated.model.Returns
 import com.example.returnpals.composetools.OrderRepository
 import java.io.File
 import java.time.LocalDate
@@ -29,12 +27,11 @@ import java.time.LocalDate
  * https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-apis
  */
 
-class ScheduleReturnViewModel(
+class OrderViewModel(
     pickup: PickupInfo = PickupInfo(),
     val navController: NavController? = null,
     private val minDate: LocalDate = LocalDate.now().minusDays(1),
-    private val maxDate: LocalDate = LocalDate.now().plusYears(1),
-
+    private val maxDate: LocalDate = LocalDate.now().plusYears(1)
 ) : PickupViewModel(pickup) {
 
     //Condition Variable
@@ -61,9 +58,6 @@ class ScheduleReturnViewModel(
         }
         val hasImage = info.packages.isNotEmpty()
 
-
-
-
         val order = OrderRepository(
             Backend.Profile.getID(),
             Backend.getEmail(),
@@ -73,16 +67,16 @@ class ScheduleReturnViewModel(
             PickupStatus.ON_THE_WAY,
             hasImage,
             uris,
-
             method = info.method
         )
         createOrder(order)
 
         Log.println(Log.INFO, "ScheduleReturnViewModel::onSubmit", info.toString())
     }
+
     fun submitLabels() {
-        //Uploads a list of labels to the database
-        //Post when succeful
+        // Uploads a list of labels to the database
+        // Post when successful
         var uploaded = true
         info.packages.forEach {
             val record = Labels.builder().type(it.labelType).returnsId(returnId).image(it.label).build()
@@ -128,6 +122,7 @@ class ScheduleReturnViewModel(
         })
 
     }
+
 //    companion object {
 //
 //        // This determines the default value for the view-model that gets instantiated in navigation.
