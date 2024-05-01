@@ -1,5 +1,6 @@
 package com.example.returnpals.mainMenu
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,7 +28,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.composetools.CustomTextField
+import com.example.returnpals.services.AmplifyOperations
+import com.example.returnpals.services.Backend
 import com.example.returnpals.services.RegisterViewModel
 import com.example.returnpals.services.UserEmail
 
@@ -118,7 +122,7 @@ fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel(
             onValueChange = { address = it })
         Spacer(modifier = Modifier.height(8.dp))
 
-        CustomTextField(label = "Email*", text = email, onValueChange = { email = it })
+        CustomTextField(label = "Email*", text = email, onValueChange = { /* Stop Email From Changing email = it*/ })
         Spacer(modifier = Modifier.height(8.dp))
 
         CustomTextField(label = "Phone Number*", text = phoneNumber, onValueChange = { phoneNumber = it })
@@ -140,6 +144,35 @@ fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel(
         ) {
             Text(
                 "Submit",
+                style = TextStyle(
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+        }
+        Spacer(modifier = Modifier.padding(24.dp))
+        Button(
+            onClick = {
+                //Logout and sends back to login screen
+                AmplifyOperations.signOut {
+                    Log.i("signOut", it.toString())
+                    Backend.resetEmail()
+                }
+                navController.navigate(MenuRoutes.Home) {
+                    // Clear all the back stack up to the start destination and save state
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                }
+            },
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = selectedBlue,
+                contentColor = Color.White
+            ),
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Text(
+                "Cancel",
                 style = TextStyle(
                     color = Color.White,
                     fontWeight = FontWeight.Bold
