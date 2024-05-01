@@ -5,6 +5,7 @@ import SettingsViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -36,6 +38,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -63,8 +66,10 @@ fun Settings(navController: NavController) {
             ResetPasswordDialog(
                 onDismiss = { showResetPasswordDialog = false },
                 onConfirm = { newPassword ->
+                    // Assuming you want to confirm reset immediately after setting a new password
                     settingsViewModel.resetPassword(newPassword)
                     showResetPasswordDialog = false
+                    showConfirmResetPasswordDialog = true // Set this to true to show the next dialog
                 }
             )
         }
@@ -83,10 +88,8 @@ fun Settings(navController: NavController) {
             AddressesDialog(
                 addresses = userAddresses,
                 onDismiss = { showAddressesDialog = false },
-                onAddAddress = {
-                    showAddressesDialog = false
-                    showAddAddressDialog = true
-                }
+                onAddAddress = { showAddressesDialog = false; showAddAddressDialog = true },
+                onDeleteAddress = { address -> settingsViewModel.deleteAddress(address) } // Callback for address deletion
             )
         }
 
@@ -235,7 +238,7 @@ fun ConfirmResetPasswordDialog(
                 TextField(
                     value = newPassword,
                     onValueChange = { newPassword = it },
-                    label = { Text("New Password") }
+                    label = { Text("Confirm Password") }
                 )
                 TextField(
                     value = confirmationCode,
@@ -266,15 +269,17 @@ fun ConfirmResetPasswordDialog(
 fun AddressesDialog(
     addresses: List<SettingsViewModel.SimpleAddress>,
     onDismiss: () -> Unit,
-    onAddAddress: () -> Unit // Adding a callback to trigger the address addition form
+    onAddAddress: () -> Unit, // Adding a callback to trigger the address addition form
+    onDeleteAddress: (SettingsViewModel.SimpleAddress) -> Unit // Callback to delete an address
 ) {
     AlertDialog(
         onDismissRequest = { onDismiss() },
         title = { Text("Manage Addresses") },
         text = {
+
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .verticalScroll(rememberScrollState())
                     .padding(16.dp)
             ) {
@@ -282,7 +287,24 @@ fun AddressesDialog(
                     Text("No addresses available.")
                 } else {
                     addresses.forEach { address ->
-                        Text(text = address.address)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = address.address,
+                                modifier = Modifier.weight(1f).padding(end = 8.dp),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                            Text(
+                                text = "Delete",
+                                modifier = Modifier
+                                    .clickable { onDeleteAddress(address) },
+                                color = Color.Red,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                         Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
@@ -302,6 +324,7 @@ fun AddressesDialog(
         }
     )
 }
+
 
 @Composable
 fun AddAddressDialog(settingsViewModel: SettingsViewModel, onDismiss: () -> Unit) {

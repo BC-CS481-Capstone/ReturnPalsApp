@@ -16,7 +16,11 @@ import com.amplifyframework.core.Consumer
 import com.amplifyframework.api.ApiException
 import com.amplifyframework.api.graphql.PaginatedResult
 import com.amplifyframework.api.graphql.model.ModelMutation
+import com.amplifyframework.core.model.Model
 import kotlin.random.Random
+import androidx.compose.runtime.livedata.observeAsState
+
+
 
 
 class SettingsViewModel : ViewModel() {
@@ -143,27 +147,26 @@ class SettingsViewModel : ViewModel() {
     fun fetchAddresses() {
         viewModelScope.launch {
             Amplify.API.query(
-                ModelQuery.list(Address::class.java),  // Correct Model class reference
-                { response: GraphQLResponse<PaginatedResult<Address>> ->  // Correct lambda parameter type
+                ModelQuery.list(Address::class.java),
+                { response ->
                     if (response.hasData()) {
-                        Log.d("MyAmplifyApp", "Addresses fetched: ${response.data.items} found")
                         val filteredAddresses = response.data.items.map { address ->
-                            SimpleAddress(address.address)
+                            SimpleAddress(address.id, address.address)
                         }
                         _userAddresses.value = filteredAddresses
                     } else if (response.hasErrors()) {
                         Log.e("MyAmplifyApp", "Error fetching addresses: ${response.errors.first().message}")
                     }
                 },
-                { error: ApiException ->  // Correct error handling lambda parameter type
+                { error ->
                     Log.e("MyAmplifyApp", "Query failed: ${error.localizedMessage}", error)
                 }
             )
         }
     }
 
-    data class SimpleAddress(val address: String,)
 
+    data class SimpleAddress(val id: String, val address: String,) : Model
 
     fun addNewAddress(address: String) {
         val userId = generateRandomUserId()
@@ -178,7 +181,11 @@ class SettingsViewModel : ViewModel() {
                     ModelMutation.create(newAddress),
                     { response ->
                         Log.i("MyAmplifyApp", "Address created: ${response.data.id}")
-                        fetchAddresses()  // Optionally refresh addresses after adding
+                        // Here, add the new address directly to _userAddresses
+                        val simpleAddress = SimpleAddress(response.data.id, address)
+                        _userAddresses.value = _userAddresses.value.toMutableList().apply {
+                            add(simpleAddress)
+                        }
                         _operationStatus.value = "Address added successfully with ID: ${response.data.id}"
                     },
                     { error ->
@@ -197,6 +204,41 @@ class SettingsViewModel : ViewModel() {
         return Random.nextInt(100000, 999999).toString()  // Generate a random number between 100000 and 999999
     }
 
-}
+    fun deleteAddress(simpleAddress: SimpleAddress) {
+        viewModelScope.launch {
+            try {
+                // Fetch the full Address model based on the ID
+                Amplify.API.query(
+                    ModelQuery.get(Address::class.java, simpleAddress.id),
+                    { response ->
+                        if (response.data != null) {
+                            Amplify.API.mutate(
+                                ModelMutation.delete(response.data),
+                                {
+                                    Log.i("MyAmplifyApp", "Successfully deleted address with ID: ${response.data.id}")
+                                    fetchAddresses()  // Refresh the list of addresses
+                                    _operationStatus.value = "Address deleted successfully."
+                                },
+                                { error ->
+                                    Log.e("MyAmplifyApp", "Deletion failed: ${error.localizedMessage}", error)
+                                    _operationStatus.value = "Error deleting address: ${error.localizedMessage}"
+                                }
+                            )
+                        } else if (response.hasErrors()) {
+                            Log.e("MyAmplifyApp", "Error fetching address for deletion: ${response.errors.first().message}")
+                        }
+                    },
+                    { error ->
+                        Log.e("MyAmplifyApp", "Failed to fetch address for deletion", error)
+                        _operationStatus.value = "Error fetching address for deletion: ${error.localizedMessage}"
+                    }
+                )
+            } catch (e: ApiException) {
+                Log.e("MyAmplifyApp", "API Exception when trying to delete address", e)
+                _operationStatus.value = "Exception when deleting address: ${e.localizedMessage}"
+            }
+        }
+    }
 
+}
 
