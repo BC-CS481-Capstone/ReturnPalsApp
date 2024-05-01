@@ -138,21 +138,25 @@ fun AppNavigation(navController: NavController) {
                 val hasUserName by thankyouVM.hasUserNames.observeAsState()
                 val createReturnSuccessful by pickupVM.createReturnSuccessful.observeAsState()
                 val createLabelsSuccessful by pickupVM.createLabelsSuccessful.observeAsState()
-                ConfirmPickupScreen(
-                    info = pickupVM.info,
-                    onClickNext = {
-                        thankyouVM.init()
-                        if (hasUserName == true) {
-                            pickupVM.onSubmit()
+                if (hasUserName != true) {
+                    thankyouVM.init()
+                }
+                if (hasUserName == true) {
+                    ConfirmPickupScreen(
+                        info = pickupVM.info,
+                        onClickNext = {
+                            if (hasUserName == true) {
+                                pickupVM.onSubmit(thankyouVM.userEmail.value)
+                            }
+                        },
+                        onClickBack = { navController.navigate("add_labels") },
+                        onClickPromoButton = {}
+                    )
+                    if (createReturnSuccessful == true) {
+                        pickupVM.submitLabels()
+                        if (createLabelsSuccessful == true) {
+                            navController.navigate("thanks")
                         }
-                         },
-                    onClickBack = { navController.navigate("add_labels") },
-                    onClickPromoButton = {}
-                )
-                if (createReturnSuccessful == true) {
-                    pickupVM.submitLabels()
-                    if (createLabelsSuccessful == true) {
-                        navController.navigate("thanks")
                     }
                 }
             }
