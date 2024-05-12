@@ -4,12 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
-import com.amplifyframework.datastore.generated.model.PickupStatus
-import com.example.returnpals.PickupInfo
 import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.Labels
+import com.amplifyframework.datastore.generated.model.PickupStatus
+import com.example.returnpals.PickupInfo
 import com.example.returnpals.composetools.OrderRepository
 import java.io.File
 import java.time.LocalDate
@@ -50,7 +50,7 @@ class OrderViewModel(
         }
     }
 
-    fun onSubmit() {
+    fun onSubmit(email:String) {
 
         val uris = mutableListOf<String>()
         info.packages.forEach {
@@ -60,7 +60,7 @@ class OrderViewModel(
 
         val order = OrderRepository(
             Backend.Profile.getID(),
-            Backend.getEmail(),
+            email,
             Temporal.Date(info.date.toString()),
             info.address.toString(),
             listOf(1, 2, 3),
