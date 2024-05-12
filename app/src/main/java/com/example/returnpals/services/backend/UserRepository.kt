@@ -1,9 +1,9 @@
-package com.example.returnpals.services
+package com.example.returnpals.services.backend
 
 import com.amplifyframework.datastore.generated.model.PricingPlan
 import com.amplifyframework.datastore.generated.model.User
 
-object UserRepository : Repository<User>(User::class.java) {
+object UserRepository : ModelRepository<User>(User::class.java) {
 
     fun create(
         email: String,
@@ -12,7 +12,7 @@ object UserRepository : Repository<User>(User::class.java) {
         nameLast: String? = null,
         phone: String? = null
     ): User? {
-        return this.create(
+        return create(
             User.builder()
                 .email(email)
                 .subscription(plan)
@@ -24,7 +24,7 @@ object UserRepository : Repository<User>(User::class.java) {
     }
 
     fun delete(id: String): User? {
-        return this.delete(User.justId(id))
+        return delete(User.justId(id))
     }
 
     fun update(
@@ -35,7 +35,7 @@ object UserRepository : Repository<User>(User::class.java) {
         nameLast: String? = null,
         phone: String? = null
     ): Boolean {
-        return this.update(
+        return update(
             User.builder()
                 .email(email)
                 .subscription(plan)

@@ -1,4 +1,4 @@
-package com.example.returnpals.services
+package com.example.returnpals.services.backend
 
 import android.util.Log
 import com.amplifyframework.api.graphql.model.ModelMutation
@@ -7,10 +7,11 @@ import com.amplifyframework.core.Amplify
 import com.amplifyframework.core.model.Model
 
 /**
- * Encapsulates create, read, update, and delete (CRUD) operations on the Return Pal database.
+ * Encapsulates create, read, update, and delete (CRUD) operations for a specified data model
+ * using [GraphQL API](https://docs.amplify.aws/gen1/android/build-a-backend/graphqlapi/).
  * @param type ModelType cannot be reified so type information needs to be passed at runtime.
  */
-abstract class Repository<ModelType>(
+open class ModelRepository<ModelType>(
     private val type: Class<ModelType>
 ) where ModelType : Model {
 

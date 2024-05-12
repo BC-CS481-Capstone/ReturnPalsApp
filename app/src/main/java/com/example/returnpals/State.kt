@@ -14,8 +14,8 @@ data class UserInfo(
     val email: String? = null,
     val id: String? = null,
     val plan: PricingPlan = PricingPlan.BRONZE,
-    val nameFirst: String? = null,
-    val nameLast: String? = null,
+    val firstName: String? = null,
+    val lastName: String? = null,
     val phone: String? = null
 ) {
     constructor(
@@ -24,16 +24,16 @@ data class UserInfo(
         email=model.email,
         id=model.id,
         plan=model.subscription,
-        nameFirst=model.firstName,
-        nameLast=model.lastName,
+        firstName=model.firstName,
+        lastName=model.lastName,
         phone=model.phone
     )
     val model: User get() =
         User.builder()
             .email(email)
             .subscription(plan)
-            .firstName(nameFirst)
-            .lastName(nameLast)
+            .firstName(firstName)
+            .lastName(lastName)
             .phone(phone)
             .id(id)
             .build()
