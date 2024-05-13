@@ -33,7 +33,6 @@ import com.example.returnpals.composetools.pickup.ThankYouViewModel
 import com.example.returnpals.services.ConfirmEmailViewModel
 import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.services.OrderViewModel
-import com.example.returnpals.services.backend.SessionRepository
 
 @Composable
 fun AppNavigation(navController: NavController) {
@@ -43,10 +42,11 @@ fun AppNavigation(navController: NavController) {
         startDestination = MenuRoutes.Home
     ) {
 
-        composable(MenuRoutes.Home) {
+        composable(MenuRoutes.Home) { entry ->
+            val loginVM = entry.sharedViewModel<LoginViewModel>(navController)
             HomeScreen(navController) {
-                if (SessionRepository.isSignedIn) navController.goto(MenuRoutes.HomeDash)
-                else if (SessionRepository.isGuest) navController.goto(MenuRoutes.PickupProcess)
+                if (loginVM.logInSuccessful.value == true) navController.goto(MenuRoutes.HomeDash)
+                else if (loginVM.isGuest) navController.goto(MenuRoutes.PickupProcess)
                 else navController.goto(MenuRoutes.SignIn)
             }
         }
@@ -54,9 +54,11 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.Pricing) { Pricing(navController) }
         composable(MenuRoutes.Contact) { Contact(navController) }
         composable(MenuRoutes.Video) { Video(navController) }
-        composable(MenuRoutes.SignIn) {
-            val viewModelLogin = LoginViewModel()
-            LoginScreen(viewModelLogin, SettingsViewModel(), navController) }
+        composable(MenuRoutes.SignIn) { entry ->
+            val loginVM = entry.sharedViewModel<LoginViewModel>(navController)
+            val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
+            LoginScreen(loginVM, settingsVM, navController)
+        }
         composable(MenuRoutes.FAQ) { FAQ(navController) }
         composable(MenuRoutes.Register) { RegistrationScreen(navController)}
 

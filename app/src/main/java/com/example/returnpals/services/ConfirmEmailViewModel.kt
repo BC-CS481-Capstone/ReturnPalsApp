@@ -4,7 +4,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.returnpals.services.backend.SessionRepository
+import androidx.lifecycle.viewModelScope
+import com.example.returnpals.services.backend.LoginRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ConfirmEmailViewModel: ViewModel() {
     //View model for confirm number. Sends data to amplify (confirm number)
@@ -15,13 +18,13 @@ class ConfirmEmailViewModel: ViewModel() {
 
     var code =  mutableStateOf("")
     var message = mutableStateOf("")
-    val email = SessionRepository.email ?: ""
+    val email = LoginRepository.email ?: ""
 
     fun confirm() {
-        SessionRepository.validateEmail(code.value,
-            onError = { it?.let { message.value = it.message + it.recoverySuggestion } }
-        ) {
-            _confirmSuccessful.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            if (LoginRepository.confirmEmail(code.value))
+                _confirmSuccessful.value = true
+            else message.value = "Nope"
         }
     }
 }

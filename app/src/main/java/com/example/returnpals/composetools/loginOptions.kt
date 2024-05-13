@@ -49,7 +49,7 @@ fun ConfirmNumber(navController: NavController, confirmVM: ConfirmEmailViewModel
         )
     }
     if (confirmSuccessful == true) {
-        viewModelLogin.signIn()
+        viewModelLogin.logIn()
         navController.navigate(MenuRoutes.Register) {
             popUpTo(MenuRoutes.Home) {
                // saveState = true
@@ -65,30 +65,29 @@ fun LoginScreen(viewModel:LoginViewModel, settingsViewModel: SettingsViewModel, 
     // Condition variables
     val signUpSuccessful by viewModel.signUpSuccessful.observeAsState()
     val logInSuccessful by viewModel.logInSuccessful.observeAsState()
-    viewModel.checkUser()
+    var isGuestMode by remember { mutableStateOf(false) }
+//    viewModel.checkUser()
     Box(modifier = Modifier
         .background(getBackGroundColor())
         .fillMaxSize()) {
         //This will switch between the guest login and user login
-        if (viewModel.isGuest.value) {
+        if (isGuestMode) {
             GuestLoginUIContent(
-                userSignIn = { viewModel.isGuest.value = !viewModel.isGuest.value },
-                signin = viewModel::signInAsGuest,
-                signup = { viewModel.isGuest.value = false },
-                email = { viewModel.email.value = it },
-                emailString = viewModel.email.value)
+                email = viewModel.email,
+                onSignIn = viewModel::logInAsGuest,
+                onSignUp = { go2(navController, MenuRoutes.Register) },
+                onChangeEmail = { viewModel.email = it })
         } else {
             LoginUIContent(
-                failMessage = viewModel.failMessage.value,
-                user = {  viewModel.email.value = it },
-                pass = { viewModel.password.value = it },
-                guest = { viewModel.isGuest.value = !viewModel.isGuest.value },
-                reset = viewModel::reset,
-                signin = viewModel::signIn,
-                signup = viewModel::signUp,
-                settingsViewModel = settingsViewModel,
-                emailString = viewModel.email.value,
-                passString =  viewModel.password.value)
+                email = viewModel.email,
+                password = viewModel.password,
+                failMessage = viewModel.failMessage,
+                onChangeEmail = {  viewModel.email = it },
+                onChangePassword = { viewModel.password = it },
+                onGuest = { isGuestMode = true },
+                onSignIn = viewModel::logIn,
+                onSignUp = viewModel::register,
+                settingsViewModel = settingsViewModel)
         }
         if (signUpSuccessful == true) {
             viewModel.reset()
@@ -128,7 +127,17 @@ fun ConfirmNumberContent(emailToConfirm:String,message:String,submitNumber:Strin
     }
 }
 @Composable
-fun LoginUIContent(failMessage:String,user:(String) -> Unit, pass:(String) -> Unit, guest: () -> Unit, reset: () -> Unit, signin:() -> Unit, signup: () -> Unit, settingsViewModel: SettingsViewModel, emailString:String = "Email",passString:String="Password") {
+fun LoginUIContent(
+    email: String = "Email",
+    password: String = "Password",
+    failMessage: String = "",
+    onChangeEmail: (String) -> Unit,
+    onChangePassword: (String) -> Unit,
+    onGuest: () -> Unit,
+    onSignIn:() -> Unit,
+    onSignUp: () -> Unit,
+    settingsViewModel: SettingsViewModel
+) {
     val config = getConfig()
 
     var showResetDialog by remember { mutableStateOf(false) }
@@ -142,7 +151,7 @@ fun LoginUIContent(failMessage:String,user:(String) -> Unit, pass:(String) -> Un
         //Set User or Guest options
         Row() {
             Text(text = "Sign In |", Modifier.align(Alignment.CenterVertically))
-            TextButton(onClick = guest) {
+            TextButton(onClick = onGuest) {
                 Text("Guest", color = Color(0xFF008BE7))
             }
         }
@@ -152,11 +161,11 @@ fun LoginUIContent(failMessage:String,user:(String) -> Unit, pass:(String) -> Un
 
         //set text fields for users
         OutlinedTextField(
-            value = emailString,
-            onValueChange = user
+            value = email,
+            onValueChange = onChangeEmail
         )
         OutlinedTextField(
-            value = passString, onValueChange = pass,
+            value = password, onValueChange = onChangePassword,
             visualTransformation = PasswordVisualTransformation()
         )
         Text(failMessage)
@@ -166,7 +175,7 @@ fun LoginUIContent(failMessage:String,user:(String) -> Unit, pass:(String) -> Un
         }
         // Big Sign in button
         Button(
-            onClick = signin,
+            onClick = onSignIn,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF008BE7),
                 contentColor = Color.White
@@ -180,7 +189,7 @@ fun LoginUIContent(failMessage:String,user:(String) -> Unit, pass:(String) -> Un
                 text = "Don't have an account yet?",
                 Modifier.align(Alignment.CenterVertically)
             )
-            TextButton(onClick = signup) {
+            TextButton(onClick = onSignUp) {
                 Text("Sign up", color = Color(0xFF008BE7))
             }
         }
@@ -209,7 +218,12 @@ fun LoginUIContent(failMessage:String,user:(String) -> Unit, pass:(String) -> Un
 }
 
 @Composable
-fun GuestLoginUIContent(userSignIn: () -> Unit, signin:() -> Unit, signup: () -> Unit,emailString:String="Email",email:(String)->Unit) {
+fun GuestLoginUIContent(
+    email: String = "",
+    onSignIn: () -> Unit = {},
+    onSignUp: () -> Unit = {},
+    onChangeEmail: (String) -> Unit,
+) {
     val config = getConfig()
     // get screen size for image size
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceBetween) {
@@ -217,29 +231,26 @@ fun GuestLoginUIContent(userSignIn: () -> Unit, signin:() -> Unit, signup: () ->
         IconManager().getReturnPalNameIcon(Modifier.requiredWidth(config.screenWidthDp.dp))
 
         //Set User or Guest options
-        Row() {
-            TextButton(onClick = userSignIn){
-            Text("Sign In ",color = Color(0xFF008BE7))
-        }
-            Text(text = "| Guest",Modifier.align(Alignment.CenterVertically))
-
+        Row {
+            TextButton(onClick = onSignIn) {
+                Text("Sign In ", color = Color(0xFF008BE7))
+            }
+            Text(text = "| Guest", Modifier.align(Alignment.CenterVertically))
         }
 
         //create temp vars for holding user inputs
 
         //set text fields for users
-        OutlinedTextField(value = emailString,
-            onValueChange = email
-        )
+        OutlinedTextField(value = email, onValueChange = onChangeEmail)
 
         // Big Sign in button
-        Button(onClick = signin,colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008BE7), contentColor = Color.White)) {
+        Button(onClick = onSignIn,colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008BE7), contentColor = Color.White)) {
             Text("Sign In as Guest")
         }
         // Sign up options
         Row() {
             Text(text = "Don't have an account yet?",Modifier.align(Alignment.CenterVertically))
-            TextButton(onClick = signup) {
+            TextButton(onClick = onSignUp) {
                 Text("Sign up",color = Color(0xFF008BE7))
             }
         }
