@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.returnpal.compose.ReturnPalTheme
-import com.returnpal.androidapp.mainMenu.AppNavigation
+import com.returnpal.androidapp.compose.nav.AppNavigation
 import com.returnpal.androidapp.services.Backend
 
 class MainActivity : ComponentActivity() {

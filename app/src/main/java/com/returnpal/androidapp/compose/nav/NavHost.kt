@@ -1,4 +1,4 @@
-package com.returnpal.androidapp.mainMenu
+package com.returnpal.androidapp.compose.nav
 
 import SettingsViewModel
 import androidx.compose.runtime.Composable
@@ -21,7 +21,13 @@ import com.returnpal.androidapp.compose.dashboard.HomeDash
 import com.returnpal.androidapp.compose.dashboard.Orders
 import com.returnpal.androidapp.compose.dashboard.Profile
 import com.returnpal.androidapp.compose.dashboard.Settings
-import com.returnpal.androidapp.compose.nav.goto
+import com.returnpal.androidapp.compose.mainMenu.About
+import com.returnpal.androidapp.compose.mainMenu.Contact
+import com.returnpal.androidapp.compose.mainMenu.FAQ
+import com.returnpal.androidapp.compose.mainMenu.HomeScreen
+import com.returnpal.androidapp.compose.mainMenu.Pricing
+import com.returnpal.androidapp.compose.mainMenu.RegistrationScreen
+import com.returnpal.androidapp.compose.mainMenu.Video
 import com.returnpal.androidapp.compose.pickup.AddPackagesScreen
 import com.returnpal.androidapp.compose.pickup.ConfirmPickupScreen
 import com.returnpal.androidapp.compose.pickup.PickupDateScreen
@@ -60,7 +66,7 @@ fun AppNavigation(navController: NavController) {
             LoginScreen(loginVM, settingsVM, navController)
         }
         composable(MenuRoutes.FAQ) { FAQ(navController) }
-        composable(MenuRoutes.Register) { RegistrationScreen(navController)}
+        composable(MenuRoutes.Register) { RegistrationScreen(navController) }
 
         navigation(
             startDestination = MenuRoutes.HomeDash,

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.returnpal.androidapp.compose.nav.goto
 import com.returnpal.androidapp.compose.pickup.PickupDateScreen
-import com.returnpal.androidapp.mainMenu.MenuRoutes
+import com.returnpal.androidapp.compose.nav.MenuRoutes
 import java.time.LocalDate
 
 

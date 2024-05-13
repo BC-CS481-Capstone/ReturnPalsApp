@@ -4,8 +4,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
-import com.returnpal.androidapp.mainMenu.AppNavigation
-import com.returnpal.androidapp.mainMenu.MenuRoutes
+import com.returnpal.androidapp.compose.nav.AppNavigation
+import com.returnpal.androidapp.compose.nav.MenuRoutes
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Rule

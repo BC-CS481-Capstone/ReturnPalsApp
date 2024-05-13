@@ -1,4 +1,4 @@
-package com.returnpal.androidapp.mainMenu
+package com.returnpal.androidapp.compose.nav
 
 object MenuRoutes {
     const val Home = "home"

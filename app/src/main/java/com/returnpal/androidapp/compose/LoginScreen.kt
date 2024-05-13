@@ -28,8 +28,8 @@ import androidx.navigation.NavController
 import com.returnpal.androidapp.compose.dashboard.ConfirmResetPasswordDialog
 import com.returnpal.androidapp.compose.dashboard.ResetPasswordDialog
 import com.returnpal.androidapp.compose.nav.go2
-import com.returnpal.androidapp.mainMenu.MenuRoutes
-import com.returnpal.androidapp.mainMenu.viewModelLogin
+import com.returnpal.androidapp.compose.nav.MenuRoutes
+import com.returnpal.androidapp.compose.mainMenu.viewModelLogin
 import com.returnpal.androidapp.services.ConfirmEmailViewModel
 import com.returnpal.androidapp.services.LoginViewModel
 
@@ -100,7 +100,7 @@ fun LoginScreen(viewModel:LoginViewModel, settingsViewModel: SettingsViewModel, 
         }
         if (logInSuccessful == true) {
             viewModel.reset()
-            go2(navController,MenuRoutes.HomeDash)
+            go2(navController, MenuRoutes.HomeDash)
         }
     }
 }

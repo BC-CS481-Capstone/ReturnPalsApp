@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.returnpal.androidapp.R
-import com.returnpal.androidapp.mainMenu.MenuRoutes
+import com.returnpal.androidapp.compose.nav.MenuRoutes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

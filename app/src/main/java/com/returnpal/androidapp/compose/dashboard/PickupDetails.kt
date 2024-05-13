@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import com.amplifyframework.datastore.generated.model.PickupMethod
 import com.returnpal.androidapp.compose.nav.goto
 import com.returnpal.androidapp.compose.pickup.PickupMethodScreen
-import com.returnpal.androidapp.mainMenu.MenuRoutes
+import com.returnpal.androidapp.compose.nav.MenuRoutes
 
 @Composable
 fun PickupDetails(navController: NavController) {

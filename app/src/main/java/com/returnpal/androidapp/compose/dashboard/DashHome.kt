@@ -40,7 +40,7 @@ import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.generated.model.User
 import com.returnpal.androidapp.R
 import com.returnpal.androidapp.compose.nav.go2
-import com.returnpal.androidapp.mainMenu.MenuRoutes
+import com.returnpal.androidapp.compose.nav.MenuRoutes
 
 val vm = DashHomeViewModel()
 @Composable
@@ -52,7 +52,7 @@ fun HomeDash(navController: NavController) {
             HomeDashContent(navController = navController, firstName = vm.getFirstName())
         }
     } else if (hasName == false) {
-        go2(navController,MenuRoutes.Register)
+        go2(navController, MenuRoutes.Register)
     }
 
 }

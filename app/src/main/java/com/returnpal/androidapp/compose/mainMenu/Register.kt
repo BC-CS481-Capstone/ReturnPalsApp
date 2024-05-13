@@ -1,4 +1,4 @@
-package com.returnpal.androidapp.mainMenu
+package com.returnpal.androidapp.compose.mainMenu
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -30,6 +30,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.returnpal.androidapp.compose.CustomTextField
+import com.returnpal.androidapp.compose.nav.MenuRoutes
 import com.returnpal.androidapp.services.AmplifyOperations
 import com.returnpal.androidapp.services.Backend
 import com.returnpal.androidapp.services.RegisterViewModel

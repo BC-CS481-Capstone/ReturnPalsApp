@@ -1,4 +1,4 @@
-package com.returnpal.androidapp.mainMenu
+package com.returnpal.androidapp.compose.mainMenu
 
 import MainMenuScaffold
 import androidx.compose.material3.Text
