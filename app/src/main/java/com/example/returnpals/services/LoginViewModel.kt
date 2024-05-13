@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 //Login View model provides the information and function needed to login, logout, and signup.
 class LoginViewModel(
-//    private val repository: LoginRepository
+//    private val repository: LoginRepository       login repo is a global object for now
 ): ViewModel() {
 
     // Condition variables
@@ -35,16 +35,20 @@ class LoginViewModel(
 
     fun register() {
         viewModelScope.launch(Dispatchers.IO) {
-            LoginRepository.register(email, password)?.let { error ->
+            val error = LoginRepository.register(email, password)
+            if (error != null) {
                 _signUpSuccessful.postValue(false)
                 failMessage = error.message + error.recoverySuggestion
-            } ?: _signUpSuccessful.postValue(true)
+            } else {
+                _signUpSuccessful.postValue(true)
+            }
         }
     }
 
     fun logIn() {
         viewModelScope.launch(Dispatchers.IO) {
-            LoginRepository.logIn(email, password)?.let { error ->
+            val error = LoginRepository.logIn(email, password)
+            if (error != null) {
                 _logInSuccessful.postValue(false)
                 failMessage = error.message + error.recoverySuggestion
                 error.message?.let {  message ->
@@ -53,7 +57,17 @@ class LoginViewModel(
                         accessEmail()
                     }
                 }
-            } ?: _logInSuccessful.postValue(true)
+            } else {
+                _logInSuccessful.postValue(true)
+            }
+        }
+    }
+
+    fun logOut() {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (LoginRepository.logOut()) {
+                _logInSuccessful.postValue(false)
+            }
         }
     }
 
