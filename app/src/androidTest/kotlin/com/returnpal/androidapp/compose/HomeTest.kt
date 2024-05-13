@@ -5,7 +5,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.compose.rememberNavController
-import com.returnpal.androidapp.mainMenu.HomeContent
+import com.returnpal.androidapp.compose.mainMenu.HomeScreen
 import org.junit.Rule
 import org.junit.Test
 
@@ -19,7 +19,7 @@ class HomeTest {
 
         rule.setContent {
             val navController = rememberNavController()
-            HomeContent(navController = navController) }
+            HomeScreen(navController = navController) }
 
         rule.onNodeWithText("Schedule Now").assertHasClickAction().assertIsDisplayed()
     }

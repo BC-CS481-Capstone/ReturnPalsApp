@@ -27,9 +27,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.returnpal.androidapp.compose.dashboard.ConfirmResetPasswordDialog
 import com.returnpal.androidapp.compose.dashboard.ResetPasswordDialog
-import com.returnpal.androidapp.compose.nav.go2
-import com.returnpal.androidapp.compose.nav.MenuRoutes
 import com.returnpal.androidapp.compose.mainMenu.viewModelLogin
+import com.returnpal.androidapp.compose.nav.MenuRoutes
+import com.returnpal.androidapp.compose.nav.go2
 import com.returnpal.androidapp.services.ConfirmEmailViewModel
 import com.returnpal.androidapp.services.LoginViewModel
 
@@ -106,7 +106,7 @@ fun LoginScreen(viewModel:LoginViewModel, settingsViewModel: SettingsViewModel, 
 }
 
 @Composable
-private fun ConfirmEmailContent(emailToConfirm:String, message:String, submitNumber:String, onSubmitNumberChange:(String)->Unit, verifyButton:()->Unit) {
+fun ConfirmEmailContent(emailToConfirm:String, message:String, submitNumber:String, onSubmitNumberChange:(String)->Unit, verifyButton:()->Unit) {
     //Promt a user for confirm number with space to enter and button to confirm
     val config = getConfig()
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceBetween
@@ -128,15 +128,15 @@ private fun ConfirmEmailContent(emailToConfirm:String, message:String, submitNum
     }
 }
 @Composable
-private fun LoginContent(
+fun LoginContent(
     email: String = "Email",
     password: String = "Password",
     failMessage: String = "",
-    onChangeEmail: (String) -> Unit,
-    onChangePassword: (String) -> Unit,
-    onGuest: () -> Unit,
-    onSignIn:() -> Unit,
-    onSignUp: () -> Unit,
+    onChangeEmail: (String) -> Unit = {},
+    onChangePassword: (String) -> Unit = {},
+    onGuest: () -> Unit = {},
+    onSignIn:() -> Unit = {},
+    onSignUp: () -> Unit = {},
     settingsViewModel: SettingsViewModel
 ) {
     val config = getConfig()
@@ -219,11 +219,11 @@ private fun LoginContent(
 }
 
 @Composable
-private fun GuestLoginContent(
+fun GuestLoginContent(
     email: String = "",
     onSignIn: () -> Unit = {},
     onSignUp: () -> Unit = {},
-    onChangeEmail: (String) -> Unit,
+    onChangeEmail: (String) -> Unit = {},
 ) {
     val config = getConfig()
     // get screen size for image size
