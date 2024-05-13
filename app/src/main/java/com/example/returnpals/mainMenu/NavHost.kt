@@ -16,12 +16,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.returnpals.composetools.ConfirmNumber
-import com.example.returnpals.composetools.ConfirmNumberViewModel
 import com.example.returnpals.composetools.LoginScreen
 import com.example.returnpals.composetools.dashboard.HomeDash
 import com.example.returnpals.composetools.dashboard.Orders
 import com.example.returnpals.composetools.dashboard.Profile
 import com.example.returnpals.composetools.dashboard.Settings
+import com.example.returnpals.composetools.goto
 import com.example.returnpals.composetools.pickup.AddPackagesScreen
 import com.example.returnpals.composetools.pickup.ConfirmPickupScreen
 import com.example.returnpals.composetools.pickup.PickupDateScreen
@@ -30,8 +30,10 @@ import com.example.returnpals.composetools.pickup.PricingScreen
 import com.example.returnpals.composetools.pickup.SelectAddressScreen
 import com.example.returnpals.composetools.pickup.ThankYouScreen
 import com.example.returnpals.composetools.pickup.ThankYouViewModel
+import com.example.returnpals.services.ConfirmEmailViewModel
 import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.services.OrderViewModel
+import com.example.returnpals.services.backend.SessionRepository
 
 @Composable
 fun AppNavigation(navController: NavController) {
@@ -42,7 +44,11 @@ fun AppNavigation(navController: NavController) {
     ) {
 
         composable(MenuRoutes.Home) {
-            Home(navController)
+            HomeScreen(navController) {
+                if (SessionRepository.isSignedIn) navController.goto(MenuRoutes.HomeDash)
+                else if (SessionRepository.isGuest) navController.goto(MenuRoutes.PickupProcess)
+                else navController.goto(MenuRoutes.SignIn)
+            }
         }
         composable(MenuRoutes.About) { About(navController) }
         composable(MenuRoutes.Pricing) { Pricing(navController) }
@@ -52,7 +58,7 @@ fun AppNavigation(navController: NavController) {
             val viewModelLogin = LoginViewModel()
             LoginScreen(viewModelLogin, SettingsViewModel(), navController) }
         composable(MenuRoutes.FAQ) { FAQ(navController) }
-        composable(MenuRoutes.Register) { Register(navController)}
+        composable(MenuRoutes.Register) { RegistrationScreen(navController)}
 
         navigation(
             startDestination = MenuRoutes.HomeDash,
@@ -67,7 +73,7 @@ fun AppNavigation(navController: NavController) {
             //  composable(MenuRoutes.Label) { Label(navController) }
         }
         composable(MenuRoutes.ConfirmNumber) {
-            val vm = ConfirmNumberViewModel()
+            val vm = ConfirmEmailViewModel()
             ConfirmNumber(navController,vm) }
 
         navigation(
