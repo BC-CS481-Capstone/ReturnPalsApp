@@ -1,4 +1,5 @@
 package com.example.returnpals.services
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -6,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.amplifyframework.auth.AuthException
 import com.example.returnpals.services.Backend.accessEmail
 import com.example.returnpals.services.backend.LoginRepository
 import kotlinx.coroutines.Dispatchers
@@ -29,56 +31,63 @@ class LoginViewModel(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            _logInSuccessful.postValue(LoginRepository.isLoggedIn())
+            try {
+                _logInSuccessful.postValue(LoginRepository.isLoggedIn())
+            } catch(error: AuthException) {
+                Log.e("LoginViewModel", "Failed to determine if user is logged in!")
+            }
         }
     }
 
     fun register() {
         viewModelScope.launch(Dispatchers.IO) {
-            val error = LoginRepository.register(email, password)
-            if (error != null) {
+            try {
+                LoginRepository.register(email, password)
+                _signUpSuccessful.postValue(true)
+            } catch (error: AuthException) {
                 _signUpSuccessful.postValue(false)
                 failMessage = error.message + error.recoverySuggestion
-            } else {
-                _signUpSuccessful.postValue(true)
             }
         }
     }
 
     fun logIn() {
         viewModelScope.launch(Dispatchers.IO) {
-            val error = LoginRepository.logIn(email, password)
-            if (error != null) {
+            try {
+                LoginRepository.logIn(email, password)
+                _logInSuccessful.postValue(true)
+            } catch(error: AuthException) {
                 _logInSuccessful.postValue(false)
                 failMessage = error.message + error.recoverySuggestion
-                error.message?.let {  message ->
+                error.message?.let { message ->
                     if (message.contains("User not confirmed in the system.")) {
                         _signUpSuccessful.postValue(true)
                         accessEmail()
                     }
                 }
-            } else {
-                _logInSuccessful.postValue(true)
             }
         }
     }
 
     fun logOut() {
         viewModelScope.launch(Dispatchers.IO) {
-            if (LoginRepository.logOut()) {
+            try {
+                LoginRepository.logOut()
                 _logInSuccessful.postValue(false)
+            } catch(error: AuthException) {
+                Log.e("LoginViewModel", "Failed to log out!")
             }
         }
     }
 
     fun logInAsGuest() {
         viewModelScope.launch(Dispatchers.IO) {
-            val error = LoginRepository.logInAsGuest(email)
-            if (error != null) {
+            try {
+                LoginRepository.logInAsGuest(email)
+                _logInSuccessful.postValue(true)
+            } catch(error: AuthException) {
                 _logInSuccessful.postValue(false)
                 failMessage = error.message + error.recoverySuggestion
-            } else {
-                _logInSuccessful.postValue(true)
             }
         }
     }

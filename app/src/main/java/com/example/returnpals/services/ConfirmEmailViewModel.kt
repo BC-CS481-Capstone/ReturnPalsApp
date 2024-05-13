@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.amplifyframework.auth.AuthException
 import com.example.returnpals.services.backend.LoginRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,9 +23,12 @@ class ConfirmEmailViewModel: ViewModel() {
 
     fun confirm() {
         viewModelScope.launch(Dispatchers.IO) {
-            if (LoginRepository.confirmEmail(code.value))
-                _confirmSuccessful.value = true
-            else message.value = "Nope"
+            try {
+                LoginRepository.confirmEmail(code.value)
+                _confirmSuccessful.postValue(true)
+            } catch (error: AuthException) {
+                message.value = "Nuh-uh"
+            }
         }
     }
 }

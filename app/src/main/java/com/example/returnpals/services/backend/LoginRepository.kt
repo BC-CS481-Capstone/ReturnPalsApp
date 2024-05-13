@@ -21,19 +21,17 @@ object LoginRepository {
     var isGuest: Boolean = false
         private set
 
-    suspend fun logInAsGuest(email: String): AuthException? {
+    suspend fun logInAsGuest(email: String) {
         if (isLoggedIn()) {
             val error = AuthException("Already logged in as $email!", "Log out first.")
-            Log.e("LoginRepository", "Failed guest log in as $email", error)
-            return error
+            Log.i("LoginRepository", "Failed guest log in as $email", error)
+            throw error
         }
         this.email = email
         isGuest = true
-        return null
     }
 
-    suspend fun logIn(email: String, password: String): AuthException? {
-        var error: AuthException? = null
+    suspend fun logIn(email: String, password: String) {
         try {
             val result = Amplify.Auth.signIn(email, password)
             if (result.isSignedIn) {
@@ -41,21 +39,21 @@ object LoginRepository {
                 isGuest = false
                 Log.i("LoginRepository", "Logged in as $email")
             } else {
-                Log.e("LoginRepository", "Incomplete log in as $email")
-                error = AuthException("Additional steps needed: ${result.nextStep}", "Complete the next step.")
+                // Flagged as a warning in logcat because we don't expect the program to go here but its not game over if it does
+                Log.w("LoginRepository", "Incomplete log in as $email")
+                throw AuthException("Additional steps needed: ${result.nextStep}", "Complete the next step.")
             }
-        } catch (exception: AuthException) {
-            error = exception
-            Log.e("LoginRepository", "Failed to log in as $email", exception)
+        } catch (error: AuthException) {
+            // Not flagged as an error in logcat because its the callers job to decide if it is an error or not  
+            Log.i("LoginRepository", "Failed to log in as $email", error)
+            throw error
         }
-        return error
     }
 
     /**
      * Log in with third-party authentication (Google, Apple, Facebook, etc).
      */
-    suspend fun logInWith(provider: AuthProvider, callingActivity: Activity): AuthException? {
-        var error: AuthException? = null
+    suspend fun logInWith(provider: AuthProvider, callingActivity: Activity) {
         try {
             val result = Amplify.Auth.signInWithSocialWebUI(provider, callingActivity)
             if (result.isSignedIn) {
@@ -63,26 +61,22 @@ object LoginRepository {
                 isGuest = false
                 Log.i("LoginRepository", "Logged in with third-party authentication [${provider.providerKey}].")
             } else {
-                error = AuthException("Additional steps needed: ${result.nextStep}", "Complete the next step.")
-                Log.e("LoginRepository", "Incomplete log in with third-party authentication [${provider.providerKey}].")
+                Log.w("LoginRepository", "Incomplete log in with third-party authentication [${provider.providerKey}].")
+                throw AuthException("Additional steps needed: ${result.nextStep}", "Complete the next step.")
             }
-        } catch (exception: AuthException) {
-            error = exception
-            Log.e("LoginRepository", "Failed to log in with third-party authentication [${provider.providerKey}].", exception)
+        } catch (error: AuthException) {
+            Log.i("LoginRepository", "Failed to log in with third-party authentication [${provider.providerKey}].", error)
+            throw error
         }
-        return error
     }
 
-    suspend fun logOut(): Boolean {
-        var status = false
+    suspend fun logOut() {
         when (val result = Amplify.Auth.signOut()) {
             is AWSCognitoAuthSignOutResult.CompleteSignOut -> {
-                status = true
                 email = null
                 Log.i("LoginRepository", "Logged out.")
             }
             is AWSCognitoAuthSignOutResult.PartialSignOut -> {
-                status = true
                 email = null
                 isGuest = false
                 result.hostedUIError?.let {
@@ -96,18 +90,17 @@ object LoginRepository {
                 }
             }
             is AWSCognitoAuthSignOutResult.FailedSignOut -> {
-                Log.e("LoginRepository", "Failed to log out.", result.exception)
+                Log.i("LoginRepository", "Failed to log out.", result.exception)
+                throw result.exception
             }
         }
-        return status
     }
 
     suspend fun register(
         email: String,
         password: String,
         phoneNumber: String? = null,
-    ): AuthException? {
-        var error: AuthException? = null
+    ) {
         val options: AuthSignUpOptions =
             AuthSignUpOptions.builder().also { builder ->
                 phoneNumber?.let { builder.userAttribute(AuthUserAttributeKey.phoneNumber(), it) }
@@ -120,35 +113,33 @@ object LoginRepository {
                 isGuest = false
                 Log.i("LoginRepository", "Registered with $email")
             } else {
-                error = AuthException("Additional steps needed: ${result.nextStep}", "Complete the next step.")
-                Log.e("LoginRepository", "Incomplete register with username: $email")
+                Log.w("LoginRepository", "Incomplete register with username: $email")
+                throw AuthException("Additional steps needed: ${result.nextStep}", "Complete the next step.")
             }
-        } catch (exception: AuthException) {
-            error = exception
-            Log.e("LoginRepository", "Failed to register with $email", exception)
+        } catch (error: AuthException) {
+            Log.i("LoginRepository", "Failed to register with $email", error)
+            throw error
         }
-        return error
     }
 
     /**
      * @param code the confirmation code sent to the user's email
      */
-    suspend fun confirmEmail(code: String): Boolean {
-        var status = false
+    suspend fun confirmEmail(code: String) {
         try {
             email?.let { email ->
                 val result = Amplify.Auth.confirmSignUp(email, code)
                 if (result.isSignUpComplete) {
-                    status = true
                     Log.i("LoginRepository", "Confirmed email: $email.")
                 } else {
-                    Log.i("LoginRepository", "Incomplete email confirmation: $email")
+                    Log.w("LoginRepository", "Incomplete email confirmation: $email")
+                    throw AuthException("Additional steps needed: ${result.nextStep}", "Complete the next step.")
                 }
-            } ?: Log.e("LoginRepository", "Failed to confirm email: $email") 
+            } ?: Log.w("LoginRepository", "Failed to confirm email: $email") 
         } catch (error: AuthException) {
-            Log.e("LoginRepository", "Failed to confirm email: $email", error)
+            Log.i("LoginRepository", "Failed to confirm email: $email", error)
+            throw error
         }
-        return status
     }
 
     suspend fun isLoggedIn(): Boolean {
@@ -157,7 +148,8 @@ object LoginRepository {
         try {
             status = Amplify.Auth.fetchAuthSession().isSignedIn
         } catch (error: AuthException) {
-            Log.e("LoginRepository", "Could not determine if the user is logged in.", error)
+            Log.w("LoginRepository", "Could not determine if the user is logged in.", error)
+            throw  error
         }
         return status
     }
