@@ -1,6 +1,6 @@
 /*
 
-package com.example.returnpals.dashboard
+package com.returnpal.androidapp.dashboard
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -32,7 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.example.returnpals.mainMenu.MenuRoutes
+import com.returnpal.androidapp.mainMenu.MenuRoutes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

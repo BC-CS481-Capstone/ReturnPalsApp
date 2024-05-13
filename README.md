@@ -80,10 +80,10 @@ build.gradle.kts
 
 *Sample*
 android {
-namespace = "com.example.returnpals"
+namespace = "com.returnpal.androidapp"
 compileSdk = 34
     defaultConfig {
-        applicationId = "com.example.returnpals"
+        applicationId = "com.returnpal.androidapp"
         minSdk = 30
         targetSdk = 34
         versionCode = 1
