@@ -204,21 +204,3 @@ inline fun <reified T:ViewModel> NavBackStackEntry.sharedViewModel(navController
     }
     return viewModel(parentEntry)
 }
-
-
-
-private fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult){
-    when(paymentSheetResult) {
-        is PaymentSheetResult.Canceled -> {
-            Log.e("PaymentApp","Canceled")
-            print("Canceled")
-        }
-        is PaymentSheetResult.Failed -> {
-            Log.e("PaymentApp","Error")
-            print("Error: ${paymentSheetResult.error}")
-        }
-        is PaymentSheetResult.Completed -> {
-            Log.e("PaymentApp","Completed")
-        }
-    }
-}
