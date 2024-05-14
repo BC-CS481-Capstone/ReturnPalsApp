@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -30,6 +32,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.composetools.CustomTextField
+import com.example.returnpals.composetools.CustomTextPasswordFields
+import com.example.returnpals.composetools.CustomTextRowFields
 import com.example.returnpals.services.AmplifyOperations
 import com.example.returnpals.services.Backend
 import com.example.returnpals.services.RegisterViewModel
@@ -77,6 +81,11 @@ fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel(
     var repository = UserEmail
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
+    var city by remember { mutableStateOf("") }
+    var suiteNumber by remember { mutableStateOf("") }
+    var password1 by remember { mutableStateOf("") }
+    var password2 by remember { mutableStateOf("") }
+    var postalCode by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
     var email by remember { mutableStateOf(repository.getEmail()) }
     var phoneNumber by remember { mutableStateOf("") }
@@ -92,6 +101,11 @@ fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel(
             address = ""
             email = ""
             phoneNumber = ""
+            city = ""
+            suiteNumber = ""
+            password1 = ""
+            password2 = ""
+            postalCode = ""
             // Reset the submission success state in the ViewModel to prevent repeated actions
             viewModel.resetSubmissionSuccess()
         }
@@ -116,17 +130,32 @@ fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel(
             onValueChange = { lastName = it })
         Spacer(modifier = Modifier.height(8.dp))
 
+        CustomTextField(label = "Email*", text = email, onValueChange = { email = it })
+        Spacer(modifier = Modifier.height(8.dp))
+
+        CustomTextField(label = "Phone Number*", text = phoneNumber, onValueChange = { phoneNumber = it })
+        Spacer(modifier = Modifier.height(8.dp))
+
         CustomTextField(
             label = "Address*",
             text = address,
             onValueChange = { address = it })
         Spacer(modifier = Modifier.height(8.dp))
 
-        CustomTextField(label = "Email*", text = email, onValueChange = { /* Stop Email From Changing email = it*/ })
+        Row(modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            CustomTextRowFields(modifier = Modifier.weight(1f),label = "(Apt)", text = suiteNumber, onValueChange = { suiteNumber = it })
+            CustomTextRowFields(modifier = Modifier.weight(1f),label = "City*", text = city, onValueChange = { city = it })
+            CustomTextRowFields(modifier = Modifier.weight(1f),label = "Postal*", text = postalCode, onValueChange = { postalCode = it })
+        }
         Spacer(modifier = Modifier.height(8.dp))
 
-        CustomTextField(label = "Phone Number*", text = phoneNumber, onValueChange = { phoneNumber = it })
-        Spacer(modifier = Modifier.height(16.dp))
+        CustomTextPasswordFields(label = "password1*", text = password1, onValueChange = { password1 = it })
+        Spacer(modifier = Modifier.height(8.dp))
+
+        CustomTextPasswordFields(label = "password2*", text = password2, onValueChange = { password2 = it })
+        Spacer(modifier = Modifier.height(8.dp))
 
         Button(
             onClick = {
@@ -187,7 +216,11 @@ fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel(
             address = ""
             email = ""
             phoneNumber = ""
-
+            city = ""
+            suiteNumber = ""
+            password1 = ""
+            password2 = ""
+            postalCode = ""
             navController.navigate(MenuRoutes.HomeDash)
         }
     }
