@@ -1,6 +1,7 @@
 package com.example.returnpals.mainMenu
 
 import SettingsViewModel
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -15,7 +16,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.returnpals.composetools.ConfirmNumber
+import com.example.returnpals.composetools.ConfirmEmailScreen
 import com.example.returnpals.composetools.LoginScreen
 import com.example.returnpals.composetools.dashboard.HomeDash
 import com.example.returnpals.composetools.dashboard.Orders
@@ -36,6 +37,7 @@ import com.example.returnpals.services.OrderViewModel
 
 @Composable
 fun AppNavigation(navController: NavController) {
+    val loginVM = remember { LoginViewModel("test@bellevue.college","Password123$") }
 
     NavHost(
         navController = navController as NavHostController,
@@ -43,11 +45,14 @@ fun AppNavigation(navController: NavController) {
     ) {
 
         composable(MenuRoutes.Home) { entry ->
-            val loginVM = entry.sharedViewModel<LoginViewModel>(navController)
-            HomeScreen(navController) {
-                if (loginVM.logInSuccessful.value == true) navController.goto(MenuRoutes.HomeDash)
-                else if (loginVM.isGuest) navController.goto(MenuRoutes.PickupProcess)
-                else navController.goto(MenuRoutes.SignIn)
+            if (loginVM.isLoggedIn == true) {
+                Log.d("NavHost", "User is already logged in, going to dashboard.")
+                navController.goto("dashboard home")
+            } else {
+                HomeScreen(navController) {
+                    if (loginVM.isGuest) navController.goto(MenuRoutes.PickupProcess)
+                    else navController.goto(MenuRoutes.SignIn)
+                }
             }
         }
         composable(MenuRoutes.About) { About(navController) }
@@ -55,7 +60,6 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.Contact) { Contact(navController) }
         composable(MenuRoutes.Video) { Video(navController) }
         composable(MenuRoutes.SignIn) { entry ->
-            val loginVM = entry.sharedViewModel<LoginViewModel>(navController)
             val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
             LoginScreen(loginVM, settingsVM, navController)
         }
@@ -66,18 +70,19 @@ fun AppNavigation(navController: NavController) {
             startDestination = MenuRoutes.HomeDash,
             route = "dashboard home"
         ) {
-            composable(MenuRoutes.HomeDash) { HomeDash(navController) }
-            composable(MenuRoutes.Profile) { Profile(navController) }
-            composable(MenuRoutes.Settings) { Settings(navController) }
-            composable(MenuRoutes.Orders) { Orders(navController) }
+            composable(MenuRoutes.HomeDash) { HomeDash(navController, loginVM) }
+            composable(MenuRoutes.Profile) { Profile(navController, loginVM) }
+            composable(MenuRoutes.Settings) { Settings(navController, loginVM) }
+            composable(MenuRoutes.Orders) { Orders(navController, loginVM) }
             // composable(MenuRoutes.SelectAddress) { SelectAddress(navController) }
             // composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }
             //  composable(MenuRoutes.Label) { Label(navController) }
         }
         composable(MenuRoutes.ConfirmNumber) {
-            val vm = ConfirmEmailViewModel()
-            ConfirmNumber(navController,vm) }
-
+            // this vm should be destroyed when confirmation is complete
+            val confirmVm = remember { ConfirmEmailViewModel() }
+            ConfirmEmailScreen(navController, confirmVm, loginVM)
+        }
         navigation(
             startDestination = "select_date",
             route = MenuRoutes.PickupProcess

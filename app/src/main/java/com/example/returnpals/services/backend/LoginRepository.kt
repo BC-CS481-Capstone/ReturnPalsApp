@@ -71,6 +71,7 @@ object LoginRepository {
     }
 
     suspend fun logOut() {
+        Log.d("LoginRepository", "logOut")
         when (val result = Amplify.Auth.signOut()) {
             is AWSCognitoAuthSignOutResult.CompleteSignOut -> {
                 email = null

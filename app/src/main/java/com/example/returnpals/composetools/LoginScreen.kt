@@ -2,11 +2,16 @@ package com.example.returnpals.composetools
 
 import SettingsViewModel
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -22,25 +27,27 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.compose.ReturnPalTheme
 import com.example.returnpals.composetools.dashboard.ConfirmResetPasswordDialog
 import com.example.returnpals.composetools.dashboard.ResetPasswordDialog
 import com.example.returnpals.mainMenu.MenuRoutes
-import com.example.returnpals.mainMenu.viewModelLogin
 import com.example.returnpals.services.ConfirmEmailViewModel
 import com.example.returnpals.services.LoginViewModel
 
 /* This is the login options class used to create the two login UI for guest and user.*/
 
 @Composable
-fun ConfirmNumber(navController: NavController, confirmVM: ConfirmEmailViewModel) {
+fun ConfirmEmailScreen(navController: NavController, confirmVM: ConfirmEmailViewModel, loginVM: LoginViewModel) {
     val confirmSuccessful by confirmVM.confirmSuccessful.observeAsState()
     Box(modifier = Modifier
-        .background(getBackGroundColor())
+        .background(ReturnPalTheme.colorScheme.background)
         .fillMaxSize()) {
-        ConfirmNumberContent(
+        ConfirmEmailContent(
             emailToConfirm = confirmVM.email,
             message = confirmVM.message.value,
             submitNumber = confirmVM.code.value,
@@ -49,7 +56,7 @@ fun ConfirmNumber(navController: NavController, confirmVM: ConfirmEmailViewModel
         )
     }
     if (confirmSuccessful == true) {
-        viewModelLogin.logIn()
+        loginVM.logIn()
         navController.navigate(MenuRoutes.Register) {
             popUpTo(MenuRoutes.Home) {
                // saveState = true
@@ -61,51 +68,55 @@ fun ConfirmNumber(navController: NavController, confirmVM: ConfirmEmailViewModel
 }
 
 @Composable
-fun LoginScreen(viewModel:LoginViewModel, settingsViewModel: SettingsViewModel, navController: NavController) {
+fun LoginScreen(
+    viewModel:LoginViewModel,
+    settingsViewModel: SettingsViewModel,
+    navController: NavController
+) {
     // Condition variables
-    val signUpSuccessful by viewModel.signUpSuccessful.observeAsState()
-    val logInSuccessful by viewModel.logInSuccessful.observeAsState()
+    val signUpSuccessful = viewModel.signUpSuccessful
+    val logInSuccessful = viewModel.isLoggedIn
     var isGuestMode by remember { mutableStateOf(false) }
 //    viewModel.checkUser()
     Box(modifier = Modifier
-        .background(getBackGroundColor())
+        .background(ReturnPalTheme.colorScheme.background)
         .fillMaxSize()) {
         //This will switch between the guest login and user login
         if (isGuestMode) {
-            GuestLoginUIContent(
+            GuestLoginContent(
                 email = viewModel.email,
                 onSignIn = viewModel::logInAsGuest,
                 onSignUp = { go2(navController, MenuRoutes.Register) },
-                onChangeEmail = { viewModel.email = it })
+                onChangeEmail = { viewModel.email = it },
+                onToggleGuest = { isGuestMode = false })
         } else {
-            LoginUIContent(
+            LoginContent(
                 email = viewModel.email,
                 password = viewModel.password,
                 failMessage = viewModel.failMessage,
                 onChangeEmail = {  viewModel.email = it },
                 onChangePassword = { viewModel.password = it },
-                onGuest = { isGuestMode = true },
+                onToggleGuest = { isGuestMode = true },
                 onSignIn = viewModel::logIn,
                 onSignUp = viewModel::register,
-                settingsViewModel = settingsViewModel)
+                onResetPassword = settingsViewModel::resetPassword,
+                onConfirmResetPassword = settingsViewModel::confirmResetPassword)
         }
-        if (signUpSuccessful == true) {
-            viewModel.reset()
+        if (signUpSuccessful) {
             navController.navigate(MenuRoutes.ConfirmNumber) {
                 popUpTo(MenuRoutes.SignIn)
                 launchSingleTop = true
                 restoreState = true
             }
         }
-        if (logInSuccessful == true) {
-            viewModel.reset()
-            go2(navController,MenuRoutes.HomeDash)
+        if (logInSuccessful) {
+            go2(navController,MenuRoutes.Home)
         }
     }
 }
 
 @Composable
-fun ConfirmNumberContent(emailToConfirm:String,message:String,submitNumber:String,onSubmitNumberChange:(String)->Unit,verifyButton:()->Unit) {
+fun ConfirmEmailContent(emailToConfirm:String, message:String, submitNumber:String, onSubmitNumberChange:(String)->Unit, verifyButton:()->Unit) {
     //Promt a user for confirm number with space to enter and button to confirm
     val config = getConfig()
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceBetween
@@ -126,17 +137,20 @@ fun ConfirmNumberContent(emailToConfirm:String,message:String,submitNumber:Strin
         }
     }
 }
+
+@Preview(showBackground = true)
 @Composable
-fun LoginUIContent(
-    email: String = "Email",
-    password: String = "Password",
+fun LoginContent(
+    email: String = "",
+    password: String = "",
     failMessage: String = "",
-    onChangeEmail: (String) -> Unit,
-    onChangePassword: (String) -> Unit,
-    onGuest: () -> Unit,
-    onSignIn:() -> Unit,
-    onSignUp: () -> Unit,
-    settingsViewModel: SettingsViewModel
+    onChangeEmail: (String) -> Unit = {},
+    onChangePassword: (String) -> Unit = {},
+    onToggleGuest: () -> Unit = {},
+    onSignIn:() -> Unit = {},
+    onSignUp: () -> Unit = {},
+    onResetPassword: (String) -> Unit = {},
+    onConfirmResetPassword: (String, String) -> Unit = { _,_ -> }
 ) {
     val config = getConfig()
 
@@ -149,24 +163,20 @@ fun LoginUIContent(
         IconManager().getReturnPalNameIcon(Modifier.requiredWidth(config.screenWidthDp.dp))
 
         //Set User or Guest options
-        Row() {
-            Text(text = "Sign In |", Modifier.align(Alignment.CenterVertically))
-            TextButton(onClick = onGuest) {
-                Text("Guest", color = Color(0xFF008BE7))
-            }
-        }
-
-        //create temp vars for holding user inputs
-
+        GuestModeToggle(isGuest = false, onGuest = onToggleGuest)
 
         //set text fields for users
         OutlinedTextField(
             value = email,
-            onValueChange = onChangeEmail
+            onValueChange = onChangeEmail,
+            label = { Text("Email") }
         )
+        Spacer(modifier = Modifier.height(10.dp))
         OutlinedTextField(
-            value = password, onValueChange = onChangePassword,
-            visualTransformation = PasswordVisualTransformation()
+            value = password,
+            onValueChange = onChangePassword,
+            visualTransformation = PasswordVisualTransformation(),
+            label = { Text("Password") }
         )
         Text(failMessage)
         //Forgot your password button
@@ -198,7 +208,7 @@ fun LoginUIContent(
             ResetPasswordDialog(
                 onDismiss = { showResetDialog = false },
                 onConfirm = { newPassword ->
-                    settingsViewModel.resetPassword(newPassword)
+                    onResetPassword(newPassword)
                     showResetDialog = false
                     showConfirmResetDialog = true
                 }
@@ -209,7 +219,7 @@ fun LoginUIContent(
             ConfirmResetPasswordDialog(
                 onDismiss = { showConfirmResetDialog = false },
                 onConfirm = { newPassword, confirmationCode ->
-                    settingsViewModel.confirmResetPassword(newPassword, confirmationCode)
+                    onConfirmResetPassword(newPassword, confirmationCode)
                     showConfirmResetDialog = false
                 }
             )
@@ -217,12 +227,14 @@ fun LoginUIContent(
     }
 }
 
+@Preview(showBackground = true)
 @Composable
-fun GuestLoginUIContent(
+fun GuestLoginContent(
     email: String = "",
     onSignIn: () -> Unit = {},
     onSignUp: () -> Unit = {},
-    onChangeEmail: (String) -> Unit,
+    onChangeEmail: (String) -> Unit = {},
+    onToggleGuest: () -> Unit = {}
 ) {
     val config = getConfig()
     // get screen size for image size
@@ -231,17 +243,15 @@ fun GuestLoginUIContent(
         IconManager().getReturnPalNameIcon(Modifier.requiredWidth(config.screenWidthDp.dp))
 
         //Set User or Guest options
-        Row {
-            TextButton(onClick = onSignIn) {
-                Text("Sign In ", color = Color(0xFF008BE7))
-            }
-            Text(text = "| Guest", Modifier.align(Alignment.CenterVertically))
-        }
-
-        //create temp vars for holding user inputs
+        GuestModeToggle(isGuest = true, onSignIn = onToggleGuest)
 
         //set text fields for users
-        OutlinedTextField(value = email, onValueChange = onChangeEmail)
+        OutlinedTextField(
+            value = email,
+            onValueChange = onChangeEmail,
+            label = { Text("Email") }
+        )
+        Spacer(modifier = Modifier.height(10.dp))
 
         // Big Sign in button
         Button(onClick = onSignIn,colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008BE7), contentColor = Color.White)) {
@@ -253,6 +263,51 @@ fun GuestLoginUIContent(
             TextButton(onClick = onSignUp) {
                 Text("Sign up",color = Color(0xFF008BE7))
             }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun GuestModeToggle(
+    isGuest: Boolean = false,
+    onSignIn: () -> Unit = {},
+    onGuest: () -> Unit = {}
+) {
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .padding(6.dp, 1.dp)
+            .border(6.dp, ReturnPalTheme.colorScheme.secondaryContainer)
+            .height(IntrinsicSize.Min)
+    ) {
+        TextButton(
+            enabled = isGuest, onClick = onSignIn,
+            modifier = Modifier.background(
+                if (isGuest) ReturnPalTheme.colorScheme.background
+                else ReturnPalTheme.colorScheme.secondaryContainer
+            )
+        ) {
+            Text(text = "Sign In",
+                color = if (isGuest) ReturnPalTheme.colorScheme.primary
+                    else ReturnPalTheme.colorScheme.secondary,
+                modifier = Modifier.padding(4.dp,0.dp)
+            )
+        }
+        TextButton(
+            enabled = !isGuest, onClick = onGuest,
+            shape = RectangleShape,
+            modifier = Modifier.background(
+                if (!isGuest) ReturnPalTheme.colorScheme.background
+                else ReturnPalTheme.colorScheme.secondaryContainer
+            )
+        ) {
+            Text(text = "Guest",
+                color = if (!isGuest) ReturnPalTheme.colorScheme.primary
+                    else ReturnPalTheme.colorScheme.secondary,
+                modifier = Modifier.padding(4.dp,0.dp)
+            )
         }
     }
 }
