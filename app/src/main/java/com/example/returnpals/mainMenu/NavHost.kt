@@ -1,6 +1,7 @@
 package com.example.returnpals.mainMenu
 
 import SettingsViewModel
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -23,7 +24,6 @@ import com.example.returnpals.composetools.dashboard.Orders
 import com.example.returnpals.composetools.dashboard.Profile
 import com.example.returnpals.composetools.dashboard.Settings
 import com.example.returnpals.composetools.pickup.AddPackagesScreen
-import com.example.returnpals.composetools.pickup.ConfirmPickupScreen
 import com.example.returnpals.composetools.pickup.PickupDateScreen
 import com.example.returnpals.composetools.pickup.PickupMethodScreen
 import com.example.returnpals.composetools.pickup.PricingScreen
@@ -32,6 +32,8 @@ import com.example.returnpals.composetools.pickup.ThankYouScreen
 import com.example.returnpals.composetools.pickup.ThankYouViewModel
 import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.services.OrderViewModel
+import com.example.returnpals.services.PaymentApp
+import com.stripe.android.paymentsheet.PaymentSheetResult
 
 @Composable
 fun AppNavigation(navController: NavController) {
@@ -138,26 +140,40 @@ fun AppNavigation(navController: NavController) {
                 val hasUserName by thankyouVM.hasUserNames.observeAsState()
                 val createReturnSuccessful by pickupVM.createReturnSuccessful.observeAsState()
                 val createLabelsSuccessful by pickupVM.createLabelsSuccessful.observeAsState()
+                var readyToNav = false
                 if (hasUserName != true) {
                     thankyouVM.init()
                 }
                 if (hasUserName == true) {
-                    ConfirmPickupScreen(
+                    pickupVM.onSubmit(thankyouVM.userEmail.value)
+                }
+                if (createReturnSuccessful == true) {
+                    pickupVM.submitLabels()
+                }
+                if (createLabelsSuccessful == true) {
+                    PaymentApp(
                         info = pickupVM.info,
-                        onClickNext = {
-                            if (hasUserName == true) {
-                                pickupVM.onSubmit(thankyouVM.userEmail.value)
+                        onPaymentSheetResult = { paymentSheetResult: PaymentSheetResult ->
+                            when (paymentSheetResult) {
+                                is PaymentSheetResult.Canceled -> {
+                                    Log.e("PaymentApp", "Canceled")
+                                    print("Canceled")
+                                }
+
+                                is PaymentSheetResult.Failed -> {
+                                    Log.e("PaymentApp", "Error")
+                                    print("Error: ${paymentSheetResult.error}")
+                                }
+
+                                is PaymentSheetResult.Completed -> {
+                                    Log.e("PaymentApp", "Completed")
+                                    navController.navigate("thanks")
+                                }
                             }
                         },
                         onClickBack = { navController.navigate("add_labels") },
-                        onClickPromoButton = {}
+                        //onClickPromoButton = {}
                     )
-                    if (createReturnSuccessful == true) {
-                        pickupVM.submitLabels()
-                        if (createLabelsSuccessful == true) {
-                            navController.navigate("thanks")
-                        }
-                    }
                 }
             }
             composable("thanks") { entry ->
@@ -187,4 +203,22 @@ inline fun <reified T:ViewModel> NavBackStackEntry.sharedViewModel(navController
         navController.getBackStackEntry(parentRoute)
     }
     return viewModel(parentEntry)
+}
+
+
+
+private fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult){
+    when(paymentSheetResult) {
+        is PaymentSheetResult.Canceled -> {
+            Log.e("PaymentApp","Canceled")
+            print("Canceled")
+        }
+        is PaymentSheetResult.Failed -> {
+            Log.e("PaymentApp","Error")
+            print("Error: ${paymentSheetResult.error}")
+        }
+        is PaymentSheetResult.Completed -> {
+            Log.e("PaymentApp","Completed")
+        }
+    }
 }

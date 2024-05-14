@@ -29,18 +29,17 @@ NOTE Before displaying the mobile Payment Element, your checkout page should:
  2 Collect any required shipping information using the Address Element
  3 Include a checkout button to present Stripe’s UI
  */
-
 @Composable
-fun PaymentApp(info: PickupInfo, onClickBack:()->Unit,isCompletedPay:()->Unit) {
+fun PaymentApp(info: PickupInfo, onClickBack:()->Unit,onPaymentSheetResult:(PaymentSheetResult)->Unit) {
 
-    val paymentSheet = rememberPaymentSheet(::onPaymentSheetResultold)
+
+
+    val paymentSheet = rememberPaymentSheet(onPaymentSheetResult)
     val context = LocalContext.current
     var customerConfig by remember {mutableStateOf< PaymentSheet.CustomerConfiguration?>(null)}
     var paymentIntentClientSecret by remember {mutableStateOf<String?>(null)}
 
     LaunchedEffect(context) {
-        Log.e("PaymentApp","StartLogs LaunchedEffect")
-
         Amplify.API.query(getPaymentSheetQueryOptions(),
             {
                 if (!it.hasErrors() && it.hasData()) {
@@ -84,7 +83,6 @@ fun PaymentApp(info: PickupInfo, onClickBack:()->Unit,isCompletedPay:()->Unit) {
     */
 }
 
-
 private fun presentPaymentSheet(
     paymentSheet:PaymentSheet,
     customerConfig:PaymentSheet.CustomerConfiguration,
@@ -100,21 +98,7 @@ private fun presentPaymentSheet(
         ))
 }
 
-private fun onPaymentSheetResultold(paymentSheetResult:PaymentSheetResult){
-    when(paymentSheetResult) {
-        is PaymentSheetResult.Canceled -> {
-            Log.e("PaymentApp","Canceled")
-            print("Canceled")
-        }
-        is PaymentSheetResult.Failed -> {
-            Log.e("PaymentApp","Error")
-            print("Error: ${paymentSheetResult.error}")
-        }
-        is PaymentSheetResult.Completed -> {
-            Log.e("PaymentApp","Completed")
-        }
-    }
-}
+
 
 //Following examples from https://github.com/aws-amplify/docs/pull/2141/files to create custom query
 private fun getPaymentSheetQueryOptions() : GraphQLRequest<com.amplifyframework.datastore.generated.model.PaymentSheet> {
