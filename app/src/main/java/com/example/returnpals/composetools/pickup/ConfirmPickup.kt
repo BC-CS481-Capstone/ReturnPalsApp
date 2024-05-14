@@ -31,10 +31,10 @@ import com.amplifyframework.datastore.generated.model.PickupMethod
 import com.amplifyframework.datastore.generated.model.PricingPlan
 import com.example.compose.ReturnPalTheme
 import com.example.returnpals.PackageInfo
+import com.example.returnpals.PickupInfo
 import com.example.returnpals.composetools.IconManager
 import com.example.returnpals.composetools.ScheduleReturnScaffold
 import com.example.returnpals.composetools.getBackGroundColor
-import com.example.returnpals.PickupInfo
 import com.example.returnpals.toNiceString
 
 @Preview
@@ -57,7 +57,7 @@ fun ConfirmPickupScreen(
         step = 5,
         onClickBack = onClickBack,
         onClickNext = onClickNext,
-        nextButtonText = "Confirm"
+        nextButtonText = "Checkout"
     ) { padding ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
