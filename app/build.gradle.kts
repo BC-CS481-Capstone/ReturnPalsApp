@@ -100,6 +100,8 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation("androidx.navigation:navigation-testing:2.7.6")
 
+    /** Stripe Android SDK */
+    implementation("com.stripe:stripe-android:20.42.0")
 
 
     /** Debug */
