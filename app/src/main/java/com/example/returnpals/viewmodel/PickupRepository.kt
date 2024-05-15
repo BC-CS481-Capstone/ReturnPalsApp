@@ -1,4 +1,4 @@
-package com.example.returnpals.services
+package com.example.returnpals.viewmodel
 
 import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.PickupMethod

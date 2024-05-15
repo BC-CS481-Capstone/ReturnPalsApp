@@ -1,4 +1,4 @@
-package com.example.returnpals.services
+package com.example.returnpals.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData

@@ -1,10 +1,8 @@
-package com.example.returnpals.services
+package com.example.returnpals.viewmodel
 import android.content.Context
 import android.util.Log
-import androidx.core.net.toFile
 import com.amplifyframework.AmplifyException
 import com.amplifyframework.api.aws.AWSApiPlugin
-import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.api.graphql.model.ModelQuery
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin
 import com.amplifyframework.core.Amplify

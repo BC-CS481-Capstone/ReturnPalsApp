@@ -1,4 +1,4 @@
-package com.example.returnpals.services
+package com.example.returnpals.viewmodel
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.example.returnpals.services
+package com.example.returnpals.viewmodel
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
@@ -8,7 +8,7 @@ import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.auth.options.AuthSignUpOptions
 import com.amplifyframework.auth.result.AuthSignOutResult
 import com.amplifyframework.core.Amplify
-import com.example.returnpals.services.Backend.accessEmail
+import com.example.returnpals.viewmodel.Backend.accessEmail
 
 //Login View model provides the information and function needed to login, logout, and signup.
 class LoginViewModel(): ViewModel() {
