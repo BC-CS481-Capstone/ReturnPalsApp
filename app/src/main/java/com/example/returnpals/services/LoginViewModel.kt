@@ -29,7 +29,11 @@ class LoginViewModel(
     // Condition variables
     // .. LiveData was causing issues (reading as false when its supposed to be true), mutableStateOf seems to work
     // .. might be a jetpack compose thing
+    /** Marks that the the registration process completed without issue and we can navigate to confirmation screen */
     var signUpSuccessful by mutableStateOf(false)
+        private set
+    /** Marks that the the login process completed without issue and we can navigate to dashboard */
+    var logInSuccessful by mutableStateOf(false)
         private set
     var isLoggedIn by mutableStateOf<Boolean?>(null)
         private set
@@ -78,6 +82,7 @@ class LoginViewModel(
                     if (isLoggedIn == true) LoginRepository.logOut()
                     LoginRepository.logIn(email, password)
                     isLoggedIn = true
+                    logInSuccessful = true
                     failMessage = ""
                 } catch (error: AuthException) {
                     failMessage = error.message + '\n' + error.recoverySuggestion
@@ -115,6 +120,7 @@ class LoginViewModel(
                     isLoggedIn = LoginRepository.isLoggedIn()
                     if (isLoggedIn == true) LoginRepository.logOut()
                     LoginRepository.logInAsGuest(email)
+                    logInSuccessful = true
                     isLoggedIn = true
                     failMessage = ""
                 } catch (error: AuthException) {
@@ -122,5 +128,12 @@ class LoginViewModel(
                 }
             }
         }
+    }
+
+    /** resets login ui state: [failMessage], [logInSuccessful], and [signUpSuccessful] */
+    fun resetUiState() {
+        logInSuccessful = false
+        signUpSuccessful = false
+        failMessage = ""
     }
 }

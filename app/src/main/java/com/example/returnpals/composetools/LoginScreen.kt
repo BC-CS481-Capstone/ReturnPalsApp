@@ -69,13 +69,13 @@ fun ConfirmEmailScreen(navController: NavController, confirmVM: ConfirmEmailView
 
 @Composable
 fun LoginScreen(
-    viewModel:LoginViewModel,
-    settingsViewModel: SettingsViewModel,
+    loginVM: LoginViewModel,
+    settingsVM: SettingsViewModel,
     navController: NavController
 ) {
     // Condition variables
-    val signUpSuccessful = viewModel.signUpSuccessful
-    val logInSuccessful = viewModel.isLoggedIn ?: false
+    val signUpSuccessful = loginVM.signUpSuccessful
+    val logInSuccessful = loginVM.logInSuccessful
     var isGuestMode by remember { mutableStateOf(false) }
 //    viewModel.checkUser()
     Box(modifier = Modifier
@@ -84,25 +84,26 @@ fun LoginScreen(
         //This will switch between the guest login and user login
         if (isGuestMode) {
             GuestLoginContent(
-                email = viewModel.email,
-                onSignIn = viewModel::logInAsGuest,
+                email = loginVM.email,
+                onSignIn = loginVM::logInAsGuest,
                 onSignUp = { go2(navController, MenuRoutes.Register) },
-                onChangeEmail = { viewModel.email = it },
+                onChangeEmail = { loginVM.email = it },
                 onToggleGuest = { isGuestMode = false })
         } else {
             LoginContent(
-                email = viewModel.email,
-                password = viewModel.password,
-                failMessage = viewModel.failMessage,
-                onChangeEmail = {  viewModel.email = it },
-                onChangePassword = { viewModel.password = it },
+                email = loginVM.email,
+                password = loginVM.password,
+                failMessage = loginVM.failMessage,
+                onChangeEmail = {  loginVM.email = it },
+                onChangePassword = { loginVM.password = it },
                 onToggleGuest = { isGuestMode = true },
-                onSignIn = viewModel::logIn,
-                onSignUp = viewModel::register,
-                onResetPassword = settingsViewModel::resetPassword,
-                onConfirmResetPassword = settingsViewModel::confirmResetPassword)
+                onSignIn = loginVM::logIn,
+                onSignUp = loginVM::register,
+                onResetPassword = settingsVM::resetPassword,
+                onConfirmResetPassword = settingsVM::confirmResetPassword)
         }
         if (signUpSuccessful) {
+            loginVM.resetUiState()
             navController.navigate(MenuRoutes.ConfirmNumber) {
                 popUpTo(MenuRoutes.SignIn)
                 launchSingleTop = true
@@ -110,6 +111,7 @@ fun LoginScreen(
             }
         }
         if (logInSuccessful) {
+            loginVM.resetUiState()
             go2(navController,MenuRoutes.Home)
         }
     }
