@@ -7,7 +7,7 @@ import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.generated.model.PricingPlan
 import com.amplifyframework.datastore.generated.model.User
 
-import com.example.returnpals.services.Backend
+import com.example.returnpals.viewmodel.Backend
 import java.time.LocalDate
 
 //For this, email on login should be stored in Profile Repository.

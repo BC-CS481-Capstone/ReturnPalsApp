@@ -21,8 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.returnpals.composetools.OrderRepository
-import com.example.returnpals.services.Backend
+import com.example.returnpals.viewmodel.Backend
 
 @Composable
 //Deviates from needing to pass NavController.

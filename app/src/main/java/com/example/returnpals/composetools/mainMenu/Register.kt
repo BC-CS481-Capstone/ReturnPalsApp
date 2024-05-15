@@ -1,6 +1,5 @@
 package com.example.returnpals.composetools.mainMenu
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,24 +29,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.composetools.CustomTextField
 import com.example.returnpals.composetools.CustomTextPasswordFields
 import com.example.returnpals.composetools.CustomTextRowFields
 import com.example.returnpals.navigation.MenuRoutes
-import com.example.returnpals.services.AmplifyOperations
-import com.example.returnpals.services.Backend
-import com.example.returnpals.services.RegisterViewModel
-import com.example.returnpals.services.UserEmail
+import com.example.returnpals.viewmodel.RegisterViewModel
+import com.example.returnpals.viewmodel.UserEmail
 
 @Composable
 fun Register(navController: NavController) {
-    RegisterContent(navController = navController)
+    RegisterContent(navController = navController,{},{},viewModel())
 }
 
 
 @Composable
-fun RegisterContent(navController: NavController){
+fun RegisterContent(navController: NavController,
+                    onCancel:()->Unit,
+                    onClick:()->Unit,
+                    viewModel:RegisterViewModel){
     val customColor = Color(0xFFE1F6FF)
 
     LazyColumn(
@@ -59,7 +58,7 @@ fun RegisterContent(navController: NavController){
     ){
         
         item { RegisterTitle() }
-        item { Form(navController = navController) }
+        item { Form(navController = navController,viewModel = viewModel,onCancel = onCancel,onClick = onClick) }
 
 
     }
@@ -78,7 +77,10 @@ fun RegisterTitle() {
 }
 
 @Composable
-fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel()) {
+fun Form(navController: NavController,
+         viewModel: RegisterViewModel = viewModel(),
+         onCancel:()->Unit,
+         onClick:()->Unit) {
     var repository = UserEmail
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
@@ -159,13 +161,14 @@ fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel(
         Spacer(modifier = Modifier.height(8.dp))
 
         Button(
-            onClick = {
+            onClick = onClick
+            /**{
                 viewModel.submitRegistration(firstName, lastName, email,
                     address, phoneNumber)
                 // Reset state variables after submission
 
 
-            },
+            }*/,
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = selectedBlue,
                 contentColor = Color.White
@@ -182,7 +185,8 @@ fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel(
         }
         Spacer(modifier = Modifier.padding(24.dp))
         Button(
-            onClick = {
+            onClick = onCancel
+            /**{
                 //Logout and sends back to login screen
                 AmplifyOperations.signOut {
                     Log.i("signOut", it.toString())
@@ -194,7 +198,7 @@ fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel(
                         saveState = true
                     }
                 }
-            },
+            }*/,
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = selectedBlue,
                 contentColor = Color.White

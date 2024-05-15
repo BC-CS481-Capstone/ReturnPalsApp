@@ -37,8 +37,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.R
 import com.example.returnpals.navigation.MenuRoutes
-import com.example.returnpals.services.AmplifyOperations.signOut
-import com.example.returnpals.services.Backend
+import com.example.returnpals.viewmodel.AmplifyOperations.signOut
+import com.example.returnpals.viewmodel.Backend
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

@@ -8,7 +8,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.example.compose.ReturnPalTheme
 import com.example.returnpals.navigation.AppNavigation
-import com.example.returnpals.services.Backend
+import com.example.returnpals.viewmodel.Backend
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

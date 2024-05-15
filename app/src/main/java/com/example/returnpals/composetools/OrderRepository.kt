@@ -1,7 +1,6 @@
 package com.example.returnpals.composetools
 
 
-import android.net.Uri
 import android.util.Log
 import com.amplifyframework.core.Amplify
 
@@ -9,9 +8,8 @@ import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.PickupMethod
 import com.amplifyframework.datastore.generated.model.PickupStatus
 import com.amplifyframework.datastore.generated.model.Returns
-import com.example.returnpals.services.Backend.getEmail
+import com.example.returnpals.viewmodel.Backend.getEmail
 import java.io.File
-import java.net.URI
 
 
 //Data Class for everything needed in the repository

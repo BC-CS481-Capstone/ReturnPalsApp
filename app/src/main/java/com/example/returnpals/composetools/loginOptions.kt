@@ -31,8 +31,8 @@ import com.amplifyframework.core.Amplify
 import com.example.returnpals.composetools.dashboard.ConfirmResetPasswordDialog
 import com.example.returnpals.composetools.dashboard.ResetPasswordDialog
 import com.example.returnpals.navigation.MenuRoutes
-import com.example.returnpals.services.LoginViewModel
-import com.example.returnpals.services.UserEmail
+import com.example.returnpals.viewmodel.LoginViewModel
+import com.example.returnpals.viewmodel.UserEmail
 
 
 /* This is the login options class used to create the two login UI for guest and user.*/

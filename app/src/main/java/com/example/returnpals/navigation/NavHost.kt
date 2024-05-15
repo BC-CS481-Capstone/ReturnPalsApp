@@ -36,8 +36,8 @@ import com.example.returnpals.composetools.pickup.PricingScreen
 import com.example.returnpals.composetools.pickup.SelectAddressScreen
 import com.example.returnpals.composetools.pickup.ThankYouScreen
 import com.example.returnpals.composetools.pickup.ThankYouViewModel
-import com.example.returnpals.services.OrderViewModel
-import com.example.returnpals.services.PaymentApp
+import com.example.returnpals.viewmodel.OrderViewModel
+import com.example.returnpals.viewmodel.PaymentApp
 import com.stripe.android.paymentsheet.PaymentSheetResult
 
 @Composable
