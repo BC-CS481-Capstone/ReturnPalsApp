@@ -124,7 +124,7 @@ fun DrawerContent1(navController: NavController, scaffoldState: ScaffoldState) {
                 Log.i("signOut",it.toString())
                 Backend.resetEmail()
                 selectedItem = "Sign Out"
-               GlobalScope.launch(Dispatchers.Main) {  navigateToScreen(navController, MenuRoutes.Home, scaffoldState, scope)}
+               GlobalScope.launch(Dispatchers.Main) {  navigateToScreen(navController, "MainMenu", scaffoldState, scope)}
             }
 
 
