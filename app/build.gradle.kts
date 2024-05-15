@@ -103,6 +103,9 @@ dependencies {
     /** Stripe Android SDK */
     implementation("com.stripe:stripe-android:20.42.0")
 
+    /** Open github for https request Plan to use for Express server if needed*/
+    implementation("com.github.kittinunf.fuel:fuel:2.3.1")
+    implementation("com.github.kittinunf.fuel:fuel-json:2.3.1")
 
     /** Debug */
     debugImplementation("androidx.compose.ui:ui-tooling")
