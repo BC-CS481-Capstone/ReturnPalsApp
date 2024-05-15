@@ -31,7 +31,6 @@ import com.amplifyframework.core.Amplify
 import com.example.returnpals.composetools.dashboard.ConfirmResetPasswordDialog
 import com.example.returnpals.composetools.dashboard.ResetPasswordDialog
 import com.example.returnpals.navigation.MenuRoutes
-import com.example.returnpals.composetools.mainMenu.viewModelLogin
 import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.services.UserEmail
 
@@ -56,7 +55,7 @@ fun ConfirmNumber(navController: NavController,confirmviewMd:ConfirmNumberViewMo
         }
     }
     if (confirmSuccessful == true) {
-        viewModelLogin.logIn()
+        LoginViewModel().logIn()
         navController.navigate(MenuRoutes.Register) {
             popUpTo(MenuRoutes.Home) {
                // saveState = true
@@ -68,7 +67,7 @@ fun ConfirmNumber(navController: NavController,confirmviewMd:ConfirmNumberViewMo
 }
 
     @Composable
-    fun LoginScreen(viewModel:LoginViewModel, settingsViewModel: SettingsViewModel, navController: NavController) {
+    fun LoginScreen(viewModel:LoginViewModel, settingsViewModel: SettingsViewModel, navController: NavController,signin: () -> Unit,signup: () -> Unit) {
         // Condition variables
         val signUpSuccessful by viewModel.signUpSuccessful.observeAsState()
         val logInSuccessful by viewModel.logInSuccessful.observeAsState()
@@ -91,8 +90,8 @@ fun ConfirmNumber(navController: NavController,confirmviewMd:ConfirmNumberViewMo
                     pass = { viewModel.changePass(it) },
                     guest = { viewModel.switchGuestUser() },
                     reset = { /*TODO*/ },
-                    signin = {viewModel.logIn()},
-                    signup = {viewModel.signUp()},
+                    signin = signin,
+                    signup = signup,
                     settingsViewModel = settingsViewModel,
                     emailString = viewModel.getEmail(),
                     passString =  viewModel.password.value)
