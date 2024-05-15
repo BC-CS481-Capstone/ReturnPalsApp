@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.returnpals.PickupInfo
 import com.example.returnpals.composetools.ConfirmNumber
 import com.example.returnpals.composetools.ConfirmNumberViewModel
 import com.example.returnpals.composetools.LoginScreen
@@ -88,23 +89,27 @@ fun AppNavigation(navController: NavController) {
                     } },
                 )
             }
+
             composable("select_address") { entry ->
-//                val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
-//                val addressesVM = entry.sharedViewModel<AddressesViewModel>(navController)
-                // TODO: retrieve addresses from user account
-                // TODO: send added addresses to user account
                 val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
                 SelectAddressScreen(
                     addresses = settingsVM.userAddresses.collectAsState().value,
                     selectedAddressId = settingsVM.selectedAddressId.collectAsState().value,
                     onSelectAddress = settingsVM::selectAddress,
                     onAddAddress = settingsVM::addNewAddress,
-                    onClickNext = { navController.navigate("select_method") },
+                    onClickNext = {
+                        navController.navigate("select_method")
+                    },
                     onClickBack = { navController.navigate("select_date") }
                 )
             }
+
             composable("select_method") { entry ->
+                val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
                 val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
+                val selectedAddress = settingsVM.getSelectedAddress()
+                pickupVM.updatePickupAddress(selectedAddress)
+
                 PickupMethodScreen(
                     method = pickupVM.method.value,
                     onChangeMethod = pickupVM::onChangeMethod,
@@ -113,7 +118,11 @@ fun AppNavigation(navController: NavController) {
                 )
             }
             composable("select_pricing") { entry ->
+                val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
                 val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
+                val selectedAddress = settingsVM.getSelectedAddress()
+                pickupVM.updatePickupAddress(selectedAddress)
+
                 PricingScreen(
                     plan = pickupVM.plan.value,
                     onChangePlan = pickupVM::onChangePlan,
@@ -122,7 +131,10 @@ fun AppNavigation(navController: NavController) {
                 )
             }
             composable("add_labels") { entry ->
+                val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
                 val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
+                val selectedAddress = settingsVM.getSelectedAddress()
+                pickupVM.updatePickupAddress(selectedAddress)
                 AddPackagesScreen(
                     packages = pickupVM.packages.toMap(),
                     onAddLabel = pickupVM::onAddLabel,
@@ -133,7 +145,11 @@ fun AppNavigation(navController: NavController) {
                 )
             }
             composable("confirm") { entry ->
+                val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
                 val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
+                val selectedAddress = settingsVM.getSelectedAddress()
+                pickupVM.updatePickupAddress(selectedAddress)
+
                 val thankyouVM = ThankYouViewModel()
                 val hasUserName by thankyouVM.hasUserNames.observeAsState()
                 val createReturnSuccessful by pickupVM.createReturnSuccessful.observeAsState()
@@ -143,7 +159,7 @@ fun AppNavigation(navController: NavController) {
                 }
                 if (hasUserName == true) {
                     ConfirmPickupScreen(
-                        info = pickupVM.info,
+                        info = pickupVM.pickupInfo.value ?: PickupInfo(),
                         onClickNext = {
                             if (hasUserName == true) {
                                 pickupVM.onSubmit(thankyouVM.userEmail.value)
