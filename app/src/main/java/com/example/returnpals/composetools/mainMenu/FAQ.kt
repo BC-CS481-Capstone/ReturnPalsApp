@@ -31,12 +31,12 @@ import androidx.navigation.NavController
 @Composable
 fun FAQ(navController: NavController) {
     MainMenuScaffold(navController = navController) {
-        FAQContent(navController = navController)
+        FAQContent()
     }
 }
 
 @Composable
-fun FAQContent(navController: NavController) {
+fun FAQContent() {
     val customColor = Color(0xFFE1F6FF)
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
     LazyColumn(

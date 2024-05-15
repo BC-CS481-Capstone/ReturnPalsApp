@@ -38,12 +38,12 @@ import com.example.returnpals.services.ContactViewModel
 @Composable
 fun Contact(navController: NavController) {
     MainMenuScaffold(navController = navController) {
-        ContactContent(navController = navController)
+        ContactContent()
     }
 }
 
 @Composable
-fun ContactContent(navController: NavController, viewModel: ContactViewModel = viewModel()) {
+fun ContactContent(viewModel: ContactViewModel = viewModel()) {
     var fullName by remember { mutableStateOf("") }
     var postalCode by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }

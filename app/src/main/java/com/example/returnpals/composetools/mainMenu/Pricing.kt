@@ -22,12 +22,12 @@ import com.example.returnpals.composetools.pickup.PricingViewModel
 @Composable
 fun Pricing(navController: NavController) {
     MainMenuScaffold(navController = navController) {
-        PricingContent(navController = navController)
+        PricingContent()
     }
 }
 
 @Composable
-fun PricingContent(navController: NavController) {
+fun PricingContent() {
     val state = remember { PricingViewModel(PricingPlan.BRONZE) }
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
     Column ( modifier = Modifier

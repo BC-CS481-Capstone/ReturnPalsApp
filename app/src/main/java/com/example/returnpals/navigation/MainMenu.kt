@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.returnpals.composetools.mainMenu.AboutContent
 import com.example.returnpals.composetools.mainMenu.ContactContent
 import com.example.returnpals.composetools.mainMenu.FAQContent
@@ -25,18 +24,12 @@ fun MainMenu(navController: NavController) {
     }
     MainMenuScaffold(navController = navController,{selectedItem = it }) {
         when(selectedItem){
-            "Home"->HomeContent(navController)
-            "About"->AboutContent(navController)
-            "Pricing"-> PricingContent(navController)
-            "Contact"-> ContactContent(navController)
-            "FAQ"-> FAQContent(navController)
+            "Home"->HomeContent({selectedItem = "Sign In" })
+            "About"->AboutContent()
+            "Pricing"-> PricingContent()
+            "Contact"-> ContactContent()
+            "FAQ"-> FAQContent()
         }
     }
 }
-@Composable
-fun contentSwitch(route:String) {
 
-    if (route == "home") {
-        return HomeContent(navController= rememberNavController())
-    }
-}

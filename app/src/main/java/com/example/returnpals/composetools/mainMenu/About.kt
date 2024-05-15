@@ -33,13 +33,13 @@ import com.example.returnpals.R
 @Composable
 fun About(navController: NavController) {
     MainMenuScaffold(navController = navController) {
-        AboutContent(navController = navController)
+        AboutContent()
     }
 }
 
 
 @Composable
-fun AboutContent(navController: NavController) {
+fun AboutContent() {
     //val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
 
     LazyColumn(

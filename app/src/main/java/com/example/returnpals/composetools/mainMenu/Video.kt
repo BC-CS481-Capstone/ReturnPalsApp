@@ -11,10 +11,10 @@ import androidx.navigation.NavController
 @Composable
 fun Video(navController: NavController) {
     MainMenuScaffold(navController = navController) {
-        VideoContent(navController = navController)
+        VideoContent()
     }
 }
 @Composable
-fun VideoContent(navController: NavController) {
+fun VideoContent() {
     Text(text = "Test4")
 }
