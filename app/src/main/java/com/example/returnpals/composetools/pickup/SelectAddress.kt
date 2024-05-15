@@ -108,9 +108,11 @@ fun SelectAddressContent(
                     onSelect = { onSelectAddress(index) }
                 )
             }
+
+            item {AddAddressField(onAddAddress)}
         }
 
-        AddAddressField(onAddAddress)
+
     }
 }
 
