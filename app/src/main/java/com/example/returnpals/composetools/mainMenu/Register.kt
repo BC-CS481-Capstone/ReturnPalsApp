@@ -1,4 +1,4 @@
-package com.example.returnpals.mainMenu
+package com.example.returnpals.composetools.mainMenu
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -34,6 +34,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.composetools.CustomTextField
 import com.example.returnpals.composetools.CustomTextPasswordFields
 import com.example.returnpals.composetools.CustomTextRowFields
+import com.example.returnpals.navigation.MenuRoutes
 import com.example.returnpals.services.AmplifyOperations
 import com.example.returnpals.services.Backend
 import com.example.returnpals.services.RegisterViewModel
@@ -137,7 +138,7 @@ fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel(
         Spacer(modifier = Modifier.height(8.dp))
 
         CustomTextField(
-            label = "Address*",
+            label = "Billing Address*",
             text = address,
             onValueChange = { address = it })
         Spacer(modifier = Modifier.height(8.dp))
@@ -151,10 +152,10 @@ fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel(
         }
         Spacer(modifier = Modifier.height(8.dp))
 
-        CustomTextPasswordFields(label = "password1*", text = password1, onValueChange = { password1 = it })
+        CustomTextPasswordFields(label = "Password*", text = password1, onValueChange = { password1 = it })
         Spacer(modifier = Modifier.height(8.dp))
 
-        CustomTextPasswordFields(label = "password2*", text = password2, onValueChange = { password2 = it })
+        CustomTextPasswordFields(label = "Confirm Password*", text = password2, onValueChange = { password2 = it })
         Spacer(modifier = Modifier.height(8.dp))
 
         Button(

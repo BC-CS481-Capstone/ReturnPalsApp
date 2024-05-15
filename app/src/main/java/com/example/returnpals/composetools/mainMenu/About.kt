@@ -1,4 +1,4 @@
-package com.example.returnpals.mainMenu
+package com.example.returnpals.composetools.mainMenu
 
 import MainMenuScaffold
 import androidx.compose.foundation.Image
@@ -49,10 +49,10 @@ fun AboutContent(navController: NavController) {
             .fillMaxSize()
         //.padding(16.dp),
     ) {
-        item {MissionStatement()}
+        item { MissionStatement() }
         item { SocialImpact() }
-        item {GTA()}
-        item { ChooseRP()}
+        item { GTA() }
+        item { ChooseRP() }
     }
 }
 
@@ -276,9 +276,9 @@ fun AboutTest() {
             .fillMaxSize()
             //.padding(16.dp),
     ) {
-        item {MissionStatement()}
-        item {SocialImpact()}
-        item {GTA()}
-        item { ChooseRP()}
+        item { MissionStatement() }
+        item { SocialImpact() }
+        item { GTA() }
+        item { ChooseRP() }
     }
 }

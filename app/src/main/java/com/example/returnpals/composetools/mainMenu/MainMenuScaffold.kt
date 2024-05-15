@@ -31,13 +31,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.R
-import com.example.returnpals.mainMenu.MenuRoutes
+import com.example.returnpals.navigation.MenuRoutes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun MainMenuScaffold(navController: NavController, content: @Composable () -> Unit) {
+fun MainMenuScaffold(navController: NavController,navigateRoute:(String)->Unit={}, content: @Composable () -> Unit) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
@@ -68,7 +68,13 @@ fun MainMenuScaffold(navController: NavController, content: @Composable () -> Un
             )
         },
         drawerContent = {
-            DrawerContent(navController = navController, scaffoldState = scaffoldState)
+            val isSelected:(String)->Unit = {
+                scope.launch {
+                    scaffoldState.drawerState.close() // Close the drawer
+                }
+                navigateRoute(it)
+            }
+            DrawerContent(navController = navController, scaffoldState = scaffoldState,isSelected = isSelected)
         }
     ) {
         content()
@@ -78,36 +84,43 @@ fun MainMenuScaffold(navController: NavController, content: @Composable () -> Un
 
 
 @Composable
-fun DrawerContent(navController: NavController, scaffoldState: ScaffoldState) {
+fun DrawerContent(navController: NavController, scaffoldState: ScaffoldState,isSelected:(String)->Unit={}) {
     val scope = rememberCoroutineScope()
     var selectedItem by remember { mutableStateOf("") }
 
     Column {
         DrawerItem(title = "Home", isSelected = selectedItem == "Home", onClick = {
             selectedItem = "Home"
+            isSelected(MenuRoutes.Home)
             navigateToScreen(navController, MenuRoutes.Home, scaffoldState, scope)
         })
         DrawerItem(title = "About", isSelected = selectedItem == "About", onClick = {
             selectedItem = "About"
+            isSelected(MenuRoutes.About)
             navigateToScreen(navController, MenuRoutes.About, scaffoldState, scope)
         })
         DrawerItem(title = "Pricing", isSelected = selectedItem == "Pricing", onClick = {
             selectedItem = "Pricing"
+            isSelected(MenuRoutes.Pricing)
             navigateToScreen(navController, MenuRoutes.Pricing, scaffoldState, scope)
         })
         /*DrawerItem(title = "Video", isSelected = selectedItem == "Video", onClick = {
             selectedItem = "Video"
+            isSelected(MenuRoutes.Video)
             navigateToSc          */
         DrawerItem(title = "Contact", isSelected = selectedItem == "Contact", onClick = {
             selectedItem = "Contact"
+            isSelected(MenuRoutes.Contact)
             navigateToScreen(navController, MenuRoutes.Contact, scaffoldState, scope)
         })
         DrawerItem(title = "Sign In", isSelected = selectedItem == "Sign In", onClick = {
             selectedItem = "Sign In"
+            isSelected(MenuRoutes.SignIn)
             navigateToScreen(navController, MenuRoutes.SignIn, scaffoldState, scope)
         })
         DrawerItem(title = "FAQ", isSelected = selectedItem == "FAQ", onClick = {
             selectedItem = "FAQ"
+            isSelected(MenuRoutes.FAQ)
             navigateToScreen(navController, MenuRoutes.FAQ, scaffoldState, scope)
         })
     }

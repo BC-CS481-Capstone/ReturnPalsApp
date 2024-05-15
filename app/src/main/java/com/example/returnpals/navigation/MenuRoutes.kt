@@ -1,4 +1,4 @@
-package com.example.returnpals.mainMenu
+package com.example.returnpals.navigation
 
 object MenuRoutes {
     const val Home = "home"

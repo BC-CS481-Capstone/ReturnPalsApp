@@ -30,8 +30,8 @@ import androidx.navigation.NavController
 import com.amplifyframework.core.Amplify
 import com.example.returnpals.composetools.dashboard.ConfirmResetPasswordDialog
 import com.example.returnpals.composetools.dashboard.ResetPasswordDialog
-import com.example.returnpals.mainMenu.MenuRoutes
-import com.example.returnpals.mainMenu.viewModelLogin
+import com.example.returnpals.navigation.MenuRoutes
+import com.example.returnpals.composetools.mainMenu.viewModelLogin
 import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.services.UserEmail
 
@@ -107,7 +107,7 @@ fun ConfirmNumber(navController: NavController,confirmviewMd:ConfirmNumberViewMo
             }
             if (logInSuccessful == true) {
                 viewModel.reset()
-                go2(navController,MenuRoutes.HomeDash)
+                go2(navController, MenuRoutes.HomeDash)
             }
         }
     }

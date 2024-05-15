@@ -1,4 +1,4 @@
-package com.example.returnpals.mainMenu
+package com.example.returnpals.navigation
 
 import SettingsViewModel
 import android.util.Log
@@ -23,6 +23,13 @@ import com.example.returnpals.composetools.dashboard.HomeDash
 import com.example.returnpals.composetools.dashboard.Orders
 import com.example.returnpals.composetools.dashboard.Profile
 import com.example.returnpals.composetools.dashboard.Settings
+import com.example.returnpals.composetools.mainMenu.About
+import com.example.returnpals.composetools.mainMenu.Contact
+import com.example.returnpals.composetools.mainMenu.FAQ
+import com.example.returnpals.composetools.mainMenu.Home
+import com.example.returnpals.composetools.mainMenu.Pricing
+import com.example.returnpals.composetools.mainMenu.Register
+import com.example.returnpals.composetools.mainMenu.Video
 import com.example.returnpals.composetools.pickup.AddPackagesScreen
 import com.example.returnpals.composetools.pickup.PickupDateScreen
 import com.example.returnpals.composetools.pickup.PickupMethodScreen
@@ -40,9 +47,9 @@ fun AppNavigation(navController: NavController) {
 
     NavHost(
         navController = navController as NavHostController,
-        startDestination = MenuRoutes.Home
+        startDestination = "MainMenu"
     ) {
-
+        composable("MainMenu"){ MainMenu(navController)}
         composable(MenuRoutes.Home) {
             Home(navController)
         }
@@ -54,7 +61,7 @@ fun AppNavigation(navController: NavController) {
             val viewModelLogin = LoginViewModel()
             LoginScreen(viewModelLogin, SettingsViewModel(), navController) }
         composable(MenuRoutes.FAQ) { FAQ(navController) }
-        composable(MenuRoutes.Register) { Register(navController)}
+        composable(MenuRoutes.Register) { Register(navController) }
 
         navigation(
             startDestination = MenuRoutes.HomeDash,

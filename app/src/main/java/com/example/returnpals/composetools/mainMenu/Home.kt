@@ -1,4 +1,4 @@
-package com.example.returnpals.mainMenu
+package com.example.returnpals.composetools.mainMenu
 
 import MainMenuScaffold
 import androidx.compose.foundation.Image
@@ -33,6 +33,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.R
 import com.example.returnpals.composetools.BenefitCards
 import com.example.returnpals.composetools.ProcessCards
+import com.example.returnpals.navigation.MenuRoutes
 
 
 @Composable
