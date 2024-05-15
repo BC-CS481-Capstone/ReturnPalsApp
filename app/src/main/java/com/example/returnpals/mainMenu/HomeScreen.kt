@@ -45,7 +45,7 @@ fun HomeScreen(navController: NavController, onScheduleNow: () -> Unit = {}) {
 
 @Preview
 @Composable
-private fun HomeContent(onScheduleNow: () -> Unit = {}) {
+fun HomeContent(onScheduleNow: () -> Unit = {}) {
     val customColor = Color(0xFFE1F6FF)
     val selectedBlue = Color(0xFF008BE7)
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)

@@ -10,6 +10,14 @@ import com.example.returnpals.services.Backend.accessEmail
 import com.example.returnpals.services.backend.LoginRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
+
+// this view model is complex because repo operations are asynchronous and view model operations
+// can be called by anyone who has a reference to it
+// meaning we have to orchestrate io operations that complete on their own time
+// to somehow work with jetpack compose
 
 //Login View model provides the information and function needed to login, logout, and signup.
 class LoginViewModel(
@@ -23,7 +31,7 @@ class LoginViewModel(
     // .. might be a jetpack compose thing
     var signUpSuccessful by mutableStateOf(false)
         private set
-    var isLoggedIn by mutableStateOf(false)
+    var isLoggedIn by mutableStateOf<Boolean?>(null)
         private set
 
     var email by mutableStateOf(email) // test@bellevue.college
@@ -32,77 +40,87 @@ class LoginViewModel(
     val isGuest get() = LoginRepository.isGuest
 
     init {
-        Log.d("LoginViewModel", "init")
+        Log.d("LoginViewModel", "initializing...")
         viewModelScope.launch(Dispatchers.Main) { // Crashes here if we use Dispatchers.IO
             try {
-                isLoggedIn = LoginRepository.isLoggedIn()
+                withContext(Dispatchers.IO) {
+                    runBlocking { isLoggedIn = LoginRepository.isLoggedIn() }
+                }
             } catch(error: AuthException) {
                 Log.e("LoginViewModel", "Failed to determine if user is logged in!")
             }
+            // init may complete after one of the methods below which can result in wierd behavior...
+            Log.d("LoginViewModel", "initialized")
         }
     }
 
-    fun register() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                LoginRepository.register(email, password)
-                signUpSuccessful = true
-                failMessage = ""
-            } catch (error: AuthException) {
-                signUpSuccessful = false
-                failMessage = error.message + error.recoverySuggestion
+    fun register(context: CoroutineContext = viewModelScope.coroutineContext) {
+        viewModelScope.launch(context) {
+            withContext(Dispatchers.IO) {
+                try {
+                    LoginRepository.register(email, password)
+                    signUpSuccessful = true
+                    failMessage = ""
+                } catch (error: AuthException) {
+                    signUpSuccessful = false
+                    failMessage = error.message + '\n' + error.recoverySuggestion
+                }
             }
         }
     }
 
-    fun logIn() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                if (isLoggedIn) LoginRepository.logOut()
-                LoginRepository.logIn(email, password)
-                isLoggedIn = LoginRepository.isLoggedIn()
-                signUpSuccessful = !isLoggedIn
-                failMessage = ""
-            } catch(error: AuthException) {
-                isLoggedIn = false
-                failMessage = error.message + error.recoverySuggestion
-                error.message?.let { message ->
-                    if (message.contains("User not confirmed in the system.")) {
-                        signUpSuccessful = true
-                        accessEmail()
+    fun logIn(context: CoroutineContext = viewModelScope.coroutineContext) {
+        viewModelScope.launch(context) {
+            withContext(Dispatchers.IO) {
+                try {
+                    isLoggedIn = null
+                    isLoggedIn = LoginRepository.isLoggedIn()
+                    if (isLoggedIn == true) LoginRepository.logOut()
+                    LoginRepository.logIn(email, password)
+                    isLoggedIn = true
+                    failMessage = ""
+                } catch (error: AuthException) {
+                    failMessage = error.message + '\n' + error.recoverySuggestion
+                    error.message?.let { message ->
+                        if (message.contains("User not confirmed in the system.")) {
+                            signUpSuccessful = true
+                            accessEmail()
+                        }
                     }
                 }
             }
-            if (!isLoggedIn) Log.e("LoginViewModel", "Failed to log in!")
         }
     }
 
-    fun logOut() {
-        Log.d("LoginViewModel", "logOut")
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                if (isLoggedIn) LoginRepository.logOut()
-                isLoggedIn = LoginRepository.isLoggedIn()
-            } catch(error: AuthException) {
-                Log.e("LoginViewModel", "Failed to log out!")
+    fun logOut(context: CoroutineContext = viewModelScope.coroutineContext) {
+        viewModelScope.launch(context) {
+            withContext(Dispatchers.IO) {
+                try {
+                    isLoggedIn = null
+                    isLoggedIn = LoginRepository.isLoggedIn()
+                    if (isLoggedIn == true) LoginRepository.logOut()
+                    isLoggedIn = false
+                } catch (error: AuthException) {
+                    Log.e("LoginViewModel", "Failed to log out!")
+                }
             }
-            if (isLoggedIn) Log.e("LoginViewModel", "Failed to log out!")
         }
     }
 
-    fun logInAsGuest() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                if (isLoggedIn) LoginRepository.logOut()
-                LoginRepository.logInAsGuest(email)
-                isLoggedIn = LoginRepository.isLoggedIn()
-                signUpSuccessful = !isLoggedIn
-                failMessage = ""
-            } catch(error: AuthException) {
-                isLoggedIn = false
-                failMessage = error.message + error.recoverySuggestion
+    fun logInAsGuest(context: CoroutineContext = viewModelScope.coroutineContext) {
+        viewModelScope.launch(context) {
+            withContext(Dispatchers.IO) {
+                try {
+                    isLoggedIn = null
+                    isLoggedIn = LoginRepository.isLoggedIn()
+                    if (isLoggedIn == true) LoginRepository.logOut()
+                    LoginRepository.logInAsGuest(email)
+                    isLoggedIn = true
+                    failMessage = ""
+                } catch (error: AuthException) {
+                    failMessage = error.message + '\n' + error.recoverySuggestion
+                }
             }
-            if (!isLoggedIn) Log.e("LoginViewModel", "Failed to log in as guest!")
         }
     }
 }

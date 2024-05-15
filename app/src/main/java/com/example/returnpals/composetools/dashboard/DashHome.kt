@@ -49,7 +49,7 @@ fun HomeDash(navController: NavController, loginVM: LoginViewModel) {
     val hasName by vm.hasUserName.observeAsState()
     vm.init()
     if (hasName == true) {
-        DashboardMenuScaffold(navController, loginVM.isLoggedIn, loginVM::logOut) {
+        DashboardMenuScaffold(navController, loginVM.isLoggedIn ?: false, loginVM::logOut) {
             HomeDashContent(navController = navController, firstName = vm.getFirstName())
         }
     } else if (hasName == false) {

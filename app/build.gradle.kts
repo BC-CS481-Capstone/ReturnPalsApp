@@ -93,6 +93,7 @@ dependencies {
     implementation("com.amplifyframework:aws-api:2.14.11")
     /** Android Testing */
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
 
     androidTestImplementation("androidx.test:core-ktx:1.5.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

@@ -22,6 +22,7 @@ object LoginRepository {
         private set
 
     suspend fun logInAsGuest(email: String) {
+        Log.d("LoginRepository", "logInAsGuest")
         if (isLoggedIn()) {
             val error = AuthException("Already logged in as $email!", "Log out first.")
             Log.i("LoginRepository", "Failed guest log in as $email", error)
@@ -32,6 +33,7 @@ object LoginRepository {
     }
 
     suspend fun logIn(email: String, password: String) {
+        Log.d("LoginRepository", "logIn")
         try {
             val result = Amplify.Auth.signIn(email, password)
             if (result.isSignedIn) {
@@ -54,6 +56,7 @@ object LoginRepository {
      * Log in with third-party authentication (Google, Apple, Facebook, etc).
      */
     suspend fun logInWith(provider: AuthProvider, callingActivity: Activity) {
+        Log.d("LoginRepository", "logInWith")
         try {
             val result = Amplify.Auth.signInWithSocialWebUI(provider, callingActivity)
             if (result.isSignedIn) {
@@ -75,6 +78,7 @@ object LoginRepository {
         when (val result = Amplify.Auth.signOut()) {
             is AWSCognitoAuthSignOutResult.CompleteSignOut -> {
                 email = null
+                isGuest = false
                 Log.i("LoginRepository", "Logged out.")
             }
             is AWSCognitoAuthSignOutResult.PartialSignOut -> {
@@ -102,6 +106,7 @@ object LoginRepository {
         password: String,
         phoneNumber: String? = null,
     ) {
+        Log.d("LoginRepository", "register")
         val options: AuthSignUpOptions =
             AuthSignUpOptions.builder().also { builder ->
                 phoneNumber?.let { builder.userAttribute(AuthUserAttributeKey.phoneNumber(), it) }
@@ -127,6 +132,7 @@ object LoginRepository {
      * @param code the confirmation code sent to the user's email
      */
     suspend fun confirmEmail(code: String) {
+        Log.d("LoginRepository", "confirmEmail")
         try {
             email?.let { email ->
                 val result = Amplify.Auth.confirmSignUp(email, code)
@@ -144,6 +150,7 @@ object LoginRepository {
     }
 
     suspend fun isLoggedIn(): Boolean {
+        Log.d("LoginRepository", "isLoggedIn")
         if (isGuest) return true
         var status = false
         try {

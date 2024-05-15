@@ -75,7 +75,7 @@ fun LoginScreen(
 ) {
     // Condition variables
     val signUpSuccessful = viewModel.signUpSuccessful
-    val logInSuccessful = viewModel.isLoggedIn
+    val logInSuccessful = viewModel.isLoggedIn ?: false
     var isGuestMode by remember { mutableStateOf(false) }
 //    viewModel.checkUser()
     Box(modifier = Modifier
