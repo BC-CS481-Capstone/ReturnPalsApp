@@ -44,11 +44,6 @@ class SettingsViewModel : ViewModel() {
         _selectedAddressId.value = id
     }
 
-    fun addAddress(id: Int, address: String) {
-        _addresses.value = _addresses.value.toMutableMap().apply {
-            put(id, address)
-        }
-    }
 
     init {
         fetchUserEmail()
@@ -150,10 +145,10 @@ class SettingsViewModel : ViewModel() {
                 ModelQuery.list(Address::class.java),
                 { response ->
                     if (response.hasData()) {
-                        val filteredAddresses = response.data.items.map { address ->
+                        val simpleAddresses = response.data.items.map { address ->
                             SimpleAddress(address.id, address.address)
                         }
-                        _userAddresses.value = filteredAddresses
+                        _userAddresses.value = simpleAddresses
                     } else if (response.hasErrors()) {
                         Log.e("MyAmplifyApp", "Error fetching addresses: ${response.errors.first().message}")
                     }
@@ -241,4 +236,3 @@ class SettingsViewModel : ViewModel() {
     }
 
 }
-
