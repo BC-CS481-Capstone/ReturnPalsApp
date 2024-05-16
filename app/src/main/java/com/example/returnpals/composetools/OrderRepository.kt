@@ -59,6 +59,15 @@ data class OrderRepository(private val customerId: String,
     fun setMethod(input: PickupMethod ){
       method = input
     }
+    fun getConfirmation() : String{
+        return confirmation
+    }
+    fun getMethod() : String{
+        return when(method!!){
+            PickupMethod.HANDOFF -> "Handoff"
+            PickupMethod.DOORSTEP -> "Doorstep"
+        }
+    }
 
     //Sets Image and acknowledges it exists
 

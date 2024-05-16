@@ -91,7 +91,8 @@ object Backend {
                                 date =  orderData.date,
                                 method = orderData.method,
                                 labels = list,
-                                address = orderData.address
+                                address = orderData.address,
+                                confirmation = orderData.id
                                                             )
                             orderList.add(order)
 

@@ -107,8 +107,8 @@ class OrderViewModel(
                     returns.getImages().forEach { uri ->
                         val file = File(uri)
                         Amplify.Storage.uploadFile(
-                            uri, file,
-                            { Log.i("Backend", "Successfully uploaded: $uri") },
+                            returnId, file,
+                            { Log.i("Backend", "Successfully uploaded: $returnId") },
                             { error -> Log.e("Backend", "Upload failed", error) }
                         )
 
