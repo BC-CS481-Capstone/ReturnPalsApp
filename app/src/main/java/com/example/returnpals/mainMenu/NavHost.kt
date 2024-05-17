@@ -124,9 +124,11 @@ fun AppNavigation(navController: NavController) {
                 val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
                 PricingScreen(
                     plan = pickupVM.plan.value,
+                    isGuest = loginVM.isGuest,
                     onChangePlan = pickupVM::onChangePlan,
                     onClickNext = { navController.navigate("add_labels") },
                     onClickBack = { navController.navigate("select_method") },
+                    onClickSignUp = { navController.goto(MenuRoutes.Register) }
                 )
             }
             composable("add_labels") { entry ->
