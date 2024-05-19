@@ -3,7 +3,7 @@ package com.example.returnpals.data
 
 import com.amplifyframework.core.Amplify
 
-class CognitoMainMenuRepository :MainMenuRepository{
+class CognitoMainMenuScreenRepository :MainMenuScreenRepository{
     //This is the cognito implementation of MainMenuRepository
 
     override suspend fun isSignedIn(result:(Boolean)->Unit) {
