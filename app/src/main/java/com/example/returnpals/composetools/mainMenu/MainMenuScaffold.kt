@@ -37,7 +37,7 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun MainMenuScaffold(navController: NavController,navigateRoute:(String)->Unit={}, content: @Composable () -> Unit) {
+fun MainMenuScaffold(navigateRoute:(String)->Unit={}, content: @Composable () -> Unit) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
@@ -74,7 +74,7 @@ fun MainMenuScaffold(navController: NavController,navigateRoute:(String)->Unit={
                 }
                 navigateRoute(it)
             }
-            DrawerContent(navController = navController, scaffoldState = scaffoldState,isSelected = isSelected)
+            DrawerContent(isSelected = isSelected)
         }
     ) {
         content()
@@ -84,7 +84,7 @@ fun MainMenuScaffold(navController: NavController,navigateRoute:(String)->Unit={
 
 
 @Composable
-fun DrawerContent(navController: NavController, scaffoldState: ScaffoldState,isSelected:(String)->Unit={}) {
+fun DrawerContent( isSelected:(String)->Unit={}) {
     val scope = rememberCoroutineScope()
     var selectedItem by remember { mutableStateOf("") }
 
@@ -92,17 +92,14 @@ fun DrawerContent(navController: NavController, scaffoldState: ScaffoldState,isS
         DrawerItem(title = "Home", isSelected = selectedItem == "Home", onClick = {
             selectedItem = "Home"
             isSelected(MenuRoutes.Home)
-            navigateToScreen(navController, MenuRoutes.Home, scaffoldState, scope)
         })
         DrawerItem(title = "About", isSelected = selectedItem == "About", onClick = {
             selectedItem = "About"
             isSelected(MenuRoutes.About)
-            navigateToScreen(navController, MenuRoutes.About, scaffoldState, scope)
         })
         DrawerItem(title = "Pricing", isSelected = selectedItem == "Pricing", onClick = {
             selectedItem = "Pricing"
             isSelected(MenuRoutes.Pricing)
-            navigateToScreen(navController, MenuRoutes.Pricing, scaffoldState, scope)
         })
         /*DrawerItem(title = "Video", isSelected = selectedItem == "Video", onClick = {
             selectedItem = "Video"
@@ -111,17 +108,14 @@ fun DrawerContent(navController: NavController, scaffoldState: ScaffoldState,isS
         DrawerItem(title = "Contact", isSelected = selectedItem == "Contact", onClick = {
             selectedItem = "Contact"
             isSelected(MenuRoutes.Contact)
-            navigateToScreen(navController, MenuRoutes.Contact, scaffoldState, scope)
         })
         DrawerItem(title = "Sign In", isSelected = selectedItem == "Sign In", onClick = {
             selectedItem = "Sign In"
             isSelected(MenuRoutes.SignIn)
-            navigateToScreen(navController, MenuRoutes.SignIn, scaffoldState, scope)
         })
         DrawerItem(title = "FAQ", isSelected = selectedItem == "FAQ", onClick = {
             selectedItem = "FAQ"
             isSelected(MenuRoutes.FAQ)
-            navigateToScreen(navController, MenuRoutes.FAQ, scaffoldState, scope)
         })
     }
 }

@@ -39,7 +39,7 @@ fun Home(navController: NavController) {
 
     val customColor = Color(0xFFE1F6FF)
     // val customFont = FontFamily(Font(R.font.you_font_file))
-    MainMenuScaffold(navController = navController) {
+    MainMenuScaffold() {
             HomeContent({})
     }
 }

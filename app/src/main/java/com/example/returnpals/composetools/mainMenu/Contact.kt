@@ -37,7 +37,7 @@ import com.example.returnpals.viewmodel.ContactViewModel
 
 @Composable
 fun Contact(navController: NavController) {
-    MainMenuScaffold(navController = navController) {
+    MainMenuScaffold() {
         ContactContent()
     }
 }

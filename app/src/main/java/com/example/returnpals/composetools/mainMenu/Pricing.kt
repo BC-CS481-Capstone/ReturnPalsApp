@@ -21,7 +21,7 @@ import com.example.returnpals.composetools.pickup.PricingViewModel
 
 @Composable
 fun Pricing(navController: NavController) {
-    MainMenuScaffold(navController = navController) {
+    MainMenuScaffold() {
         PricingContent()
     }
 }

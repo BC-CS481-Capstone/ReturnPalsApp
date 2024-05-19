@@ -32,7 +32,7 @@ import com.example.returnpals.R
 
 @Composable
 fun About(navController: NavController) {
-    MainMenuScaffold(navController = navController) {
+    MainMenuScaffold() {
         AboutContent()
     }
 }

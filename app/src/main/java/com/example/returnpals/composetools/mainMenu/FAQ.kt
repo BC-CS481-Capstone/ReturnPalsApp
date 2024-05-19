@@ -30,7 +30,7 @@ import androidx.navigation.NavController
 
 @Composable
 fun FAQ(navController: NavController) {
-    MainMenuScaffold(navController = navController) {
+    MainMenuScaffold() {
         FAQContent()
     }
 }
