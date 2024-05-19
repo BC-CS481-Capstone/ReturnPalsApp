@@ -48,9 +48,7 @@ fun AppNavigation(navController: NavController) {
         startDestination = "MainMenu"
     ) {
         composable("MainMenu"){ MainMenu(navController)}
-        composable(MenuRoutes.Home) {
-            Home(navController)
-        }
+        composable(MenuRoutes.Home) { Home(navController) }
         composable(MenuRoutes.About) { About(navController) }
         composable(MenuRoutes.Pricing) { Pricing(navController) }
         composable(MenuRoutes.Contact) { Contact(navController) }
@@ -153,7 +151,7 @@ fun AppNavigation(navController: NavController) {
                 if (createReturnSuccessful == true) {
                     pickupVM.submitLabels()
                 }
-                if (createLabelsSuccessful == true) {
+                if (/*createLabelsSuccessful ==*/ true) {
                     PaymentApp(
                         info = pickupVM.info,
                         onPaymentSheetResult = { paymentSheetResult: PaymentSheetResult ->
