@@ -2,7 +2,7 @@ package com.example.returnpals.data
 
 import androidx.lifecycle.LiveData
 
-interface RegistrationRepository {
+interface RegisterRepository {
 
     val submissionSuccessful: LiveData<Boolean?>
     suspend fun registerUser(userInfo:UserregisterInfo)
