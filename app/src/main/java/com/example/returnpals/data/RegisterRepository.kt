@@ -1,23 +1,10 @@
 package com.example.returnpals.data
 
-import androidx.lifecycle.LiveData
+import com.example.returnpals.viewmodel.RegisterUserInfo
 
 interface RegisterRepository {
 
-    val submissionSuccessful: LiveData<Boolean?>
-    suspend fun registerUser(userInfo:UserregisterInfo)
+    fun registerUser(registerUserInfo: RegisterUserInfo, errorMessage:(String?)->Unit)
 
 }
-
-data class UserregisterInfo(val first_name:String,
-                    val last_name:String,
-                    val user_email:String,
-                    val phone_number:String,
-                    val billing_address:String,
-                    val apt_number:String,
-                    val city_name:String,
-                    val postal_code:String,
-                    val new_password: String,
-                    val confirm_password:String
-)
 
