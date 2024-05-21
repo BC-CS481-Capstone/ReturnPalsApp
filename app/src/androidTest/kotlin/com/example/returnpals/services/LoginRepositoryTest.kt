@@ -13,30 +13,30 @@ class LoginRepositoryTest {
 
     @Test
     fun logInAsGuest() = runTest {
-        if (LoginRepository.isLoggedIn())
+        if (LoginRepository.isLoggedIn == true)
             LoginRepository.logOut()
         LoginRepository.logInAsGuest(email)
-        assert(LoginRepository.isLoggedIn()) { "isLoggedIn: expected true, was false" }
+        assert(LoginRepository.isLoggedIn == true) { "isLoggedIn: expected true, was false" }
         assert(LoginRepository.isGuest) { "isGuest: expected true, was false" }
         assert(LoginRepository.email == email) { "email: expected $email, was ${LoginRepository.email}" }
     }
 
     @Test
     fun logIn() = runTest {
-        if (LoginRepository.isLoggedIn())
+        if (LoginRepository.isLoggedIn == true)
             LoginRepository.logOut()
         LoginRepository.logIn(email, password)
-        assert(LoginRepository.isLoggedIn()) { "isLoggedIn: expected true, was false" }
+        assert(LoginRepository.isLoggedIn == true) { "isLoggedIn: expected true, was false" }
         assert(!LoginRepository.isGuest) { "isGuest: expected false, was true" }
         assert(LoginRepository.email == email) { "email: expected $email, was ${LoginRepository.email}" }
     }
 
     @Test
     fun logOut() = runTest {
-        if (!LoginRepository.isLoggedIn())
+        if (LoginRepository.isLoggedIn == false)
             LoginRepository.logIn(email, password)
         LoginRepository.logOut()
-        assert(!LoginRepository.isLoggedIn()) { "isLoggedIn: expected false, was true" }
+        assert(LoginRepository.isLoggedIn == false) { "isLoggedIn: expected false, was true" }
         assert(!LoginRepository.isGuest) { "isGuest: expected false, was true" }
         assert(LoginRepository.email == null) { "email: expected null, was ${LoginRepository.email}" }
     }

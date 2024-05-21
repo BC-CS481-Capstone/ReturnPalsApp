@@ -15,12 +15,11 @@ class LoginViewModelTest {
     @Test
     fun logInAsGuest() = runTest {
         val email = "test@bellevue.college"
-        val password = ""
         async { vm.logInAsGuest(email, this.coroutineContext) }.await()
         assert(vm.isLoggedIn == true) { "isLoggedIn: expected true, was false" }
         assert(vm.isGuest) { "isGuest: expected true, was false" }
         assert(vm.isGuest == LoginRepository.isGuest) { "isGuest: doesn't match with repository" }
-        assert(vm.isLoggedIn == LoginRepository.isLoggedIn()) { "isLoggedIn: doesn't match with repository" }
+        assert(vm.isLoggedIn == LoginRepository.isLoggedIn) { "isLoggedIn: doesn't match with repository" }
     }
 
     @Test
@@ -31,7 +30,7 @@ class LoginViewModelTest {
         assert(vm.isLoggedIn == true) { "isLoggedIn: expected true, was false" }
         assert(!vm.isGuest) { "isGuest: expected false, was true" }
         assert(vm.isGuest == LoginRepository.isGuest) { "isGuest: doesn't match with repository" }
-        assert(vm.isLoggedIn == LoginRepository.isLoggedIn()) { "isLoggedIn: doesn't match with repository" }
+        assert(vm.isLoggedIn == LoginRepository.isLoggedIn) { "isLoggedIn: doesn't match with repository" }
     }
 
     @Test
@@ -43,7 +42,7 @@ class LoginViewModelTest {
         assert(vm.isLoggedIn == false) { "isLoggedIn: expected false, was true" }
         assert(!vm.isGuest) { "isGuest: expected false, was true" }
         assert(vm.isGuest == LoginRepository.isGuest) { "isGuest: doesn't match with repository" }
-        assert(vm.isLoggedIn == LoginRepository.isLoggedIn()) { "isLoggedIn: doesn't match with repository" }
+        assert(vm.isLoggedIn == LoginRepository.isLoggedIn) { "isLoggedIn: doesn't match with repository" }
     }
 
 //    results in "Username already exists in the system" error

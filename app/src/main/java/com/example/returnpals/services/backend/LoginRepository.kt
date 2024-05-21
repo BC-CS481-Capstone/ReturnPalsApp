@@ -2,6 +2,9 @@ package com.example.returnpals.services.backend
 
 import android.app.Activity
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.amplifyframework.auth.AuthException
 import com.amplifyframework.auth.AuthProvider
 import com.amplifyframework.auth.AuthUserAttributeKey
@@ -15,21 +18,27 @@ import com.amplifyframework.kotlin.core.Amplify
 object LoginRepository {
     // https://developer.android.com/develop/ui/compose/kotlin#coroutines
 
-    /** Is the same value as the username. */
-    var email: String? = null
+    /** Is the same value as the username.
+     * Gets updated on calls to [logIn], [logOut], [logInAsGuest], [register], and [update]. */
+    var email by mutableStateOf<String?>(null)
         private set
-    var isGuest: Boolean = false
+    /** Gets updated on calls to [logIn], [logOut], [logInAsGuest], [register], and [update]. */
+    var isGuest by mutableStateOf(false)
+        private set
+    /** Gets updated on calls to [logIn], [logOut], [logInAsGuest], [register], and [update]. */
+    var isLoggedIn by mutableStateOf<Boolean?>(null)
         private set
 
     suspend fun logInAsGuest(email: String) {
         Log.d("LoginRepository", "logInAsGuest")
-        if (isLoggedIn()) {
+        if (isLoggedIn==true) {
             val error = AuthException("Already logged in as $email!", "Log out first.")
             Log.i("LoginRepository", "Failed guest log in as $email", error)
             throw error
         }
         this.email = email
         isGuest = true
+        isLoggedIn = true
     }
 
     suspend fun logIn(email: String, password: String) {
@@ -39,6 +48,7 @@ object LoginRepository {
             if (result.isSignedIn) {
                 this.email = email
                 isGuest = false
+                isLoggedIn = true
                 Log.i("LoginRepository", "Logged in as $email")
             } else {
                 // Flagged as a warning in logcat because we don't expect the program to go here but its not game over if it does
@@ -60,8 +70,9 @@ object LoginRepository {
         try {
             val result = Amplify.Auth.signInWithSocialWebUI(provider, callingActivity)
             if (result.isSignedIn) {
-                this.email = null // provider doesn't return the email of the user logged in?
+                email = null // provider doesn't return the email of the user logged in?
                 isGuest = false
+                isLoggedIn = true
                 Log.i("LoginRepository", "Logged in with third-party authentication [${provider.providerKey}].")
             } else {
                 Log.w("LoginRepository", "Incomplete log in with third-party authentication [${provider.providerKey}].")
@@ -79,11 +90,13 @@ object LoginRepository {
             is AWSCognitoAuthSignOutResult.CompleteSignOut -> {
                 email = null
                 isGuest = false
+                isLoggedIn = false
                 Log.i("LoginRepository", "Logged out.")
             }
             is AWSCognitoAuthSignOutResult.PartialSignOut -> {
                 email = null
                 isGuest = false
+                isLoggedIn = false
                 result.hostedUIError?.let {
                     Log.w("LoginRepository", "Logged out with hosted UI errors.", it.exception)
                 }
@@ -117,6 +130,7 @@ object LoginRepository {
             if (result.isSignUpComplete) {
                 this.email = email
                 isGuest = false
+                isLoggedIn = true
                 Log.i("LoginRepository", "Registered with $email")
             } else {
                 Log.w("LoginRepository", "Incomplete register with username: $email")
@@ -149,17 +163,19 @@ object LoginRepository {
         }
     }
 
-    suspend fun isLoggedIn(): Boolean {
-        Log.d("LoginRepository", "isLoggedIn")
-        if (isGuest) return true
-        var status = false
+    /** Updates this repository with the remote database. */
+    suspend fun update() {
+        Log.d("LoginRepository", "update")
         try {
-            status = Amplify.Auth.fetchAuthSession().isSignedIn
+            // if is guest with valid and confirmed email then is marked as logged in
+            isLoggedIn = (isGuest && email != null) || Amplify.Auth.fetchAuthSession().isSignedIn
+            email = if (isLoggedIn == true) Amplify.Auth.getCurrentUser().username else null
         } catch (error: AuthException) {
+            isLoggedIn = null
+            email = null
             Log.w("LoginRepository", "Could not determine if the user is logged in.", error)
             throw  error
         }
-        return status
     }
 
 }
