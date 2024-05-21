@@ -31,7 +31,6 @@ open class LoginViewModel(
 
     var email by mutableStateOf(email) // test@bellevue.college
     var password by  mutableStateOf(password) // Password123$
-    var failMessage by mutableStateOf("")
     val isGuest get() = LoginRepository.isGuest
 
     init {
@@ -49,6 +48,7 @@ open class LoginViewModel(
         }
     }
 
+    /** Note: making a jetpack compose navigation call within onSuccess or onFailure will result in a [java.lang.IllegalStateException]. */
     fun register(
         context: CoroutineContext = viewModelScope.coroutineContext,
         onFailure: (AuthException) -> Unit = {},
@@ -58,16 +58,15 @@ open class LoginViewModel(
             withContext(Dispatchers.IO) {
                 try {
                     LoginRepository.register(email, password)
-                    failMessage = ""
                     onSuccess()
                 } catch (error: AuthException) {
-                    failMessage = error.message + '\n' + error.recoverySuggestion
                     onFailure(error)
                 }
             }
         }
     }
 
+    /** Note: making a jetpack compose navigation call within onSuccess or onFailure will result in a [java.lang.IllegalStateException]. */
     fun logIn(
         context: CoroutineContext = viewModelScope.coroutineContext,
         onFailure: (AuthException) -> Unit = {},
@@ -81,16 +80,15 @@ open class LoginViewModel(
                     if (isLoggedIn == true) LoginRepository.logOut()
                     LoginRepository.logIn(email, password)
                     isLoggedIn = true
-                    failMessage = ""
                     onSuccess()
                 } catch (error: AuthException) {
-                    failMessage = error.message + '\n' + error.recoverySuggestion
                     onFailure(error)
                 }
             }
         }
     }
 
+    /** Note: making a jetpack compose navigation call within onSuccess or onFailure will result in a [java.lang.IllegalStateException]. */
     fun logOut(
         context: CoroutineContext = viewModelScope.coroutineContext,
         onFailure: (AuthException) -> Unit = {},
@@ -112,6 +110,7 @@ open class LoginViewModel(
         }
     }
 
+    /** Note: making a jetpack compose navigation call within onSuccess or onFailure will result in a [java.lang.IllegalStateException]. */
     fun logInAsGuest(
         context: CoroutineContext = viewModelScope.coroutineContext,
         onFailure: (AuthException) -> Unit = {},
@@ -125,10 +124,8 @@ open class LoginViewModel(
                     if (isLoggedIn == true) LoginRepository.logOut()
                     LoginRepository.logInAsGuest(email)
                     isLoggedIn = true
-                    failMessage = ""
                     onSuccess()
                 } catch (error: AuthException) {
-                    failMessage = error.message + '\n' + error.recoverySuggestion
                     onFailure(error)
                 }
             }

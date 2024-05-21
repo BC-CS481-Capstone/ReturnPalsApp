@@ -60,7 +60,6 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.Video) { Video(navController) }
         composable(MenuRoutes.SignIn) { entry ->
             val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
-            loginVM.failMessage = ""
             LoginScreen(loginVM, settingsVM, navController)
         }
         composable(MenuRoutes.FAQ) { FAQ(navController) }

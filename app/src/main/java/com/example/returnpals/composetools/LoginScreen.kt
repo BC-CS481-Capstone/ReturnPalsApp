@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -45,7 +46,10 @@ fun LoginScreen(
     settingsVM: SettingsViewModel,
     navController: NavController
 ) {
+    var failMessage by remember { mutableStateOf("") }
     var isGuestMode by remember { mutableStateOf(false) }
+    var loginSuccess by remember { mutableStateOf(false) }
+    if (loginSuccess) navController.goto(MenuRoutes.Home)
     Box(modifier = Modifier
         .background(ReturnPalTheme.colorScheme.background)
         .fillMaxSize()) {
@@ -53,7 +57,7 @@ fun LoginScreen(
         if (isGuestMode) {
             GuestLoginContent(
                 email = loginVM.email,
-                onSignIn = { loginVM.logInAsGuest { navController.goto(MenuRoutes.Home) } },
+                onSignIn = { loginVM.logInAsGuest { loginSuccess = true } },
                 onSignUp = { navController.goto(MenuRoutes.Register) },
                 onChangeEmail = { loginVM.email = it },
                 onToggleGuest = { isGuestMode = false }
@@ -62,11 +66,15 @@ fun LoginScreen(
             LoginContent(
                 email = loginVM.email,
                 password = loginVM.password,
-                failMessage = loginVM.failMessage,
+                failMessage = failMessage,
                 onChangeEmail = {  loginVM.email = it },
                 onChangePassword = { loginVM.password = it },
                 onToggleGuest = { isGuestMode = true },
-                onSignIn = { loginVM.logIn { navController.goto(MenuRoutes.Home) } },
+                onSignIn = {
+                    loginVM.logIn(
+                        onFailure = { failMessage = it.message + '\n' + it.recoverySuggestion },
+                        onSuccess = { loginSuccess = true }
+                    ) },
                 onSignUp = { navController.goto(MenuRoutes.Register) },
                 onResetPassword = settingsVM::resetPassword,
                 onConfirmResetPassword = settingsVM::confirmResetPassword
@@ -138,7 +146,7 @@ fun LoginContent(
             visualTransformation = PasswordVisualTransformation(),
             label = { Text("Password") }
         )
-        Text(failMessage)
+        Text(failMessage, textAlign=TextAlign.Center, color=ReturnPalTheme.colorScheme.error)
         //Forgot your password button
         TextButton(onClick = {showResetDialog = true}) {
             Text("Forgot your password?", color = Color(0xFF008BE7))
