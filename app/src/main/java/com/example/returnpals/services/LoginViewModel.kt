@@ -19,7 +19,7 @@ import kotlin.coroutines.CoroutineContext
 // to somehow work with jetpack compose
 
 //Login View model provides the information and function needed to login, logout, and signup.
-open class LoginViewModel(
+class LoginViewModel(
 //    private val repository: LoginRepository       login repo is a global object for now
 ): ViewModel() {
 
