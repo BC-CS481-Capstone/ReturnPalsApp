@@ -20,7 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -36,36 +35,9 @@ import com.example.compose.ReturnPalTheme
 import com.example.returnpals.composetools.dashboard.ConfirmResetPasswordDialog
 import com.example.returnpals.composetools.dashboard.ResetPasswordDialog
 import com.example.returnpals.mainMenu.MenuRoutes
-import com.example.returnpals.services.ConfirmEmailViewModel
 import com.example.returnpals.services.LoginViewModel
 
 /* This is the login options class used to create the two login UI for guest and user.*/
-
-@Composable
-fun ConfirmEmailScreen(navController: NavController, confirmVM: ConfirmEmailViewModel, loginVM: LoginViewModel) {
-    val confirmSuccessful by confirmVM.confirmSuccessful.observeAsState()
-    Box(modifier = Modifier
-        .background(ReturnPalTheme.colorScheme.background)
-        .fillMaxSize()) {
-        ConfirmEmailContent(
-            emailToConfirm = confirmVM.email,
-            message = confirmVM.message.value,
-            submitNumber = confirmVM.code.value,
-            onSubmitNumberChange = { confirmVM.code.value = it },
-            verifyButton = confirmVM::confirm
-        )
-    }
-    if (confirmSuccessful == true) {
-        loginVM.logIn()
-        navController.navigate(MenuRoutes.Register) {
-            popUpTo(MenuRoutes.Home) {
-               // saveState = true
-            }
-            launchSingleTop = true
-            //restoreState = true
-        }
-    }
-}
 
 @Composable
 fun LoginScreen(
