@@ -45,11 +45,8 @@ fun LoginScreen(
     settingsVM: SettingsViewModel,
     navController: NavController
 ) {
-    // Condition variables
-    val signUpSuccessful = loginVM.signUpSuccessful
-    val logInSuccessful = loginVM.logInSuccessful
+    if (loginVM.isLoggedIn == true) navController.goto(MenuRoutes.Home)
     var isGuestMode by remember { mutableStateOf(false) }
-//    viewModel.checkUser()
     Box(modifier = Modifier
         .background(ReturnPalTheme.colorScheme.background)
         .fillMaxSize()) {
@@ -58,9 +55,10 @@ fun LoginScreen(
             GuestLoginContent(
                 email = loginVM.email,
                 onSignIn = loginVM::logInAsGuest,
-                onSignUp = { go2(navController, MenuRoutes.Register) },
+                onSignUp = { navController.goto(MenuRoutes.Register) },
                 onChangeEmail = { loginVM.email = it },
-                onToggleGuest = { isGuestMode = false })
+                onToggleGuest = { isGuestMode = false }
+            )
         } else {
             LoginContent(
                 email = loginVM.email,
@@ -70,21 +68,10 @@ fun LoginScreen(
                 onChangePassword = { loginVM.password = it },
                 onToggleGuest = { isGuestMode = true },
                 onSignIn = loginVM::logIn,
-                onSignUp = loginVM::register,
+                onSignUp = { navController.goto(MenuRoutes.Register) },
                 onResetPassword = settingsVM::resetPassword,
-                onConfirmResetPassword = settingsVM::confirmResetPassword)
-        }
-        if (signUpSuccessful) {
-            loginVM.resetUiState()
-            navController.navigate(MenuRoutes.ConfirmNumber) {
-                popUpTo(MenuRoutes.SignIn)
-                launchSingleTop = true
-                restoreState = true
-            }
-        }
-        if (logInSuccessful) {
-            loginVM.resetUiState()
-            go2(navController,MenuRoutes.Home)
+                onConfirmResetPassword = settingsVM::confirmResetPassword
+            )
         }
     }
 }

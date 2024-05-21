@@ -31,7 +31,6 @@ class LoginViewModelTest {
         async { vm.logInAsGuest(this.coroutineContext) }.await()
         assert(vm.isLoggedIn == true) { "user is not logged in... " + vm.failMessage }
         assert(vm.isGuest) { "user not marked as guest" }
-        assert(!vm.signUpSuccessful) { "marked as a sign up even though was login" }
         assert(vm.isGuest == LoginRepository.isGuest) { "data doesn't match with repository" }
         assert(vm.isLoggedIn == LoginRepository.isLoggedIn()) { "data doesn't match with repository" }
     }
@@ -43,8 +42,7 @@ class LoginViewModelTest {
         async { vm.logIn(this.coroutineContext) }.await()
         assert(vm.isLoggedIn == true) { "user is not logged in... " + vm.failMessage }
         assert(!vm.isGuest) { "user marked as guest" }
-        assert(!vm.signUpSuccessful) { "marked as a sign up even though was login" }
-        assert(vm.isGuest == LoginRepository.isGuest) { "data doesn't match with repository" }
+                assert(vm.isGuest == LoginRepository.isGuest) { "data doesn't match with repository" }
         assert(vm.isLoggedIn == LoginRepository.isLoggedIn()) { "data doesn't match with repository" }
     }
 
@@ -54,7 +52,6 @@ class LoginViewModelTest {
         vm.password = "Password123$"
         async { vm.logIn(this.coroutineContext) }.await()
         async { vm.logOut(this.coroutineContext) }.await()
-        assert(!vm.signUpSuccessful) { "sign up marked as successful" }
         assert(vm.isLoggedIn == false) { "user still logged in" }
         assert(!vm.isGuest) { "user still marked as guest" }
         assert(vm.isGuest == LoginRepository.isGuest) { "data doesn't match with repository" }

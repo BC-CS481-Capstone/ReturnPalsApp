@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amplifyframework.auth.AuthException
-import com.example.returnpals.services.Backend.accessEmail
 import com.example.returnpals.services.backend.LoginRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,15 +25,7 @@ class LoginViewModel(
     password: String = ""
 ): ViewModel() {
 
-    // Condition variables
-    // .. LiveData was causing issues (reading as false when its supposed to be true), mutableStateOf seems to work
-    // .. might be a jetpack compose thing
-    /** Marks that the the registration process completed without issue and we can navigate to confirmation screen */
-    var signUpSuccessful by mutableStateOf(false)
-        private set
-    /** Marks that the the login process completed without issue and we can navigate to dashboard */
-    var logInSuccessful by mutableStateOf(false)
-        private set
+    /** Gets updated on calls to [logIn], [logOut], [register], and [logInAsGuest]. **/
     var isLoggedIn by mutableStateOf<Boolean?>(null)
         private set
 
@@ -63,10 +54,8 @@ class LoginViewModel(
             withContext(Dispatchers.IO) {
                 try {
                     LoginRepository.register(email, password)
-                    signUpSuccessful = true
                     failMessage = ""
                 } catch (error: AuthException) {
-                    signUpSuccessful = false
                     failMessage = error.message + '\n' + error.recoverySuggestion
                 }
             }
@@ -82,16 +71,9 @@ class LoginViewModel(
                     if (isLoggedIn == true) LoginRepository.logOut()
                     LoginRepository.logIn(email, password)
                     isLoggedIn = true
-                    logInSuccessful = true
                     failMessage = ""
                 } catch (error: AuthException) {
                     failMessage = error.message + '\n' + error.recoverySuggestion
-                    error.message?.let { message ->
-                        if (message.contains("User not confirmed in the system.")) {
-                            signUpSuccessful = true
-                            accessEmail()
-                        }
-                    }
                 }
             }
         }
@@ -120,7 +102,6 @@ class LoginViewModel(
                     isLoggedIn = LoginRepository.isLoggedIn()
                     if (isLoggedIn == true) LoginRepository.logOut()
                     LoginRepository.logInAsGuest(email)
-                    logInSuccessful = true
                     isLoggedIn = true
                     failMessage = ""
                 } catch (error: AuthException) {
@@ -128,12 +109,5 @@ class LoginViewModel(
                 }
             }
         }
-    }
-
-    /** resets login ui state: [failMessage], [logInSuccessful], and [signUpSuccessful] */
-    fun resetUiState() {
-        logInSuccessful = false
-        signUpSuccessful = false
-        failMessage = ""
     }
 }
