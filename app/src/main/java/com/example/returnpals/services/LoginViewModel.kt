@@ -1,5 +1,8 @@
 package com.example.returnpals.services
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amplifyframework.auth.AuthException
@@ -16,17 +19,19 @@ import kotlin.coroutines.CoroutineContext
 
 //Login View model provides the information and function needed to login, logout, and signup.
 class LoginViewModel(
+    email: String = "",
+    password: String = ""
 //    private val repository: LoginRepository       login repo is a global object for now
 ): ViewModel() {
 
     /** Gets updated on calls to [logIn], [logOut], [register], and [logInAsGuest]. **/
     val isLoggedIn get() = LoginRepository.isLoggedIn
     val isGuest get() = LoginRepository.isGuest
+    var email by mutableStateOf(email)
+    var password by mutableStateOf(password)
 
     /** Note: making a jetpack compose navigation call within onSuccess or onFailure will result in a [java.lang.IllegalStateException]. */
     fun register(
-        email: String,
-        password: String,
         context: CoroutineContext = viewModelScope.coroutineContext,
         onFailure: (AuthException) -> Unit = {},
         onSuccess: () -> Unit = {}
@@ -45,8 +50,6 @@ class LoginViewModel(
 
     /** Note: making a jetpack compose navigation call within onSuccess or onFailure will result in a [java.lang.IllegalStateException]. */
     fun logIn(
-        email: String,
-        password: String,
         context: CoroutineContext = viewModelScope.coroutineContext,
         onFailure: (AuthException) -> Unit = {},
         onSuccess: () -> Unit = {}
@@ -85,7 +88,6 @@ class LoginViewModel(
 
     /** Note: making a jetpack compose navigation call within onSuccess or onFailure will result in a [java.lang.IllegalStateException]. */
     fun logInAsGuest(
-        email: String,
         context: CoroutineContext = viewModelScope.coroutineContext,
         onFailure: (AuthException) -> Unit = {},
         onSuccess: () -> Unit = {}

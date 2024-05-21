@@ -45,11 +45,7 @@ fun LoginScreen(
     loginVM: LoginViewModel,
     settingsVM: SettingsViewModel,
     navController: NavController,
-    email: String = "",
-    password: String = ""
 ) {
-    var email by remember { mutableStateOf(email) }
-    var password by remember { mutableStateOf(password) }
     var failMessage by remember { mutableStateOf("") }
     var isGuestMode by remember { mutableStateOf(false) }
     var loginSuccess by remember { mutableStateOf(false) }
@@ -60,22 +56,22 @@ fun LoginScreen(
         //This will switch between the guest login and user login
         if (isGuestMode) {
             GuestLoginContent(
-                email = email,
-                onSignIn = { loginVM.logInAsGuest(email) { loginSuccess = true } },
+                email = loginVM.email,
+                onSignIn = { loginVM.logInAsGuest { loginSuccess = true } },
                 onSignUp = { navController.goto(MenuRoutes.Register) },
-                onChangeEmail = { email = it },
+                onChangeEmail = { loginVM.email = it },
                 onToggleGuest = { isGuestMode = false }
             )
         } else {
             LoginContent(
-                email = email,
-                password = password,
+                email = loginVM.email,
+                password = loginVM.password,
                 failMessage = failMessage,
-                onChangeEmail = {  email = it },
-                onChangePassword = { password = it },
+                onChangeEmail = {  loginVM.email = it },
+                onChangePassword = { loginVM.password = it },
                 onToggleGuest = { isGuestMode = true },
                 onSignIn = {
-                    loginVM.logIn(email, password,
+                    loginVM.logIn(
                         onFailure = { failMessage = it.message + '\n' + it.recoverySuggestion },
                         onSuccess = { loginSuccess = true }
                     ) },
