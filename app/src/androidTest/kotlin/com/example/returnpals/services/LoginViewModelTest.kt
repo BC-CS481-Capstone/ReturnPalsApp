@@ -15,13 +15,13 @@ class LoginViewModelTest {
     @Test
     fun email() {
         vm.email = "joe.biden@bellevuecollege.edu"
-        assert(vm.email == "joe.biden@bellevuecollege.edu") { "incorrect email stored: ${vm.email}"}
+        assert(vm.email == "joe.biden@bellevuecollege.edu") { "email: expected \"joe.biden@bellevuecollege.edu\", was \"${vm.email}\""}
     }
 
     @Test
     fun password() {
         vm.password = "password123"
-        assert(vm.password == "password123") { "incorrect password stored: ${vm.password}"}
+        assert(vm.password == "password123") { "password: expected \"password123\", was \"${vm.password}\""}
     }
 
     @Test
@@ -29,10 +29,10 @@ class LoginViewModelTest {
         vm.email = "test@bellevue.college"
         vm.password = ""
         async { vm.logInAsGuest(this.coroutineContext) }.await()
-        assert(vm.isLoggedIn == true) { "user is not logged in... " + vm.failMessage }
-        assert(vm.isGuest) { "user not marked as guest" }
-        assert(vm.isGuest == LoginRepository.isGuest) { "data doesn't match with repository" }
-        assert(vm.isLoggedIn == LoginRepository.isLoggedIn()) { "data doesn't match with repository" }
+        assert(vm.isLoggedIn == true) { "isLoggedIn: expected true, was false" }
+        assert(vm.isGuest) { "isGuest: expected true, was false" }
+        assert(vm.isGuest == LoginRepository.isGuest) { "isGuest: doesn't match with repository" }
+        assert(vm.isLoggedIn == LoginRepository.isLoggedIn()) { "isLoggedIn: doesn't match with repository" }
     }
 
     @Test
@@ -40,10 +40,10 @@ class LoginViewModelTest {
         vm.email = "test@bellevue.college"
         vm.password = "Password123$"
         async { vm.logIn(this.coroutineContext) }.await()
-        assert(vm.isLoggedIn == true) { "user is not logged in... " + vm.failMessage }
-        assert(!vm.isGuest) { "user marked as guest" }
-        assert(vm.isGuest == LoginRepository.isGuest) { "data doesn't match with repository" }
-        assert(vm.isLoggedIn == LoginRepository.isLoggedIn()) { "data doesn't match with repository" }
+        assert(vm.isLoggedIn == true) { "isLoggedIn: expected true, was false" }
+        assert(!vm.isGuest) { "isGuest: expected false, was true" }
+        assert(vm.isGuest == LoginRepository.isGuest) { "isGuest: doesn't match with repository" }
+        assert(vm.isLoggedIn == LoginRepository.isLoggedIn()) { "isLoggedIn: doesn't match with repository" }
     }
 
     @Test
@@ -52,10 +52,10 @@ class LoginViewModelTest {
         vm.password = "Password123$"
         async { vm.logIn(this.coroutineContext) }.await()
         async { vm.logOut(this.coroutineContext) }.await()
-        assert(vm.isLoggedIn == false) { "user still logged in" }
-        assert(!vm.isGuest) { "user still marked as guest" }
-        assert(vm.isGuest == LoginRepository.isGuest) { "data doesn't match with repository" }
-        assert(vm.isLoggedIn == LoginRepository.isLoggedIn()) { "data doesn't match with repository" }
+        assert(vm.isLoggedIn == false) { "isLoggedIn: expected false, was true" }
+        assert(!vm.isGuest) { "isGuest: expected false, was true" }
+        assert(vm.isGuest == LoginRepository.isGuest) { "isGuest: doesn't match with repository" }
+        assert(vm.isLoggedIn == LoginRepository.isLoggedIn()) { "isLoggedIn: doesn't match with repository" }
     }
 
 //    results in "Username already exists in the system" error
