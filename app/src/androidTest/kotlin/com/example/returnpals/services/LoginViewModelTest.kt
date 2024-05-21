@@ -42,7 +42,7 @@ class LoginViewModelTest {
         async { vm.logIn(this.coroutineContext) }.await()
         assert(vm.isLoggedIn == true) { "user is not logged in... " + vm.failMessage }
         assert(!vm.isGuest) { "user marked as guest" }
-                assert(vm.isGuest == LoginRepository.isGuest) { "data doesn't match with repository" }
+        assert(vm.isGuest == LoginRepository.isGuest) { "data doesn't match with repository" }
         assert(vm.isLoggedIn == LoginRepository.isLoggedIn()) { "data doesn't match with repository" }
     }
 

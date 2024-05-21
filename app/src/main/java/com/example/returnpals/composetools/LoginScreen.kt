@@ -45,7 +45,6 @@ fun LoginScreen(
     settingsVM: SettingsViewModel,
     navController: NavController
 ) {
-    if (loginVM.isLoggedIn == true) navController.goto(MenuRoutes.Home)
     var isGuestMode by remember { mutableStateOf(false) }
     Box(modifier = Modifier
         .background(ReturnPalTheme.colorScheme.background)
@@ -54,7 +53,7 @@ fun LoginScreen(
         if (isGuestMode) {
             GuestLoginContent(
                 email = loginVM.email,
-                onSignIn = loginVM::logInAsGuest,
+                onSignIn = { loginVM.logInAsGuest { navController.goto(MenuRoutes.Home) } },
                 onSignUp = { navController.goto(MenuRoutes.Register) },
                 onChangeEmail = { loginVM.email = it },
                 onToggleGuest = { isGuestMode = false }
@@ -67,7 +66,7 @@ fun LoginScreen(
                 onChangeEmail = {  loginVM.email = it },
                 onChangePassword = { loginVM.password = it },
                 onToggleGuest = { isGuestMode = true },
-                onSignIn = loginVM::logIn,
+                onSignIn = { loginVM.logIn { navController.goto(MenuRoutes.Home) } },
                 onSignUp = { navController.goto(MenuRoutes.Register) },
                 onResetPassword = settingsVM::resetPassword,
                 onConfirmResetPassword = settingsVM::confirmResetPassword

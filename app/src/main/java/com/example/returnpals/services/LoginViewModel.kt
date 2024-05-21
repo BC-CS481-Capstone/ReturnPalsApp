@@ -19,7 +19,7 @@ import kotlin.coroutines.CoroutineContext
 // to somehow work with jetpack compose
 
 //Login View model provides the information and function needed to login, logout, and signup.
-class LoginViewModel(
+open class LoginViewModel(
 //    private val repository: LoginRepository       login repo is a global object for now
     email: String = LoginRepository.email ?: "",
     password: String = ""
@@ -49,20 +49,30 @@ class LoginViewModel(
         }
     }
 
-    fun register(context: CoroutineContext = viewModelScope.coroutineContext) {
+    fun register(
+        context: CoroutineContext = viewModelScope.coroutineContext,
+        onFailure: (AuthException) -> Unit = {},
+        onSuccess: () -> Unit = {}
+    ) {
         viewModelScope.launch(context) {
             withContext(Dispatchers.IO) {
                 try {
                     LoginRepository.register(email, password)
                     failMessage = ""
+                    onSuccess()
                 } catch (error: AuthException) {
                     failMessage = error.message + '\n' + error.recoverySuggestion
+                    onFailure(error)
                 }
             }
         }
     }
 
-    fun logIn(context: CoroutineContext = viewModelScope.coroutineContext) {
+    fun logIn(
+        context: CoroutineContext = viewModelScope.coroutineContext,
+        onFailure: (AuthException) -> Unit = {},
+        onSuccess: () -> Unit = {}
+    ) {
         viewModelScope.launch(context) {
             withContext(Dispatchers.IO) {
                 try {
@@ -72,14 +82,20 @@ class LoginViewModel(
                     LoginRepository.logIn(email, password)
                     isLoggedIn = true
                     failMessage = ""
+                    onSuccess()
                 } catch (error: AuthException) {
                     failMessage = error.message + '\n' + error.recoverySuggestion
+                    onFailure(error)
                 }
             }
         }
     }
 
-    fun logOut(context: CoroutineContext = viewModelScope.coroutineContext) {
+    fun logOut(
+        context: CoroutineContext = viewModelScope.coroutineContext,
+        onFailure: (AuthException) -> Unit = {},
+        onSuccess: () -> Unit = {}
+    ) {
         viewModelScope.launch(context) {
             withContext(Dispatchers.IO) {
                 try {
@@ -87,14 +103,20 @@ class LoginViewModel(
                     isLoggedIn = LoginRepository.isLoggedIn()
                     if (isLoggedIn == true) LoginRepository.logOut()
                     isLoggedIn = false
+                    onSuccess()
                 } catch (error: AuthException) {
                     Log.e("LoginViewModel", "Failed to log out!")
+                    onFailure(error)
                 }
             }
         }
     }
 
-    fun logInAsGuest(context: CoroutineContext = viewModelScope.coroutineContext) {
+    fun logInAsGuest(
+        context: CoroutineContext = viewModelScope.coroutineContext,
+        onFailure: (AuthException) -> Unit = {},
+        onSuccess: () -> Unit = {}
+    ) {
         viewModelScope.launch(context) {
             withContext(Dispatchers.IO) {
                 try {
@@ -104,8 +126,10 @@ class LoginViewModel(
                     LoginRepository.logInAsGuest(email)
                     isLoggedIn = true
                     failMessage = ""
+                    onSuccess()
                 } catch (error: AuthException) {
                     failMessage = error.message + '\n' + error.recoverySuggestion
+                    onFailure(error)
                 }
             }
         }
