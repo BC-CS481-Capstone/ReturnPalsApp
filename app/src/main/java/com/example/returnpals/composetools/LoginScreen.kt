@@ -44,8 +44,12 @@ import com.example.returnpals.services.LoginViewModel
 fun LoginScreen(
     loginVM: LoginViewModel,
     settingsVM: SettingsViewModel,
-    navController: NavController
+    navController: NavController,
+    email: String = "",
+    password: String = ""
 ) {
+    var email by remember { mutableStateOf(email) }
+    var password by remember { mutableStateOf(password) }
     var failMessage by remember { mutableStateOf("") }
     var isGuestMode by remember { mutableStateOf(false) }
     var loginSuccess by remember { mutableStateOf(false) }
@@ -56,22 +60,22 @@ fun LoginScreen(
         //This will switch between the guest login and user login
         if (isGuestMode) {
             GuestLoginContent(
-                email = loginVM.email,
-                onSignIn = { loginVM.logInAsGuest { loginSuccess = true } },
+                email = email,
+                onSignIn = { loginVM.logInAsGuest(email) { loginSuccess = true } },
                 onSignUp = { navController.goto(MenuRoutes.Register) },
-                onChangeEmail = { loginVM.email = it },
+                onChangeEmail = { email = it },
                 onToggleGuest = { isGuestMode = false }
             )
         } else {
             LoginContent(
-                email = loginVM.email,
-                password = loginVM.password,
+                email = email,
+                password = password,
                 failMessage = failMessage,
-                onChangeEmail = {  loginVM.email = it },
-                onChangePassword = { loginVM.password = it },
+                onChangeEmail = {  email = it },
+                onChangePassword = { password = it },
                 onToggleGuest = { isGuestMode = true },
                 onSignIn = {
-                    loginVM.logIn(
+                    loginVM.logIn(email, password,
                         onFailure = { failMessage = it.message + '\n' + it.recoverySuggestion },
                         onSuccess = { loginSuccess = true }
                     ) },

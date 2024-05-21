@@ -11,30 +11,23 @@ import androidx.navigation.NavController
 import com.example.compose.ReturnPalTheme
 import com.example.returnpals.mainMenu.MenuRoutes
 import com.example.returnpals.services.ConfirmEmailViewModel
-import com.example.returnpals.services.LoginViewModel
 
 @Composable
-fun ConfirmEmailScreen(navController: NavController, confirmVM: ConfirmEmailViewModel, loginVM: LoginViewModel) {
-    val confirmSuccessful by confirmVM.confirmSuccessful.observeAsState()
+fun ConfirmEmailScreen(
+    navController: NavController,
+    confirmVM: ConfirmEmailViewModel
+) {
+    val confirmSuccess by confirmVM.confirmSuccessful.observeAsState()
+    if (confirmSuccess == true) navController.goto(MenuRoutes.SignIn)
     Box(modifier = Modifier
         .background(ReturnPalTheme.colorScheme.background)
         .fillMaxSize()) {
         ConfirmEmailContent(
             emailToConfirm = confirmVM.email,
-            message = confirmVM.message.value,
-            submitNumber = confirmVM.code.value,
-            onSubmitNumberChange = { confirmVM.code.value = it },
+            message = confirmVM.message,
+            submitNumber = confirmVM.code,
+            onSubmitNumberChange = { confirmVM.code = it },
             verifyButton = confirmVM::confirm
         )
-    }
-    if (confirmSuccessful == true) {
-        loginVM.logIn()
-        navController.navigate(MenuRoutes.Register) {
-            popUpTo(MenuRoutes.Home) {
-                // saveState = true
-            }
-            launchSingleTop = true
-            //restoreState = true
-        }
     }
 }

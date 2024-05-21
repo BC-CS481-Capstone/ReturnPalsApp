@@ -36,7 +36,7 @@ import com.example.returnpals.services.OrderViewModel
 
 @Composable
 fun AppNavigation(navController: NavController) {
-    val loginVM = remember { LoginViewModel("test@bellevue.college","Password123$") }
+    val loginVM = remember { LoginViewModel() }
 
     NavHost(
         navController = navController as NavHostController,
@@ -60,7 +60,7 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.Video) { Video(navController) }
         composable(MenuRoutes.SignIn) { entry ->
             val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
-            LoginScreen(loginVM, settingsVM, navController)
+            LoginScreen(loginVM, settingsVM, navController, "test@bellevue.college", "Password123$")
         }
         composable(MenuRoutes.FAQ) { FAQ(navController) }
         composable(MenuRoutes.Register) { RegistrationScreen(navController)}
@@ -80,7 +80,7 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.ConfirmNumber) {
             // this vm should be destroyed when confirmation is complete
             val confirmVm = remember { ConfirmEmailViewModel() }
-            ConfirmEmailScreen(navController, confirmVm, loginVM)
+            ConfirmEmailScreen(navController, confirmVm)
         }
         navigation(
             startDestination = "select_date",

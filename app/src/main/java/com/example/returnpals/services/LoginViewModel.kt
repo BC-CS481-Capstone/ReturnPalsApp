@@ -21,16 +21,11 @@ import kotlin.coroutines.CoroutineContext
 //Login View model provides the information and function needed to login, logout, and signup.
 open class LoginViewModel(
 //    private val repository: LoginRepository       login repo is a global object for now
-    email: String = LoginRepository.email ?: "",
-    password: String = ""
 ): ViewModel() {
 
     /** Gets updated on calls to [logIn], [logOut], [register], and [logInAsGuest]. **/
     var isLoggedIn by mutableStateOf<Boolean?>(null)
         private set
-
-    var email by mutableStateOf(email) // test@bellevue.college
-    var password by  mutableStateOf(password) // Password123$
     val isGuest get() = LoginRepository.isGuest
 
     init {
@@ -50,6 +45,8 @@ open class LoginViewModel(
 
     /** Note: making a jetpack compose navigation call within onSuccess or onFailure will result in a [java.lang.IllegalStateException]. */
     fun register(
+        email: String,
+        password: String,
         context: CoroutineContext = viewModelScope.coroutineContext,
         onFailure: (AuthException) -> Unit = {},
         onSuccess: () -> Unit = {}
@@ -68,6 +65,8 @@ open class LoginViewModel(
 
     /** Note: making a jetpack compose navigation call within onSuccess or onFailure will result in a [java.lang.IllegalStateException]. */
     fun logIn(
+        email: String,
+        password: String,
         context: CoroutineContext = viewModelScope.coroutineContext,
         onFailure: (AuthException) -> Unit = {},
         onSuccess: () -> Unit = {}
@@ -112,6 +111,7 @@ open class LoginViewModel(
 
     /** Note: making a jetpack compose navigation call within onSuccess or onFailure will result in a [java.lang.IllegalStateException]. */
     fun logInAsGuest(
+        email: String,
         context: CoroutineContext = viewModelScope.coroutineContext,
         onFailure: (AuthException) -> Unit = {},
         onSuccess: () -> Unit = {}
@@ -131,4 +131,5 @@ open class LoginViewModel(
             }
         }
     }
+
 }
