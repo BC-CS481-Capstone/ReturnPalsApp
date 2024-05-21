@@ -169,7 +169,7 @@ object LoginRepository {
         try {
             // if is guest with valid and confirmed email then is marked as logged in
             isLoggedIn = (isGuest && email != null) || Amplify.Auth.fetchAuthSession().isSignedIn
-            email = if (isLoggedIn == true) Amplify.Auth.getCurrentUser().username else null
+            email = if (!isGuest && isLoggedIn == true) Amplify.Auth.getCurrentUser().username else if (isGuest) email else null
         } catch (error: AuthException) {
             isLoggedIn = null
             email = null
