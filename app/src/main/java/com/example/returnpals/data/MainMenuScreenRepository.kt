@@ -6,5 +6,5 @@ interface MainMenuScreenRepository {
     //Interface needs Express and AWS implementation
 
     /**Uses a callback function to expose boolen for isLoggedIn*/
-    suspend fun isSignedIn(result:(Boolean)->Unit)
+    fun isSignedIn(result:(Boolean)->Unit)
 }
