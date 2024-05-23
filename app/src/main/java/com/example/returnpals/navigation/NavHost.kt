@@ -29,7 +29,6 @@ import com.example.returnpals.composetools.mainMenu.Contact
 import com.example.returnpals.composetools.mainMenu.FAQ
 import com.example.returnpals.composetools.mainMenu.Home
 import com.example.returnpals.composetools.mainMenu.Pricing
-import com.example.returnpals.composetools.mainMenu.Register
 import com.example.returnpals.composetools.mainMenu.Video
 import com.example.returnpals.composetools.pickup.AddPackagesScreen
 import com.example.returnpals.composetools.pickup.PickupDateScreen
@@ -46,29 +45,27 @@ import com.stripe.android.paymentsheet.PaymentSheetResult
 
 @Composable
 fun AppNavigation(navController: NavController) {
-    val loginVM = remember { LoginViewModel("test@bellevue.college", "Password123$") }
+    val loginVM = remember { LoginViewModel("test@bellevue.college", "Password123$", navController = navController) }
 
     NavHost(
         navController = navController as NavHostController,
         startDestination = "MainMenu"
     ) {
+        /**START of the Main Menu Navigation*/
         composable("MainMenu"){ MainMenu(navController)}
         composable(MenuRoutes.Home) { Home(navController) }
         composable(MenuRoutes.About) { About(navController) }
         composable(MenuRoutes.Pricing) { Pricing(navController) }
         composable(MenuRoutes.Contact) { Contact(navController) }
         composable(MenuRoutes.Video) { Video(navController) }
-        composable(MenuRoutes.SignIn) { entry ->
-            val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
-            LoginScreen(loginVM, settingsVM, navController)
-        }
         composable(MenuRoutes.FAQ) { FAQ(navController) }
-        composable(MenuRoutes.Register) { Register(navController) }
+        /**END of the Main Menu Navigation*/
 
         navigation(
             startDestination = MenuRoutes.HomeDash,
             route = "dashboard home"
         ) {
+            /**START of the Dashboard Home Navigation*/
             composable(MenuRoutes.HomeDash) { HomeDash(navController, loginVM) }
             composable(MenuRoutes.Profile) { Profile(navController, loginVM) }
             composable(MenuRoutes.Settings) { Settings(navController, loginVM) }
@@ -76,16 +73,35 @@ fun AppNavigation(navController: NavController) {
             // composable(MenuRoutes.SelectAddress) { SelectAddress(navController) }
             // composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }
             //  composable(MenuRoutes.Label) { Label(navController) }
+            /**END of the Dashboard Home Navigation*/
         }
-        composable(MenuRoutes.ConfirmNumber) {
-            // this vm should be destroyed when confirmation is complete
-            val confirmVm = remember { ConfirmEmailViewModel(loginVM.email) }
-            ConfirmEmailScreen(navController, confirmVm)
+        navigation(
+            startDestination = MenuRoutes.SignIn,
+            route = "Login"
+        ) {
+            /**START of the Login Navigation*/
+            composable(MenuRoutes.SignIn) { entry ->
+                val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
+                LoginScreen(loginVM, settingsVM, navController)
+            }
+            composable(MenuRoutes.Register) {
+                com.example.returnpals.composetools.mainMenu.Register(
+                    navController
+                )
+            }
+            composable(MenuRoutes.ConfirmNumber) {
+                // this vm should be destroyed when confirmation is complete
+                val confirmVm = remember { ConfirmEmailViewModel(loginVM.email) }
+                ConfirmEmailScreen(navController, confirmVm)
+            }
+            /**END of the Login Navigation*/
         }
+
         navigation(
             startDestination = "select_date",
             route = MenuRoutes.PickupProcess
         ) {
+            /**START of the Pickup Process Navigation*/
             composable("select_date") { entry ->
                 val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
                 PickupDateScreen(
@@ -196,6 +212,7 @@ fun AppNavigation(navController: NavController) {
                     }
                 )
             }
+            /**END of the Pickup Process Navigation*/
         }
 
     }

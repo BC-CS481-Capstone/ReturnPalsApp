@@ -5,7 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.amplifyframework.auth.AuthException
+import com.example.returnpals.composetools.goto
 import com.example.returnpals.dataRepository.LoginRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,16 +22,16 @@ import kotlin.coroutines.CoroutineContext
 //Login View model provides the information and function needed to login, logout, and signup.
 class LoginViewModel(
     email: String = "",
-    password: String = ""
+    password: String = "",
+    navController: NavController
 //    private val repository: LoginRepository       login repo is a global object for now
 ): ViewModel() {
-
     /** Gets updated on calls to [logIn], [logOut], [register], and [logInAsGuest]. **/
     val isLoggedIn get() = LoginRepository.isLoggedIn
     val isGuest get() = LoginRepository.isGuest
     var email by mutableStateOf(email)
     var password by mutableStateOf(password)
-
+    val navController = navController
     /** Note: making a jetpack compose navigation call within onSuccess or onFailure will result in a [java.lang.IllegalStateException]. */
     fun register(
         context: CoroutineContext = viewModelScope.coroutineContext,
@@ -76,7 +78,8 @@ class LoginViewModel(
         viewModelScope.launch(context) {
             withContext(Dispatchers.IO) {
                 try {
-                    /* Removed this logic as it would not work when the app closed and opened again if (isLoggedIn == true)*/ LoginRepository.logOut()
+                    /* Removed this logic as it would not work when the app closed and opened again if (isLoggedIn == true)*/
+                    LoginRepository.logOut()
                     onSuccess()
                 } catch (error: AuthException) {
                     Log.e("LoginViewModel", "Failed to log out!")
@@ -84,6 +87,8 @@ class LoginViewModel(
                 }
             }
         }
+        navController.goto("MainMenu")
+
     }
 
     /** Note: making a jetpack compose navigation call within onSuccess or onFailure will result in a [java.lang.IllegalStateException]. */

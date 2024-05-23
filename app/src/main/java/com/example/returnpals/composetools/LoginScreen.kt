@@ -49,7 +49,7 @@ fun LoginScreen(
     var failMessage by remember { mutableStateOf("") }
     var isGuestMode by remember { mutableStateOf(false) }
     var loginSuccess by remember { mutableStateOf(false) }
-    if (loginSuccess) navController.goto(MenuRoutes.Home)
+    if (loginSuccess) navController.goto("MainMenu")
     Box(modifier = Modifier
         .background(ReturnPalTheme.colorScheme.background)
         .fillMaxSize()) {
