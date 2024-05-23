@@ -9,8 +9,10 @@ import com.example.returnpals.dataRepository.LoginRepository
 import com.example.returnpals.navigation.AppNavigation
 import com.example.returnpals.services.LoginViewModel
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.withContext
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -54,7 +56,9 @@ class LoginViewModelTest {
     fun logInAsGuest() = runTest {
         vm.email = "test@bellevue.college"
         vm.password = ""
-        async { vm.logInAsGuest(this.coroutineContext) }.await()
+        async { withContext(Dispatchers.Main) {
+            vm.logInAsGuest(this.coroutineContext)
+        } }.await()
         assert(vm.isLoggedIn == true) { "isLoggedIn: expected true, was false" }
         assert(vm.isGuest) { "isGuest: expected true, was false" }
         assert(vm.isGuest == LoginRepository.isGuest) { "isGuest: doesn't match with repository" }
@@ -65,7 +69,9 @@ class LoginViewModelTest {
     fun logIn() = runTest {
         vm.email = "test@bellevue.college"
         vm.password = "Password123$"
-        async { vm.logIn(this.coroutineContext) }.await()
+        async { withContext(Dispatchers.Main) {
+            vm.logIn(this.coroutineContext)
+        } }.await()
         assert(vm.isLoggedIn == true) { "isLoggedIn: expected true, was false" }
         assert(!vm.isGuest) { "isGuest: expected false, was true" }
         assert(vm.isGuest == LoginRepository.isGuest) { "isGuest: doesn't match with repository" }
@@ -76,8 +82,12 @@ class LoginViewModelTest {
     fun logOut() = runTest {
         vm.email = "test@bellevue.college"
         vm.password = "Password123$"
-        async { vm.logIn(this.coroutineContext) }.await()
-        async { vm.logOut(this.coroutineContext) }.await()
+        async { withContext(Dispatchers.Main){
+            vm.logIn(this.coroutineContext)
+        }  }.await()
+        async {withContext(Dispatchers.Main) {
+            vm.logOut(this.coroutineContext)
+        }  }.await()
         assert(vm.isLoggedIn == false) { "isLoggedIn: expected false, was true" }
         assert(!vm.isGuest) { "isGuest: expected false, was true" }
         assert(vm.isGuest == LoginRepository.isGuest) { "isGuest: doesn't match with repository" }
