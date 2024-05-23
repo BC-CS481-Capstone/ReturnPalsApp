@@ -87,8 +87,11 @@ class LoginViewModel(
                 }
             }
         }
+        // THE LAUNCH SCOPE IS FOR TESTing
        viewModelScope.launch { withContext(Dispatchers.Main) {
            navController.goto("MainMenu")
+           //You can only call navigate from main thread.  Running this fuction from a test unit is not main thread.
+           //This luanch effect is so the main thread will be used even from a test or debug file.
        } }
 
 
