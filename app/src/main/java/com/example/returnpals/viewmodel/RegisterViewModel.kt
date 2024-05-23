@@ -1,17 +1,11 @@
 package com.example.returnpals.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.amplifyframework.api.graphql.model.ModelMutation
-import com.amplifyframework.core.Amplify
-import com.amplifyframework.datastore.generated.model.Address
-import com.amplifyframework.datastore.generated.model.PricingPlan
-import com.amplifyframework.datastore.generated.model.User
-import com.example.returnpals.data.RegisterRepository
+import com.example.returnpals.dataRepository.RegisterRepository
 import com.example.returnpals.navigation.MenuRoutes
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

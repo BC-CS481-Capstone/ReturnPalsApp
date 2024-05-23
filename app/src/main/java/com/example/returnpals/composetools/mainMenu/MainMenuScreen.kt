@@ -11,7 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.example.returnpals.data.MainMenuScreenRepository
+import com.example.returnpals.dataRepository.MainMenuScreenRepository
 import com.example.returnpals.navigation.MenuRoutes
 
 

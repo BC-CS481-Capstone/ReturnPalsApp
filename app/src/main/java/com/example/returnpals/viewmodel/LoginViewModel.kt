@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amplifyframework.auth.AuthException
-import com.example.returnpals.services.backend.LoginRepository
+import com.example.returnpals.dataRepository.LoginRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

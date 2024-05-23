@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.returnpals.composetools.mainMenu.RegisterScreen
-import com.example.returnpals.data.RegisterRepository
+import com.example.returnpals.dataRepository.RegisterRepository
 import com.example.returnpals.viewmodel.RegisterUserInfo
 import com.example.returnpals.viewmodel.RegisterViewModel
 

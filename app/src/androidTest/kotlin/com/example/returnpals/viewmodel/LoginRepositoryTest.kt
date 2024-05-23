@@ -1,6 +1,6 @@
 package com.example.returnpals.services
 
-import com.example.returnpals.services.backend.LoginRepository
+import com.example.returnpals.dataRepository.LoginRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 

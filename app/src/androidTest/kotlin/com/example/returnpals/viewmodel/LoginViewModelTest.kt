@@ -1,7 +1,7 @@
 package com.example.returnpals.viewmodel
 
 import com.example.returnpals.services.LoginViewModel
-import com.example.returnpals.services.backend.LoginRepository
+import com.example.returnpals.dataRepository.LoginRepository
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.async
 import kotlinx.coroutines.test.runTest

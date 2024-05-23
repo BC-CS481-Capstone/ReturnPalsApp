@@ -1,4 +1,4 @@
-package com.example.returnpals.services.backend
+package com.example.returnpals.dataRepository
 
 import android.app.Activity
 import android.util.Log
@@ -31,12 +31,12 @@ object LoginRepository {
 
     suspend fun logInAsGuest(email: String) {
         Log.d("LoginRepository", "logInAsGuest")
-        if (isLoggedIn==true) {
+        if (isLoggedIn ==true) {
             val error = AuthException("Already logged in as $email!", "Log out first.")
             Log.i("LoginRepository", "Failed guest log in as $email", error)
             throw error
         }
-        this.email = email
+        LoginRepository.email = email
         isGuest = true
         isLoggedIn = true
     }
@@ -46,7 +46,7 @@ object LoginRepository {
         try {
             val result = Amplify.Auth.signIn(email, password)
             if (result.isSignedIn) {
-                this.email = email
+                LoginRepository.email = email
                 isGuest = false
                 isLoggedIn = true
                 Log.i("LoginRepository", "Logged in as $email")
@@ -128,7 +128,7 @@ object LoginRepository {
         try {
             val result = Amplify.Auth.signUp(email, password, options)
             if (result.isSignUpComplete) {
-                this.email = email
+                LoginRepository.email = email
                 isGuest = false
                 isLoggedIn = true
                 Log.i("LoginRepository", "Registered with $email")
@@ -156,7 +156,7 @@ object LoginRepository {
                     Log.w("LoginRepository", "Incomplete email confirmation: $email")
                     throw AuthException("Additional steps needed: ${result.nextStep}", "Complete the next step.")
                 }
-            } ?: Log.w("LoginRepository", "Failed to confirm email: $email") 
+            } ?: Log.w("LoginRepository", "Failed to confirm email: $email")
         } catch (error: AuthException) {
             Log.i("LoginRepository", "Failed to confirm email: $email", error)
             throw error

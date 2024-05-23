@@ -1,4 +1,4 @@
-package com.example.returnpals.data
+package com.example.returnpals.dataRepository
 
 
 import com.amplifyframework.core.Amplify
