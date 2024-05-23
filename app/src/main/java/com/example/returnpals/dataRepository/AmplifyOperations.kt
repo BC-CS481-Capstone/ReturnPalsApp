@@ -1,4 +1,4 @@
-package com.example.returnpals.viewmodel
+package com.example.returnpals.dataRepository
 
 import android.util.Log
 import com.amplifyframework.api.graphql.model.ModelMutation

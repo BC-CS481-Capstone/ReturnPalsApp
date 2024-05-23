@@ -39,7 +39,7 @@ import com.example.returnpals.composetools.pickup.ThankYouViewModel
 import com.example.returnpals.services.ConfirmEmailViewModel
 import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.viewmodel.OrderViewModel
-import com.example.returnpals.viewmodel.PaymentApp
+import com.example.returnpals.composetools.pickup.PaymentApp
 import com.stripe.android.paymentsheet.PaymentSheetResult
 
 @Composable

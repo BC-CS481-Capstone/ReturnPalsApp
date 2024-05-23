@@ -8,7 +8,7 @@ import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.PickupMethod
 import com.amplifyframework.datastore.generated.model.PickupStatus
 import com.amplifyframework.datastore.generated.model.Returns
-import com.example.returnpals.viewmodel.Backend.getEmail
+import com.example.returnpals.dataRepository.Backend.getEmail
 import java.io.File
 
 

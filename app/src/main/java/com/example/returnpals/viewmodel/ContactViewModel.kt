@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.amplifyframework.datastore.generated.model.MailingList
+import com.example.returnpals.dataRepository.AmplifyOperations
 
 class ContactViewModel : ViewModel() {
     // You can expose LiveData or StateFlow for observing the operation's result in the UI

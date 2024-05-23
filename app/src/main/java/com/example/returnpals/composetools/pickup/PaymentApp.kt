@@ -1,4 +1,4 @@
-package com.example.returnpals.viewmodel
+package com.example.returnpals.composetools.pickup
 
 import android.util.Log
 import androidx.compose.runtime.Composable
@@ -13,7 +13,6 @@ import com.amplifyframework.api.graphql.GraphQLRequest
 import com.amplifyframework.api.graphql.SimpleGraphQLRequest
 import com.amplifyframework.core.Amplify
 import com.example.returnpals.PickupInfo
-import com.example.returnpals.composetools.pickup.ConfirmPickupScreen
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
@@ -40,7 +39,8 @@ fun PaymentApp(info: PickupInfo, onClickBack:()->Unit,onPaymentSheetResult:(Paym
     var paymentIntentClientSecret by remember {mutableStateOf<String?>(null)}
 
     LaunchedEffect(context) {
-        Amplify.API.query(getPaymentSheetQueryOptions(),
+        Amplify.API.query(
+            getPaymentSheetQueryOptions(),
             {
                 if (!it.hasErrors() && it.hasData()) {
                     paymentIntentClientSecret = it.data.paymentIntent

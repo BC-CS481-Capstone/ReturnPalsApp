@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.returnpals.services.LoginViewModel
-import com.example.returnpals.viewmodel.Backend
+import com.example.returnpals.dataRepository.Backend
 
 //Deviates from needing to pass NavController.
 @Composable

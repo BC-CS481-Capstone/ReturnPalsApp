@@ -1,4 +1,4 @@
-package com.example.returnpals.viewmodel
+package com.example.returnpals.dataRepository
 import android.content.Context
 import android.util.Log
 import com.amplifyframework.AmplifyException
@@ -9,8 +9,6 @@ import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.AWSDataStorePlugin
 import com.amplifyframework.datastore.generated.model.Returns
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin
-import com.example.returnpals.dataRepository.OrderRepository
-import com.example.returnpals.dataRepository.ProfileRepository
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
