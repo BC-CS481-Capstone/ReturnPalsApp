@@ -1,7 +1,6 @@
 package com.example.returnpals.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.example.returnpals.composetools.mainMenu.MainMenuScreen
@@ -20,13 +19,7 @@ fun MainMenu(navController: NavController) {
         CognitoMainMenuScreenRepository(),
         navController = navController
     )
-    LaunchedEffect(context) {
-        //Launch API call to talk to server
-        viewModel.checkSignedIn()
-    }
-    MainMenuScreen(
-        mainMenuScreenViewModel = viewModel,
-        )
+    MainMenuScreen(viewModel)
 }
 
 

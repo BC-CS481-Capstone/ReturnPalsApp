@@ -54,7 +54,8 @@ class MainMenuScreenViewModel(
 
     private val _navRoute = MutableLiveData<String?>("home")
     val navRoute: LiveData<String?> = _navRoute
-    suspend fun checkSignedIn(){
+
+    fun checkSignedIn(){
         mainMenuScreenRepository.isSignedIn { isSignedIn ->
             _isSignedIn.value = isSignedIn
         }
@@ -64,15 +65,21 @@ class MainMenuScreenViewModel(
     }
     @Composable
     fun onSignInOrScheduleButton() {
-        var route = ""
+        checkSignedIn()
         if (_isSignedIn.value == true) {
-            route = MenuRoutes.HomeDash
-        } else if (_isSignedIn.value == false) {
-            route = MenuRoutes.SignIn
+            navigateAwayFromMainMenu(MenuRoutes.HomeDash)
+        } else if (_isSignedIn.value==false) {
+            navigateAwayFromMainMenu(MenuRoutes.SignIn)
         } else {
             Log.e("MainMenuScreenViewModel","Unknown if user is signed in or not already. Suspect API call has not returned.")
-          return
+            return
         }
+
+
+    }
+
+    private fun navigateAwayFromMainMenu(route:String) {
+
         navController.navigate(route) { // Clear all the back stack up to the start destination and save state
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
