@@ -1,4 +1,5 @@
-package com.example.returnpals.viewmodel
+package com.example.returnpals.viewmodel.backend
+
 
 import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.PickupMethod
@@ -6,7 +7,7 @@ import com.amplifyframework.datastore.generated.model.PickupStatus
 import com.amplifyframework.datastore.generated.model.Returns
 import java.time.LocalDate
 
-object PickupRepository : Repository<Returns>(Returns::class.java) {
+object PickupRepository : ModelRepository<Returns>(Returns::class.java) {
 
     fun create(
         userId: String,
@@ -17,7 +18,7 @@ object PickupRepository : Repository<Returns>(Returns::class.java) {
         confirmNum: String,
         status: PickupStatus = PickupStatus.ON_THE_WAY,
     ): Returns? {
-        return this.create(
+        return create(
             Returns.builder()
                 .userId(userId)
                 .email(email)
@@ -31,7 +32,7 @@ object PickupRepository : Repository<Returns>(Returns::class.java) {
     }
 
     fun delete(id: String): Returns? {
-        return this.delete(Returns.justId(id))
+        return delete(Returns.justId(id))
     }
 
     fun update(
@@ -43,7 +44,7 @@ object PickupRepository : Repository<Returns>(Returns::class.java) {
         confirmNum: String,
         status: PickupStatus,
     ): Boolean {
-        return this.update(
+        return update(
             Returns.builder()
                 .userId(id)
                 .email(email)

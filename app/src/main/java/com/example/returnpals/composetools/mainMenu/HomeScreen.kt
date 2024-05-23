@@ -26,13 +26,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.returnpals.R
 import com.example.returnpals.composetools.BenefitCards
 import com.example.returnpals.composetools.ProcessCards
-
 
 @Composable
 fun Home(navController: NavController) {
@@ -44,9 +44,10 @@ fun Home(navController: NavController) {
     }
 }
 
-
+@Preview
 @Composable
-fun HomeContent(onNextButton:()->Unit) {
+fun HomeContent(onScheduleNow: () -> Unit = {}) {
+
     val customColor = Color(0xFFE1F6FF)
     val selectedBlue = Color(0xFF008BE7)
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
@@ -102,7 +103,8 @@ fun HomeContent(onNextButton:()->Unit) {
 
         // Schedule Now Button
         Button(
-            onClick = onNextButton,
+
+            onClick = onScheduleNow,
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = selectedBlue,

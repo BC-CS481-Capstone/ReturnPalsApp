@@ -1,4 +1,4 @@
-package com.example.returnpals.viewmodel
+package com.example.returnpals.viewmodel.backend
 
 
 import com.amplifyframework.datastore.generated.model.LabelType

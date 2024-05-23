@@ -1,18 +1,18 @@
-package com.example.returnpals.viewmodel
+package com.example.returnpals.viewmodel.backend
 
 import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.Payments
 import com.amplifyframework.datastore.generated.model.PricingPlan
 import java.time.LocalDate
 
-object PaymentRepository : Repository<Payments>(Payments::class.java) {
+object PaymentRepository : ModelRepository<Payments>(Payments::class.java) {
 
     fun create(
         userId: String,
         plan: PricingPlan,
         date: LocalDate,
     ): Payments? {
-        return this.create(
+        return create(
             Payments.builder()
                 .userId(userId)
                 .paymentPlan(plan)
@@ -22,7 +22,7 @@ object PaymentRepository : Repository<Payments>(Payments::class.java) {
     }
 
     fun delete(id: String): Payments? {
-        return this.delete(Payments.justId(id))
+        return delete(Payments.justId(id))
     }
 
     fun update(
@@ -31,7 +31,7 @@ object PaymentRepository : Repository<Payments>(Payments::class.java) {
         plan: PricingPlan,
         date: LocalDate,
     ): Boolean {
-        return this.update(
+        return update(
             Payments.builder()
                 .userId(userId)
                 .paymentPlan(plan)

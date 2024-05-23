@@ -2,8 +2,8 @@ package com.example.returnpals.composetools.dashboard
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.example.returnpals.composetools.pickup.PickupDateScreen
 import com.example.returnpals.composetools.goto
+import com.example.returnpals.composetools.pickup.PickupDateScreen
 import com.example.returnpals.navigation.MenuRoutes
 import java.time.LocalDate
 
@@ -24,8 +24,8 @@ fun PickupProcessContent(navController: NavController) {
     PickupDateScreen(
         date = LocalDate.now(),
         onChangeDate = {},
-        onClickNext = { goto(navController, MenuRoutes.SelectAddress) },
-        onClickBack = { goto(navController, MenuRoutes.PickupProcess) }
+        onClickNext = { navController.goto(MenuRoutes.SelectAddress) },
+        onClickBack = { navController.goto(MenuRoutes.PickupProcess) }
     )
 }
 

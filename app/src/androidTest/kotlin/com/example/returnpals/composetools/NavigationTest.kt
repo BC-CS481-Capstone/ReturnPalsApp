@@ -1,8 +1,11 @@
 package com.example.returnpals.composetools
 
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.navigation.compose.ComposeNavigator
+import androidx.navigation.compose.NavHost
 import androidx.navigation.testing.TestNavHostController
 import com.example.returnpals.navigation.AppNavigation
 import com.example.returnpals.navigation.MenuRoutes

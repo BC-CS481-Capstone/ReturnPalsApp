@@ -1,5 +1,7 @@
 package com.example.returnpals.navigation
 
+
+
 import SettingsViewModel
 import android.util.Log
 import androidx.compose.runtime.Composable
@@ -11,17 +13,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.returnpals.composetools.ConfirmNumber
-import com.example.returnpals.composetools.ConfirmNumberViewModel
+import com.example.returnpals.composetools.ConfirmEmailScreen
+import com.example.returnpals.composetools.LoginScreen
 import com.example.returnpals.composetools.dashboard.HomeDash
 import com.example.returnpals.composetools.dashboard.Orders
 import com.example.returnpals.composetools.dashboard.Profile
 import com.example.returnpals.composetools.dashboard.Settings
+import com.example.returnpals.composetools.goto
 import com.example.returnpals.composetools.mainMenu.About
 import com.example.returnpals.composetools.mainMenu.Contact
 import com.example.returnpals.composetools.mainMenu.FAQ
@@ -36,12 +38,15 @@ import com.example.returnpals.composetools.pickup.PricingScreen
 import com.example.returnpals.composetools.pickup.SelectAddressScreen
 import com.example.returnpals.composetools.pickup.ThankYouScreen
 import com.example.returnpals.composetools.pickup.ThankYouViewModel
+import com.example.returnpals.services.ConfirmEmailViewModel
+import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.viewmodel.OrderViewModel
 import com.example.returnpals.viewmodel.PaymentApp
 import com.stripe.android.paymentsheet.PaymentSheetResult
 
 @Composable
 fun AppNavigation(navController: NavController) {
+    val loginVM = remember { LoginViewModel("test@bellevue.college", "Password123$") }
 
     NavHost(
         navController = navController as NavHostController,
@@ -53,7 +58,10 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.Pricing) { Pricing(navController) }
         composable(MenuRoutes.Contact) { Contact(navController) }
         composable(MenuRoutes.Video) { Video(navController) }
-        composable(MenuRoutes.SignIn) { SignIn(navController) }
+        composable(MenuRoutes.SignIn) { entry ->
+            val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
+            LoginScreen(loginVM, settingsVM, navController)
+        }
         composable(MenuRoutes.FAQ) { FAQ(navController) }
         composable(MenuRoutes.Register) { Register(navController) }
 
@@ -61,18 +69,19 @@ fun AppNavigation(navController: NavController) {
             startDestination = MenuRoutes.HomeDash,
             route = "dashboard home"
         ) {
-            composable(MenuRoutes.HomeDash) { HomeDash(navController) }
-            composable(MenuRoutes.Profile) { Profile(navController) }
-            composable(MenuRoutes.Settings) { Settings(navController) }
-            composable(MenuRoutes.Orders) { Orders(navController) }
+            composable(MenuRoutes.HomeDash) { HomeDash(navController, loginVM) }
+            composable(MenuRoutes.Profile) { Profile(navController, loginVM) }
+            composable(MenuRoutes.Settings) { Settings(navController, loginVM) }
+            composable(MenuRoutes.Orders) { Orders(navController, loginVM) }
             // composable(MenuRoutes.SelectAddress) { SelectAddress(navController) }
             // composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }
             //  composable(MenuRoutes.Label) { Label(navController) }
         }
         composable(MenuRoutes.ConfirmNumber) {
-            val vm = ConfirmNumberViewModel()
-            ConfirmNumber(navController,vm) }
-
+            // this vm should be destroyed when confirmation is complete
+            val confirmVm = remember { ConfirmEmailViewModel(loginVM.email) }
+            ConfirmEmailScreen(navController, confirmVm)
+        }
         navigation(
             startDestination = "select_date",
             route = MenuRoutes.PickupProcess
@@ -84,11 +93,7 @@ fun AppNavigation(navController: NavController) {
                     onChangeDate = pickupVM::onChangeDate,
                     isValidDate = pickupVM::isValidDate,
                     onClickNext = { navController.navigate("select_address") },
-                    onClickBack = { navController.navigate(MenuRoutes.HomeDash) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
-                        }
-                    } },
+                    onClickBack = { navController.goto(MenuRoutes.Home) },
                 )
             }
             composable("select_address") { entry ->
@@ -119,9 +124,11 @@ fun AppNavigation(navController: NavController) {
                 val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
                 PricingScreen(
                     plan = pickupVM.plan.value,
+                    isGuest = loginVM.isGuest,
                     onChangePlan = pickupVM::onChangePlan,
                     onClickNext = { navController.navigate("add_labels") },
                     onClickBack = { navController.navigate("select_method") },
+                    onClickSignUp = { navController.goto(MenuRoutes.Register) }
                 )
             }
             composable("add_labels") { entry ->

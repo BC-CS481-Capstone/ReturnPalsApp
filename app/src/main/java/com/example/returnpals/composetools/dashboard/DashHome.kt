@@ -41,14 +41,15 @@ import com.amplifyframework.datastore.generated.model.User
 import com.example.returnpals.R
 import com.example.returnpals.composetools.go2
 import com.example.returnpals.navigation.MenuRoutes
+import com.example.returnpals.services.LoginViewModel
 
 val vm = DashHomeViewModel()
 @Composable
-fun HomeDash(navController: NavController) {
+fun HomeDash(navController: NavController, loginVM: LoginViewModel) {
     val hasName by vm.hasUserName.observeAsState()
     vm.init()
     if (hasName == true) {
-        DashboardMenuScaffold(navController = navController) {
+        DashboardMenuScaffold(navController, loginVM.isLoggedIn ?: false, loginVM::logOut) {
             HomeDashContent(navController = navController, firstName = vm.getFirstName())
         }
     } else if (hasName == false) {
