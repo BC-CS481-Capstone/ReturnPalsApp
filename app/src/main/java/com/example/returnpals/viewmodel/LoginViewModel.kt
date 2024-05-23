@@ -76,7 +76,7 @@ class LoginViewModel(
         viewModelScope.launch(context) {
             withContext(Dispatchers.IO) {
                 try {
-                    if (isLoggedIn == true) LoginRepository.logOut()
+                    /* Removed this logic as it would not work when the app closed and opened again if (isLoggedIn == true)*/ LoginRepository.logOut()
                     onSuccess()
                 } catch (error: AuthException) {
                     Log.e("LoginViewModel", "Failed to log out!")

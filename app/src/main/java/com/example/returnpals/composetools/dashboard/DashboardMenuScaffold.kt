@@ -46,7 +46,7 @@ fun DashboardMenuScaffold(navController: NavController, isLoggedIn: Boolean, onL
     val scope = rememberCoroutineScope()
 
     //if (!isLoggedIn) navigateToScreen(navController, MenuRoutes.Home, scaffoldState, scope)
-
+    //Removed this logic as it would not work when the app closed and opened again
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
