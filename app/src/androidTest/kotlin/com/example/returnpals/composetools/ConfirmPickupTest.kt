@@ -128,7 +128,7 @@ class ConfirmPickupTest {
     @Test
     fun testNext() {
         rule.setContent { ConfirmPickupScreen(info = testPickupInfo) }
-        rule.onNode(hasText("Confirm") and hasClickAction()).assertIsDisplayed()
+        rule.onNode(hasText("Checkout") and hasClickAction()).assertIsDisplayed()
     }
     @Test
     fun testBack() {

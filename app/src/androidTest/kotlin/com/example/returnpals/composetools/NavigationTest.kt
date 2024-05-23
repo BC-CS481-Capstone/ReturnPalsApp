@@ -28,7 +28,7 @@ class NavigationTest {
 
     @Test
     fun appNavHost_verifyStartDestination() {
-        assertEquals(MenuRoutes.Home, navController.currentDestination?.route)
+        assertEquals("MainMenu", navController.currentDestination?.route)
     }
 
     @Test
@@ -153,7 +153,7 @@ class NavigationTest {
         }
 
         // Verify back navigation to Home
-        assertEquals(MenuRoutes.Home, navController.currentDestination?.route)
+        assertEquals("MainMenu", navController.currentDestination?.route)
     }
 }
 

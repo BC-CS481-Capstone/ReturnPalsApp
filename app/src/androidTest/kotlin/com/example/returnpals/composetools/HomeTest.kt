@@ -4,7 +4,6 @@ import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import androidx.navigation.compose.rememberNavController
 import com.example.returnpals.composetools.mainMenu.HomeContent
 import org.junit.Rule
 import org.junit.Test
@@ -18,8 +17,7 @@ class HomeTest {
     fun homeButtonTest() {
 
         rule.setContent {
-            val navController = rememberNavController()
-            HomeContent(navController = navController) }
+            HomeContent({  }) }
 
         rule.onNodeWithText("Schedule Now").assertHasClickAction().assertIsDisplayed()
     }
