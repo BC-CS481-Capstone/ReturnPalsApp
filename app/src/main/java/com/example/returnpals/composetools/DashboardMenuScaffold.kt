@@ -1,6 +1,5 @@
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -37,19 +36,17 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.R
 import com.example.returnpals.mainMenu.MenuRoutes
-import com.example.returnpals.services.AmplifyOperations.signOut
 import com.example.returnpals.services.Backend
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun DashboardMenuScaffold(navController: NavController, content: @Composable () -> Unit) {
+fun DashboardMenuScaffold(navController: NavController, isLoggedIn: Boolean, onLogOut: () -> Unit = {}, content: @Composable () -> Unit) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
+    if (!isLoggedIn) navigateToScreen(navController, MenuRoutes.Home, scaffoldState, scope)
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -78,7 +75,7 @@ fun DashboardMenuScaffold(navController: NavController, content: @Composable () 
             )
         },
         drawerContent = {
-            DrawerContent1(navController = navController, scaffoldState = scaffoldState)
+            DrawerContent1(navController = navController, scaffoldState = scaffoldState, onLogOut = onLogOut)
         }
     ) {
         content()
@@ -88,7 +85,7 @@ fun DashboardMenuScaffold(navController: NavController, content: @Composable () 
 
 
 @Composable
-fun DrawerContent1(navController: NavController, scaffoldState: ScaffoldState) {
+fun DrawerContent1(navController: NavController, scaffoldState: ScaffoldState, onLogOut: () -> Unit) {
     val scope = rememberCoroutineScope()
     var selectedItem by remember { mutableStateOf("") }
     val dashBlue = Color(0xFF052A42)
@@ -120,14 +117,17 @@ fun DrawerContent1(navController: NavController, scaffoldState: ScaffoldState) {
         Spacer(modifier = Modifier.weight(1f)) // This pushes the items below it to the bottom
 
         DrawerItem1(title = "Sign Out", isSelected = selectedItem == "Sign Out", onClick = {
-            signOut {
-                Log.i("signOut",it.toString())
-                Backend.resetEmail()
-                selectedItem = "Sign Out"
-               GlobalScope.launch(Dispatchers.Main) {  navigateToScreen(navController, MenuRoutes.Home, scaffoldState, scope)}
-            }
+            onLogOut()
+            Backend.resetEmail()
+            selectedItem = "Sign Out"
+//            navigateToScreen(navController, MenuRoutes.Home, scaffoldState, scope)    // will navigate right back to home dash because log out takes some time to complete
 
-
+//            signOut {
+//                Log.i("signOut",it.toString())
+//                Backend.resetEmail()
+//                selectedItem = "Sign Out"
+//                GlobalScope.launch(Dispatchers.Main) {  navigateToScreen(navController, MenuRoutes.Home, scaffoldState, scope)}
+//            }
         })
     }
 }

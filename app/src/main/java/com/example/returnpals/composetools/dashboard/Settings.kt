@@ -43,11 +43,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.amplifyframework.datastore.generated.model.Address
 import com.example.returnpals.R
+import com.example.returnpals.services.LoginViewModel
 
 @Composable
-fun Settings(navController: NavController) {
+fun Settings(navController: NavController, loginVM: LoginViewModel) {
     val settingsViewModel: SettingsViewModel = viewModel()
     val operationStatus by settingsViewModel.operationStatus.collectAsState()
     val userAddresses by settingsViewModel.userAddresses.collectAsState()
@@ -61,7 +61,7 @@ fun Settings(navController: NavController) {
         settingsViewModel.fetchAddresses()
     }
 
-    DashboardMenuScaffold(navController = navController) {
+    DashboardMenuScaffold(navController, loginVM.isLoggedIn ?: false, loginVM::logOut) {
         if (showResetPasswordDialog) {
             ResetPasswordDialog(
                 onDismiss = { showResetPasswordDialog = false },
@@ -293,7 +293,9 @@ fun AddressesDialog(
                         ) {
                             Text(
                                 text = address.address,
-                                modifier = Modifier.weight(1f).padding(end = 8.dp),
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(end = 8.dp),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )

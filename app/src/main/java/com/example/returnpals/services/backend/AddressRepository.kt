@@ -1,8 +1,8 @@
-package com.example.returnpals.services
+package com.example.returnpals.services.backend
 
 import com.amplifyframework.datastore.generated.model.Address
 
-object AddressRepository : Repository<Address>(Address::class.java) {
+object AddressRepository : ModelRepository<Address>(Address::class.java) {
 
     fun create(
         userId: String,
@@ -10,7 +10,7 @@ object AddressRepository : Repository<Address>(Address::class.java) {
         nickname: String? = null,
         email: String? = null,
     ): Address? {
-        return this.create(
+        return create(
             Address.builder()
                 .address(address)
                 .userId(userId)
@@ -21,7 +21,7 @@ object AddressRepository : Repository<Address>(Address::class.java) {
     }
 
     fun delete(id: String): Address? {
-        return this.delete(Address.justId(id))
+        return delete(Address.justId(id))
     }
 
     fun update(
@@ -31,7 +31,7 @@ object AddressRepository : Repository<Address>(Address::class.java) {
         nickname: String,
         email: String,
     ): Address? {
-        return this.create(
+        return create(
             Address.builder()
                 .address(address)
                 .userId(userId)

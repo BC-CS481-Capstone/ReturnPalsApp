@@ -1,9 +1,9 @@
-package com.example.returnpals.services
+package com.example.returnpals.services.backend
 
 import com.amplifyframework.datastore.generated.model.LabelType
 import com.amplifyframework.datastore.generated.model.Labels
 
-class LabelRepository : Repository<Labels>(Labels::class.java) {
+object LabelRepository : ModelRepository<Labels>(Labels::class.java) {
 
     fun create(
         returnId: String,

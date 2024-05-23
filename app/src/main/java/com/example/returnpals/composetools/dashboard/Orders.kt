@@ -21,13 +21,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.returnpals.composetools.OrderRepository
 import com.example.returnpals.services.Backend
+import com.example.returnpals.services.LoginViewModel
 
 @Composable
 //Deviates from needing to pass NavController.
-fun Orders(navController: NavController) {
-    DashboardMenuScaffold(navController = navController) {
+fun Orders(navController: NavController, loginVM: LoginViewModel) {
+    DashboardMenuScaffold(navController, loginVM.isLoggedIn ?: false, loginVM::logOut) {
         OrdersContent()
     }
 }

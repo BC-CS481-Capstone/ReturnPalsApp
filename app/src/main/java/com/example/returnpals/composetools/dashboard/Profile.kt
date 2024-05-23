@@ -35,11 +35,12 @@ import com.amplifyframework.datastore.generated.model.PricingPlan
 import com.amplifyframework.datastore.generated.model.User
 import com.example.returnpals.R
 import com.example.returnpals.composetools.pickup.PricingPlanText
+import com.example.returnpals.services.LoginViewModel
 
 val profileVM = ProfileViewModel()
 @Composable
-fun Profile(navController: NavController) {
-    DashboardMenuScaffold(navController = navController) {
+fun Profile(navController: NavController, loginVM: LoginViewModel) {
+    DashboardMenuScaffold(navController, loginVM.isLoggedIn ?: false, loginVM::logOut) {
         val hasUserInfo by profileVM.hasUserInfo.observeAsState()
         profileVM.init()
         if (hasUserInfo == true) {

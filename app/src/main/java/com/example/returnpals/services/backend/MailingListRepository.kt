@@ -1,8 +1,8 @@
-package com.example.returnpals.services
+package com.example.returnpals.services.backend
 
 import com.amplifyframework.datastore.generated.model.MailingList
 
-object MailingListRepository : Repository<MailingList>(MailingList::class.java) {
+object MailingListRepository : ModelRepository<MailingList>(MailingList::class.java) {
 
     fun create(
         name: String,
@@ -10,7 +10,7 @@ object MailingListRepository : Repository<MailingList>(MailingList::class.java) 
         email: String,
         message: String,
     ): MailingList? {
-        return this.create(
+        return create(
             MailingList.builder()
                 .email(email)
                 .fullName(name)
@@ -21,7 +21,7 @@ object MailingListRepository : Repository<MailingList>(MailingList::class.java) 
     }
 
     fun delete(id: String): MailingList? {
-        return this.delete(MailingList.justId(id))
+        return delete(MailingList.justId(id))
     }
 
     fun update(
@@ -31,7 +31,7 @@ object MailingListRepository : Repository<MailingList>(MailingList::class.java) 
         email: String,
         message: String,
     ): Boolean {
-        return this.update(
+        return update(
             MailingList.builder()
                 .id(id)
                 .email(email)
