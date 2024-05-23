@@ -45,7 +45,7 @@ fun DashboardMenuScaffold(navController: NavController, isLoggedIn: Boolean, onL
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
-    if (!isLoggedIn) navigateToScreen(navController, MenuRoutes.Home, scaffoldState, scope)
+    //if (!isLoggedIn) navigateToScreen(navController, MenuRoutes.Home, scaffoldState, scope)
 
     Scaffold(
         scaffoldState = scaffoldState,
