@@ -1,4 +1,4 @@
-package com.example.returnpals.composetools
+package com.example.returnpals.composetools.login
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -9,6 +9,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.compose.ReturnPalTheme
+import com.example.returnpals.navigation.goto
 import com.example.returnpals.navigation.MenuRoutes
 import com.example.returnpals.services.ConfirmEmailViewModel
 

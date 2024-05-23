@@ -35,7 +35,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose.ReturnPalTheme
-import com.example.returnpals.composetools.ScheduleReturnScaffold
 
 // A view model is necessary here to remember which address option was selected across screens.
 

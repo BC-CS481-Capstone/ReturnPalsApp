@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.sp
 import com.example.compose.ReturnPalTheme
 import com.amplifyframework.datastore.generated.model.PickupMethod
 import com.example.returnpals.R
-import com.example.returnpals.composetools.ScheduleReturnScaffold
 import com.example.returnpals.composetools.getFontFamily
 
 /////////////////////////////////////////////////////////////////////////////

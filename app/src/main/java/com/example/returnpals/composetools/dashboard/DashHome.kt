@@ -39,7 +39,7 @@ import com.amplifyframework.api.graphql.model.ModelQuery
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.generated.model.User
 import com.example.returnpals.R
-import com.example.returnpals.composetools.go2
+import com.example.returnpals.navigation.go2
 import com.example.returnpals.navigation.MenuRoutes
 import com.example.returnpals.services.LoginViewModel
 

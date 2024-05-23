@@ -33,7 +33,6 @@ import com.example.compose.ReturnPalTheme
 import com.example.returnpals.PackageInfo
 import com.example.returnpals.PickupInfo
 import com.example.returnpals.composetools.IconManager
-import com.example.returnpals.composetools.ScheduleReturnScaffold
 import com.example.returnpals.composetools.getBackGroundColor
 import com.example.returnpals.toNiceString
 

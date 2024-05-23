@@ -1,4 +1,4 @@
-package com.example.returnpals.composetools
+package com.example.returnpals.composetools.pickup
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.compose.ReturnPalTheme
+import com.example.returnpals.composetools.NavigationBar
+import com.example.returnpals.composetools.ProgressBar
 
 /**
  * UI functionality and composables specific to the "Schedule a Return" process go here.

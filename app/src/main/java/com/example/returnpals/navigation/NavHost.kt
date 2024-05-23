@@ -17,13 +17,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.returnpals.composetools.ConfirmEmailScreen
-import com.example.returnpals.composetools.LoginScreen
 import com.example.returnpals.composetools.dashboard.HomeDash
 import com.example.returnpals.composetools.dashboard.Orders
 import com.example.returnpals.composetools.dashboard.Profile
 import com.example.returnpals.composetools.dashboard.Settings
-import com.example.returnpals.composetools.goto
+import com.example.returnpals.composetools.login.ConfirmEmailScreen
+import com.example.returnpals.composetools.login.LoginScreen
 import com.example.returnpals.composetools.mainMenu.About
 import com.example.returnpals.composetools.mainMenu.Contact
 import com.example.returnpals.composetools.mainMenu.FAQ
@@ -85,7 +84,7 @@ fun AppNavigation(navController: NavController) {
                 LoginScreen(loginVM, settingsVM, navController)
             }
             composable(MenuRoutes.Register) {
-                com.example.returnpals.composetools.mainMenu.Register(
+                com.example.returnpals.composetools.login.Register(
                     navController
                 )
             }

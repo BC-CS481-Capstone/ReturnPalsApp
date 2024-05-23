@@ -55,7 +55,6 @@ import com.amplifyframework.datastore.generated.model.LabelType
 import com.example.compose.ReturnPalTheme
 import com.example.returnpals.PackageInfo
 import com.example.returnpals.composetools.IconManager
-import com.example.returnpals.composetools.ScheduleReturnScaffold
 import com.example.returnpals.composetools.getBackGroundColor
 import com.example.returnpals.viewmodel.Backend
 import com.example.returnpals.toNiceString

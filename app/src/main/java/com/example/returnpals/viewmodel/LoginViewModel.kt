@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.amplifyframework.auth.AuthException
-import com.example.returnpals.composetools.goto
 import com.example.returnpals.dataRepository.LoginRepository
+import com.example.returnpals.navigation.goto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -87,7 +87,10 @@ class LoginViewModel(
                 }
             }
         }
-        navController.goto("MainMenu")
+       viewModelScope.launch { withContext(Dispatchers.Main) {
+           navController.goto("MainMenu")
+       } }
+
 
     }
 

@@ -1,4 +1,4 @@
-package com.example.returnpals.composetools.mainMenu
+package com.example.returnpals.composetools.login
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

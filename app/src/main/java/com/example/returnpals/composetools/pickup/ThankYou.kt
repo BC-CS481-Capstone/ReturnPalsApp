@@ -31,7 +31,6 @@ import com.amplifyframework.datastore.generated.model.Returns
 import com.amplifyframework.datastore.generated.model.User
 import com.example.returnpals.composetools.ButtonManager
 import com.example.returnpals.composetools.IconManager
-import com.example.returnpals.composetools.ScheduleReturnProgressBar
 import com.example.returnpals.composetools.getBlueIconColor
 import com.example.returnpals.composetools.getConfig
 var thankYouVM = ThankYouViewModel()

@@ -1,4 +1,4 @@
-package com.example.returnpals.composetools
+package com.example.returnpals.navigation
 
 import android.util.Log
 import androidx.navigation.NavController

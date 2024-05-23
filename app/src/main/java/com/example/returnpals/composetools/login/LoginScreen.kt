@@ -1,4 +1,4 @@
-package com.example.returnpals.composetools
+package com.example.returnpals.composetools.login
 
 import SettingsViewModel
 import androidx.compose.foundation.background
@@ -33,8 +33,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.compose.ReturnPalTheme
+import com.example.returnpals.composetools.IconManager
 import com.example.returnpals.composetools.dashboard.ConfirmResetPasswordDialog
 import com.example.returnpals.composetools.dashboard.ResetPasswordDialog
+import com.example.returnpals.composetools.getConfig
+import com.example.returnpals.navigation.goto
 import com.example.returnpals.navigation.MenuRoutes
 import com.example.returnpals.services.LoginViewModel
 
