@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.amplifyframework.auth.AuthException
 import com.example.returnpals.dataRepository.LoginRepository
+import com.example.returnpals.navigation.MenuRoutes
 import com.example.returnpals.navigation.goto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -67,6 +68,12 @@ class LoginViewModel(
                 }
             }
         }
+        // THE LAUNCH SCOPE IS FOR TESTing
+        viewModelScope.launch { withContext(Dispatchers.Main) {
+            navController.goto(MenuRoutes.HomeDash)
+            //You can only call navigate from main thread.  Running this fuction from a test unit is not main thread.
+            //This luanch effect is so the main thread will be used even from a test or debug file.
+        } }
     }
 
     /** Note: making a jetpack compose navigation call within onSuccess or onFailure will result in a [java.lang.IllegalStateException]. */
@@ -114,6 +121,12 @@ class LoginViewModel(
                 }
             }
         }
+        // THE LAUNCH SCOPE IS FOR TESTing
+        viewModelScope.launch { withContext(Dispatchers.Main) {
+            navController.goto(MenuRoutes.PickupProcess)
+            //You can only call navigate from main thread.  Running this fuction from a test unit is not main thread.
+            //This luanch effect is so the main thread will be used even from a test or debug file.
+        } }
     }
 
 }

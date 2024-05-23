@@ -37,8 +37,8 @@ import com.example.returnpals.composetools.IconManager
 import com.example.returnpals.composetools.dashboard.ConfirmResetPasswordDialog
 import com.example.returnpals.composetools.dashboard.ResetPasswordDialog
 import com.example.returnpals.composetools.getConfig
-import com.example.returnpals.navigation.goto
 import com.example.returnpals.navigation.MenuRoutes
+import com.example.returnpals.navigation.goto
 import com.example.returnpals.services.LoginViewModel
 
 /* This is the login options class used to create the two login UI for guest and user.*/
@@ -52,7 +52,7 @@ fun LoginScreen(
     var failMessage by remember { mutableStateOf("") }
     var isGuestMode by remember { mutableStateOf(false) }
     var loginSuccess by remember { mutableStateOf(false) }
-    if (loginSuccess) navController.goto("MainMenu")
+    //if (loginSuccess) navController.goto(MenuRoutes.HomeDash)
     Box(modifier = Modifier
         .background(ReturnPalTheme.colorScheme.background)
         .fillMaxSize()) {
