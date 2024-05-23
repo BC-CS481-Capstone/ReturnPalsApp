@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.amplifyframework.auth.AuthException
-import com.example.returnpals.dataRepository.LoginRepository
+import com.example.returnpals.dataRepository.CognitoLoginRepository
 import com.example.returnpals.navigation.MenuRoutes
 import com.example.returnpals.navigation.goto
 import kotlinx.coroutines.Dispatchers
@@ -28,8 +28,8 @@ class LoginViewModel(
 //    private val repository: LoginRepository       login repo is a global object for now
 ): ViewModel() {
     /** Gets updated on calls to [logIn], [logOut], [register], and [logInAsGuest]. **/
-    val isLoggedIn get() = LoginRepository.isLoggedIn
-    val isGuest get() = LoginRepository.isGuest
+    val isLoggedIn get() = CognitoLoginRepository.isLoggedIn
+    val isGuest get() = CognitoLoginRepository.isGuest
     var email by mutableStateOf(email)
     var password by mutableStateOf(password)
     val navController = navController
@@ -40,9 +40,9 @@ class LoginViewModel(
         onSuccess: () -> Unit = {}
     ) {
         viewModelScope.launch(context) {
-            withContext(Dispatchers.IO) {
+            withContext(Dispatchers.Main) {
                 try {
-                    LoginRepository.register(email, password)
+                    CognitoLoginRepository.register(email, password){}
                     onSuccess()
                 } catch (error: AuthException) {
                     onFailure(error)
@@ -57,18 +57,20 @@ class LoginViewModel(
         onFailure: (AuthException) -> Unit = {},
         onSuccess: () -> Unit = {}
     ) {
+        val lambda:(Boolean)->Unit =  {if (it) {
+            navController.goto(MenuRoutes.HomeDash)}
+        }
         viewModelScope.launch(context) {
-            withContext(Dispatchers.IO) {
+            withContext(Dispatchers.Main) {
                 try {
-                    if (isLoggedIn == true) LoginRepository.logOut()
-                    LoginRepository.logIn(email, password)
+                    if (isLoggedIn == true) CognitoLoginRepository.logOut({ })
+                    CognitoLoginRepository.logIn(email, password,lambda)
                     onSuccess()
                 } catch (error: AuthException) {
                     onFailure(error)
                 }
             }
         }
-        navController.goto(MenuRoutes.HomeDash)
     }
 
     /** Note: making a jetpack compose navigation call within onSuccess or onFailure will result in a [java.lang.IllegalStateException]. */
@@ -77,11 +79,14 @@ class LoginViewModel(
         onFailure: (AuthException) -> Unit = {},
         onSuccess: () -> Unit = {}
     ) {
+        val lambda:(Boolean)->Unit =  {if (it) {
+            navController.goto("MainMenu")}
+        }
         viewModelScope.launch(context) {
-            withContext(Dispatchers.IO) {
+            withContext(Dispatchers.Main) {
                 try {
                     /* Removed this logic as it would not work when the app closed and opened again if (isLoggedIn == true)*/
-                    LoginRepository.logOut()
+                    CognitoLoginRepository.logOut(lambda)
                     onSuccess()
                 } catch (error: AuthException) {
                     Log.e("LoginViewModel", "Failed to log out!")
@@ -89,7 +94,6 @@ class LoginViewModel(
                 }
             }
         }
-      navController.goto("MainMenu")
     }
 
     /** Note: making a jetpack compose navigation call within onSuccess or onFailure will result in a [java.lang.IllegalStateException]. */
@@ -98,17 +102,19 @@ class LoginViewModel(
         onFailure: (AuthException) -> Unit = {},
         onSuccess: () -> Unit = {}
     ) {
+        val lambda:(Boolean)->Unit =  {if (it) {
+            navController.goto(MenuRoutes.PickupProcess)}
+        }
         viewModelScope.launch(context) {
-            withContext(Dispatchers.IO) {
+            withContext(Dispatchers.Main) {
                 try {
-                    if (isLoggedIn == true) LoginRepository.logOut()
-                    LoginRepository.logInAsGuest(email)
+                    if (isLoggedIn == true) CognitoLoginRepository.logOut({})
+                    CognitoLoginRepository.logInAsGuest(email,lambda)
                     onSuccess()
                 } catch (error: AuthException) {
                     onFailure(error)
                 }
             }
         }
-        navController.goto(MenuRoutes.PickupProcess)
     }
 }

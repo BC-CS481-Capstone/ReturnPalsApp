@@ -5,7 +5,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
-import com.example.returnpals.dataRepository.LoginRepository
+import com.example.returnpals.dataRepository.CognitoLoginRepository
 import com.example.returnpals.navigation.AppNavigation
 import com.example.returnpals.services.LoginViewModel
 import junit.framework.TestCase.assertEquals
@@ -61,8 +61,8 @@ class LoginViewModelTest {
         } }.await()
         assert(vm.isLoggedIn == true) { "isLoggedIn: expected true, was false" }
         assert(vm.isGuest) { "isGuest: expected true, was false" }
-        assert(vm.isGuest == LoginRepository.isGuest) { "isGuest: doesn't match with repository" }
-        assert(vm.isLoggedIn == LoginRepository.isLoggedIn) { "isLoggedIn: doesn't match with repository" }
+        assert(vm.isGuest == CognitoLoginRepository.isGuest) { "isGuest: doesn't match with repository" }
+        assert(vm.isLoggedIn == CognitoLoginRepository.isLoggedIn) { "isLoggedIn: doesn't match with repository" }
     }
 
     @Test
@@ -74,8 +74,8 @@ class LoginViewModelTest {
         } }.await()
         assert(vm.isLoggedIn == true) { "isLoggedIn: expected true, was false" }
         assert(!vm.isGuest) { "isGuest: expected false, was true" }
-        assert(vm.isGuest == LoginRepository.isGuest) { "isGuest: doesn't match with repository" }
-        assert(vm.isLoggedIn == LoginRepository.isLoggedIn) { "isLoggedIn: doesn't match with repository" }
+        assert(vm.isGuest == CognitoLoginRepository.isGuest) { "isGuest: doesn't match with repository" }
+        assert(vm.isLoggedIn == CognitoLoginRepository.isLoggedIn) { "isLoggedIn: doesn't match with repository" }
     }
 
     @Test
@@ -90,8 +90,8 @@ class LoginViewModelTest {
         }  }.await()
         assert(vm.isLoggedIn == false) { "isLoggedIn: expected false, was true" }
         assert(!vm.isGuest) { "isGuest: expected false, was true" }
-        assert(vm.isGuest == LoginRepository.isGuest) { "isGuest: doesn't match with repository" }
-        assert(vm.isLoggedIn == LoginRepository.isLoggedIn) { "isLoggedIn: doesn't match with repository" }
+        assert(vm.isGuest == CognitoLoginRepository.isGuest) { "isGuest: doesn't match with repository" }
+        assert(vm.isLoggedIn == CognitoLoginRepository.isLoggedIn) { "isLoggedIn: doesn't match with repository" }
     }
 
 //    results in "Username already exists in the system" error
