@@ -93,7 +93,7 @@ fun AppNavigation(navController: NavController) {
                     onChangeDate = pickupVM::onChangeDate,
                     isValidDate = pickupVM::isValidDate,
                     onClickNext = { navController.navigate("select_address") },
-                    onClickBack = { navController.goto(MenuRoutes.Home) },
+                    onClickBack = { navController.goto("MainMenu") },
                 )
             }
             composable("select_address") { entry ->
