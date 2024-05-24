@@ -33,16 +33,9 @@ import com.example.returnpals.composetools.CustomTextField
 import com.example.returnpals.services.AmplifyOperations
 import com.example.returnpals.services.Backend
 import com.example.returnpals.services.RegisterViewModel
-import com.example.returnpals.services.UserEmail
 
 @Composable
-fun Register(navController: NavController) {
-    RegisterContent(navController = navController)
-}
-
-
-@Composable
-fun RegisterContent(navController: NavController){
+fun RegistrationScreen(navController: NavController) {
     val customColor = Color(0xFFE1F6FF)
 
     LazyColumn(
@@ -50,18 +43,14 @@ fun RegisterContent(navController: NavController){
             .fillMaxSize()
             .background(customColor)
             .padding(16.dp)
-
-    ){
-        
-        item { RegisterTitle() }
-        item { Form(navController = navController) }
-
-
+    ) {
+        item { Title() }
+        item { RegistrationForm(navController = navController) }
     }
 }
 
 @Composable
-fun RegisterTitle() {
+private fun Title() {
     val selectedBlue = Color(0xFF008BE7)
 
     Text(
@@ -73,12 +62,11 @@ fun RegisterTitle() {
 }
 
 @Composable
-fun Form(navController: NavController, viewModel: RegisterViewModel = viewModel()) {
-    var repository = UserEmail
+fun RegistrationForm(navController: NavController, viewModel: RegisterViewModel = viewModel()) {
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf(repository.getEmail()) }
+    var email by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
     val selectedBlue = Color(0xFF008BE7)
     val customColor = Color(0xFFE1F6FF)

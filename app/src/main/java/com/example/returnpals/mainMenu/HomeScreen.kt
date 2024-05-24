@@ -26,28 +26,26 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.R
 import com.example.returnpals.composetools.BenefitCards
 import com.example.returnpals.composetools.ProcessCards
 
-
 @Composable
-fun Home(navController: NavController) {
-    val customColor = Color(0xFFE1F6FF)
-    // val customFont = FontFamily(Font(R.font.you_font_file))
+fun HomeScreen(navController: NavController, onScheduleNow: () -> Unit = {}) {
+//    val customColor = Color(0xFFE1F6FF)
+//    val customFont = FontFamily(Font(R.font.you_font_file))
     MainMenuScaffold(navController = navController) {
-            HomeContent(navController = navController)
+        HomeContent(onScheduleNow)
     }
-
 }
 
-
+@Preview
 @Composable
-fun HomeContent(navController: NavController) {
+fun HomeContent(onScheduleNow: () -> Unit = {}) {
     val customColor = Color(0xFFE1F6FF)
     val selectedBlue = Color(0xFF008BE7)
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
@@ -103,18 +101,7 @@ fun HomeContent(navController: NavController) {
 
         // Schedule Now Button
         Button(
-            onClick = {
-                // Navigate to the DashboardMenu screen
-                navController.navigate(MenuRoutes.SignIn) { // Clear all the back stack up to the start destination and save state
-                    popUpTo(navController.graph.findStartDestination().id) {
-                        saveState = true
-                    }
-                    // Avoid multiple copies of the same destination when reselecting the same item
-                    launchSingleTop = true
-                    // Restore state when navigating back to the composable
-                    restoreState = true
-                }
-            },
+            onClick = onScheduleNow,
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = selectedBlue,

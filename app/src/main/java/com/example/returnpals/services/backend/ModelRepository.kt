@@ -1,4 +1,4 @@
-package com.example.returnpals.services
+package com.example.returnpals.services.backend
 
 import android.util.Log
 import com.amplifyframework.api.graphql.model.ModelMutation
@@ -7,10 +7,11 @@ import com.amplifyframework.core.Amplify
 import com.amplifyframework.core.model.Model
 
 /**
- * Encapsulates create, read, update, and delete (CRUD) operations on the Return Pal database.
+ * Encapsulates create, read, update, and delete (CRUD) operations for a specified data model
+ * using [GraphQL API](https://docs.amplify.aws/gen1/android/build-a-backend/graphqlapi/).
  * @param type ModelType cannot be reified so type information needs to be passed at runtime.
  */
-abstract class Repository<ModelType>(
+open class ModelRepository<ModelType>(
     private val type: Class<ModelType>
 ) where ModelType : Model {
 
@@ -23,16 +24,16 @@ abstract class Repository<ModelType>(
                 if (response.hasErrors()) {
                     var errors = ""
                     response.errors.forEachIndexed { index, error -> errors += "[$index] ${error.message}\n" }
-                    Log.e("Repository", "Failed to create ${model.modelName} due to GraphQL errors:\n$errors")
+                    Log.w("ModelRepository<${type.simpleName}>", "Failed to create ${model.modelName} due to GraphQL errors:\n$errors")
                 } else if (!response.hasData()) {
-                    Log.e("Repository", "Failed to create ${model.modelName}. GraphQL response is empty.")
+                    Log.w("ModelRepository<${type.simpleName}>", "Failed to create ${model.modelName}. GraphQL response is empty.")
                 } else {
                     result = response.data
-                    Log.i("Repository", "Created ${result?.modelName} with primary key: ${result?.primaryKeyString}")
+                    Log.i("ModelRepository<${type.simpleName}>", "Created ${result?.modelName} with primary key: ${result?.primaryKeyString}")
                 }
             },
             { exception ->
-                Log.e("Repository", "Failed to create ${model.modelName}. Amplify API threw exception:\n" +
+                Log.e("ModelRepository<${type.simpleName}>", "Failed to create ${model.modelName}. Amplify API threw exception:\n" +
                         exception.message + '\n' + exception.cause + '\n' + exception.recoverySuggestion + '\n')
             }
         )
@@ -47,16 +48,16 @@ abstract class Repository<ModelType>(
                 if (response.hasErrors()) {
                     var errors = ""
                     response.errors.forEachIndexed { index, error -> errors += "[$index] ${error.message}\n" }
-                    Log.e("Repository", "Failed to delete ${model.modelName} due to GraphQL errors:\n$errors")
+                    Log.e("ModelRepository<${type.simpleName}>", "Failed to delete ${model.modelName} due to GraphQL errors:\n$errors")
                 } else if (!response.hasData()) {
-                    Log.e("Repository", "Failed to delete ${model.modelName}. GraphQL response is empty.")
+                    Log.e("ModelRepository<${type.simpleName}>", "Failed to delete ${model.modelName}. GraphQL response is empty.")
                 } else {
                     result = response.data
-                    Log.i("Repository", "Deleted ${result?.modelName} with primary key: ${result?.primaryKeyString}")
+                    Log.i("ModelRepository<${type.simpleName}>", "Deleted ${result?.modelName} with primary key: ${result?.primaryKeyString}")
                 }
             },
             { exception ->
-                Log.e("Repository", "Failed to delete ${model.modelName}. Amplify API threw exception:\n" +
+                Log.e("ModelRepository<${type.simpleName}>", "Failed to delete ${model.modelName}. Amplify API threw exception:\n" +
                         exception.message + '\n' + exception.cause + '\n' + exception.recoverySuggestion + '\n')
             }
         )
@@ -71,16 +72,16 @@ abstract class Repository<ModelType>(
                 if (response.hasErrors()) {
                     var errors = ""
                     response.errors.forEachIndexed { index, error -> errors += "[$index] ${error.message}\n" }
-                    Log.e("Repository", "Failed to update ${model.modelName} due to GraphQL errors:\n$errors")
+                    Log.e("ModelRepository<${type.simpleName}>", "Failed to update ${model.modelName} due to GraphQL errors:\n$errors")
                 } else if (!response.hasData()) {
-                    Log.e("Repository", "Failed to update ${model.modelName}. GraphQL response is empty.")
+                    Log.e("ModelRepository<${type.simpleName}>", "Failed to update ${model.modelName}. GraphQL response is empty.")
                 } else {
                     result = true
-                    Log.i("Repository", "Updated ${response.data.modelName} with primary key: ${response.data.primaryKeyString}")
+                    Log.i("ModelRepository<${type.simpleName}>", "Updated ${response.data.modelName} with primary key: ${response.data.primaryKeyString}")
                 }
             },
             { exception ->
-                Log.e("Repository", "Failed to update ${model.modelName}. Amplify API threw exception:\n" +
+                Log.e("ModelRepository<${type.simpleName}>", "Failed to update ${model.modelName}. Amplify API threw exception:\n" +
                         exception.message + '\n' + exception.cause + '\n' + exception.recoverySuggestion + '\n')
             }
         )
@@ -95,14 +96,14 @@ abstract class Repository<ModelType>(
                 if (response.hasErrors()) {
                     var errors = ""
                     response.errors.forEachIndexed { index, error -> errors += "[$index] ${error.message}\n" }
-                    Log.e("Repository", "Failed to retrieve $type due to GraphQL errors:\n$errors")
+                    Log.e("ModelRepository<${type.simpleName}>", "Failed to retrieve $type due to GraphQL errors:\n$errors")
                 } else if (response.hasData()) {
                     result = response.data
-                    Log.i("Repository", "Retrieved ${result?.modelName} with primary key: ${result?.primaryKeyString}")
+                    Log.i("ModelRepository<${type.simpleName}>", "Retrieved ${result?.modelName} with primary key: ${result?.primaryKeyString}")
                 }
             },
             { exception ->
-                Log.e("Repository", "Failed to update $type. Amplify API threw exception:\n" +
+                Log.e("ModelRepository<${type.simpleName}>", "Failed to update $type. Amplify API threw exception:\n" +
                         exception.message + '\n' + exception.cause + '\n' + exception.recoverySuggestion + '\n')
             }
         )
