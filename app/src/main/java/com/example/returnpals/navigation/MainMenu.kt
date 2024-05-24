@@ -16,13 +16,13 @@ fun MainMenu(navController: NavController) {
 
 
     //Create view model
-    val viewModel = MainMenuScreenViewModel(
-        CognitoMainMenuScreenRepository(),
-    )
+    val viewModel = MainMenuScreenViewModel(CognitoMainMenuScreenRepository())
+
+    //Navigation Logic
     val readyToNav by viewModel.readyToNav.observeAsState()
-    if (readyToNav != null) {
-        navController.goto(readyToNav!!)
-    }
+    if (readyToNav != null) navController.goto(readyToNav!!)
+
+    //Content with view state
     MainMenuScreen(viewModel)
 }
 
