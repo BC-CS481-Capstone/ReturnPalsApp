@@ -143,7 +143,7 @@ fun AppNavigation(navController: NavController) {
                 pickupVM.updatePickupAddress(selectedAddress)
                 PricingScreen(
                     plan = pickupVM.plan.value,
-                    isGuest = loginVM.isGuest.value!!,
+                    isGuest = loginVM.isGuest.value == true,
                     onChangePlan = pickupVM::onChangePlan,
                     onClickNext = { navController.navigate("add_labels") },
                     onClickBack = { navController.navigate("select_method") },
