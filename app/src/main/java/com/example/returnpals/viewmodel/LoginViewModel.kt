@@ -76,6 +76,7 @@ class LoginViewModel(
         val lambda:(Boolean,String,String)->Unit =  {it,message,recoverSuggestion ->
             if (it) {
             _isLoggedIn.postValue(true)
+                _isGuest.postValue(false)
             }
             //Set fail message if this was part of call back logic.
             setFailMessage(message,recoverSuggestion)
@@ -128,9 +129,13 @@ class LoginViewModel(
         onSuccess: () -> Unit = {}
     ) {
         val lambda:(Boolean,String,String)->Unit =  {it,message,recoverSuggestion ->
-            if (it) {
-            _isGuest.postValue(true)
-        }}
+            //_isGuest.postValue(true)
+            //_isLoggedIn.postValue(true)
+        }
+        ///Always set to true as login will fail and create exception stopping the lambda call above from executing
+        _isGuest.postValue(true)
+        _isLoggedIn.postValue(true)
+
         viewModelScope.launch(context) {
             withContext(Dispatchers.Main) {
                 try {

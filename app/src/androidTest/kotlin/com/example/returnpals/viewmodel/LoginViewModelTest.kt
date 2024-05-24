@@ -70,6 +70,10 @@ class LoginViewModelTest {
         vm.email = "test@bellevue.college"
         vm.password = "Password123$"
         async { withContext(Dispatchers.Main) {
+            vm.logOut(this.coroutineContext)
+            //Would fail to login randomly. Set to make sure user log out first.
+        } }.await()
+        async { withContext(Dispatchers.Main) {
             vm.logIn(this.coroutineContext)
         } }.await()
         assert(vm.isLoggedIn.value == true) { "isLoggedIn: expected true, was false" }
