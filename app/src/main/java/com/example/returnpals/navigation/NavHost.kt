@@ -15,9 +15,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.returnpals.PickupInfo
-import com.example.returnpals.composetools.ConfirmEmailScreen
-import com.example.returnpals.composetools.LoginScreen
 import com.example.returnpals.composetools.dashboard.HomeDash
 import com.example.returnpals.composetools.dashboard.Orders
 import com.example.returnpals.composetools.dashboard.Profile
@@ -31,16 +28,20 @@ import com.example.returnpals.composetools.mainMenu.Home
 import com.example.returnpals.composetools.mainMenu.Pricing
 import com.example.returnpals.composetools.mainMenu.Video
 import com.example.returnpals.composetools.pickup.AddPackagesScreen
+import com.example.returnpals.composetools.pickup.PaymentApp
 import com.example.returnpals.composetools.pickup.PickupDateScreen
 import com.example.returnpals.composetools.pickup.PickupMethodScreen
 import com.example.returnpals.composetools.pickup.PricingScreen
 import com.example.returnpals.composetools.pickup.SelectAddressScreen
 import com.example.returnpals.composetools.pickup.ThankYouScreen
 import com.example.returnpals.composetools.pickup.ThankYouViewModel
+import com.example.returnpals.navigation.MainMenu
+import com.example.returnpals.navigation.MenuRoutes
+import com.example.returnpals.navigation.Register
+import com.example.returnpals.navigation.goto
 import com.example.returnpals.services.ConfirmEmailViewModel
 import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.viewmodel.OrderViewModel
-import com.example.returnpals.composetools.pickup.PaymentApp
 import com.stripe.android.paymentsheet.PaymentSheetResult
 
 @Composable
@@ -59,7 +60,7 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.Contact) { Contact(navController) }
         composable(MenuRoutes.Video) { Video(navController) }
         composable(MenuRoutes.FAQ) { FAQ(navController) }
-        composable(MenuRoutes.Register) { RegistrationScreen(navController)}
+        composable(MenuRoutes.Register) { Register(navController) }
 
         navigation(
             startDestination = MenuRoutes.HomeDash,
@@ -142,7 +143,7 @@ fun AppNavigation(navController: NavController) {
                 pickupVM.updatePickupAddress(selectedAddress)
                 PricingScreen(
                     plan = pickupVM.plan.value,
-                    isGuest = loginVM.isGuest,
+                    isGuest = loginVM.isGuest.value!!,
                     onChangePlan = pickupVM::onChangePlan,
                     onClickNext = { navController.navigate("add_labels") },
                     onClickBack = { navController.navigate("select_method") },

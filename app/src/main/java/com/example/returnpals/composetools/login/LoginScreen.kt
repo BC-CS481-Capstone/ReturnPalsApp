@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -49,34 +50,35 @@ fun LoginScreen(
     settingsVM: SettingsViewModel,
     navController: NavController,
 ) {
-    var failMessage by remember { mutableStateOf("") }
-    var isGuestMode by remember { mutableStateOf(false) }
-    var loginSuccess by remember { mutableStateOf(false) }
-    //if (loginSuccess) navController.goto(MenuRoutes.HomeDash)
+    val failMessage by loginVM.message.observeAsState()
+    val isGuestMode by loginVM.isGuest.observeAsState()
+    val loginSuccess  by loginVM.isLoggedIn.observeAsState()
+    if (loginSuccess == true) navController.goto(MenuRoutes.HomeDash)
+    if (loginSuccess == true) navController.goto(MenuRoutes.HomeDash)
     Box(modifier = Modifier
         .background(ReturnPalTheme.colorScheme.background)
         .fillMaxSize()) {
         //This will switch between the guest login and user login
-        if (isGuestMode) {
+        if (isGuestMode == true) {
             GuestLoginContent(
                 email = loginVM.email,
-                onSignIn = { loginVM.logInAsGuest { loginSuccess = true } },
+                onSignIn = { loginVM.logInAsGuest() },
                 onSignUp = { navController.goto(MenuRoutes.Register) },
                 onChangeEmail = { loginVM.email = it },
-                onToggleGuest = { isGuestMode = false }
+                onToggleGuest = {  }
             )
         } else {
             LoginContent(
                 email = loginVM.email,
                 password = loginVM.password,
-                failMessage = failMessage,
+                failMessage = failMessage!!,
                 onChangeEmail = {  loginVM.email = it },
                 onChangePassword = { loginVM.password = it },
-                onToggleGuest = { isGuestMode = true },
+                onToggleGuest = {  },
                 onSignIn = {
                     loginVM.logIn(
-                        onFailure = { failMessage = it.message + '\n' + it.recoverySuggestion },
-                        onSuccess = { loginSuccess = true }
+                        onFailure = {  },
+                        onSuccess = {}
                     ) },
                 onSignUp = { navController.goto(MenuRoutes.Register) },
                 onResetPassword = settingsVM::resetPassword,

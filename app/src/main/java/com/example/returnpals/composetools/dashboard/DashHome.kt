@@ -39,17 +39,18 @@ import com.amplifyframework.api.graphql.model.ModelQuery
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.generated.model.User
 import com.example.returnpals.R
-import com.example.returnpals.navigation.go2
 import com.example.returnpals.navigation.MenuRoutes
+import com.example.returnpals.navigation.go2
 import com.example.returnpals.services.LoginViewModel
 
 val vm = DashHomeViewModel()
 @Composable
 fun HomeDash(navController: NavController, loginVM: LoginViewModel) {
     val hasName by vm.hasUserName.observeAsState()
+    val isLoggedIn = loginVM.isLoggedIn.observeAsState()
     vm.init()
     if (hasName == true) {
-        DashboardMenuScaffold(navController, loginVM.isLoggedIn ?: false, loginVM::logOut) {
+        DashboardMenuScaffold(navController, isLoggedIn.value!!, loginVM::logOut) {
             HomeDashContent(navController = navController, firstName = vm.getFirstName())
         }
     } else if (hasName == false) {

@@ -9,7 +9,7 @@ interface LoginRepository {
 
 
     suspend fun logInAsGuest(email: String,result: (Boolean)->Unit)
-    suspend fun logIn(email:String,password: String,result: (Boolean)->Unit)
+    suspend fun logIn(email:String,password: String,result:(Boolean,String,String)->Unit)
 
     /**
      * Log in with third-party authentication (Google, Apple, Facebook, etc).

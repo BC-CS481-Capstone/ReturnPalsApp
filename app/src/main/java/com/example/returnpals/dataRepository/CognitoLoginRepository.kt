@@ -44,8 +44,10 @@ object CognitoLoginRepository: LoginRepository {
         result(success)
     }
 
-    override suspend fun logIn(email: String, password: String,result: (Boolean)->Unit) {
+    override suspend fun logIn(email: String, password: String,result:(Boolean,String,String)->Unit) {
         var success = false
+        var message = ""
+        var recoverySuggestion = ""
         Log.d("LoginRepository", "logIn")
         try {
             val result = Amplify.Auth.signIn(email, password)
@@ -61,11 +63,17 @@ object CognitoLoginRepository: LoginRepository {
                 throw AuthException("Additional steps needed: ${result.nextStep}", "Complete the next step.")
             }
         } catch (error: AuthException) {
+            if (error.message != null) {
+                message = error.message!!
+            }
+            if (error.recoverySuggestion != null) {
+                recoverySuggestion = error.recoverySuggestion!!
+            }
             // Not flagged as an error in logcat because its the callers job to decide if it is an error or not  
             Log.i("LoginRepository", "Failed to log in as $email", error)
             throw error
         }
-        result(success)
+        result(success,message,recoverySuggestion)
     }
 
     /**

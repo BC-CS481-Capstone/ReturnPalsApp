@@ -61,7 +61,7 @@ fun Settings(navController: NavController, loginVM: LoginViewModel) {
         settingsViewModel.fetchAddresses()
     }
 
-    DashboardMenuScaffold(navController, loginVM.isLoggedIn ?: false, loginVM::logOut) {
+    DashboardMenuScaffold(navController, loginVM.isLoggedIn.value!! ?: false, loginVM::logOut) {
         if (showResetPasswordDialog) {
             ResetPasswordDialog(
                 onDismiss = { showResetPasswordDialog = false },
