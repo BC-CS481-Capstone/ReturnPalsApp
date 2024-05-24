@@ -23,16 +23,18 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.returnpals.composetools.CustomTextField
 import com.example.returnpals.composetools.CustomTextPasswordFields
 import com.example.returnpals.composetools.CustomTextRowFields
+import com.example.returnpals.dataRepository.CognitoRegisterRepository
 import com.example.returnpals.viewmodel.RegisterViewModel
 
 @Composable
 fun Register(navController: NavController) {
-    RegisterScreen(viewModel())
+    val registerRepository = CognitoRegisterRepository()
+    val registerVM = RegisterViewModel(registerRepository,navController)
+    RegisterScreen(registerVM)
 }
 
 
