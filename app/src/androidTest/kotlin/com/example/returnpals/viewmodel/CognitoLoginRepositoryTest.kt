@@ -10,12 +10,13 @@ class CognitoLoginRepositoryTest {
 
     val email = "test@bellevue.college"
     val password = "Password123$"
+    val lambdaTest:(Boolean,String,String)->Unit =  {it,message,recoverSuggestion ->}
 
     @Test
     fun logInAsGuest() = runTest {
         if (CognitoLoginRepository.isLoggedIn == true)
             CognitoLoginRepository.logOut(){}
-        CognitoLoginRepository.logInAsGuest(email){}
+        CognitoLoginRepository.logInAsGuest(email,lambdaTest)
         assert(CognitoLoginRepository.isLoggedIn == true) { "isLoggedIn: expected true, was false" }
         assert(CognitoLoginRepository.isGuest) { "isGuest: expected true, was false" }
         assert(CognitoLoginRepository.email == email) { "email: expected $email, was ${CognitoLoginRepository.email}" }
@@ -25,7 +26,7 @@ class CognitoLoginRepositoryTest {
     fun logIn() = runTest {
         if (CognitoLoginRepository.isLoggedIn == true)
             CognitoLoginRepository.logOut(){}
-        CognitoLoginRepository.logIn(email, password){}
+        CognitoLoginRepository.logIn(email, password,lambdaTest)
         assert(CognitoLoginRepository.isLoggedIn == true) { "isLoggedIn: expected true, was false" }
         assert(!CognitoLoginRepository.isGuest) { "isGuest: expected false, was true" }
         assert(CognitoLoginRepository.email == email) { "email: expected $email, was ${CognitoLoginRepository.email}" }
@@ -34,7 +35,7 @@ class CognitoLoginRepositoryTest {
     @Test
     fun logOut() = runTest {
         if (CognitoLoginRepository.isLoggedIn == false)
-            CognitoLoginRepository.logIn(email, password){}
+            CognitoLoginRepository.logIn(email, password,lambdaTest)
         CognitoLoginRepository.logOut(){}
         assert(CognitoLoginRepository.isLoggedIn == false) { "isLoggedIn: expected false, was true" }
         assert(!CognitoLoginRepository.isGuest) { "isGuest: expected false, was true" }
