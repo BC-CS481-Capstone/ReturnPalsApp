@@ -41,10 +41,11 @@ class ConfirmEmailViewModel(
         onFailure: (AuthException) -> Unit = {},
         onSuccess: () -> Unit = {}
     ) {
+        val lambda:(Boolean,String,String)->Unit =  {it,message,recoverSuggestion ->}
         viewModelScope.launch(context) {
             withContext(Dispatchers.IO) {
                 try {
-                    CognitoLoginRepository.confirmEmail(code,{})
+                    CognitoLoginRepository.confirmEmail(code,lambda)
                     onSuccess()
                 } catch (error: AuthException) {
                     onFailure(error)

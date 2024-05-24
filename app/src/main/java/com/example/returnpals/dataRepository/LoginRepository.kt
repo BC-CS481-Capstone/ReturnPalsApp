@@ -8,7 +8,7 @@ interface LoginRepository {
 
 
 
-    suspend fun logInAsGuest(email: String,result: (Boolean)->Unit)
+    suspend fun logInAsGuest(email: String,result: (Boolean,String,String)->Unit)
     suspend fun logIn(email:String,password: String,result:(Boolean,String,String)->Unit)
 
     /**
@@ -22,10 +22,10 @@ interface LoginRepository {
         email: String,
         password: String,
         phoneNumber: String? = null,
-        result: (Boolean)->Unit
+        result: (Boolean,String,String)->Unit
     )
 
-    suspend fun confirmEmail(code: String,result: (Boolean)->Unit)
+    suspend fun confirmEmail(code: String,result: (Boolean,String,String)->Unit)
 
 
     /** Updates this repository with the remote database. */

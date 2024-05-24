@@ -29,7 +29,7 @@ object CognitoLoginRepository: LoginRepository {
     var isLoggedIn by mutableStateOf<Boolean?>(null)
         private set
 
-    override suspend fun logInAsGuest(email: String,result: (Boolean)->Unit) {
+    override suspend fun logInAsGuest(email: String,result: (Boolean,String,String)->Unit) {
         var success = false
         Log.d("LoginRepository", "logInAsGuest")
         if (isLoggedIn ==true) {
@@ -41,7 +41,7 @@ object CognitoLoginRepository: LoginRepository {
         isGuest = true
         isLoggedIn = true
         success = true
-        result(success)
+        result(success,"","") //TODO messages
     }
 
     override suspend fun logIn(email: String, password: String,result:(Boolean,String,String)->Unit) {
@@ -136,7 +136,7 @@ object CognitoLoginRepository: LoginRepository {
         email: String,
         password: String,
         phoneNumber: String?,
-        result: (Boolean)->Unit
+        result: (Boolean,String,String)->Unit
     ) {
         var success = false
         Log.d("LoginRepository", "register")
@@ -160,13 +160,13 @@ object CognitoLoginRepository: LoginRepository {
             Log.i("LoginRepository", "Failed to register with $email", error)
             throw error
         }
-        result(success)
+        result(success,"","") //TODO messages
     }
 
     /**
      * @param code the confirmation code sent to the user's email
      */
-    override suspend fun confirmEmail(code: String, result: (Boolean)->Unit) {
+    override suspend fun confirmEmail(code: String, result: (Boolean,String,String)->Unit) {
         var success = false
         Log.d("LoginRepository", "confirmEmail")
         try {
@@ -183,7 +183,7 @@ object CognitoLoginRepository: LoginRepository {
             Log.i("LoginRepository", "Failed to confirm email: $email", error)
             throw error
         }
-        result(success)
+        result(success,"","") //TODO messages
     }
 
     /** Updates this repository with the remote database. */

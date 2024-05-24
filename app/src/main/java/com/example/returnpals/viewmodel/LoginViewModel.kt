@@ -23,7 +23,7 @@ import kotlin.coroutines.CoroutineContext
 class LoginViewModel(
     email: String = "",
     password: String = "",
-//    private val repository: LoginRepository       login repo is a global object for now
+//    private val repository: LoginRepository  login repo is a global object for now
 ): ViewModel() {
     /** Gets updated on calls to [logIn], [logOut], [register], and [logInAsGuest]. **/
     //val isLoggedIn get() = CognitoLoginRepository.isLoggedIn
@@ -49,13 +49,17 @@ class LoginViewModel(
         onFailure: (AuthException) -> Unit = {},
         onSuccess: () -> Unit = {}
     ) {
+        val lambda:(Boolean,String,String)->Unit = { it, message, recoverSuggestion ->
+        }
         viewModelScope.launch(context) {
             withContext(Dispatchers.Main) {
                 try {
-                    CognitoLoginRepository.register(email, password){}
+                    CognitoLoginRepository.register(email, password,phoneNumber = null,lambda)
                     onSuccess()
                 } catch (error: AuthException) {
                     onFailure(error)
+                    //Set fail message as part of exception logic.This Requires Amplify Cognito Auth to work TODO Decouple tightly coupled to Amplifly logic
+                    setFailMessage(error.message!!,error.recoverySuggestion)
                 }
             }
         }
@@ -67,12 +71,14 @@ class LoginViewModel(
         onFailure: (AuthException) -> Unit = {},
         onSuccess: () -> Unit = {}
     ) {
+        //Reset Fail message
+        _message.postValue("")
         val lambda:(Boolean,String,String)->Unit =  {it,message,recoverSuggestion ->
             if (it) {
             _isLoggedIn.postValue(true)
-            } else {
-                _message.postValue(message+'\n'+recoverSuggestion)
             }
+            //Set fail message if this was part of call back logic.
+            setFailMessage(message,recoverSuggestion)
         }
         viewModelScope.launch(context) {
             withContext(Dispatchers.Main) {
@@ -82,6 +88,8 @@ class LoginViewModel(
                     onSuccess()
                 } catch (error: AuthException) {
                     onFailure(error)
+                    //Set fail message as part of exception logic.This Requires Amplify Cognito Auth to work TODO Decouple tightly coupled to Amplifly logic
+                    setFailMessage(error.message!!,error.recoverySuggestion)
                 }
             }
         }
@@ -106,6 +114,8 @@ class LoginViewModel(
                 } catch (error: AuthException) {
                     Log.e("LoginViewModel", "Failed to log out!")
                     onFailure(error)
+                    //Set fail message as part of exception logic.This Requires Amplify Cognito Auth to work TODO Decouple tightly coupled to Amplifly logic
+                    setFailMessage(error.message!!,error.recoverySuggestion)
                 }
             }
         }
@@ -117,7 +127,8 @@ class LoginViewModel(
         onFailure: (AuthException) -> Unit = {},
         onSuccess: () -> Unit = {}
     ) {
-        val lambda:(Boolean)->Unit =  {if (it) {
+        val lambda:(Boolean,String,String)->Unit =  {it,message,recoverSuggestion ->
+            if (it) {
             _isGuest.postValue(true)
         }}
         viewModelScope.launch(context) {
@@ -128,6 +139,8 @@ class LoginViewModel(
                     onSuccess()
                 } catch (error: AuthException) {
                     onFailure(error)
+                    //Set fail message as part of exception logic.This Requires Amplify Cognito Auth to work TODO Decouple tightly coupled to Amplifly logic
+                    setFailMessage(error.message!!,error.recoverySuggestion)
                 }
             }
         }
