@@ -14,8 +14,8 @@ class CognitoLoginRepositoryTest {
     @Test
     fun logInAsGuest() = runTest {
         if (CognitoLoginRepository.isLoggedIn == true)
-            CognitoLoginRepository.logOut()
-        CognitoLoginRepository.logInAsGuest(email)
+            CognitoLoginRepository.logOut(){}
+        CognitoLoginRepository.logInAsGuest(email){}
         assert(CognitoLoginRepository.isLoggedIn == true) { "isLoggedIn: expected true, was false" }
         assert(CognitoLoginRepository.isGuest) { "isGuest: expected true, was false" }
         assert(CognitoLoginRepository.email == email) { "email: expected $email, was ${CognitoLoginRepository.email}" }
@@ -24,8 +24,8 @@ class CognitoLoginRepositoryTest {
     @Test
     fun logIn() = runTest {
         if (CognitoLoginRepository.isLoggedIn == true)
-            CognitoLoginRepository.logOut()
-        CognitoLoginRepository.logIn(email, password)
+            CognitoLoginRepository.logOut(){}
+        CognitoLoginRepository.logIn(email, password){}
         assert(CognitoLoginRepository.isLoggedIn == true) { "isLoggedIn: expected true, was false" }
         assert(!CognitoLoginRepository.isGuest) { "isGuest: expected false, was true" }
         assert(CognitoLoginRepository.email == email) { "email: expected $email, was ${CognitoLoginRepository.email}" }
@@ -34,8 +34,8 @@ class CognitoLoginRepositoryTest {
     @Test
     fun logOut() = runTest {
         if (CognitoLoginRepository.isLoggedIn == false)
-            CognitoLoginRepository.logIn(email, password)
-        CognitoLoginRepository.logOut()
+            CognitoLoginRepository.logIn(email, password){}
+        CognitoLoginRepository.logOut(){}
         assert(CognitoLoginRepository.isLoggedIn == false) { "isLoggedIn: expected false, was true" }
         assert(!CognitoLoginRepository.isGuest) { "isGuest: expected false, was true" }
         assert(CognitoLoginRepository.email == null) { "email: expected null, was ${CognitoLoginRepository.email}" }
