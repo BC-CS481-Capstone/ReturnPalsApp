@@ -4,6 +4,8 @@ import MainMenuScaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import com.example.returnpals.dataRepository.ContactRepositoryAmplify
+import com.example.returnpals.viewmodel.ContactViewModel
 import com.example.returnpals.viewmodel.MainMenuScreenViewModel
 
 
@@ -21,12 +23,13 @@ import com.example.returnpals.viewmodel.MainMenuScreenViewModel
 @Composable
 fun MainMenuScreen(mainMenuScreenViewModel: MainMenuScreenViewModel) {
     val selectedItem by mainMenuScreenViewModel.contentSet.observeAsState()
+    val contactVM = ContactViewModel(ContactRepositoryAmplify)
     MainMenuScaffold(navigateRoute = mainMenuScreenViewModel::setContent) {
         when(selectedItem){
             "home"->HomeContent(mainMenuScreenViewModel::onMainMenuSignInOrSchedule)
             "about"->AboutContent()
             "pricing"-> PricingContent()
-            "contact"-> ContactContent()
+            "contact"-> ContactContent(contactVM)
             "faq"-> FAQContent()
         }
     }
