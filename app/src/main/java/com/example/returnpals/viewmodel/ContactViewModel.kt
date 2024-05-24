@@ -3,30 +3,20 @@ package com.example.returnpals.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.amplifyframework.datastore.generated.model.MailingList
-import com.example.returnpals.dataRepository.AmplifyOperations
+import com.example.returnpals.dataRepository.ContactRepository
 
-class ContactViewModel : ViewModel() {
+class ContactViewModel(
+    private val contactRepository: ContactRepository
+) : ViewModel() {
     // You can expose LiveData or StateFlow for observing the operation's result in the UI
     private val _submissionSuccessful = MutableLiveData<Boolean?>()
     val submissionSuccessful: LiveData<Boolean?> = _submissionSuccessful
 
     fun submitData(fullName: String, postalCode: String, email: String, message: String) {
-        val model = MailingList.builder()
-            .fullName(fullName)
-            .postalCode(postalCode)
-            .email(email)
-            .message(message)
-            .build()
-
-        AmplifyOperations.sendMailingListData(model,
-            onSuccess = { id ->
-                _submissionSuccessful.postValue(true)
-            },
-            onError = { error ->
-                _submissionSuccessful.postValue(false)
-            }
-        )
+        contactRepository.submitData(fullName,postalCode,email,message){
+            _submissionSuccessful.postValue(it)
+            if (it) resetSubmissionSuccess()
+        }
     }
 
     fun resetSubmissionSuccess() {
