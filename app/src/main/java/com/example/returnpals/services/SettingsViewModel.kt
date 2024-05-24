@@ -21,8 +21,6 @@ import kotlin.random.Random
 import androidx.compose.runtime.livedata.observeAsState
 
 
-
-
 class SettingsViewModel : ViewModel() {
 
     private val _operationStatus = MutableStateFlow<String?>(null)
@@ -37,17 +35,17 @@ class SettingsViewModel : ViewModel() {
     private val _addresses = MutableStateFlow<Map<Int, String>>(mapOf())
     val addresses: StateFlow<Map<Int, String>> = _addresses
 
-    private val _selectedAddressId = MutableStateFlow<Int?>(null)
-    val selectedAddressId: StateFlow<Int?> = _selectedAddressId
+    private val _selectedAddressId = MutableStateFlow<String?>(null)
+    val selectedAddressId: StateFlow<String?> = _selectedAddressId
 
-    fun selectAddress(id: Int) {
+    fun selectAddress(id: String) {
         _selectedAddressId.value = id
+        Log.d("SettingsViewModel", "Selected address ID: $id")
     }
 
-    fun addAddress(id: Int, address: String) {
-        _addresses.value = _addresses.value.toMutableMap().apply {
-            put(id, address)
-        }
+    fun getSelectedAddress(): String? {
+        val selectedId = _selectedAddressId.value
+        return _userAddresses.value.find { it.id == selectedId }?.address
     }
 
     init {
@@ -150,10 +148,10 @@ class SettingsViewModel : ViewModel() {
                 ModelQuery.list(Address::class.java),
                 { response ->
                     if (response.hasData()) {
-                        val filteredAddresses = response.data.items.map { address ->
+                        val simpleAddresses = response.data.items.map { address ->
                             SimpleAddress(address.id, address.address)
                         }
-                        _userAddresses.value = filteredAddresses
+                        _userAddresses.value = simpleAddresses
                     } else if (response.hasErrors()) {
                         Log.e("MyAmplifyApp", "Error fetching addresses: ${response.errors.first().message}")
                     }
@@ -241,4 +239,3 @@ class SettingsViewModel : ViewModel() {
     }
 
 }
-
