@@ -27,7 +27,6 @@ import java.time.LocalDate
  * https://developer.android.com/topic/libraries/architecture/viewmodel#best-practices
  * https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-apis
  */
-
 class OrderViewModel(
     pickup: PickupInfo = PickupInfo(),
     val navController: NavController? = null,
@@ -35,58 +34,55 @@ class OrderViewModel(
     private val maxDate: LocalDate = LocalDate.now().plusYears(1)
 ) : PickupViewModel(pickup) {
 
-    //Condition Variable
+    private val _pickupInfo = MutableLiveData(pickup)
+    val pickupInfo: LiveData<PickupInfo> = _pickupInfo
+
     private val _createReturnSuccessful = MutableLiveData<Boolean?>()
     val createReturnSuccessful: LiveData<Boolean?> = _createReturnSuccessful
     private val _createLabelsSuccessful = MutableLiveData<Boolean?>()
     val createLabelsSuccessful: LiveData<Boolean?> = _createLabelsSuccessful
 
-    //Extra data for returns
     var returnId = ""
+
     fun isValidDate(value: LocalDate): Boolean {
         return run {
             value > minDate && value < maxDate
         }.also {
-            Log.println(Log.INFO, "ScheduleReturnViewModel::isValidDate", it.toString())
+            Log.println(Log.INFO, "OrderViewModel::isValidDate", it.toString())
         }
     }
 
-    fun onSubmit(email:String) {
-
+    fun onSubmit(email: String) {
         val uris = mutableListOf<String>()
-        info.packages.forEach {
-            thing -> uris.add(thing.label)
-        }
-        val hasImage = info.packages.isNotEmpty()
+        _pickupInfo.value?.packages?.forEach { thing -> uris.add(thing.label) }
+        val hasImage = _pickupInfo.value?.packages?.isNotEmpty() == true
 
         val order = OrderRepository(
             Backend.Profile.getID(),
             email,
-            Temporal.Date(info.date.toString()),
-            info.address.toString(),
+            Temporal.Date(_pickupInfo.value?.date.toString()),
+            _pickupInfo.value?.address.toString(),
             listOf(1, 2, 3),
             PickupStatus.ON_THE_WAY,
             hasImage,
             uris,
-            method = info.method
+            method = _pickupInfo.value?.method
         )
         createOrder(order)
 
-        Log.println(Log.INFO, "ScheduleReturnViewModel::onSubmit", info.toString())
+        Log.println(Log.INFO, "OrderViewModel::onSubmit", _pickupInfo.value.toString())
     }
 
     fun submitLabels() {
-        // Uploads a list of labels to the database
-        // Post when successful
         var uploaded = true
-        info.packages.forEach {
+        _pickupInfo.value?.packages?.forEach {
             val record = Labels.builder().type(it.labelType).returnsId(returnId).image(it.label).build()
-            Amplify.API.mutate(ModelMutation.create(record),{
-                Log.i("backend",it.toString())
-                if(it.hasData() && !it.hasErrors()) {
+            Amplify.API.mutate(ModelMutation.create(record), {
+                Log.i("backend", it.toString())
+                if (it.hasData() && !it.hasErrors()) {
                     uploaded = false
                 }
-            },{
+            }, {
                 uploaded = false
             })
         }
@@ -96,14 +92,15 @@ class OrderViewModel(
             _createLabelsSuccessful.postValue(false)
         }
     }
-    private fun createOrder(returns: OrderRepository){
-        Amplify.API.mutate(ModelMutation.create(returns.order),{
-            Log.i("backend",it.toString())
+
+    private fun createOrder(returns: OrderRepository) {
+        Amplify.API.mutate(ModelMutation.create(returns.order), {
+            Log.i("backend", it.toString())
             if (!it.hasErrors()) {
                 returnId = it.data.id
                 _createReturnSuccessful.postValue(true)
                 Backend.orderList.add(returns)
-                if(returns.getHasImage()) {
+                if (returns.getHasImage()) {
                     Log.i("Backend", "True checked")
                     returns.getImages().forEach { uri ->
                         val file = File(uri)
@@ -112,17 +109,20 @@ class OrderViewModel(
                             { Log.i("Backend", "Successfully uploaded: $uri") },
                             { error -> Log.e("Backend", "Upload failed", error) }
                         )
-
                     }
                 }
             } else {
                 Log.e("Backend", it.errors.first().message)
             }
-        },{
+        }, {
             _createReturnSuccessful.postValue(false)
         })
-
     }
+
+    fun updatePickupAddress(address: String?) {
+        _pickupInfo.value = _pickupInfo.value?.copy(address = address)
+    }
+}
 
 //    companion object {
 //
@@ -138,4 +138,3 @@ class OrderViewModel(
 //
 //    }
 
-}
