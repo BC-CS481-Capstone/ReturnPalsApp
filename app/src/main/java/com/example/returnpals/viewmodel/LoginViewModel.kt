@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amplifyframework.auth.AuthException
-import com.example.returnpals.dataRepository.CognitoLoginRepository
+import com.example.returnpals.dataRepository.LoginRepositoryAmplify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -54,7 +54,7 @@ class LoginViewModel(
         viewModelScope.launch(context) {
             withContext(Dispatchers.Main) {
                 try {
-                    CognitoLoginRepository.register(email, password,phoneNumber = null,lambda)
+                    LoginRepositoryAmplify.register(email, password,phoneNumber = null,lambda)
                     onSuccess()
                 } catch (error: AuthException) {
                     onFailure(error)
@@ -84,8 +84,8 @@ class LoginViewModel(
         viewModelScope.launch(context) {
             withContext(Dispatchers.Main) {
                 try {
-                    if (isLoggedIn.value == true) CognitoLoginRepository.logOut({ })
-                    CognitoLoginRepository.logIn(email, password,lambda)
+                    if (isLoggedIn.value == true) LoginRepositoryAmplify.logOut({ })
+                    LoginRepositoryAmplify.logIn(email, password,lambda)
                     onSuccess()
                 } catch (error: AuthException) {
                     onFailure(error)
@@ -110,7 +110,7 @@ class LoginViewModel(
             withContext(Dispatchers.Main) {
                 try {
                     /* Removed this logic as it would not work when the app closed and opened again if (isLoggedIn == true)*/
-                    CognitoLoginRepository.logOut(lambda)
+                    LoginRepositoryAmplify.logOut(lambda)
                     onSuccess()
                 } catch (error: AuthException) {
                     Log.e("LoginViewModel", "Failed to log out!")
@@ -139,8 +139,8 @@ class LoginViewModel(
         viewModelScope.launch(context) {
             withContext(Dispatchers.Main) {
                 try {
-                    if (isLoggedIn.value == true) CognitoLoginRepository.logOut({})
-                    CognitoLoginRepository.logInAsGuest(email,lambda)
+                    if (isLoggedIn.value == true) LoginRepositoryAmplify.logOut({})
+                    LoginRepositoryAmplify.logInAsGuest(email,lambda)
                     onSuccess()
                 } catch (error: AuthException) {
                     onFailure(error)

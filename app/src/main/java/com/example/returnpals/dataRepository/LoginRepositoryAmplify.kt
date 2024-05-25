@@ -15,7 +15,7 @@ import com.amplifyframework.kotlin.core.Amplify
 /**
  * Encapsulates log in, log out, and registration capabilities using AWS Cognito and Auth API.
  */
-object CognitoLoginRepository: LoginRepository {
+object LoginRepositoryAmplify: LoginRepository {
     // https://developer.android.com/develop/ui/compose/kotlin#coroutines
 
     /** Is the same value as the username.
@@ -37,7 +37,7 @@ object CognitoLoginRepository: LoginRepository {
             Log.i("LoginRepository", "Failed guest log in as $email", error)
             throw error
         }
-        CognitoLoginRepository.email = email
+        LoginRepositoryAmplify.email = email
         isGuest = true
         isLoggedIn = true
         success = true
@@ -52,7 +52,7 @@ object CognitoLoginRepository: LoginRepository {
         try {
             val result = Amplify.Auth.signIn(email, password)
             if (result.isSignedIn) {
-                CognitoLoginRepository.email = email
+                LoginRepositoryAmplify.email = email
                 isGuest = false
                 isLoggedIn = true
                 success = true
@@ -148,7 +148,7 @@ object CognitoLoginRepository: LoginRepository {
         try {
             val result = Amplify.Auth.signUp(email, password, options)
             if (result.isSignUpComplete) {
-                CognitoLoginRepository.email = email
+                LoginRepositoryAmplify.email = email
                 isGuest = false
                 isLoggedIn = true
                 Log.i("LoginRepository", "Registered with $email")

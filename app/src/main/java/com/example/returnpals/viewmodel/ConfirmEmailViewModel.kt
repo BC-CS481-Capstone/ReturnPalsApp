@@ -8,14 +8,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amplifyframework.auth.AuthException
-import com.example.returnpals.dataRepository.CognitoLoginRepository
+import com.example.returnpals.dataRepository.LoginRepositoryAmplify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
 class ConfirmEmailViewModel(
-    val email: String = CognitoLoginRepository.email ?: ""
+    val email: String = LoginRepositoryAmplify.email ?: ""
 ) : ViewModel() {
     //View model for confirm number. Sends data to amplify (confirm number)
 
@@ -45,7 +45,7 @@ class ConfirmEmailViewModel(
         viewModelScope.launch(context) {
             withContext(Dispatchers.IO) {
                 try {
-                    CognitoLoginRepository.confirmEmail(code,lambda)
+                    LoginRepositoryAmplify.confirmEmail(code,lambda)
                     onSuccess()
                 } catch (error: AuthException) {
                     onFailure(error)
