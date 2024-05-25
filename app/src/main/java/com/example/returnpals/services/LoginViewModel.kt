@@ -21,9 +21,9 @@ import kotlin.coroutines.CoroutineContext
 
 //Login View model provides the information and function needed to login, logout, and signup.
 class LoginViewModel(
-    private val navController: NavController,
     email: String = "",
     password: String = "",
+    private val navController: NavController? = null,
 ): ViewModel() {
 
     /** Gets updated on calls to [logIn], [logOut], [register], and [logInAsGuest]. **/
@@ -33,16 +33,23 @@ class LoginViewModel(
     var password by mutableStateOf(password)
 
     fun register(
+        firstName: String = "",
+        lastName: String = "",
+        phoneNumber: String = "",
         context: CoroutineContext = viewModelScope.coroutineContext,
         onFailure: (String) -> Unit = {}
     ) {
         viewModelScope.launch(context) {
             withContext(Dispatchers.IO) {
-                val result = LoginRepository.register(email, password)
+                val result = LoginRepository.register(
+                    email, password,
+                    if (firstName == "") null else firstName,
+                    if (lastName == "") null else lastName,
+                    if (phoneNumber == "") null else phoneNumber)
                 withContext(Dispatchers.Main) {
                     when (result) {
-                        RepoResult.SUCCESS -> navController.goto(MenuRoutes.HomeDash)
-                        RepoResult.INCOMPLETE -> navController.goto(MenuRoutes.ConfirmNumber)
+                        RepoResult.SUCCESS -> navController?.goto(MenuRoutes.HomeDash)
+                        RepoResult.INCOMPLETE -> navController?.goto(MenuRoutes.ConfirmNumber)
                         RepoResult.PARTIAL -> onFailure(result.message)
                         RepoResult.FAILURE -> onFailure(result.message)
                     }
@@ -61,7 +68,7 @@ class LoginViewModel(
                 val result = LoginRepository.confirmEmail(code)
                 withContext(Dispatchers.Main) {
                     when (result) {
-                        RepoResult.SUCCESS -> navController.goto(MenuRoutes.SignIn)
+                        RepoResult.SUCCESS -> navController?.goto(MenuRoutes.SignIn)
                         RepoResult.INCOMPLETE -> onFailure(result.message)
                         RepoResult.PARTIAL -> onFailure(result.message)
                         RepoResult.FAILURE -> onFailure(result.message)
@@ -80,8 +87,8 @@ class LoginViewModel(
                 val result = LoginRepository.logIn(email, password)
                 withContext(Dispatchers.Main) {
                     when (result) {
-                        RepoResult.SUCCESS -> navController.goto(MenuRoutes.HomeDash)
-                        RepoResult.INCOMPLETE -> navController.goto(MenuRoutes.ConfirmNumber)
+                        RepoResult.SUCCESS -> navController?.goto(MenuRoutes.HomeDash)
+                        RepoResult.INCOMPLETE -> navController?.goto(MenuRoutes.ConfirmNumber)
                         RepoResult.PARTIAL -> onFailure(result.message)
                         RepoResult.FAILURE -> onFailure(result.message)
                     }
@@ -91,6 +98,7 @@ class LoginViewModel(
     }
 
     fun logOut(
+        route: String = MenuRoutes.Home,
         context: CoroutineContext = viewModelScope.coroutineContext,
         onFailure: (String) -> Unit = {}
     ) {
@@ -99,7 +107,12 @@ class LoginViewModel(
                 val result = LoginRepository.logOut()
                 withContext(Dispatchers.Main) {
                     when (result) {
-                        RepoResult.SUCCESS -> navController.goto(MenuRoutes.Home)
+                        RepoResult.SUCCESS -> {
+                            navController?.goto(route)
+                            // for sake of ease of demo
+                            email = "test@bellevue.college"
+                            password = "Password123$"
+                        }
                         RepoResult.INCOMPLETE -> onFailure(result.message)
                         RepoResult.PARTIAL -> onFailure(result.message)
                         RepoResult.FAILURE -> onFailure(result.message)
@@ -118,8 +131,27 @@ class LoginViewModel(
                 val result = LoginRepository.logInAsGuest(email)
                 withContext(Dispatchers.Main) {
                     when (result) {
-                        RepoResult.SUCCESS -> navController.goto(MenuRoutes.Home)
-                        RepoResult.INCOMPLETE -> navController.goto(MenuRoutes.ConfirmNumber)
+                        RepoResult.SUCCESS -> navController?.goto(MenuRoutes.Home)
+                        RepoResult.INCOMPLETE -> navController?.goto(MenuRoutes.ConfirmNumber)
+                        RepoResult.PARTIAL -> onFailure(result.message)
+                        RepoResult.FAILURE -> onFailure(result.message)
+                    }
+                }
+            }
+        }
+    }
+
+    fun update(
+        context: CoroutineContext = viewModelScope.coroutineContext,
+        onFailure: (String) -> Unit = {}
+    ) {
+        viewModelScope.launch(context) {
+            withContext(Dispatchers.IO) {
+                val result = LoginRepository.update()
+                withContext(Dispatchers.Main) {
+                    when (result) {
+                        RepoResult.SUCCESS -> {}
+                        RepoResult.INCOMPLETE -> onFailure(result.message)
                         RepoResult.PARTIAL -> onFailure(result.message)
                         RepoResult.FAILURE -> onFailure(result.message)
                     }

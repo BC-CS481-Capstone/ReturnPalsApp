@@ -151,21 +151,26 @@ object LoginRepository {
     suspend fun register(
         email: String,
         password: String,
+        firstName: String? = null,
+        lastName: String? = null,
         phoneNumber: String? = null,
     ): RepoResult {
         Log.d("LoginRepository", "register")
+
         var status = RepoResult.FAILURE
         val options: AuthSignUpOptions =
             AuthSignUpOptions.builder().also { builder ->
+                firstName?.let { builder.userAttribute(AuthUserAttributeKey.givenName(), it) }
+                lastName?.let { builder.userAttribute(AuthUserAttributeKey.familyName(), it) }
                 phoneNumber?.let { builder.userAttribute(AuthUserAttributeKey.phoneNumber(), it) }
             }.build()
 
         try {
             val result = Amplify.Auth.signUp(email, password, options)
+            this.email = email
             if (result.isSignUpComplete) {
-                this.email = email
                 isGuest = false
-                isLoggedIn = true
+                isLoggedIn = false
                 Log.i("LoginRepository", "Registered with $email")
                 status = RepoResult.SUCCESS
             } else {
@@ -199,11 +204,12 @@ object LoginRepository {
         Log.d("LoginRepository", "confirmEmail")
         var status = RepoResult.FAILURE
         try {
-            if (email == null) {
+            if (email != null) {
                 val result = Amplify.Auth.confirmSignUp(email!!, code)
                 if (result.isSignUpComplete) {
                     Log.i("LoginRepository", "Confirmed email: $email.")
                     status = RepoResult.SUCCESS
+                    isLoggedIn = true
                 } else {
                     Log.w("LoginRepository", "Incomplete email confirmation: $email")
                     status = RepoResult.INCOMPLETE.message("Additional steps needed: ${result.nextStep}")

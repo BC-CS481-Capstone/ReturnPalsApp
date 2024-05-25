@@ -56,7 +56,10 @@ fun LoginScreen(
             GuestLoginContent(
                 email = loginVM.email,
                 onSignIn = { loginVM.logInAsGuest { failMessage = it } },
-                onSignUp = { navController.goto(MenuRoutes.Register) },
+                onSignUp = {
+                    loginVM.email = ""
+                    loginVM.password = ""
+                    navController.goto(MenuRoutes.Register) },
                 onChangeEmail = { loginVM.email = it },
                 onToggleGuest = { isGuestMode = false }
             )
@@ -69,33 +72,13 @@ fun LoginScreen(
                 onChangePassword = { loginVM.password = it },
                 onToggleGuest = { isGuestMode = true },
                 onSignIn = { loginVM.logIn { failMessage = it } },
-                onSignUp = { navController.goto(MenuRoutes.Register) },
+                onSignUp = {
+                    loginVM.email = ""
+                    loginVM.password = ""
+                    navController.goto(MenuRoutes.Register) },
                 onResetPassword = settingsVM::resetPassword,
                 onConfirmResetPassword = settingsVM::confirmResetPassword
             )
-        }
-    }
-}
-
-@Composable
-fun ConfirmEmailContent(emailToConfirm:String, message:String, submitNumber:String, onSubmitNumberChange:(String)->Unit, verifyButton:()->Unit) {
-    //Promt a user for confirm number with space to enter and button to confirm
-    val config = getConfig()
-    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceBetween
-        //,modifier = Modifier.fillMaxSize()
-
-    ) {
-        IconManager().getReturnPalNameIcon(Modifier.requiredWidth(config.screenWidthDp.dp))
-        Text("Please enter the confirmation number sent to,\n")
-        Text(emailToConfirm)
-        OutlinedTextField(value=submitNumber, onValueChange = onSubmitNumberChange)
-        Text(message)
-        Button(onClick = verifyButton,
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008BE7),
-                contentColor = Color.White)
-            //,modifier = Modifier.padding(bottom=300.dp)
-        ) {
-            Text("Verify")
         }
     }
 }
@@ -131,14 +114,16 @@ fun LoginContent(
         OutlinedTextField(
             value = email,
             onValueChange = onChangeEmail,
-            label = { Text("Email") }
+            label = { Text("Email") },
+            singleLine = true
         )
         Spacer(modifier = Modifier.height(10.dp))
         OutlinedTextField(
             value = password,
             onValueChange = onChangePassword,
             visualTransformation = PasswordVisualTransformation(),
-            label = { Text("Password") }
+            label = { Text("Password") },
+            singleLine = true
         )
         Text(failMessage, textAlign=TextAlign.Center, color=ReturnPalTheme.colorScheme.error)
         //Forgot your password button
@@ -211,7 +196,8 @@ fun GuestLoginContent(
         OutlinedTextField(
             value = email,
             onValueChange = onChangeEmail,
-            label = { Text("Email") }
+            label = { Text("Email") },
+            singleLine = true
         )
         Spacer(modifier = Modifier.height(10.dp))
 

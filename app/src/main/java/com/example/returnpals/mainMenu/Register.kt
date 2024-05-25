@@ -1,6 +1,5 @@
 package com.example.returnpals.mainMenu
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,9 +12,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -26,16 +23,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.composetools.CustomTextField
-import com.example.returnpals.services.AmplifyOperations
-import com.example.returnpals.services.Backend
-import com.example.returnpals.services.RegisterViewModel
+import com.example.returnpals.services.LoginViewModel
 
 @Composable
-fun RegistrationScreen(navController: NavController) {
+fun RegistrationScreen(loginVM: LoginViewModel) {
     val customColor = Color(0xFFE1F6FF)
 
     LazyColumn(
@@ -45,7 +37,7 @@ fun RegistrationScreen(navController: NavController) {
             .padding(16.dp)
     ) {
         item { Title() }
-        item { RegistrationForm(navController = navController) }
+        item { RegistrationForm(loginVM) }
     }
 }
 
@@ -62,28 +54,27 @@ private fun Title() {
 }
 
 @Composable
-fun RegistrationForm(navController: NavController, viewModel: RegisterViewModel = viewModel()) {
+fun RegistrationForm(loginVM: LoginViewModel) {
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
+    var failMessage by remember { mutableStateOf("") }
     val selectedBlue = Color(0xFF008BE7)
     val customColor = Color(0xFFE1F6FF)
-    val submissionSuccessful by viewModel.submissionSuccessful.observeAsState()
 
     // Use LaunchedEffect to clear fields on submission success
-   LaunchedEffect(submissionSuccessful) {
-        if (submissionSuccessful == true) {
-            firstName = ""
-            lastName = ""
-            address = ""
-            email = ""
-            phoneNumber = ""
-            // Reset the submission success state in the ViewModel to prevent repeated actions
-            viewModel.resetSubmissionSuccess()
-        }
-    }
+//   LaunchedEffect(submissionSuccessful) {
+//        if (submissionSuccessful == true) {
+//            firstName = ""
+//            lastName = ""
+//            address = ""
+//            email = ""
+//            phoneNumber = ""
+//            // Reset the submission success state in the ViewModel to prevent repeated actions
+//            viewModel.resetSubmissionSuccess()
+//        }
+//    }
 
     Column(
         modifier = Modifier
@@ -95,6 +86,17 @@ fun RegistrationForm(navController: NavController, viewModel: RegisterViewModel 
     ) {
 
         Spacer(modifier = Modifier.height(16.dp))
+        CustomTextField(label = "Email*", text = loginVM.email, onValueChange = { loginVM.email = it })
+        Spacer(modifier = Modifier.height(8.dp))
+
+        CustomTextField(
+            label = "Password*",
+            text = loginVM.password,
+            onValueChange = { loginVM.password = it},
+            hideText = true
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
         CustomTextField(label = "First Name*", text = firstName, onValueChange = { firstName = it })
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -104,26 +106,23 @@ fun RegistrationForm(navController: NavController, viewModel: RegisterViewModel 
             onValueChange = { lastName = it })
         Spacer(modifier = Modifier.height(8.dp))
 
-        CustomTextField(
-            label = "Address*",
-            text = address,
-            onValueChange = { address = it })
-        Spacer(modifier = Modifier.height(8.dp))
-
-        CustomTextField(label = "Email*", text = email, onValueChange = { /* Stop Email From Changing email = it*/ })
-        Spacer(modifier = Modifier.height(8.dp))
+//        CustomTextField(
+//            label = "Address*",
+//            text = address,
+//            onValueChange = { address = it })
+//        Spacer(modifier = Modifier.height(8.dp))
 
         CustomTextField(label = "Phone Number*", text = phoneNumber, onValueChange = { phoneNumber = it })
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = {
-                viewModel.submitRegistration(firstName, lastName, email,
-                    address, phoneNumber)
-                // Reset state variables after submission
-
-
-            },
+                loginVM.register(firstName, lastName, phoneNumber) { failMessage = it } },
+//            {
+//                viewModel.submitRegistration(firstName, lastName, email,
+//                    address, phoneNumber)
+//                // Reset state variables after submission
+//            },
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = selectedBlue,
                 contentColor = Color.White
@@ -140,19 +139,20 @@ fun RegistrationForm(navController: NavController, viewModel: RegisterViewModel 
         }
         Spacer(modifier = Modifier.padding(24.dp))
         Button(
-            onClick = {
-                //Logout and sends back to login screen
-                AmplifyOperations.signOut {
-                    Log.i("signOut", it.toString())
-                    Backend.resetEmail()
-                }
-                navController.navigate(MenuRoutes.Home) {
-                    // Clear all the back stack up to the start destination and save state
-                    popUpTo(navController.graph.findStartDestination().id) {
-                        saveState = true
-                    }
-                }
-            },
+            onClick = { loginVM.logOut(MenuRoutes.SignIn) { failMessage = it } },
+//            {
+//                //Logout and sends back to login screen
+//                AmplifyOperations.signOut {
+//                    Log.i("signOut", it.toString())
+//                    Backend.resetEmail()
+//                }
+//                navController.navigate(MenuRoutes.Home) {
+//                    // Clear all the back stack up to the start destination and save state
+//                    popUpTo(navController.graph.findStartDestination().id) {
+//                        saveState = true
+//                    }
+//                }
+//            },
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = selectedBlue,
                 contentColor = Color.White
@@ -168,16 +168,16 @@ fun RegistrationForm(navController: NavController, viewModel: RegisterViewModel 
             )
         }
         Spacer(modifier = Modifier.padding(24.dp))
-        Text(viewModel.failMessage)
-        if (submissionSuccessful == true) {
-            firstName = ""
-            lastName = ""
-            address = ""
-            email = ""
-            phoneNumber = ""
-
-            navController.navigate(MenuRoutes.HomeDash)
-        }
+        Text(failMessage)
+//        if (submissionSuccessful == true) {
+//            firstName = ""
+//            lastName = ""
+//            address = ""
+//            email = ""
+//            phoneNumber = ""
+//
+//            navController.navigate(MenuRoutes.HomeDash)
+//        }
     }
 }
 

@@ -13,10 +13,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CustomTextField(label: String, text: String, onValueChange: (String) -> Unit) {
+fun CustomTextField(
+    label: String, text: String,
+    onValueChange: (String) -> Unit,
+    hideText: Boolean = false,
+) {
     val interactionSource = remember { MutableInteractionSource() }
     val selectedBlue = Color(0xFF008BE7)
     val isFocused = interactionSource.collectIsFocusedAsState().value
@@ -25,7 +31,9 @@ fun CustomTextField(label: String, text: String, onValueChange: (String) -> Unit
     TextField(
         value = text,
         onValueChange = onValueChange,
+        singleLine = true,
         label = { Text(label) },
+        visualTransformation = if (hideText) PasswordVisualTransformation() else VisualTransformation.None,
         modifier = Modifier
             .fillMaxWidth()
             .border(1.dp, borderColor, RoundedCornerShape(corner = CornerSize(4.dp))),

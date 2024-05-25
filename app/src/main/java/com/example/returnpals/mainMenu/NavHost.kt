@@ -31,13 +31,13 @@ import com.example.returnpals.composetools.pickup.PricingScreen
 import com.example.returnpals.composetools.pickup.SelectAddressScreen
 import com.example.returnpals.composetools.pickup.ThankYouScreen
 import com.example.returnpals.composetools.pickup.ThankYouViewModel
-import com.example.returnpals.services.ConfirmEmailViewModel
 import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.services.OrderViewModel
+import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun AppNavigation(navController: NavController) {
-    val loginVM = remember { LoginViewModel(navController, "test@bellevue.college", "Password123$") }
+    val loginVM = remember { LoginViewModel("test@bellevue.college", "Password123$", navController) }
 
     NavHost(
         navController = navController as NavHostController,
@@ -45,6 +45,7 @@ fun AppNavigation(navController: NavController) {
     ) {
 
         composable(MenuRoutes.Home) { entry ->
+            loginVM.update(Dispatchers.Main)
             if (loginVM.isLoggedIn == true && !loginVM.isGuest) {
                 Log.d("NavHost", "User is already logged in, going to dashboard.")
                 navController.goto("dashboard home")
@@ -61,10 +62,13 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.Video) { Video(navController) }
         composable(MenuRoutes.SignIn) { entry ->
             val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
+            // For the sake of ease of demo:
             LoginScreen(loginVM, settingsVM, navController)
         }
         composable(MenuRoutes.FAQ) { FAQ(navController) }
-        composable(MenuRoutes.Register) { RegistrationScreen(navController)}
+        composable(MenuRoutes.Register) {
+            RegistrationScreen(loginVM)
+        }
 
         navigation(
             startDestination = MenuRoutes.HomeDash,
@@ -78,11 +82,7 @@ fun AppNavigation(navController: NavController) {
             // composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }
             //  composable(MenuRoutes.Label) { Label(navController) }
         }
-        composable(MenuRoutes.ConfirmNumber) {
-            // this vm should be destroyed when confirmation is complete
-            val confirmVm = remember { ConfirmEmailViewModel(loginVM.email) }
-            ConfirmEmailScreen(navController, confirmVm)
-        }
+        composable(MenuRoutes.ConfirmNumber) { ConfirmEmailScreen(loginVM) }
         navigation(
             startDestination = "select_date",
             route = MenuRoutes.PickupProcess

@@ -39,7 +39,6 @@ import com.amplifyframework.api.graphql.model.ModelQuery
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.generated.model.User
 import com.example.returnpals.R
-import com.example.returnpals.composetools.go2
 import com.example.returnpals.mainMenu.MenuRoutes
 import com.example.returnpals.services.LoginViewModel
 
@@ -48,17 +47,14 @@ val vm = DashHomeViewModel()
 fun HomeDash(navController: NavController, loginVM: LoginViewModel) {
     val hasName by vm.hasUserName.observeAsState()
     vm.init()
-    if (hasName == true) {
-        DashboardMenuScaffold(navController, loginVM.isLoggedIn ?: false, loginVM::logOut) {
-            HomeDashContent(navController = navController, firstName = vm.getFirstName())
-        }
-    } else if (hasName == false) {
-        go2(navController,MenuRoutes.Register)
+    DashboardMenuScaffold(navController, loginVM.isLoggedIn ?: false, loginVM::logOut) {
+        HomeDashContent(navController = navController, firstName = if (hasName == true) vm.getFirstName() else null)
     }
 
+    // its ok for a user to not have a name (i.e. email but no name)
 }
 @Composable
-fun HomeDashContent(navController: NavController,firstName: String) {
+fun HomeDashContent(navController: NavController,firstName: String?) {
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
 
     LazyColumn( modifier = Modifier
@@ -69,12 +65,11 @@ fun HomeDashContent(navController: NavController,firstName: String) {
     ){
         item{ Welcome(firstName = firstName) }
         item{ DashCard(navController = navController) }
-
     }
 }
 
 @Composable
-fun Welcome(firstName:String) {
+fun Welcome(firstName:String?) {
     Column (
         modifier = Modifier
             .padding(8.dp),
@@ -82,7 +77,7 @@ fun Welcome(firstName:String) {
     ){
 
         Text(
-            text = "Welcome Back, $firstName", // Needs to get user's name
+            text = if (firstName!=null) "Welcome Back, $firstName" else "Welcome", // Needs to get user's name
             style = TextStyle(
                 color = Color.Black,
                 fontSize = 30.sp,
