@@ -71,9 +71,7 @@ data class OrderRepository(private val customerId: String,
     val order : Returns
 
         get() = Returns.Builder()
-            .userId(customerId)
             .address(address)
-            .email(getEmail())
             .confrimationNumber(confirmation)
             .date(date)
             .labelIds(labels)
