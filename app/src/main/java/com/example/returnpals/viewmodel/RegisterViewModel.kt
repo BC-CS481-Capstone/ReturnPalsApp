@@ -3,24 +3,22 @@ package com.example.returnpals.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.example.returnpals.dataRepository.RegisterRepository
-import com.example.returnpals.navigation.MenuRoutes
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 class RegisterViewModel (
-    private val registerRepository: RegisterRepository,
-    private val navController: NavController,
+    private val registerRepository: RegisterRepository
 ): ViewModel(
 
 ){
     // You can expose LiveData or StateFlow for observing the operation's result in the UI
     private val _submissionSuccessful = MutableLiveData<Boolean?>()
     val submissionSuccessful: LiveData<Boolean?> = _submissionSuccessful
+    private val _cancelRegistration = MutableLiveData<Boolean?>()
+    val cancelRegistration: LiveData<Boolean?> = _cancelRegistration
     var failMessage = ""
     
     companion object {
@@ -28,18 +26,19 @@ class RegisterViewModel (
     }
 
     fun onSubmit() {
-        registerRepository.registerUser(errorMessage = { if (it != null )onFailMessage(it) }, registerUserInfo = uiState.value)
+        //Sends UI state to repository and lambda to set error message and condition variable.
+        registerRepository.registerUser(registerUserInfo = uiState.value){ isSuccess,message->
+            _submissionSuccessful.postValue(isSuccess)
+            if (message != null) onFailMessage(message)
+        }
     }
     fun onCancel() {
-        navController.navigate(MenuRoutes.SignIn) { // Clear all the back stack up to the start destination and save state
-            popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
-            }
-            // Avoid multiple copies of the same destination when reselecting the same item
-            launchSingleTop = true
-            // Restore state when navigating back to the composable
-            restoreState = true
+        //Clears the data saved in the UIstate
+        _uiState.update{
+            RegisterUserInfo()
         }
+        //Sends navigation signal
+        _cancelRegistration.postValue(true)
     }
 
 
