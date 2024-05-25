@@ -3,12 +3,10 @@ package com.example.returnpals.dataRepository
 
 import android.util.Log
 import com.amplifyframework.core.Amplify
-
 import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.PickupMethod
 import com.amplifyframework.datastore.generated.model.PickupStatus
 import com.amplifyframework.datastore.generated.model.Returns
-import com.example.returnpals.dataRepository.Backend.getEmail
 import java.io.File
 
 
@@ -71,9 +69,7 @@ data class OrderRepository(private val customerId: String,
     val order : Returns
 
         get() = Returns.Builder()
-            .userId(customerId)
             .address(address)
-            .email(getEmail())
             .confrimationNumber(confirmation)
             .date(date)
             .labelIds(labels)
