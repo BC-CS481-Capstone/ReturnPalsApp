@@ -60,7 +60,6 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.Contact) { Contact(navController) }
         composable(MenuRoutes.Video) { Video(navController) }
         composable(MenuRoutes.FAQ) { FAQ(navController) }
-        composable(MenuRoutes.Register) { Register(navController) }
 
         navigation(
             startDestination = MenuRoutes.HomeDash,
@@ -85,11 +84,7 @@ fun AppNavigation(navController: NavController) {
                 val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
                 LoginScreen(loginVM, settingsVM, navController)
             }
-            composable(MenuRoutes.Register) {
-                com.example.returnpals.composetools.login.Register(
-                    navController
-                )
-            }
+            composable(MenuRoutes.Register) { Register(navController) }
             composable(MenuRoutes.ConfirmNumber) {
                 // this vm should be destroyed when confirmation is complete
                 val confirmVm = remember { ConfirmEmailViewModel(loginVM.email) }
