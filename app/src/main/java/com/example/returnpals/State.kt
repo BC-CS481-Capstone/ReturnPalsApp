@@ -7,9 +7,10 @@ import com.amplifyframework.datastore.generated.model.PickupMethod
 import com.amplifyframework.datastore.generated.model.PickupStatus
 import com.amplifyframework.datastore.generated.model.PricingPlan
 import com.amplifyframework.datastore.generated.model.Returns
-import com.amplifyframework.datastore.generated.model.User
 import java.time.LocalDate
 
+
+/* This is saved in Cognito now TODO change to work with cognito attributes
 data class UserInfo(
     val email: String? = null,
     val id: String? = null,
@@ -38,7 +39,7 @@ data class UserInfo(
             .id(id)
             .build()
 }
-
+*/
 data class PackageInfo(
     val labelType: LabelType,
     val id: String? = null,
@@ -49,7 +50,7 @@ data class PackageInfo(
     val model: Labels get() =
         Labels.builder()
             .type(labelType)
-            .returnsId(returnId)
+            //The label id is saved in the returns table .returnsId(returnId)
             .id(id)
             .image(label.toString())
             .build()
@@ -79,7 +80,7 @@ data class PickupInfo(
 
     val model: Returns get() =
         Returns.builder()
-            .userId(userId)
+            //uers id is saved through cognito on the backend and scoped that way for tables .userId(userId)
             .date(Temporal.Date(date.toString()))
             .method(method)
             .address(address)
