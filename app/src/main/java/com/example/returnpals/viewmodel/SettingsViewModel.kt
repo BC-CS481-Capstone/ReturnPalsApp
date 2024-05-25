@@ -2,19 +2,23 @@
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.amplifyframework.api.ApiException
-import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.api.graphql.model.ModelQuery
 import com.amplifyframework.auth.AuthException
 import com.amplifyframework.auth.AuthSession
 import com.amplifyframework.auth.result.AuthResetPasswordResult
 import com.amplifyframework.core.Amplify
-import com.amplifyframework.core.model.Model
 import com.amplifyframework.datastore.generated.model.Address
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import com.amplifyframework.api.graphql.GraphQLResponse
+import com.amplifyframework.core.Consumer
+import com.amplifyframework.api.ApiException
+import com.amplifyframework.api.graphql.PaginatedResult
+import com.amplifyframework.api.graphql.model.ModelMutation
+import com.amplifyframework.core.model.Model
 import kotlin.random.Random
+import androidx.compose.runtime.livedata.observeAsState
 
 
 class SettingsViewModel : ViewModel() {
@@ -167,6 +171,7 @@ class SettingsViewModel : ViewModel() {
         viewModelScope.launch {
             val newAddress = Address.builder()
                 .address(address)
+                .userId(userId)
                 .build()
 
             try {
