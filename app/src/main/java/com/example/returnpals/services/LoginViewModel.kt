@@ -4,8 +4,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.amplifyframework.auth.AuthException
+import com.example.returnpals.composetools.goto
+import com.example.returnpals.mainMenu.MenuRoutes
 import com.example.returnpals.services.backend.LoginRepository
+import com.example.returnpals.services.backend.RepoResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,7 +23,7 @@ import kotlin.coroutines.CoroutineContext
 //Login View model provides the information and function needed to login, logout, and signup.
 class LoginViewModel(
     email: String = "",
-    password: String = ""
+    password: String = "",
 ): ViewModel() {
 
     /** Gets updated on calls to [logIn], [logOut], [register], and [logInAsGuest]. **/
@@ -27,19 +31,23 @@ class LoginViewModel(
     val isGuest get() = LoginRepository.isGuest
     var email by mutableStateOf(email)
     var password by mutableStateOf(password)
+    var failMessage by mutableStateOf<String?>(null)
+        private set
 
     fun register(
         context: CoroutineContext = viewModelScope.coroutineContext,
-        onFailure: (AuthException) -> Unit = {},
-        onSuccess: () -> Unit = {}
+        onComplete: (RepoResult) -> Unit
     ) {
         viewModelScope.launch(context) {
             withContext(Dispatchers.IO) {
-                try {
-                    LoginRepository.register(email, password)
-                    withContext(Dispatchers.Main) { onSuccess() }
-                } catch (error: AuthException) {
-                    withContext(Dispatchers.Main) { onFailure(error) }
+                val result = LoginRepository.register(email, password)
+                withContext(Dispatchers.Main) {
+                    when (result) {
+                        RepoResult.SUCCESS -> navController.goto(MenuRoutes.HomeDash)
+                        RepoResult.INCOMPLETE -> navController.goto(MenuRoutes.ConfirmNumber)
+                        RepoResult.PARTIAL -> failMessage = result.message
+                        RepoResult.FAILURE -> failMessage = result.message
+                    }
                 }
             }
         }
@@ -47,8 +55,7 @@ class LoginViewModel(
 
     fun logIn(
         context: CoroutineContext = viewModelScope.coroutineContext,
-        onFailure: (AuthException) -> Unit = {},
-        onSuccess: () -> Unit = {}
+        onComplete: (RepoResult) -> Unit
     ) {
         viewModelScope.launch(context) {
             withContext(Dispatchers.IO) {
