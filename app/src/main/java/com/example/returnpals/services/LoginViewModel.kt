@@ -5,7 +5,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.amplifyframework.auth.AuthException
 import com.example.returnpals.composetools.goto
 import com.example.returnpals.mainMenu.MenuRoutes
 import com.example.returnpals.services.backend.LoginRepository
@@ -22,6 +21,7 @@ import kotlin.coroutines.CoroutineContext
 
 //Login View model provides the information and function needed to login, logout, and signup.
 class LoginViewModel(
+    private val navController: NavController,
     email: String = "",
     password: String = "",
 ): ViewModel() {
@@ -31,12 +31,10 @@ class LoginViewModel(
     val isGuest get() = LoginRepository.isGuest
     var email by mutableStateOf(email)
     var password by mutableStateOf(password)
-    var failMessage by mutableStateOf<String?>(null)
-        private set
 
     fun register(
         context: CoroutineContext = viewModelScope.coroutineContext,
-        onComplete: (RepoResult) -> Unit
+        onFailure: (String) -> Unit = {}
     ) {
         viewModelScope.launch(context) {
             withContext(Dispatchers.IO) {
@@ -45,8 +43,28 @@ class LoginViewModel(
                     when (result) {
                         RepoResult.SUCCESS -> navController.goto(MenuRoutes.HomeDash)
                         RepoResult.INCOMPLETE -> navController.goto(MenuRoutes.ConfirmNumber)
-                        RepoResult.PARTIAL -> failMessage = result.message
-                        RepoResult.FAILURE -> failMessage = result.message
+                        RepoResult.PARTIAL -> onFailure(result.message)
+                        RepoResult.FAILURE -> onFailure(result.message)
+                    }
+                }
+            }
+        }
+    }
+
+    fun confirmEmail(
+        code: String,
+        context: CoroutineContext = viewModelScope.coroutineContext,
+        onFailure: (String) -> Unit = {}
+    ) {
+        viewModelScope.launch(context) {
+            withContext(Dispatchers.IO) {
+                val result = LoginRepository.confirmEmail(code)
+                withContext(Dispatchers.Main) {
+                    when (result) {
+                        RepoResult.SUCCESS -> navController.goto(MenuRoutes.SignIn)
+                        RepoResult.INCOMPLETE -> onFailure(result.message)
+                        RepoResult.PARTIAL -> onFailure(result.message)
+                        RepoResult.FAILURE -> onFailure(result.message)
                     }
                 }
             }
@@ -55,16 +73,18 @@ class LoginViewModel(
 
     fun logIn(
         context: CoroutineContext = viewModelScope.coroutineContext,
-        onComplete: (RepoResult) -> Unit
+        onFailure: (String) -> Unit = {}
     ) {
         viewModelScope.launch(context) {
             withContext(Dispatchers.IO) {
-                try {
-                    if (isLoggedIn == true) LoginRepository.logOut()
-                    LoginRepository.logIn(email, password)
-                    withContext(Dispatchers.Main) { onSuccess() }
-                } catch (error: AuthException) {
-                    withContext(Dispatchers.Main) { onFailure(error) }
+                val result = LoginRepository.logIn(email, password)
+                withContext(Dispatchers.Main) {
+                    when (result) {
+                        RepoResult.SUCCESS -> navController.goto(MenuRoutes.HomeDash)
+                        RepoResult.INCOMPLETE -> navController.goto(MenuRoutes.ConfirmNumber)
+                        RepoResult.PARTIAL -> onFailure(result.message)
+                        RepoResult.FAILURE -> onFailure(result.message)
+                    }
                 }
             }
         }
@@ -72,16 +92,18 @@ class LoginViewModel(
 
     fun logOut(
         context: CoroutineContext = viewModelScope.coroutineContext,
-        onFailure: (AuthException) -> Unit = {},
-        onSuccess: () -> Unit = {}
+        onFailure: (String) -> Unit = {}
     ) {
         viewModelScope.launch(context) {
             withContext(Dispatchers.IO) {
-                try {
-                    if (isLoggedIn == true) LoginRepository.logOut()
-                    withContext(Dispatchers.Main) { onSuccess() }
-                } catch (error: AuthException) {
-                    withContext(Dispatchers.Main) { onFailure(error) }
+                val result = LoginRepository.logOut()
+                withContext(Dispatchers.Main) {
+                    when (result) {
+                        RepoResult.SUCCESS -> navController.goto(MenuRoutes.Home)
+                        RepoResult.INCOMPLETE -> onFailure(result.message)
+                        RepoResult.PARTIAL -> onFailure(result.message)
+                        RepoResult.FAILURE -> onFailure(result.message)
+                    }
                 }
             }
         }
@@ -89,17 +111,18 @@ class LoginViewModel(
 
     fun logInAsGuest(
         context: CoroutineContext = viewModelScope.coroutineContext,
-        onFailure: (AuthException) -> Unit = {},
-        onSuccess: () -> Unit = {}
+        onFailure: (String) -> Unit = {}
     ) {
         viewModelScope.launch(context) {
             withContext(Dispatchers.IO) {
-                try {
-                    if (isLoggedIn == true) LoginRepository.logOut()
-                    LoginRepository.logInAsGuest(email)
-                    withContext(Dispatchers.Main) { onSuccess() }
-                } catch (error: AuthException) {
-                    withContext(Dispatchers.Main) { onFailure(error) }
+                val result = LoginRepository.logInAsGuest(email)
+                withContext(Dispatchers.Main) {
+                    when (result) {
+                        RepoResult.SUCCESS -> navController.goto(MenuRoutes.Home)
+                        RepoResult.INCOMPLETE -> navController.goto(MenuRoutes.ConfirmNumber)
+                        RepoResult.PARTIAL -> onFailure(result.message)
+                        RepoResult.FAILURE -> onFailure(result.message)
+                    }
                 }
             }
         }

@@ -37,7 +37,7 @@ import com.example.returnpals.services.OrderViewModel
 
 @Composable
 fun AppNavigation(navController: NavController) {
-    val loginVM = remember { LoginViewModel("test@bellevue.college", "Password123$") }
+    val loginVM = remember { LoginViewModel(navController, "test@bellevue.college", "Password123$") }
 
     NavHost(
         navController = navController as NavHostController,

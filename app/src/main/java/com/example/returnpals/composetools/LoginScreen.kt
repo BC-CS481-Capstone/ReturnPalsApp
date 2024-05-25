@@ -55,7 +55,7 @@ fun LoginScreen(
         if (isGuestMode) {
             GuestLoginContent(
                 email = loginVM.email,
-                onSignIn = { loginVM.logInAsGuest { navController.goto(MenuRoutes.Home) } },
+                onSignIn = { loginVM.logInAsGuest { failMessage = it } },
                 onSignUp = { navController.goto(MenuRoutes.Register) },
                 onChangeEmail = { loginVM.email = it },
                 onToggleGuest = { isGuestMode = false }
@@ -68,11 +68,7 @@ fun LoginScreen(
                 onChangeEmail = {  loginVM.email = it },
                 onChangePassword = { loginVM.password = it },
                 onToggleGuest = { isGuestMode = true },
-                onSignIn = {
-                    loginVM.logIn(
-                        onFailure = { failMessage = it.message + '\n' + it.recoverySuggestion },
-                        onSuccess = { navController.goto(MenuRoutes.Home) }
-                    ) },
+                onSignIn = { loginVM.logIn { failMessage = it } },
                 onSignUp = { navController.goto(MenuRoutes.Register) },
                 onResetPassword = settingsVM::resetPassword,
                 onConfirmResetPassword = settingsVM::confirmResetPassword
