@@ -88,3 +88,12 @@ data class PickupInfo(
             .id(id)
             .build()
 }
+
+data class AddressInfo(
+    val country: String= "",
+    var state: String = "",
+    val city: String = "",
+    val zipcode: String = "",
+    val street: String = "",
+    val unit: String = "",
+)
