@@ -48,8 +48,6 @@ fun LoginScreen(
 ) {
     var failMessage by remember { mutableStateOf("") }
     var isGuestMode by remember { mutableStateOf(false) }
-    var loginSuccess by remember { mutableStateOf(false) }
-    if (loginSuccess) navController.goto(MenuRoutes.Home)
     Box(modifier = Modifier
         .background(ReturnPalTheme.colorScheme.background)
         .fillMaxSize()) {
@@ -57,7 +55,7 @@ fun LoginScreen(
         if (isGuestMode) {
             GuestLoginContent(
                 email = loginVM.email,
-                onSignIn = { loginVM.logInAsGuest { loginSuccess = true } },
+                onSignIn = { loginVM.logInAsGuest { navController.goto(MenuRoutes.Home) } },
                 onSignUp = { navController.goto(MenuRoutes.Register) },
                 onChangeEmail = { loginVM.email = it },
                 onToggleGuest = { isGuestMode = false }
@@ -73,7 +71,7 @@ fun LoginScreen(
                 onSignIn = {
                     loginVM.logIn(
                         onFailure = { failMessage = it.message + '\n' + it.recoverySuggestion },
-                        onSuccess = { loginSuccess = true }
+                        onSuccess = { navController.goto(MenuRoutes.Home) }
                     ) },
                 onSignUp = { navController.goto(MenuRoutes.Register) },
                 onResetPassword = settingsVM::resetPassword,

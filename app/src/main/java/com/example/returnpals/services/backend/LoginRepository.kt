@@ -29,7 +29,8 @@ object LoginRepository {
     var isLoggedIn by mutableStateOf<Boolean?>(null)
         private set
 
-    suspend fun logInAsGuest(email: String) {
+    @Throws(AuthException::class)
+    fun logInAsGuest(email: String) {
         Log.d("LoginRepository", "logInAsGuest")
         if (isLoggedIn==true) {
             val error = AuthException("Already logged in as $email!", "Log out first.")
@@ -41,6 +42,7 @@ object LoginRepository {
         isLoggedIn = true
     }
 
+    @Throws(AuthException::class)
     suspend fun logIn(email: String, password: String) {
         Log.d("LoginRepository", "logIn")
         try {
@@ -65,6 +67,7 @@ object LoginRepository {
     /**
      * Log in with third-party authentication (Google, Apple, Facebook, etc).
      */
+    @Throws(AuthException::class)
     suspend fun logInWith(provider: AuthProvider, callingActivity: Activity) {
         Log.d("LoginRepository", "logInWith")
         try {
@@ -84,6 +87,7 @@ object LoginRepository {
         }
     }
 
+    @Throws(AuthException::class)
     suspend fun logOut() {
         Log.d("LoginRepository", "logOut")
         when (val result = Amplify.Auth.signOut()) {
@@ -114,6 +118,7 @@ object LoginRepository {
         }
     }
 
+    @Throws(AuthException::class)
     suspend fun register(
         email: String,
         password: String,
@@ -145,6 +150,7 @@ object LoginRepository {
     /**
      * @param code the confirmation code sent to the user's email
      */
+    @Throws(AuthException::class)
     suspend fun confirmEmail(code: String) {
         Log.d("LoginRepository", "confirmEmail")
         try {
@@ -164,6 +170,7 @@ object LoginRepository {
     }
 
     /** Updates this repository with the remote database. */
+    @Throws(AuthException::class)
     suspend fun update() {
         Log.d("LoginRepository", "update")
         try {
