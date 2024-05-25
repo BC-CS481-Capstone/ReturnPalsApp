@@ -23,19 +23,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.returnpals.composetools.CustomTextField
 import com.example.returnpals.composetools.CustomTextPasswordFields
 import com.example.returnpals.composetools.CustomTextRowFields
-import com.example.returnpals.dataRepository.CognitoRegisterRepository
 import com.example.returnpals.viewmodel.RegisterViewModel
 
-@Composable
-fun Register(navController: NavController) {
-    val registerRepository = CognitoRegisterRepository()
-    val registerVM = RegisterViewModel(registerRepository,navController)
-    RegisterScreen(registerVM)
-}
 
 
 @Composable
@@ -51,7 +43,7 @@ fun RegisterScreen(viewModel:RegisterViewModel){
 
     ){
         item { RegisterTitle() }
-        item { Form(
+        item { FormContent(
             registerViewModel = viewModel,
             onCancel = viewModel::onCancel,
             onSubmit = viewModel::onSubmit)
@@ -72,9 +64,9 @@ fun RegisterTitle() {
 }
 
 @Composable
-fun Form(onCancel:()->Unit,
-         onSubmit:()->Unit,
-         registerViewModel:RegisterViewModel) {
+fun FormContent(onCancel:()->Unit,
+                onSubmit:()->Unit,
+                registerViewModel:RegisterViewModel) {
 
     //Collect data from view model
     val uiState by registerViewModel.uiState.collectAsState()
