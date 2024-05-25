@@ -147,6 +147,17 @@ object LoginRepository {
         }
     }
 
+    @Throws(AuthException::class)
+    suspend fun deleteCurrentUser() {
+        Log.d("LoginRepository", "deleteCurrentUser")
+        try {
+            Amplify.Auth.deleteUser()
+        } catch (error: AuthException) {
+            Log.i("LoginRepository", "Failed to delete the current user with email $email", error)
+            throw error
+        }
+    }
+
     /**
      * @param code the confirmation code sent to the user's email
      */
