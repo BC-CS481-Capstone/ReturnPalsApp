@@ -49,7 +49,6 @@ data class PackageInfo(
     val model: Labels get() =
         Labels.builder()
             .type(labelType)
-            .returnsId(returnId)
             .id(id)
             .image(label.toString())
             .build()
@@ -79,7 +78,6 @@ data class PickupInfo(
 
     val model: Returns get() =
         Returns.builder()
-            .userId(userId)
             .date(Temporal.Date(date.toString()))
             .method(method)
             .address(address)
