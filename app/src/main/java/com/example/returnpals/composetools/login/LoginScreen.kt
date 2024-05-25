@@ -50,11 +50,17 @@ fun LoginScreen(
     settingsVM: SettingsViewModel,
     navController: NavController,
 ) {
-    val failMessage by loginVM.message.observeAsState()
-    val isGuestMode by loginVM.isGuest.observeAsState()
+    /** Navigation Logic HERE */
+    //Condition variables from view models
     val loginSuccess  by loginVM.isLoggedIn.observeAsState()
     if (loginSuccess == true) navController.goto(MenuRoutes.HomeDash)
-    if (loginSuccess == true) navController.goto(MenuRoutes.HomeDash)
+    //Local Lambda calls
+    val onSignUp ={navController.goto(MenuRoutes.Register)}
+    /** Navigation Logic STOP */
+
+    val failMessage by loginVM.message.observeAsState()
+    val isGuestMode by loginVM.isGuest.observeAsState()
+
     Box(modifier = Modifier
         .background(ReturnPalTheme.colorScheme.background)
         .fillMaxSize()) {
@@ -63,7 +69,7 @@ fun LoginScreen(
             GuestLoginContent(
                 email = loginVM.email,
                 onSignIn = { loginVM.logInAsGuest() },
-                onSignUp = { navController.goto(MenuRoutes.Register) },
+                onSignUp =onSignUp,
                 onChangeEmail = { loginVM.email = it },
                 onToggleGuest = {  }
             )
@@ -80,7 +86,7 @@ fun LoginScreen(
                         onFailure = {  },
                         onSuccess = {}
                     ) },
-                onSignUp = { navController.goto(MenuRoutes.Register) },
+                onSignUp = onSignUp,
                 onResetPassword = settingsVM::resetPassword,
                 onConfirmResetPassword = settingsVM::confirmResetPassword
             )
