@@ -30,7 +30,6 @@ class ConfirmEmailViewModel(
         confirmEmail(code,
             onFailure={ message = it.message ?: "" }
         ) {
-            _confirmSuccessful.postValue(true)
         }
     }
 
@@ -41,11 +40,16 @@ class ConfirmEmailViewModel(
         onFailure: (AuthException) -> Unit = {},
         onSuccess: () -> Unit = {}
     ) {
-        val lambda:(Boolean,String,String)->Unit =  {it,message,recoverSuggestion ->}
+        val lambda:(Boolean,String,String)->Unit =  {it,message,recoverSuggestion ->
+            _confirmSuccessful.postValue(it)
+            if (!it) {
+                this.message = message+'\n'+ recoverSuggestion
+            }
+        }
         viewModelScope.launch(context) {
             withContext(Dispatchers.IO) {
                 try {
-                    LoginRepositoryAmplify.confirmEmail(code,lambda)
+                    LoginRepositoryAmplify.confirmEmail(code, lambda,email)
                     onSuccess()
                 } catch (error: AuthException) {
                     onFailure(error)
