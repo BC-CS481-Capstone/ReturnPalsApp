@@ -37,14 +37,12 @@ import com.example.returnpals.composetools.pickup.SelectAddressScreen
 import com.example.returnpals.composetools.pickup.ThankYouScreen
 import com.example.returnpals.composetools.pickup.ThankYouViewModel
 import com.example.returnpals.dataRepository.CognitoMainMenuScreenRepository
-import com.example.returnpals.dataRepository.ContactRepositoryAmplify
 import com.example.returnpals.dataRepository.RegisterRepositoryAmplify
 import com.example.returnpals.navigation.MenuRoutes
 import com.example.returnpals.navigation.Register
 import com.example.returnpals.navigation.goto
 import com.example.returnpals.services.ConfirmEmailViewModel
 import com.example.returnpals.services.LoginViewModel
-import com.example.returnpals.viewmodel.ContactViewModel
 import com.example.returnpals.viewmodel.MainMenuScreenViewModel
 import com.example.returnpals.viewmodel.OrderViewModel
 import com.example.returnpals.viewmodel.RegisterViewModel
@@ -66,7 +64,6 @@ fun AppNavigation(navController: NavController) {
         //Start at main menu.
         composable("MainMenu"){
             val mainMenuVM = remember {MainMenuScreenViewModel(CognitoMainMenuScreenRepository())}
-            val contactVM = remember {ContactViewModel(ContactRepositoryAmplify)}
             val navigate by mainMenuVM.readyToNav.observeAsState()
             /**$navigate is a nullable string.
              * @Null do not navigate
