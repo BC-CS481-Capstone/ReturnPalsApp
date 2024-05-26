@@ -10,16 +10,18 @@ object UserRepository : ModelRepository<User>(User::class.java) {
         plan: PricingPlan = PricingPlan.BRONZE,
         nameFirst: String? = null,
         nameLast: String? = null,
-        phone: String? = null
-    ): User? {
-        return create(
+        phone: String? = null,
+        onSuccess: (User) -> Unit = {}
+    ) {
+        create(
             User.builder()
                 .email(email)
                 .subscription(plan)
                 .firstName(nameFirst)
                 .lastName(nameLast)
                 .phone(phone)
-                .build()
+                .build(),
+            onSuccess
         )
     }
 

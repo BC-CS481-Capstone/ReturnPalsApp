@@ -15,8 +15,7 @@ open class ModelRepository<ModelType>(
     private val type: Class<ModelType>
 ) where ModelType : Model {
 
-    fun create(model: ModelType): ModelType? {
-        var result: ModelType? = null
+    fun create(model: ModelType, onSuccess: (ModelType) -> Unit = {}) {
         Amplify.API.mutate(
             ModelMutation.create(model),
             { response ->
@@ -28,8 +27,8 @@ open class ModelRepository<ModelType>(
                 } else if (!response.hasData()) {
                     Log.w("ModelRepository<${type.simpleName}>", "Failed to create ${model.modelName}. GraphQL response is empty.")
                 } else {
-                    result = response.data
-                    Log.i("ModelRepository<${type.simpleName}>", "Created ${result?.modelName} with primary key: ${result?.primaryKeyString}")
+                    Log.i("ModelRepository<${type.simpleName}>", "Created ${response.data?.modelName} with primary key: ${response.data?.primaryKeyString}")
+                    onSuccess(response.data)
                 }
             },
             { exception ->
@@ -37,7 +36,6 @@ open class ModelRepository<ModelType>(
                         exception.message + '\n' + exception.cause + '\n' + exception.recoverySuggestion + '\n')
             }
         )
-        return result
     }
 
     fun delete(model: ModelType): ModelType? {

@@ -43,20 +43,20 @@ data class PackageInfo(
     val labelType: LabelType,
     val id: String? = null,
     val returnId: String? = null,
-    val label: String ="", // label is an absolute file path
+    val label: String = "", // label is an absolute file path
     val description: String? = null, // additional info provided by user
 ) {
     val model: Labels get() =
         Labels.builder()
             .type(labelType)
-            .returnsId(returnId)
-            .id(id)
-            .image(label.toString())
+            .returnsId(returnId ?: "")
+            .image(label)
+            .also { if (id != null) it.id(id) }
             .build()
 }
 
 data class PickupInfo(
-    val userId: String? = null,
+    val email: String? = null,
     val date: LocalDate = LocalDate.now(),
     val packages: List<PackageInfo> = listOf(),
     val id: String? = null,
@@ -79,13 +79,13 @@ data class PickupInfo(
 
     val model: Returns get() =
         Returns.builder()
-            .userId(userId)
+            .userId(email ?: "")
             .date(Temporal.Date(date.toString()))
             .method(method)
-            .address(address)
-            .confrimationNumber(confirmationNumber)
+            .address(address ?: "")
+            .confrimationNumber(confirmationNumber ?: "")
             .status(status)
-            .id(id)
+            .also { if (id != null) it.id(id) }
             .build()
 }
 

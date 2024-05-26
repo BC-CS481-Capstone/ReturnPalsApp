@@ -196,6 +196,7 @@ class SettingsViewModel : ViewModel() {
                         _operationStatus.value = "Error adding address: ${error.localizedMessage}"
                     }
                 )
+                _selectedAddressId.value = userId
             } catch (e: ApiException) {
                 Log.e("MyAmplifyApp", "API Exception when trying to add address", e)
                 _operationStatus.value = "Exception when adding address: ${e.localizedMessage}"

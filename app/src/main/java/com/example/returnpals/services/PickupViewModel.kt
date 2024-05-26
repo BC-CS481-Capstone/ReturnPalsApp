@@ -1,8 +1,10 @@
 package com.example.returnpals.services
 
 import android.util.Log
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.amplifyframework.datastore.generated.model.PickupMethod
 import com.amplifyframework.datastore.generated.model.PricingPlan
@@ -37,10 +39,14 @@ open class PickupViewModel(
 
     // https://developer.android.com/topic/libraries/architecture/livedata
 
-    val date = mutableStateOf(date)
-    val address = mutableStateOf(address)
-    val method = mutableStateOf(method)
-    val plan = mutableStateOf(pricing)
+    var date by mutableStateOf(date)
+        private set
+    var address by mutableStateOf(address)
+        private set
+    var method by mutableStateOf(method)
+        private set
+    var plan by mutableStateOf(pricing)
+        private set
     val packages = mutableStateMapOf(*_packageRowIdManager.allot(packages).toTypedArray())
 
     /**
@@ -48,35 +54,35 @@ open class PickupViewModel(
      */
     val info get() =
         PickupInfo(
-            date = date.value,
-            address = address.value,
-            method = method.value,
-            plan = plan.value,
+            date = date,
+            address = address,
+            method = method,
+            plan = plan,
             packages = packages.values.toList(),
         )
 
     val isValid get() =
-        address.value != null &&
-        method.value != null &&
-        plan.value != null
+        address != null &&
+        method != null &&
+        plan != null
 
     fun onChangeDate(value: LocalDate) {
-        date.value = value
-        Log.println(Log.INFO, "PickupViewModel::onChangeDate", "Updated value: ${date.value}")
+        date = value
+        Log.println(Log.INFO, "PickupViewModel::onChangeDate", "Updated value: ${date}")
     }
 
     fun onChangeAddress(value: String) {
-        address.value = value
-        Log.println(Log.INFO, "PickupViewModel::onChangeAddress", "Updated value: ${address.value}")
+        address = value
+        Log.println(Log.INFO, "PickupViewModel::onChangeAddress", "Updated value: ${address}")
     }
 
     fun onChangeMethod(value: PickupMethod) {
-        method.value = value
-        Log.println(Log.INFO, "PickupViewModel::onChangeAddress", "Updated value: ${method.value}")
+        method = value
+        Log.println(Log.INFO, "PickupViewModel::onChangeAddress", "Updated value: ${method}")
     }
 
     fun onChangePlan(value: PricingPlan) {
-        plan.value = value
+        plan = value
         Log.println(Log.INFO, "PickupViewModel::onChangePlan", "Updated value: $plan")
     }
 

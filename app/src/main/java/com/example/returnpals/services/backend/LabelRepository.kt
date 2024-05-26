@@ -9,15 +9,17 @@ object LabelRepository : ModelRepository<Labels>(Labels::class.java) {
         returnId: String,
         type: LabelType,
         image: String? = null,
-        qrcode: String? = null
-    ): Labels? {
-        return this.create(
+        qrcode: String? = null,
+        onSuccess: (Labels) -> Unit = {}
+    ) {
+        create(
             Labels.builder()
                 .type(type)
                 .returnsId(returnId)
                 .image(image)
                 .qrcode(qrcode)
-                .build()
+                .build(),
+            onSuccess
         )
     }
 
