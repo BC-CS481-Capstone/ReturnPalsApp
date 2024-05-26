@@ -1,6 +1,8 @@
 package com.example.returnpals.dataRepository
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.amplifyframework.AmplifyException
 import com.amplifyframework.api.aws.AWSApiPlugin
 import com.amplifyframework.api.graphql.model.ModelQuery
@@ -65,15 +67,19 @@ object Backend {
         Log.i(TAG, "Email Retrieved $email")
         return email
     }
-    private fun orderRetrieval() {
+
+
+    private val _proccessingReturns = MutableLiveData(false)
+    val proccessingReturns: LiveData<Boolean> = _proccessingReturns
+    fun orderRetrieval() { // TODO Rename to or move logic to repository
+        _proccessingReturns.postValue(true)
         Log.i(TAG, "Order Retrieval Called")
         Amplify.API.query(
-
             ModelQuery.list(Returns::class.java),
-
             { response ->
                 Log.i(TAG, response.toString())
                 if (response.hasData()) {
+                    orderList.clear()
                     response.data.forEach() { orderData ->
 
 
@@ -89,11 +95,9 @@ object Backend {
                                 address = orderData.address
                                                             )
                             orderList.add(order)
-
-
-
                     }
                 }
+                _proccessingReturns.postValue(false)
 
             },
             { Log.e(TAG, "Query failed", it) }

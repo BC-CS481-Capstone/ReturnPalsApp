@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -27,6 +29,7 @@ import com.example.returnpals.services.LoginViewModel
 //Deviates from needing to pass NavController.
 @Composable
 fun Orders(navController: NavController, loginVM: LoginViewModel) {
+    Backend.orderRetrieval()
     DashboardMenuScaffold(navController, loginVM::logOut) {
         OrdersContent()
     }
@@ -63,6 +66,8 @@ fun OrderTable(){
     val column2Weight = .25f
     val column3Weight = .35f
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
+    val proccessingReturns by Backend.proccessingReturns.observeAsState()
+    if (proccessingReturns != true) {
     LazyColumn(
         Modifier
             .fillMaxSize()
@@ -90,9 +95,9 @@ fun OrderTable(){
 
         items(1) {
             //Log.i("Order", orderList.toString())
-            orderList.forEach{
+            orderList.forEach {
                 Log.i("Order", "Loading Item")
-                Row(){
+                Row() {
                     TableCell(text = it.getStatus(), column1Weight)
                     TableCell(text = it.getDate().format(), column2Weight)
                     TableCell(text = it.getAddress(), column3Weight)
@@ -100,8 +105,8 @@ fun OrderTable(){
                 }
 
             }
-
         }
+    }
     }
 }
 //This function gets orders, needs to be updated to account for the Order
