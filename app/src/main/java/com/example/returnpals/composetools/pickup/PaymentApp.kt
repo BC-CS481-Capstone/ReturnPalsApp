@@ -70,7 +70,7 @@ fun PaymentApp(info: PickupInfo, onClickBack:()->Unit,onPaymentSheetResult:(Paym
             presentPaymentSheet(paymentSheet,currentConfig,currentClientSecret)
         }
     }
-    ConfirmPickupScreen(info = info,onClickNext = /*onCheckOutButton*/ { },onClickBack = onClickBack)
+    ConfirmPickupScreen(info = info,onClickNext = onCheckOutButton,onClickBack = onClickBack)
     // Checkout Button
     Button(
         onClick = {
@@ -107,8 +107,13 @@ private fun presentPaymentSheet(
 //Following examples from https://github.com/aws-amplify/docs/pull/2141/files to create custom query
 private fun getPaymentSheetQueryOptions() : GraphQLRequest<MyPaymentSheet> {
     val document = "query MyQuery {\n" +
-            "  helloworld(msg: \"Time\")\n" +
-            "}"
+            "  stripepaymentsheet {\n" +
+            "    customer\n" +
+            "    ephemeralKey\n" +
+            "    paymentIntent\n" +
+            "    publishableKey\n" +
+            "  }\n" +
+            "}\n"
     return SimpleGraphQLRequest(document,
         MyPaymentSheet::class.java,
         GsonVariablesSerializer()
