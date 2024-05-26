@@ -162,7 +162,7 @@ fun AppNavigation(navController: NavController) {
                     info = pickupVM.info,
                     onClickNext = {
                         pickupVM.onSubmit(LoginRepository.email ?: "")
-                        navController.goto(MenuRoutes.Home)
+                        navController.goto("thanks")
                     },
                     onClickBack = { navController.navigate("add_labels") },
                     onClickPromoButton = {}
@@ -178,7 +178,7 @@ fun AppNavigation(navController: NavController) {
 //                val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
                 ThankYouScreen(
                     dashBoardButton = {
-                        navController.navigate("dashboard home") {
+                        navController.navigate(MenuRoutes.Home) {
                             popUpTo(MenuRoutes.PickupProcess) {
                                 inclusive = true
                             }
