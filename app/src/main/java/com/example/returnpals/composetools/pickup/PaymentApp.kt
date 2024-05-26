@@ -1,8 +1,6 @@
 package com.example.returnpals.composetools.pickup
 
 import android.util.Log
-import androidx.compose.material.Button
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -71,7 +69,7 @@ fun PaymentApp(info: PickupInfo, onClickBack:()->Unit,onPaymentSheetResult:(Paym
         }
     }
     ConfirmPickupScreen(info = info,onClickNext = onCheckOutButton,onClickBack = onClickBack)
-    // Checkout Button
+    /*/ Checkout Button
     Button(
         onClick = {
             Log.e("PaymentApp","OnClick")
@@ -83,7 +81,7 @@ fun PaymentApp(info: PickupInfo, onClickBack:()->Unit,onPaymentSheetResult:(Paym
         }
     ) {
         Text("Checkout")
-    }
+    }*/
 
 }
 
@@ -105,7 +103,7 @@ private fun presentPaymentSheet(
 
 
 //Following examples from https://github.com/aws-amplify/docs/pull/2141/files to create custom query
-private fun getPaymentSheetQueryOptions() : GraphQLRequest<MyPaymentSheet> {
+private fun getPaymentSheetQueryOptions() : GraphQLRequest<MyPaymentSheet> {//TODO move to repository
     val document = "query MyQuery {\n" +
             "  stripepaymentsheet {\n" +
             "    customer\n" +
