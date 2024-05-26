@@ -39,7 +39,8 @@ fun PaymentApp(info: PickupInfo, onClickBack:()->Unit,onPaymentSheetResult:(Paym
     var paymentIntentClientSecret by remember {mutableStateOf<String?>(null)}
 
     LaunchedEffect(context) {
-        Amplify.API.query(
+        /*
+        Amplify.API.query(//TODO Move logic to repositor
             getPaymentSheetQueryOptions(),
             {
                 if (!it.hasErrors() && it.hasData()) {
@@ -64,9 +65,9 @@ fun PaymentApp(info: PickupInfo, onClickBack:()->Unit,onPaymentSheetResult:(Paym
         val currentClientSecret = paymentIntentClientSecret
         if (currentConfig !=null && currentClientSecret != null ) {
             presentPaymentSheet(paymentSheet,currentConfig,currentClientSecret)
-        }
+        }*/
     }
-    ConfirmPickupScreen(info = info,onClickNext = onCheckOutButton,onClickBack = onClickBack)
+    ConfirmPickupScreen(info = info,onClickNext = /*onCheckOutButton*/ { },onClickBack = onClickBack)
     /** Checkout Button
     Button(
         onClick = {
@@ -100,7 +101,7 @@ private fun presentPaymentSheet(
 
 
 
-//Following examples from https://github.com/aws-amplify/docs/pull/2141/files to create custom query
+/*/Following examples from https://github.com/aws-amplify/docs/pull/2141/files to create custom query
 private fun getPaymentSheetQueryOptions() : GraphQLRequest<com.amplifyframework.datastore.generated.model.PaymentSheet> {
     val document = "query MyQuery {\n" +
             "  getPaymentSheet {\n" +
@@ -113,4 +114,4 @@ private fun getPaymentSheetQueryOptions() : GraphQLRequest<com.amplifyframework.
     return SimpleGraphQLRequest(document,
         com.amplifyframework.datastore.generated.model.PaymentSheet::class.java,
         GsonVariablesSerializer())
-}
+}*/
