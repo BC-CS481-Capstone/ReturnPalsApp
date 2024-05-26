@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +23,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -102,7 +104,7 @@ fun SelectAddressContent(
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
-    Spacer(modifier = Modifier.height(16.dp))
+        AddressHeader("Select an Address", modifier=Modifier.fillMaxWidth())
         Text(
             text = "Your Addresses:",
             style = TextStyle(
@@ -112,16 +114,22 @@ fun SelectAddressContent(
             )
         )
         Spacer(modifier = Modifier.height(16.dp))
-        LazyColumn {
-            items(userAddresses) { address ->
-                AddressItem(
-                    address = address.address,
-                    isSelected = selected == address.id,
-                    onSelect = { onSelectAddress(address.id) }
-                )
+        Scaffold(
+            bottomBar = { AddAddressField(onAddAddress) }
+        ) { padding ->
+            LazyColumn(
+                contentPadding = PaddingValues(10.dp),
+                modifier = Modifier.padding(padding)
+//                    .border(4.dp, ReturnPalTheme.colorScheme.outline)
+            ) {
+                items(userAddresses) { address ->
+                    AddressItem(
+                        address = address.address,
+                        isSelected = selected == address.id,
+                        onSelect = { onSelectAddress(address.id) }
+                    )
+                }
             }
-
-            item { AddAddressField(onAddAddress) }
         }
     }
 }
@@ -161,8 +169,15 @@ private fun SelectAddressPreview() {
                 SettingsViewModel.SimpleAddress("8", "eight"),
                 SettingsViewModel.SimpleAddress("9", "nine"),
                 SettingsViewModel.SimpleAddress("10", "ten"),
+                SettingsViewModel.SimpleAddress("10", "ten"),
+                SettingsViewModel.SimpleAddress("10", "ten"),
+                SettingsViewModel.SimpleAddress("10", "ten"),
+                SettingsViewModel.SimpleAddress("10", "ten"),
+                SettingsViewModel.SimpleAddress("10", "ten"),
+                SettingsViewModel.SimpleAddress("10", "ten"),
+                SettingsViewModel.SimpleAddress("10", "ten"),
             ),
-            isGuest = true
+            isGuest = false
         )
     }
 }
@@ -188,7 +203,7 @@ private fun AddressHeader(
             color = ReturnPalTheme.colorScheme.secondary,
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         if (description != null) {
             Text(
@@ -197,6 +212,7 @@ private fun AddressHeader(
                 textAlign = TextAlign.Center,
                 color = ReturnPalTheme.colorScheme.secondary,
             )
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
@@ -204,7 +220,7 @@ private fun AddressHeader(
 @Composable
 private fun AddAddressField(
     onAddAddress: (String) -> Unit,
-    isGuest: Boolean = false,
+    isGuest: Boolean = false
 ) {
     var address by remember { mutableStateOf("") }
     Column(
@@ -337,7 +353,7 @@ private fun AddressFields(
                 label = { Text(text = "Country") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(spacing, spacing, spacing, spacing/2)
+                    .padding(spacing, spacing, spacing, spacing / 2)
             )
         }
         item {
@@ -347,7 +363,7 @@ private fun AddressFields(
                 label = { Text(text = "Street Address") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(spacing, spacing/2)
+                    .padding(spacing, spacing / 2)
             )
         }
         item {
@@ -357,7 +373,7 @@ private fun AddressFields(
                 label = { Text(text = "Apt, Suite, Building, Floor, ect") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(spacing, spacing/2)
+                    .padding(spacing, spacing / 2)
             )
         }
         item {
@@ -367,7 +383,7 @@ private fun AddressFields(
                 label = { Text(text = "City") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(spacing, spacing/2)
+                    .padding(spacing, spacing / 2)
             )
         }
         item {
@@ -377,7 +393,7 @@ private fun AddressFields(
                 label = { Text(text = "Province or State") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(spacing, spacing/2)
+                    .padding(spacing, spacing / 2)
             )
         }
         item {
@@ -387,7 +403,7 @@ private fun AddressFields(
                 label = { Text(text = "ZIP Code") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(spacing, spacing/2, spacing, spacing)
+                    .padding(spacing, spacing / 2, spacing, spacing)
             )
         }
     }
