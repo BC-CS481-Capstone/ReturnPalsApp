@@ -11,9 +11,10 @@ class ContactViewModel(
     // You can expose LiveData or StateFlow for observing the operation's result in the UI
     private val _submissionSuccessful = MutableLiveData<Boolean?>()
     val submissionSuccessful: LiveData<Boolean?> = _submissionSuccessful
+    //TODO MOVE state to View Model
 
     fun submitData(fullName: String, postalCode: String, email: String, message: String) {
-        contactRepository.submitData(fullName,postalCode,email,message){
+        contactRepository.submitData(fullName,postalCode,email,message){it,id->
             _submissionSuccessful.postValue(it)
             if (it) resetSubmissionSuccess()
         }
