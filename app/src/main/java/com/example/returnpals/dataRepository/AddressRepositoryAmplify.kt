@@ -13,22 +13,24 @@ class AddressRepositoryAmplify:AddressRepository {
     override fun addNewAddress(address: String, name: String, result: (Boolean) -> Unit) {
         val userId = Random.nextInt(100000, 999999).toString()
         val addressJSON = "{" +
-                    "formatted:"+address+
-                    "street_address:"+ address+
-                    "locality:" +address+
-                    //"region:WA" +
-                    "postal_code:"+address+
-                    //"country:USA" +
-                    "}"
+                        "\"address\":\""+address+
+                    "\"}"
+
         Log.i("MyAmplifyApp", addressJSON)
         val model = Address.builder().address(addressJSON).build()
         Log.i("MyAmplifyApp", model.toString())
         Log.i("MyAmplifyApp", "\n\n\n\n\n\n")
+        val test = MailingList.builder().email("Test").fullName("Test").postalCode("Test").message("Test").build()
         Amplify.API.mutate(
-            ModelMutation.create(MailingList.builder().email("Test").fullName("Test").postalCode("Test").message("Test").build()),
+            ModelMutation.create(model),
             {
-                result(true)
-                Log.i("MyAmplifyApp", "Address with id: ${it.data.id}")
+                if (it.hasErrors()) {
+                    Log.e("MyAmplifyApp", "Create failed${it.errors}}")
+                    result(false)
+                } else {
+                    result(true)
+                    Log.i("MyAmplifyApp", "Address with id: ${it.data.id}")
+                }
             },
             {
                 result(false)

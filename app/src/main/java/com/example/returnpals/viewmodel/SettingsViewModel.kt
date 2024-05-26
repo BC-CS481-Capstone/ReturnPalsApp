@@ -11,6 +11,7 @@ import com.amplifyframework.auth.result.AuthResetPasswordResult
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.core.model.Model
 import com.amplifyframework.datastore.generated.model.Address
+import com.example.returnpals.dataRepository.AddressRepositoryAmplify
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -24,6 +25,7 @@ class SettingsViewModel : ViewModel() {
 
     private val _userEmail = MutableStateFlow<String?>(null)
     val userEmail: StateFlow<String?> = _userEmail
+
 
     private val _userAddresses = MutableStateFlow<List<SimpleAddress>>(emptyList())
     val userAddresses: StateFlow<List<SimpleAddress>> = _userAddresses
@@ -163,32 +165,11 @@ class SettingsViewModel : ViewModel() {
     data class SimpleAddress(val id: String, val address: String,) : Model
 
     fun addNewAddress(address: String) {
-        val userId = generateRandomUserId()
-        viewModelScope.launch {
-            val newAddress = Address.builder()
-                .address(address)
-                .build()
+        AddressRepositoryAmplify().addNewAddress(address,"TODO add nicknames",){
+            if (it){//Upload complete
+                fetchAddresses()
+            }else {//Upload Failed
 
-            try {
-                Amplify.API.mutate(
-                    ModelMutation.create(newAddress),
-                    { response ->
-                        Log.i("MyAmplifyApp", "Address created: ${response.data.id}")
-                        // Here, add the new address directly to _userAddresses
-                        val simpleAddress = SimpleAddress(response.data.id, address)
-                        _userAddresses.value = _userAddresses.value.toMutableList().apply {
-                            add(simpleAddress)
-                        }
-                        _operationStatus.value = "Address added successfully with ID: ${response.data.id}"
-                    },
-                    { error ->
-                        Log.e("MyAmplifyApp", "Failed to add address", error)
-                        _operationStatus.value = "Error adding address: ${error.localizedMessage}"
-                    }
-                )
-            } catch (e: ApiException) {
-                Log.e("MyAmplifyApp", "API Exception when trying to add address", e)
-                _operationStatus.value = "Exception when adding address: ${e.localizedMessage}"
             }
         }
     }
