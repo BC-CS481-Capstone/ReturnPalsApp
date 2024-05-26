@@ -178,7 +178,7 @@ class SettingsViewModel : ViewModel() {
         return Random.nextInt(100000, 999999).toString()  // Generate a random number between 100000 and 999999
     }
 
-    fun deleteAddress(simpleAddress: SimpleAddress) {
+    fun deleteAddress(simpleAddress: SimpleAddress) { // TODO move logic to repository
         viewModelScope.launch {
             try {
                 // Fetch the full Address model based on the ID
@@ -189,9 +189,13 @@ class SettingsViewModel : ViewModel() {
                             Amplify.API.mutate(
                                 ModelMutation.delete(response.data),
                                 {
-                                    Log.i("MyAmplifyApp", "Successfully deleted address with ID: ${response.data.id}")
-                                    fetchAddresses()  // Refresh the list of addresses
-                                    _operationStatus.value = "Address deleted successfully."
+                                    if (it.hasErrors()) {
+                                        Log.e("MyAmplifyApp", "Deletion failed: ${it.errors}")
+                                    } else {
+                                        Log.i("MyAmplifyApp", "Successfully deleted address with ID: ${response.data.id}")
+                                        fetchAddresses()  // Refresh the list of addresses
+                                        _operationStatus.value = "Address deleted successfully."
+                                    }
                                 },
                                 { error ->
                                     Log.e("MyAmplifyApp", "Deletion failed: ${error.localizedMessage}", error)
