@@ -59,19 +59,19 @@ fun LoginScreen(
     /** Navigation Logic STOP */
 
     val failMessage by loginVM.message.observeAsState()
-    val isGuestMode by loginVM.isGuest.observeAsState()
+    var isGuestMode by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier
         .background(ReturnPalTheme.colorScheme.background)
         .fillMaxSize()) {
         //This will switch between the guest login and user login
-        if (isGuestMode == true) {
+        if (isGuestMode) {
             GuestLoginContent(
                 email = loginVM.email,
                 onSignIn = { loginVM.logInAsGuest() },
                 onSignUp =onSignUp,
                 onChangeEmail = { loginVM.email = it },
-                onToggleGuest = {  }
+                onToggleGuest = { isGuestMode = false }
             )
         } else {
             LoginContent(
@@ -80,7 +80,7 @@ fun LoginScreen(
                 failMessage = failMessage!!,
                 onChangeEmail = {  loginVM.email = it },
                 onChangePassword = { loginVM.password = it },
-                onToggleGuest = {  },
+                onToggleGuest = { isGuestMode = true },
                 onSignIn = {
                     loginVM.logIn(
                         onFailure = {  },
