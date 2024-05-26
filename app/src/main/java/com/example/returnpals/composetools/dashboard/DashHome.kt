@@ -142,7 +142,8 @@ fun DashCard(navController: NavController) {
             Button(
                 onClick = {
                     // Navigate to the DashboardMenu screen
-                    navController.navigate(MenuRoutes.PickupProcess) {
+                    // next button should go to "select_date" so that it always navigates to start of pickup process
+                    navController.navigate("select_date") {
                         // Clear all the back stack up to the start destination and save state
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true

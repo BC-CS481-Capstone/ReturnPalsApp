@@ -177,7 +177,7 @@ private fun SelectAddressPreview() {
                 SettingsViewModel.SimpleAddress("10", "ten"),
                 SettingsViewModel.SimpleAddress("10", "ten"),
             ),
-            isGuest = false
+            isGuest = true
         )
     }
 }
