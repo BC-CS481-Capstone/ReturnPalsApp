@@ -9,14 +9,16 @@ object MailingListRepository : ModelRepository<MailingList>(MailingList::class.j
         postalCode: String,
         email: String,
         message: String,
-    ): MailingList? {
-        return create(
+        onSuccess: (MailingList) -> Unit = {}
+    ) {
+        create(
             MailingList.builder()
                 .email(email)
                 .fullName(name)
                 .message(message)
                 .postalCode(postalCode)
-                .build()
+                .build(),
+            onSuccess
         )
     }
 

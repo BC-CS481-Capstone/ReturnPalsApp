@@ -11,13 +11,15 @@ object PaymentRepository : ModelRepository<Payments>(Payments::class.java) {
         userId: String,
         plan: PricingPlan,
         date: LocalDate,
-    ): Payments? {
-        return create(
+        onSuccess: (Payments) -> Unit = {}
+    ) {
+        create(
             Payments.builder()
                 .userId(userId)
                 .paymentPlan(plan)
                 .date(Temporal.Date(date.toString()))
-                .build()
+                .build(),
+            onSuccess
         )
     }
 

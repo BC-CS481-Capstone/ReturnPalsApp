@@ -1,24 +1,25 @@
 
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.amplifyframework.api.ApiException
+import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.api.graphql.model.ModelQuery
 import com.amplifyframework.auth.AuthException
 import com.amplifyframework.auth.AuthSession
 import com.amplifyframework.auth.result.AuthResetPasswordResult
 import com.amplifyframework.core.Amplify
+import com.amplifyframework.core.model.Model
 import com.amplifyframework.datastore.generated.model.Address
+import com.example.returnpals.AddressInfo
+import com.example.returnpals.services.backend.LoginRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import com.amplifyframework.api.graphql.GraphQLResponse
-import com.amplifyframework.core.Consumer
-import com.amplifyframework.api.ApiException
-import com.amplifyframework.api.graphql.PaginatedResult
-import com.amplifyframework.api.graphql.model.ModelMutation
-import com.amplifyframework.core.model.Model
 import kotlin.random.Random
-import androidx.compose.runtime.livedata.observeAsState
 
 
 class SettingsViewModel : ViewModel() {
@@ -38,6 +39,9 @@ class SettingsViewModel : ViewModel() {
     private val _selectedAddressId = MutableStateFlow<String?>(null)
     val selectedAddressId: StateFlow<String?> = _selectedAddressId
 
+    var guestAddress by mutableStateOf(AddressInfo())
+    val isGuest get() = LoginRepository.isGuest
+
     fun selectAddress(id: String) {
         _selectedAddressId.value = id
         Log.d("SettingsViewModel", "Selected address ID: $id")
@@ -45,7 +49,8 @@ class SettingsViewModel : ViewModel() {
 
     fun getSelectedAddress(): String? {
         val selectedId = _selectedAddressId.value
-        return _userAddresses.value.find { it.id == selectedId }?.address
+        return if (isGuest) guestAddress.toString()
+            else _userAddresses.value.find { it.id == selectedId }?.address
     }
 
     init {
@@ -191,6 +196,7 @@ class SettingsViewModel : ViewModel() {
                         _operationStatus.value = "Error adding address: ${error.localizedMessage}"
                     }
                 )
+                _selectedAddressId.value = userId
             } catch (e: ApiException) {
                 Log.e("MyAmplifyApp", "API Exception when trying to add address", e)
                 _operationStatus.value = "Exception when adding address: ${e.localizedMessage}"

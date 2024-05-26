@@ -9,14 +9,16 @@ object AddressRepository : ModelRepository<Address>(Address::class.java) {
         address: String,
         nickname: String? = null,
         email: String? = null,
-    ): Address? {
-        return create(
+        onSuccess: (Address) -> Unit = {}
+    ) {
+        create(
             Address.builder()
                 .address(address)
                 .userId(userId)
                 .nickName(nickname)
                 .userEmail(email)
-                .build()
+                .build(),
+            onSuccess
         )
     }
 
@@ -29,9 +31,9 @@ object AddressRepository : ModelRepository<Address>(Address::class.java) {
         userId: String,
         address: String,
         nickname: String,
-        email: String,
-    ): Address? {
-        return create(
+        email: String
+    ): Boolean {
+        return this.update(
             Address.builder()
                 .address(address)
                 .userId(userId)

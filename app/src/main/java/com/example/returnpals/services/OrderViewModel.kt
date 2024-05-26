@@ -3,14 +3,17 @@ package com.example.returnpals.services
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.core.Amplify
-import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.Labels
-import com.amplifyframework.datastore.generated.model.PickupStatus
 import com.example.returnpals.PickupInfo
 import com.example.returnpals.composetools.OrderRepository
+import com.example.returnpals.services.backend.LabelRepository
+import com.example.returnpals.services.backend.PickupRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 import java.time.LocalDate
 
@@ -32,9 +35,7 @@ class OrderViewModel(
     private val minDate: LocalDate = LocalDate.now().minusDays(1),
     private val maxDate: LocalDate = LocalDate.now().plusYears(1)
 ) : PickupViewModel(pickup) {
-
-    private val _pickupInfo = MutableLiveData(pickup)
-    val pickupInfo: LiveData<PickupInfo> = _pickupInfo
+    // Not sure if y'all knew, the pickup info object is stored in the pickup view model this inherits from
 
     private val _createReturnSuccessful = MutableLiveData<Boolean?>()
     val createReturnSuccessful: LiveData<Boolean?> = _createReturnSuccessful
@@ -52,30 +53,41 @@ class OrderViewModel(
     }
 
     fun onSubmit(email: String) {
-        val uris = mutableListOf<String>()
-        _pickupInfo.value?.packages?.forEach { thing -> uris.add(thing.label) }
-        val hasImage = _pickupInfo.value?.packages?.isNotEmpty() == true
-
-        val order = OrderRepository(
-            Backend.Profile.getID(),
-            email,
-            Temporal.Date(_pickupInfo.value?.date.toString()),
-            _pickupInfo.value?.address.toString(),
-            listOf(1, 2, 3),
-            PickupStatus.ON_THE_WAY,
-            hasImage,
-            uris,
-            method = _pickupInfo.value?.method
-        )
-        createOrder(order)
-
-        Log.println(Log.INFO, "OrderViewModel::onSubmit", _pickupInfo.value.toString())
+        viewModelScope.launch(Dispatchers.IO) {
+            val pickup = info
+            PickupRepository.create(pickup.copy(email=email).model) { model ->
+                for (pack in pickup.packages) {
+                    LabelRepository.create(pack.copy(returnId=model.id).model)
+                }
+            }
+        }
     }
+
+//    fun onSubmit(email: String) {
+//        val uris = mutableListOf<String>()
+//        this.packages.forEach { (_, pack) -> uris.add(pack.label) }
+//        val hasImage = uris.isNotEmpty()
+//
+//        val order = OrderRepository(
+//            Backend.Profile.getID(),
+//            email,
+//            Temporal.Date(this.date.toString()),
+//            this.address.toString(),
+//            listOf(1, 2, 3),
+//            PickupStatus.ON_THE_WAY,
+//            hasImage,
+//            uris,
+//            method = this.method
+//        )
+//        createOrder(order)
+//
+//        Log.println(Log.INFO, "OrderViewModel::onSubmit", this.info.toString())
+//    }
 
     fun submitLabels() {
         var uploaded = true
-        _pickupInfo.value?.packages?.forEach {
-            val record = Labels.builder().type(it.labelType).returnsId(returnId).image(it.label).build()
+        this.packages.forEach { (_, pack) ->
+            val record = Labels.builder().type(pack.labelType).returnsId(returnId).image(pack.label).build()
             Amplify.API.mutate(ModelMutation.create(record), {
                 Log.i("backend", it.toString())
                 if (it.hasData() && !it.hasErrors()) {
@@ -116,10 +128,6 @@ class OrderViewModel(
         }, {
             _createReturnSuccessful.postValue(false)
         })
-    }
-
-    fun updatePickupAddress(address: String?) {
-        _pickupInfo.value = _pickupInfo.value?.copy(address = address)
     }
 }
 

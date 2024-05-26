@@ -16,8 +16,9 @@ object PickupRepository : ModelRepository<Returns>(Returns::class.java) {
         method: PickupMethod,
         confirmNum: String,
         status: PickupStatus = PickupStatus.ON_THE_WAY,
-    ): Returns? {
-        return create(
+        onSuccess: (Returns) -> Unit = {}
+    ) {
+        create(
             Returns.builder()
                 .userId(userId)
                 .email(email)
@@ -26,7 +27,8 @@ object PickupRepository : ModelRepository<Returns>(Returns::class.java) {
                 .address(address)
                 .confrimationNumber(confirmNum)
                 .status(status)
-                .build()
+                .build(),
+            onSuccess
         )
     }
 

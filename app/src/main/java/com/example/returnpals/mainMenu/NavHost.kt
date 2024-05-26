@@ -4,8 +4,6 @@ import SettingsViewModel
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -15,7 +13,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.returnpals.PickupInfo
 import com.example.returnpals.composetools.ConfirmEmailScreen
 import com.example.returnpals.composetools.LoginScreen
 import com.example.returnpals.composetools.dashboard.HomeDash
@@ -30,9 +27,9 @@ import com.example.returnpals.composetools.pickup.PickupMethodScreen
 import com.example.returnpals.composetools.pickup.PricingScreen
 import com.example.returnpals.composetools.pickup.SelectAddressScreen
 import com.example.returnpals.composetools.pickup.ThankYouScreen
-import com.example.returnpals.composetools.pickup.ThankYouViewModel
 import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.services.OrderViewModel
+import com.example.returnpals.services.backend.LoginRepository
 import kotlinx.coroutines.Dispatchers
 
 @Composable
@@ -90,7 +87,7 @@ fun AppNavigation(navController: NavController) {
             composable("select_date") { entry ->
                 val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
                 PickupDateScreen(
-                    date = pickupVM.date.value,
+                    date = pickupVM.date,
                     onChangeDate = pickupVM::onChangeDate,
                     isValidDate = pickupVM::isValidDate,
                     onClickNext = { navController.navigate("select_address") },
@@ -99,34 +96,40 @@ fun AppNavigation(navController: NavController) {
             }
             composable("select_address") { entry ->
                 val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
+                val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
                 SelectAddressScreen(
+                    isGuest = settingsVM.isGuest,
+                    guestAddress = settingsVM.guestAddress,
+                    onChangeGuestAddress = { settingsVM.guestAddress = it },
                     addresses = settingsVM.userAddresses.collectAsState().value,
                     selectedAddressId = settingsVM.selectedAddressId.collectAsState().value,
-                    onSelectAddress = settingsVM::selectAddress,
-                    onAddAddress = settingsVM::addNewAddress,
+                    onSelectAddress = { id ->
+                        settingsVM.selectAddress(id)
+                        settingsVM.getSelectedAddress()?.let { pickupVM.onChangeAddress(it) }
+                    },
+                    onAddAddress = { addy ->
+                        settingsVM.addNewAddress(addy)
+                        settingsVM.getSelectedAddress()?.let { pickupVM.onChangeAddress(it) }
+                    },
                     onClickNext = { navController.navigate("select_method") },
                     onClickBack = { navController.navigate("select_date") }
                 )
             }
             composable("select_method") { entry ->
-                val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
+//                val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
                 val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
-                val selectedAddress = settingsVM.getSelectedAddress()
-                pickupVM.updatePickupAddress(selectedAddress)
                 PickupMethodScreen(
-                    method = pickupVM.method.value,
+                    method = pickupVM.method,
                     onChangeMethod = pickupVM::onChangeMethod,
                     onClickNext = { navController.navigate("select_pricing") },
                     onClickBack = { navController.navigate("select_address") },
                 )
             }
             composable("select_pricing") { entry ->
-                val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
+//                val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
                 val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
-                val selectedAddress = settingsVM.getSelectedAddress()
-                pickupVM.updatePickupAddress(selectedAddress)
                 PricingScreen(
-                    plan = pickupVM.plan.value,
+                    plan = pickupVM.plan,
                     isGuest = loginVM.isGuest,
                     onChangePlan = pickupVM::onChangePlan,
                     onClickNext = { navController.navigate("add_labels") },
@@ -135,10 +138,8 @@ fun AppNavigation(navController: NavController) {
                 )
             }
             composable("add_labels") { entry ->
-                val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
+//                val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
                 val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
-                val selectedAddress = settingsVM.getSelectedAddress()
-                pickupVM.updatePickupAddress(selectedAddress)
                 AddPackagesScreen(
                     packages = pickupVM.packages.toMap(),
                     onAddLabel = pickupVM::onAddLabel,
@@ -149,42 +150,35 @@ fun AppNavigation(navController: NavController) {
                 )
             }
             composable("confirm") { entry ->
-                val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
+//                val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
                 val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
-                val selectedAddress = settingsVM.getSelectedAddress()
-                pickupVM.updatePickupAddress(selectedAddress)
-
-                val thankyouVM = ThankYouViewModel()
-                val hasUserName by thankyouVM.hasUserNames.observeAsState()
-                val createReturnSuccessful by pickupVM.createReturnSuccessful.observeAsState()
-                val createLabelsSuccessful by pickupVM.createLabelsSuccessful.observeAsState()
-                if (hasUserName != true) {
-                    thankyouVM.init()
-                }
-                if (hasUserName == true) {
-                    ConfirmPickupScreen(
-                        info = pickupVM.pickupInfo.value ?: PickupInfo(),
-                        onClickNext = {
-                            if (hasUserName == true) {
-                                pickupVM.onSubmit(thankyouVM.userEmail.value)
-                            }
-                        },
-                        onClickBack = { navController.navigate("add_labels") },
-                        onClickPromoButton = {}
-                    )
-                    if (createReturnSuccessful == true) {
-                        pickupVM.submitLabels()
-                        if (createLabelsSuccessful == true) {
-                            navController.navigate("thanks")
-                        }
-                    }
-                }
+//                val thankYouVM = remember { ThankYouViewModel() }
+//                val hasUserName by thankYouVM.hasUserNames.observeAsState()
+//                val createReturnSuccessful by pickupVM.createReturnSuccessful.observeAsState()
+//                val createLabelsSuccessful by pickupVM.createLabelsSuccessful.observeAsState()
+//                if (hasUserName != true) thankYouVM.init()
+                // its ok for the user to not have a name (i.e. email but no name)
+                ConfirmPickupScreen(
+                    info = pickupVM.info,
+                    onClickNext = {
+                        pickupVM.onSubmit(LoginRepository.email ?: "")
+                        navController.goto("thanks")
+                    },
+                    onClickBack = { navController.navigate("add_labels") },
+                    onClickPromoButton = {}
+                )
+//                if (createReturnSuccessful == true) {
+//                    pickupVM.submitLabels()
+//                    if (createLabelsSuccessful == true) {
+//                        navController.navigate("thanks")
+//                    }
+//                }
             }
             composable("thanks") { entry ->
-                val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
+//                val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
                 ThankYouScreen(
                     dashBoardButton = {
-                        navController.navigate("dashboard home") {
+                        navController.navigate(MenuRoutes.Home) {
                             popUpTo(MenuRoutes.PickupProcess) {
                                 inclusive = true
                             }
