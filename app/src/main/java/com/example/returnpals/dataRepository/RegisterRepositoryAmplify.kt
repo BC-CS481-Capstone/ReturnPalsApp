@@ -12,12 +12,14 @@ class RegisterRepositoryAmplify : RegisterRepository {
 
     override fun registerUser(registerUserInfo: RegisterUserInfo, errorMessage: (Boolean,String?) -> Unit) {
         val address = "{" +
-                "formatted:address" +
-                "street_address:address" +
-                "locality:address" +
-                "region:address" +
-                "postal_code:98021" +
-                "country:address" +
+                "formatted:"+registerUserInfo.address+'\n'+
+                registerUserInfo.suiteNumber+'\n'+
+                registerUserInfo.city+", "+registerUserInfo.postalCode+
+                "street_address:" +registerUserInfo.address+
+                "locality:" +registerUserInfo.city+
+                //"region:WA" +
+                "postal_code:"+registerUserInfo.postalCode+
+                //"country:USA" +
                 "}"
         val attributes = listOf(
             AuthUserAttribute(AuthUserAttributeKey.email(),registerUserInfo.email),
@@ -27,19 +29,15 @@ class RegisterRepositoryAmplify : RegisterRepository {
             AuthUserAttribute(AuthUserAttributeKey.address(),address),
         )
         val options = AuthSignUpOptions.builder().userAttributes(attributes).build()
-        val options2 = AuthSignUpOptions.builder().
-            userAttribute(AuthUserAttributeKey.phoneNumber(),registerUserInfo.phoneNumber)
-            .userAttribute(AuthUserAttributeKey.givenName(),registerUserInfo.firstName)
-            .userAttribute(AuthUserAttributeKey.familyName(),registerUserInfo.lastName)
-            .userAttribute(AuthUserAttributeKey.address(),address)
-            .userAttribute(AuthUserAttributeKey.email(),registerUserInfo.email)
-            .build()
+
+
         Log.i("RegisterRepositoryAmplify",options.toString())
         Amplify.Auth.signUp(
             registerUserInfo.email,
             registerUserInfo.password1,
              options ,
             { result ->
+                //result.isSignUpComplete should return false every time as the user needs to confirm email.
                 errorMessage(true,null)
                 Log.i("Amplify Auth", "Result: \n" + result.toString()) }
         ) { error ->
