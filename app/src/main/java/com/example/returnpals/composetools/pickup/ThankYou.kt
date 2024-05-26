@@ -26,9 +26,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.amplifyframework.api.graphql.model.ModelQuery
+import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.generated.model.Returns
-import com.amplifyframework.datastore.generated.model.User
 import com.example.returnpals.composetools.ButtonManager
 import com.example.returnpals.composetools.IconManager
 import com.example.returnpals.composetools.getBlueIconColor
@@ -178,7 +178,7 @@ fun ThankYouScreen(dashBoardButton: () -> Unit) {
         }
     }
 
-class ThankYouViewModel(): ViewModel() {
+class ThankYouViewModel(): ViewModel() { //TODO move view model to new file
     private val _hasUserNames = MutableLiveData<Boolean>()
     val hasUserNames: LiveData<Boolean> = _hasUserNames
     private val _hasConfirmNumber = MutableLiveData<Boolean>()
@@ -189,22 +189,18 @@ class ThankYouViewModel(): ViewModel() {
     var confirmNumber = mutableStateOf("")
 
     fun init() {
-        Amplify.API.query(
-            ModelQuery.list(User::class.java), {
-                if (it.hasData()) {
-                    userName.value = it.data.items.first().firstName
-                    userEmail.value = it.data.items.first().email
-                    //OR something like this
-                    _hasUserNames.postValue(true)
-                }
-            },
-            {
-            });
+        //TODO move logic to repository
+        Amplify.Auth.fetchUserAttributes({
+            it.iterator().forEach {
+                if (it.key == AuthUserAttributeKey.givenName()) userName.value = it.value
+                if (it.key == AuthUserAttributeKey.email()) userEmail.value = it.value
+            }
+            _hasUserNames.postValue(true)
+        }){}
         Amplify.API.query(
             ModelQuery.list(Returns::class.java), {
                 if (it.hasData() && it.data.items.count() > 0) {
                     confirmNumber.value = it.data.items.first().confrimationNumber
-                    userEmail.value = it.data.items.first().email
                     //OR something like this
                     _hasConfirmNumber.postValue(true)
                 } else {
