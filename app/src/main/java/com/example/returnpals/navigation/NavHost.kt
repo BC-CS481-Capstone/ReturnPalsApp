@@ -22,7 +22,7 @@ import com.example.returnpals.composetools.dashboard.Settings
 import com.example.returnpals.composetools.login.ConfirmEmailScreen
 import com.example.returnpals.composetools.login.LoginScreen
 import com.example.returnpals.composetools.mainMenu.About
-import com.example.returnpals.composetools.mainMenu.Contact
+import com.example.returnpals.composetools.mainMenu.ContactScreen
 import com.example.returnpals.composetools.mainMenu.FAQ
 import com.example.returnpals.composetools.mainMenu.Home
 import com.example.returnpals.composetools.mainMenu.MainMenuScreen
@@ -37,18 +37,23 @@ import com.example.returnpals.composetools.pickup.SelectAddressScreen
 import com.example.returnpals.composetools.pickup.ThankYouScreen
 import com.example.returnpals.composetools.pickup.ThankYouViewModel
 import com.example.returnpals.dataRepository.CognitoMainMenuScreenRepository
+import com.example.returnpals.dataRepository.ContactRepositoryAmplify
+import com.example.returnpals.dataRepository.RegisterRepositoryAmplify
 import com.example.returnpals.navigation.MenuRoutes
 import com.example.returnpals.navigation.Register
 import com.example.returnpals.navigation.goto
 import com.example.returnpals.services.ConfirmEmailViewModel
 import com.example.returnpals.services.LoginViewModel
+import com.example.returnpals.viewmodel.ContactViewModel
 import com.example.returnpals.viewmodel.MainMenuScreenViewModel
 import com.example.returnpals.viewmodel.OrderViewModel
+import com.example.returnpals.viewmodel.RegisterViewModel
 import com.stripe.android.paymentsheet.PaymentSheetResult
 
 @Composable
 fun AppNavigation(navController: NavController) {
-    val loginVM = remember { LoginViewModel("test@bellevue.college", "Password123$") }
+    val loginVM = remember { LoginViewModel("", "") }
+    val registerVM = RegisterViewModel(RegisterRepositoryAmplify())
     //val ordersVM = remember {}
     //val settingsVM = remember {}
     //val profileVM = remember {}
@@ -61,6 +66,7 @@ fun AppNavigation(navController: NavController) {
         //Start at main menu.
         composable("MainMenu"){
             val mainMenuVM = remember {MainMenuScreenViewModel(CognitoMainMenuScreenRepository())}
+            val contactVM = remember {ContactViewModel(ContactRepositoryAmplify)}
             val navigate by mainMenuVM.readyToNav.observeAsState()
             /**$navigate is a nullable string.
              * @Null do not navigate
@@ -76,7 +82,7 @@ fun AppNavigation(navController: NavController) {
         ) {
             /**START of the Dashboard Home Navigation*/
             composable(MenuRoutes.HomeDash) {
-                //TODO get navigate logic from view model>val navigate = homeDashVM.readyToNav.observeAsState()
+                //TODO get navigate logic from view model>val navigate by homeDashVM.readyToNav.observeAsState()
                 /**$navigate is a nullable string.
                  * @Null do not navigate
                  * @String navigate to the specific destination*/
@@ -85,7 +91,7 @@ fun AppNavigation(navController: NavController) {
                 HomeDash(navController, loginVM)
             }
             composable(MenuRoutes.Profile) {
-                //TODO get navigate logic from view model>val navigate = profileVM.readyToNav.observeAsState()
+                //TODO get navigate logic from view model>val navigate by profileVM.readyToNav.observeAsState()
                 /**$navigate is a nullable string.
                  * @Null do not navigate
                  * @String navigate to the specific destination*/
@@ -94,7 +100,7 @@ fun AppNavigation(navController: NavController) {
                 Profile(navController, loginVM)
             }
             composable(MenuRoutes.Settings) {
-                //TODO get navigate logic from view model>val navigate = settingsVM.readyToNav.observeAsState()
+                //TODO get navigate logic from view model>val navigate by settingsVM.readyToNav.observeAsState()
                 /**$navigate is a nullable string.
                  * @Null do not navigate
                  * @String navigate to the specific destination*/
@@ -103,7 +109,7 @@ fun AppNavigation(navController: NavController) {
                 Settings(navController, loginVM)
             }
             composable(MenuRoutes.Orders) {
-                //TODO get navigate logic from view model>val navigate = ordersVM.readyToNav.observeAsState()
+                //TODO get navigate logic from view model>val navigate by ordersVM.readyToNav.observeAsState()
                 /**$navigate is a nullable string.
                  * @Null do not navigate
                  * @String navigate to the specific destination*/
@@ -123,7 +129,7 @@ fun AppNavigation(navController: NavController) {
             /**START of the Login Navigation*/
             composable(MenuRoutes.SignIn) { entry ->
                 val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
-                //TODO get navigate logic from view model>val navigate = settingsVM.readyToNav.observeAsState()
+                //TODO get navigate logic from view model>val navigate by settingsVM.readyToNav.observeAsState()
                 /**$navigate is a nullable string.
                  * @Null do not navigate
                  * @String navigate to the specific destination*/
@@ -131,11 +137,19 @@ fun AppNavigation(navController: NavController) {
                 //Call Content
                 LoginScreen(loginVM, settingsVM, navController)
             }
-            composable(MenuRoutes.Register) { Register(navController) }
+            composable(MenuRoutes.Register) {
+                val navigate by registerVM.readyToNav.observeAsState()
+                /**$navigate is a nullable string.
+                 * @Null do not navigate
+                 * @String navigate to the specific destination*/
+                if (navigate != null) navController.goto(navigate!!)
+                //Call Content
+                Register(registerVM)
+            }
             composable(MenuRoutes.ConfirmNumber) {
                 // this vm should be destroyed when confirmation is complete
-                val confirmVm = remember { ConfirmEmailViewModel(loginVM.email) }
-                //TODO get navigate logic from view model>val navigate = confirmVm.readyToNav.observeAsState()
+                val confirmVm = remember { ConfirmEmailViewModel(registerVM.uiState.value.email) }
+                //TODO get navigate logic from view model>val navigate by confirmVm.readyToNav.observeAsState()
                 /**$navigate is a nullable string.
                  * @Null do not navigate
                  * @String navigate to the specific destination*/
@@ -153,7 +167,7 @@ fun AppNavigation(navController: NavController) {
             /**START of the Pickup Process Navigation*/
             composable("select_date") { entry ->
                 val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
-                //TODO get navigate logic from view model>val navigate = pickupVM.readyToNav.observeAsState()
+                //TODO get navigate logic from view model>val navigate by pickupVM.readyToNav.observeAsState()
                 /**$navigate is a nullable string.
                  * @Null do not navigate
                  * @String navigate to the specific destination*/
@@ -169,7 +183,7 @@ fun AppNavigation(navController: NavController) {
             }
             composable("select_address") { entry ->
                 val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
-                //TODO get navigate logic from view model>val navigate = settingsVM.readyToNav.observeAsState()
+                //TODO get navigate logic from view model>val navigate by settingsVM.readyToNav.observeAsState()
                 /**$navigate is a nullable string.
                  * @Null do not navigate
                  * @String navigate to the specific destination*/
@@ -189,7 +203,7 @@ fun AppNavigation(navController: NavController) {
                 val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
                 val selectedAddress = settingsVM.getSelectedAddress()
                 pickupVM.updatePickupAddress(selectedAddress)
-                //TODO get navigate logic from view model>val navigate = pickupVM.readyToNav.observeAsState()
+                //TODO get navigate logic from view model>val navigate by pickupVM.readyToNav.observeAsState()
                 /**$navigate is a nullable string.
                  * @Null do not navigate
                  * @String navigate to the specific destination*/
@@ -207,7 +221,7 @@ fun AppNavigation(navController: NavController) {
                 val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
                 val selectedAddress = settingsVM.getSelectedAddress()
                 pickupVM.updatePickupAddress(selectedAddress)
-                //TODO get navigate logic from view model>val navigate = pickupVM.readyToNav.observeAsState()
+                //TODO get navigate logic from view model>val navigate by pickupVM.readyToNav.observeAsState()
                 /**$navigate is a nullable string.
                  * @Null do not navigate
                  * @String navigate to the specific destination*/
@@ -227,7 +241,7 @@ fun AppNavigation(navController: NavController) {
                 val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
                 val selectedAddress = settingsVM.getSelectedAddress()
                 pickupVM.updatePickupAddress(selectedAddress)
-                //TODO get navigate logic from view model>val navigate = pickupVM.readyToNav.observeAsState()
+                //TODO get navigate logic from view model>val navigate by pickupVM.readyToNav.observeAsState()
                 /**$navigate is a nullable string.
                  * @Null do not navigate
                  * @String navigate to the specific destination*/
@@ -252,7 +266,7 @@ fun AppNavigation(navController: NavController) {
                 val hasUserName by thankyouVM.hasUserNames.observeAsState()
                 val createReturnSuccessful by pickupVM.createReturnSuccessful.observeAsState()
                 val createLabelsSuccessful by pickupVM.createLabelsSuccessful.observeAsState()
-                //TODO get navigate logic from view model>val navigate = pickupVM.readyToNav.observeAsState()
+                //TODO get navigate logic from view model>val navigate by pickupVM.readyToNav.observeAsState()
                 /**$navigate is a nullable string.
                  * @Null do not navigate
                  * @String navigate to the specific destination*/
@@ -295,7 +309,7 @@ fun AppNavigation(navController: NavController) {
             }
             composable("thanks") { entry ->
                 val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
-                //TODO get navigate logic from view model>val navigate = pickupVM.readyToNav.observeAsState()
+                //TODO get navigate logic from view model>val navigate by pickupVM.readyToNav.observeAsState()
                 /**$navigate is a nullable string.
                  * @Null do not navigate
                  * @String navigate to the specific destination*/
@@ -315,7 +329,7 @@ fun AppNavigation(navController: NavController) {
         composable(MenuRoutes.Home) { Home(navController) }
         composable(MenuRoutes.About) { About(navController) }
         composable(MenuRoutes.Pricing) { Pricing(navController) }
-        composable(MenuRoutes.Contact) { Contact(navController) }
+        composable(MenuRoutes.Contact) { ContactScreen(navController) }
         composable(MenuRoutes.Video) { Video(navController) }
         composable(MenuRoutes.FAQ) { FAQ(navController) }
     }
