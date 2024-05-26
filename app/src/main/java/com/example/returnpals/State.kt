@@ -51,7 +51,7 @@ data class PackageInfo(
         Labels.builder()
             .type(labelType)
             //The label id is saved in the returns table .returnsId(returnId)
-            .id(id)
+            .returnsId(id)
             .image(label.toString())
             .build()
 }
