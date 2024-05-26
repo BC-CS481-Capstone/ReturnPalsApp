@@ -272,13 +272,13 @@ fun AppNavigation(navController: NavController) {
                 if (hasUserName != true) {
                     thankyouVM.init()
                 }
-                if (hasUserName == true) {
-                    pickupVM.onSubmit(thankyouVM.userEmail.value)
+                if ( createLabelsSuccessful== true) {
+                    navController.navigate("thanks")
                 }
                 if (createReturnSuccessful == true) {
                     pickupVM.submitLabels()
                 }
-                if (/*createLabelsSuccessful ==*/ true) {
+                if (hasUserName == true) {
                     PaymentApp( //TODO change signature to accept 1 view model
                         info = pickupVM.info,
                         onPaymentSheetResult = { paymentSheetResult: PaymentSheetResult ->
@@ -295,7 +295,7 @@ fun AppNavigation(navController: NavController) {
 
                                 is PaymentSheetResult.Completed -> {
                                     Log.e("PaymentApp", "Completed")
-                                    navController.navigate("thanks")  //TODO move navigate logic
+                                    pickupVM.onSubmit(thankyouVM.userEmail.value)
                                 }
                             }
                         },
