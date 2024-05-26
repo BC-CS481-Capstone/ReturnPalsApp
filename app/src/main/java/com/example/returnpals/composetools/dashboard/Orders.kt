@@ -27,7 +27,7 @@ import com.example.returnpals.services.LoginViewModel
 //Deviates from needing to pass NavController.
 @Composable
 fun Orders(navController: NavController, loginVM: LoginViewModel) {
-    DashboardMenuScaffold(navController, loginVM.isLoggedIn.value!! ?: false, loginVM::logOut) {
+    DashboardMenuScaffold(navController, loginVM::logOut) {
         OrdersContent()
     }
 }
@@ -89,7 +89,7 @@ fun OrderTable(){
 
 
         items(1) {
-            Log.i("Order", orderList.toString())
+            //Log.i("Order", orderList.toString())
             orderList.forEach{
                 Log.i("Order", "Loading Item")
                 Row(){

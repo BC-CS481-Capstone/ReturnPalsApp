@@ -61,7 +61,7 @@ fun Settings(navController: NavController, loginVM: LoginViewModel) {
         settingsViewModel.fetchAddresses()
     }
 
-    DashboardMenuScaffold(navController, loginVM.isLoggedIn.value!! ?: false, loginVM::logOut) {
+    DashboardMenuScaffold(navController, loginVM::logOut) {
         if (showResetPasswordDialog) {
             ResetPasswordDialog(
                 onDismiss = { showResetPasswordDialog = false },
@@ -73,7 +73,6 @@ fun Settings(navController: NavController, loginVM: LoginViewModel) {
                 }
             )
         }
-
         if (showConfirmResetPasswordDialog) {
             ConfirmResetPasswordDialog(
                 onDismiss = { showConfirmResetPasswordDialog = false },
@@ -83,7 +82,6 @@ fun Settings(navController: NavController, loginVM: LoginViewModel) {
                 }
             )
         }
-
         if (showAddressesDialog) {
             AddressesDialog(
                 addresses = userAddresses,
@@ -92,28 +90,22 @@ fun Settings(navController: NavController, loginVM: LoginViewModel) {
                 onDeleteAddress = { address -> settingsViewModel.deleteAddress(address) } // Callback for address deletion
             )
         }
-
         if (showAddAddressDialog) {
             AddAddressDialog(
                 settingsViewModel = settingsViewModel,
                 onDismiss = { showAddAddressDialog = false }
             )
         }
-
-
         PasswordField(
             onResetPasswordClick = { showResetPasswordDialog = true },
             onAddRemoveAddressesClick = { showAddressesDialog = true },
             onBillingInfoClick = { /* Logic for billing information */ }
         )
-
         operationStatus?.let { status ->
             if (status.isNotEmpty()) {
                 Text(text = status)
             }
         }
-
-
     }
 }
 
@@ -276,7 +268,6 @@ fun AddressesDialog(
         onDismissRequest = { onDismiss() },
         title = { Text("Manage Addresses") },
         text = {
-
             Column(
                 modifier = Modifier
                     .fillMaxWidth()

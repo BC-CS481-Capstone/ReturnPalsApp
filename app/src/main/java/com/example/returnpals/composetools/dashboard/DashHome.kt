@@ -48,7 +48,7 @@ fun HomeDash(navController: NavController, loginVM: LoginViewModel) {
     val isLoggedIn = loginVM.isLoggedIn.observeAsState()
     vm.init()
     if (hasName == true && isLoggedIn.value != false) { // check for not signed in to Avoid null probelm with login view model
-        DashboardMenuScaffold(navController, true, loginVM::logOut) {
+        DashboardMenuScaffold(navController, loginVM::logOut) {
             HomeDashContent(navController = navController, firstName = vm.getFirstName())
         }
     } else if (hasName == false) {

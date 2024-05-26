@@ -39,7 +39,7 @@ import com.example.returnpals.services.LoginViewModel
 val profileVM = ProfileViewModel()
 @Composable
 fun Profile(navController: NavController, loginVM: LoginViewModel) {
-    DashboardMenuScaffold(navController, loginVM.isLoggedIn.value!! ?: false, loginVM::logOut) {
+    DashboardMenuScaffold(navController, loginVM::logOut) {
         val hasUserInfo by profileVM.hasUserInfo.observeAsState()
         profileVM.init()
         if (hasUserInfo == true) {

@@ -41,7 +41,11 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun DashboardMenuScaffold(navController: NavController, isLoggedIn: Boolean, onLogOut: () -> Unit = {}, content: @Composable () -> Unit) {
+fun DashboardMenuScaffold(
+    navController: NavController,
+    onLogOut: () -> Unit = {},
+    content: @Composable () -> Unit
+) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
