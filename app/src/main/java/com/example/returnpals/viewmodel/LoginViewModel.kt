@@ -52,7 +52,7 @@ class LoginViewModel(
         val lambda:(Boolean,String,String)->Unit = { it, message, recoverSuggestion ->
         }
         viewModelScope.launch(context) {
-            withContext(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
                 try {
                     LoginRepositoryAmplify.register(email, password,phoneNumber = null,lambda)
                     onSuccess()
@@ -82,7 +82,7 @@ class LoginViewModel(
             setFailMessage(message,recoverSuggestion)
         }
         viewModelScope.launch(context) {
-            withContext(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
                 try {
                     if (isLoggedIn.value == true) LoginRepositoryAmplify.logOut({ })
                     LoginRepositoryAmplify.logIn(email, password,lambda)
@@ -107,7 +107,7 @@ class LoginViewModel(
             _isGuest.postValue(false)
         }}
         viewModelScope.launch(context) {
-            withContext(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
                 try {
                     /* Removed this logic as it would not work when the app closed and opened again if (isLoggedIn == true)*/
                     LoginRepositoryAmplify.logOut(lambda)
@@ -137,7 +137,7 @@ class LoginViewModel(
         _isLoggedIn.postValue(true)
 
         viewModelScope.launch(context) {
-            withContext(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
                 try {
                     if (isLoggedIn.value == true) LoginRepositoryAmplify.logOut({})
                     LoginRepositoryAmplify.logInAsGuest(email,lambda)
