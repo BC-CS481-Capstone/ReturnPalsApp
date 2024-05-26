@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.returnpals.dataRepository.RegisterRepository
+import com.example.returnpals.navigation.MenuRoutes
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,11 +16,8 @@ class RegisterViewModel (
 
 ){
     // You can expose LiveData or StateFlow for observing the operation's result in the UI
-    private val _submissionSuccessful = MutableLiveData<Boolean?>()
-    val submissionSuccessful: LiveData<Boolean?> = _submissionSuccessful
-    private val _cancelRegistration = MutableLiveData<Boolean?>()
-    val cancelRegistration: LiveData<Boolean?> = _cancelRegistration
-    var failMessage = ""
+    private val _readyToNav = MutableLiveData<String?>()
+    val readyToNav: LiveData<String?> = _readyToNav
     
     companion object {
         private const val TAG = "ReturnPalsApp"
@@ -28,7 +26,7 @@ class RegisterViewModel (
     fun onSubmit() {
         //Sends UI state to repository and lambda to set error message and condition variable.
         registerRepository.registerUser(registerUserInfo = uiState.value){ isSuccess,message->
-            _submissionSuccessful.postValue(isSuccess)
+            if (isSuccess) _readyToNav.postValue(MenuRoutes.ConfirmNumber)
             if (message != null) onFailMessage(message)
         }
     }
@@ -38,13 +36,7 @@ class RegisterViewModel (
             RegisterUserInfo()
         }
         //Sends navigation signal
-        _cancelRegistration.postValue(true)
-    }
-
-
-
-    fun resetSubmissionSuccess() {
-        _submissionSuccessful.value = null // Reset the LiveData to its initial state
+        _readyToNav.postValue(MenuRoutes.SignIn)
     }
 
 
