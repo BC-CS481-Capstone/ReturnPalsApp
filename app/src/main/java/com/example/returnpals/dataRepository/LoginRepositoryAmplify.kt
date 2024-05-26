@@ -45,7 +45,6 @@ object LoginRepositoryAmplify: LoginRepository {
     }
 
     override suspend fun logIn(email: String, password: String,result:(Boolean,String,String)->Unit) {
-        var success = false
         var message = ""
         var recoverySuggestion = ""
         Log.d("LoginRepository", "logIn")
@@ -55,11 +54,12 @@ object LoginRepositoryAmplify: LoginRepository {
                 LoginRepositoryAmplify.email = email
                 isGuest = false
                 isLoggedIn = true
-                success = true
+                result(true,"","")
                 Log.i("LoginRepository", "Logged in as $email")
             } else {
                 // Flagged as a warning in logcat because we don't expect the program to go here but its not game over if it does
                 Log.w("LoginRepository", "Incomplete log in as $email")
+                result(false,message,recoverySuggestion)
                 throw AuthException("Additional steps needed: ${result.nextStep}", "Complete the next step.")
             }
         } catch (error: AuthException) {
@@ -71,9 +71,9 @@ object LoginRepositoryAmplify: LoginRepository {
             }
             // Not flagged as an error in logcat because its the callers job to decide if it is an error or not  
             Log.i("LoginRepository", "Failed to log in as $email", error)
+            result(false,message,recoverySuggestion)
             throw error
         }
-        result(success,message,recoverySuggestion)
     }
 
     /**
@@ -166,24 +166,30 @@ object LoginRepositoryAmplify: LoginRepository {
     /**
      * @param code the confirmation code sent to the user's email
      */
-    override suspend fun confirmEmail(code: String, result: (Boolean,String,String)->Unit) {
-        var success = false
+    override suspend fun confirmEmail(
+        code: String,
+        result: (Boolean, String, String) -> Unit,
+        email: String
+    ) { //TODO move to new Repo for confirm view model
+
         Log.d("LoginRepository", "confirmEmail")
         try {
             email?.let { email ->
                 val result = Amplify.Auth.confirmSignUp(email, code)
                 if (result.isSignUpComplete) {
+                    result(true,"","")
                     Log.i("LoginRepository", "Confirmed email: $email.")
                 } else {
                     Log.w("LoginRepository", "Incomplete email confirmation: $email")
+                    result(false,"","")
                     throw AuthException("Additional steps needed: ${result.nextStep}", "Complete the next step.")
                 }
             } ?: Log.w("LoginRepository", "Failed to confirm email: $email")
         } catch (error: AuthException) {
             Log.i("LoginRepository", "Failed to confirm email: $email", error)
+            result(false,error.message!!,error.recoverySuggestion!!)
             throw error
         }
-        result(success,"","") //TODO messages
     }
 
     /** Updates this repository with the remote database. */

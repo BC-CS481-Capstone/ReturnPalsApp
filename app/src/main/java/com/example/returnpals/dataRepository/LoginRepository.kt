@@ -25,7 +25,7 @@ interface LoginRepository {
         result: (Boolean,String,String)->Unit
     )
 
-    suspend fun confirmEmail(code: String,result: (Boolean,String,String)->Unit)
+    suspend fun confirmEmail(code: String, result: (Boolean, String, String) -> Unit, email: String)
 
 
     /** Updates this repository with the remote database. */
