@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -32,6 +33,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,6 +53,8 @@ fun SelectAddressScreen(
     onSelectAddress: (String) -> Unit = {},
     onAddAddress: (String) -> Unit = {},
     isGuest: Boolean = false,
+    guestAddress: AddressInfo = AddressInfo(),
+    onChangeGuestAddress: (AddressInfo) -> Unit = {}
 ) {
     if (addresses.isEmpty()) {
         Log.d("SelectAddressScreen", "No addresses available")
@@ -62,16 +66,18 @@ fun SelectAddressScreen(
         step = 2,
         onClickBack = onClickBack,
         onClickNext = onClickNext,
-        enabledNext = selectedAddressId != null,
+        enabledNext = if (isGuest) guestAddress.isValid else selectedAddressId != null,
     ) { padding ->
-        if (isGuest)
+        if (isGuest) {
             SelectAddressGuestContent(
+                address = guestAddress,
+                onChangeAddress = onChangeGuestAddress,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(padding)
                     .padding(20.dp)
             )
-        else
+        } else
             SelectAddressContent(
                 selected = selectedAddressId,
                 userAddresses = addresses,
@@ -122,12 +128,20 @@ fun SelectAddressContent(
 
 @Composable
 fun SelectAddressGuestContent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    address: AddressInfo = AddressInfo(),
+    onChangeAddress: (AddressInfo) -> Unit = {}
 ) {
-    var address by remember { mutableStateOf(AddressInfo()) }
     Column(modifier) {
-        AddressHeader()
-        AddressFields(address, modifier.padding(20.dp)) { address = it }
+        AddressHeader("Enter your Address", modifier=Modifier.fillMaxWidth())
+        // I don't know why its not expanding the fields the whole height
+        AddressFields(
+            address = address,
+            modifier = Modifier
+                .padding(10.dp)
+                .border(4.dp, ReturnPalTheme.colorScheme.outline),
+            onChange = onChangeAddress
+        )
     }
 }
 
@@ -154,27 +168,36 @@ private fun SelectAddressPreview() {
 }
 
 @Composable
-private fun AddressHeader() {
-    Column {
+private fun AddressHeader(
+    title: String,
+    description: String? = null,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+    ) {
         Text(
-            text = "Pickup Details",
-            style = TextStyle(
-                color = Color.Black,
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Normal
-            )
+            modifier = Modifier
+                .padding(10.dp)
+                .offset(0.dp, 10.dp),
+            text = title,
+            fontWeight = FontWeight.Bold,
+            fontSize = 30.sp,
+            textAlign = TextAlign.Center,
+            color = ReturnPalTheme.colorScheme.secondary,
         )
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        Text(
-            text = "Select or add your pickup address",
-            style = TextStyle(
-                color = Color.Gray,
+        if (description != null) {
+            Text(
+                text = description,
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Normal,
+                textAlign = TextAlign.Center,
+                color = ReturnPalTheme.colorScheme.secondary,
             )
-        )
+        }
     }
 }
 
@@ -312,52 +335,59 @@ private fun AddressFields(
                 value = address.country,
                 onValueChange = { onChange(address.copy(country=it)) },
                 label = { Text(text = "Country") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(spacing, spacing, spacing, spacing/2)
             )
-            Spacer(Modifier.height(spacing))
         }
         item {
             TextField(
                 value = address.street,
                 onValueChange = { onChange(address.copy(street = it)) },
                 label = { Text(text = "Street Address") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(spacing, spacing/2)
             )
-            Spacer(Modifier.height(spacing))
         }
         item {
             TextField(
                 value = address.unit,
                 onValueChange = { onChange(address.copy(unit = it)) },
                 label = { Text(text = "Apt, Suite, Building, Floor, ect") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(spacing, spacing/2)
             )
-            Spacer(Modifier.height(spacing))
         }
         item {
             TextField(
                 value = address.city,
                 onValueChange = { onChange(address.copy(city = it)) },
                 label = { Text(text = "City") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(spacing, spacing/2)
             )
-            Spacer(Modifier.height(spacing))
         }
         item {
             TextField(
                 value = address.state,
                 onValueChange = { onChange(address.copy(state = it)) },
                 label = { Text(text = "Province or State") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(spacing, spacing/2)
             )
-            Spacer(Modifier.height(spacing))
         }
         item {
             TextField(
                 value = address.zipcode,
                 onValueChange = { onChange(address.copy(zipcode = it)) },
                 label = { Text(text = "ZIP Code") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(spacing, spacing/2, spacing, spacing)
             )
         }
     }

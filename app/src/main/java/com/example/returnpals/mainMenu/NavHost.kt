@@ -100,6 +100,9 @@ fun AppNavigation(navController: NavController) {
             composable("select_address") { entry ->
                 val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
                 SelectAddressScreen(
+                    isGuest = settingsVM.isGuest,
+                    guestAddress = settingsVM.guestAddress,
+                    onChangeGuestAddress = { settingsVM.guestAddress = it },
                     addresses = settingsVM.userAddresses.collectAsState().value,
                     selectedAddressId = settingsVM.selectedAddressId.collectAsState().value,
                     onSelectAddress = settingsVM::selectAddress,
@@ -158,25 +161,18 @@ fun AppNavigation(navController: NavController) {
                 val hasUserName by thankyouVM.hasUserNames.observeAsState()
                 val createReturnSuccessful by pickupVM.createReturnSuccessful.observeAsState()
                 val createLabelsSuccessful by pickupVM.createLabelsSuccessful.observeAsState()
-                if (hasUserName != true) {
-                    thankyouVM.init()
-                }
-                if (hasUserName == true) {
-                    ConfirmPickupScreen(
-                        info = pickupVM.pickupInfo.value ?: PickupInfo(),
-                        onClickNext = {
-                            if (hasUserName == true) {
-                                pickupVM.onSubmit(thankyouVM.userEmail.value)
-                            }
-                        },
-                        onClickBack = { navController.navigate("add_labels") },
-                        onClickPromoButton = {}
-                    )
-                    if (createReturnSuccessful == true) {
-                        pickupVM.submitLabels()
-                        if (createLabelsSuccessful == true) {
-                            navController.navigate("thanks")
-                        }
+                if (hasUserName != true) thankyouVM.init()
+                // its ok for the user to not have a name (i.e. email but no name)
+                ConfirmPickupScreen(
+                    info = pickupVM.pickupInfo.value ?: PickupInfo(),
+                    onClickNext = { pickupVM.onSubmit(thankyouVM.userEmail.value) },
+                    onClickBack = { navController.navigate("add_labels") },
+                    onClickPromoButton = {}
+                )
+                if (createReturnSuccessful == true) {
+                    pickupVM.submitLabels()
+                    if (createLabelsSuccessful == true) {
+                        navController.navigate("thanks")
                     }
                 }
             }

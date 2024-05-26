@@ -91,9 +91,16 @@ data class PickupInfo(
 
 data class AddressInfo(
     val country: String= "",
-    var state: String = "",
+    val state: String = "",
     val city: String = "",
     val zipcode: String = "",
     val street: String = "",
     val unit: String = "",
-)
+) {
+    override fun toString(): String {
+        return "$street, $unit, $city, $state, $zipcode, $country"
+    }
+
+    // simple isValid for ease of demoing
+    val isValid: Boolean get() = (country + state + city + zipcode + street + unit).isNotBlank()
+}
