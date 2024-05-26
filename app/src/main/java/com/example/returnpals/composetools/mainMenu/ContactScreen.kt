@@ -13,7 +13,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -53,17 +52,17 @@ fun ContactContent(viewModel: ContactViewModel = viewModel()) {
     val submissionSuccessful by viewModel.submissionSuccessful.observeAsState()
 
 
-    // Use LaunchedEffect to clear fields on submission success
-    LaunchedEffect(submissionSuccessful) {
-        if (submissionSuccessful == true) {
-            fullName = ""
-            postalCode = ""
-            email = ""
-            message = ""
-            // Reset the submission success state in the ViewModel to prevent repeated actions
-            viewModel.resetSubmissionSuccess()
-        }
+
+
+    if (submissionSuccessful == true) {
+        fullName = ""
+        postalCode = ""
+        email = ""
+        message = ""
+        // Reset the submission success state in the ViewModel to prevent repeated actions
+        viewModel.resetSubmissionSuccess()
     }
+
 
     Column(
         modifier = Modifier
@@ -91,12 +90,6 @@ fun ContactContent(viewModel: ContactViewModel = viewModel()) {
         Button(
             onClick = {
                 viewModel.submitData(fullName, postalCode, email, message)
-                // Reset state variables after submission
-                fullName = ""
-                postalCode = ""
-                email = ""
-                message = ""
-
             },
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = selectedBlue,
