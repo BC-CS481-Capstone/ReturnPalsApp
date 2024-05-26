@@ -8,8 +8,8 @@ import org.junit.Test
 
 class LoginRepositoryAmplifyTest {
 
-    val email = "test@bellevue.college"
-    val password = "Password123$"
+    val email = "daviddcmmoo@gmail.com"
+    val password = "Password12345!"
     val lambdaTest:(Boolean,String,String)->Unit =  {it,message,recoverSuggestion ->}
 
     @Test

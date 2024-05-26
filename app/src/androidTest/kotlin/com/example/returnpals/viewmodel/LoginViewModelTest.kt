@@ -67,8 +67,8 @@ class LoginViewModelTest {
 
     @Test
     fun logIn() = runTest {
-        vm.email = "test@bellevue.college"
-        vm.password = "Password123$"
+        vm.email = "daviddcmmoo@gmail.com"
+        vm.password = "Password12345!"
         async { withContext(Dispatchers.Main) {
             vm.logOut(this.coroutineContext)
             //Would fail to login randomly. Set to make sure user log out first.
@@ -84,8 +84,8 @@ class LoginViewModelTest {
 
     @Test
     fun logOut() = runTest {
-        vm.email = "test@bellevue.college"
-        vm.password = "Password123$"
+        vm.email = "daviddcmmoo@gmail.com"
+        vm.password = "Password12345!"
         async { withContext(Dispatchers.Main){
             vm.logIn(this.coroutineContext)
         }  }.await()
