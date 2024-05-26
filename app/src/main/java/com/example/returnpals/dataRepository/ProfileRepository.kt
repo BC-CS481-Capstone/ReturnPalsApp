@@ -2,16 +2,14 @@ package com.example.returnpals.dataRepository
 
 
 import android.util.Log
-import com.amplifyframework.api.graphql.model.ModelQuery
+import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.generated.model.PricingPlan
-import com.amplifyframework.datastore.generated.model.User
-
 import java.time.LocalDate
 
 //For this, email on login should be stored in Profile Repository.
 
-data class ProfileRepository(
+data class ProfileRepository(//TODO Move State of UI to a view model
     private var nameFirst : String = "John",
     private var nameLast : String = "Doe",
     private var email : String = "JD@ReturnPal.com",
@@ -23,6 +21,15 @@ data class ProfileRepository(
 ) {
     private val TAG = "ProfileRepo"
     fun getDataBase(){
+        Amplify.Auth.fetchUserAttributes({
+            it.iterator().forEach {
+                if (it.key == AuthUserAttributeKey.givenName()) nameFirst = it.value
+                if (it.key == AuthUserAttributeKey.email()) email = it.value
+                if (it.key == AuthUserAttributeKey.familyName()) nameLast = it.value
+            }
+
+        }){}
+        /*
         email = Backend.getEmail()
         Amplify.API.query(
             ModelQuery.list(User::class.java, User.EMAIL.contains(email)),
@@ -60,7 +67,7 @@ data class ProfileRepository(
 
             },
             { Log.e(TAG, "Query failed", it) }
-        )
+        )*/
         Log.i(TAG, "$nameLast $nameFirst")
     }
     fun getID() : String {
@@ -80,5 +87,4 @@ data class ProfileRepository(
     fun getExpireDate() : LocalDate{
         return expireDate
     }
-
 }

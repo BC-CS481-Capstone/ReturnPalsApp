@@ -60,7 +60,6 @@ object Backend {
                 { Log.e("AuthDemo", "Failed to fetch user attributes", it) }
             )
         }
-
     }
     fun getEmail(): String{
         Log.i(TAG, "Email Retrieved $email")
@@ -70,7 +69,7 @@ object Backend {
         Log.i(TAG, "Order Retrieval Called")
         Amplify.API.query(
 
-            ModelQuery.list(Returns::class.java, Returns.EMAIL.contains(email)),
+            ModelQuery.list(Returns::class.java),
 
             { response ->
                 Log.i(TAG, response.toString())
@@ -81,8 +80,8 @@ object Backend {
                             val list = listOf(1, 2, 3)
 
                             val order = OrderRepository(
-                                orderData.userId,
-                                email,
+                                customerId = "",//TODO id and email removed from model
+                                email = email,
                                 status = orderData.status,
                                 date =  orderData.date,
                                 method = orderData.method,

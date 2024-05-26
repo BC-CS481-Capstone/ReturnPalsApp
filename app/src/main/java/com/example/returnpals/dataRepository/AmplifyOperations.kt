@@ -1,6 +1,5 @@
 package com.example.returnpals.dataRepository
 
-import android.util.Log
 import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.auth.AuthSession
 import com.amplifyframework.auth.AuthUserAttributeKey
@@ -8,7 +7,6 @@ import com.amplifyframework.auth.options.AuthSignUpOptions
 import com.amplifyframework.auth.result.AuthSignOutResult
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.generated.model.MailingList
-import com.amplifyframework.datastore.generated.model.User
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -27,7 +25,7 @@ object AmplifyOperations {
             { error -> onError(error) }
         )
     }
-
+/* Not being used right now
     fun sendRegistrationData(model: User, onSuccess: (String) -> Unit, onError: (Throwable) -> Unit) {
         Amplify.API.mutate(
             ModelMutation.create(model),
@@ -44,7 +42,7 @@ object AmplifyOperations {
                 onError(error)
             }
         )
-    }
+    }*/
 
     fun isLoggedIn(authSession:(AuthSession)->Unit) {
             Amplify.Auth.fetchAuthSession(authSession) {}
