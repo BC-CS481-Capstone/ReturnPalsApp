@@ -7,13 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.example.compose.ReturnPalTheme
-import com.example.returnpals.dataRepository.Backend
 import com.example.returnpals.mainMenu.AppNavigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        Backend.accessEmail()
+        //Backend.accessEmail()
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContent {
