@@ -19,7 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -35,9 +34,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.amplifyframework.api.graphql.model.ModelQuery
+import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.core.Amplify
-import com.amplifyframework.datastore.generated.model.User
 import com.example.returnpals.R
 import com.example.returnpals.navigation.MenuRoutes
 import com.example.returnpals.navigation.go2
@@ -49,8 +47,8 @@ fun HomeDash(navController: NavController, loginVM: LoginViewModel) {
     val hasName by vm.hasUserName.observeAsState()
     val isLoggedIn = loginVM.isLoggedIn.observeAsState()
     vm.init()
-    if (hasName == true) {
-        DashboardMenuScaffold(navController, isLoggedIn.value!!, loginVM::logOut) {
+    if (hasName == true && isLoggedIn.value != false) { // check for not signed in to Avoid null probelm with login view model
+        DashboardMenuScaffold(navController, true, loginVM::logOut) {
             HomeDashContent(navController = navController, firstName = vm.getFirstName())
         }
     } else if (hasName == false) {
@@ -176,26 +174,22 @@ fun DashCard(navController: NavController) {
     }
 }
 
-class DashHomeViewModel(): ViewModel() {
+class DashHomeViewModel(): ViewModel() {// TODO move to new file
     private val _hasUserName = MutableLiveData<Boolean?>()
     val hasUserName: LiveData<Boolean?> = _hasUserName
-    var userNameFirst  = mutableStateOf("Guest")
+    private val _userNameFirst = MutableLiveData<String?>()
+    var userNameFirst : LiveData<String?> = _userNameFirst
     fun getFirstName() :String{
-        return userNameFirst.value
+        return userNameFirst.value!!
     }
-    fun init() {
-        Amplify.API.query(
-            ModelQuery.list(User::class.java), {
-                if (!it.hasErrors() && it.hasData() && it.data.items.count() != 0) {
-                    val first = it.data.items.first()
-                    userNameFirst.value = first.firstName
-                    _hasUserName.postValue(true)
-                } else {
-                    _hasUserName.postValue(false)
-                }
-            },
-            {
+    fun init() { //TODO Move logic to repository
+        Amplify.Auth.fetchUserAttributes({
+            it.iterator().forEach {
+               if (it.key == AuthUserAttributeKey.givenName()) {
+                   _userNameFirst.postValue(it.value)
+                   _hasUserName.postValue(true)
+               }
             }
-        );
+        }){}
     }
 }
