@@ -1,6 +1,8 @@
 package com.example.returnpals.composetools.pickup
 
 import android.util.Log
+import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -12,6 +14,7 @@ import com.amplifyframework.api.aws.GsonVariablesSerializer
 import com.amplifyframework.api.graphql.GraphQLRequest
 import com.amplifyframework.api.graphql.SimpleGraphQLRequest
 import com.amplifyframework.core.Amplify
+import com.amplifyframework.core.model.Model
 import com.example.returnpals.PickupInfo
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
@@ -33,13 +36,13 @@ fun PaymentApp(info: PickupInfo, onClickBack:()->Unit,onPaymentSheetResult:(Paym
 
 
 
+
     val paymentSheet = rememberPaymentSheet(onPaymentSheetResult)
     val context = LocalContext.current
     var customerConfig by remember {mutableStateOf< PaymentSheet.CustomerConfiguration?>(null)}
     var paymentIntentClientSecret by remember {mutableStateOf<String?>(null)}
 
     LaunchedEffect(context) {
-        /*
         Amplify.API.query(//TODO Move logic to repositor
             getPaymentSheetQueryOptions(),
             {
@@ -65,10 +68,10 @@ fun PaymentApp(info: PickupInfo, onClickBack:()->Unit,onPaymentSheetResult:(Paym
         val currentClientSecret = paymentIntentClientSecret
         if (currentConfig !=null && currentClientSecret != null ) {
             presentPaymentSheet(paymentSheet,currentConfig,currentClientSecret)
-        }*/
+        }
     }
     ConfirmPickupScreen(info = info,onClickNext = /*onCheckOutButton*/ { },onClickBack = onClickBack)
-    /** Checkout Button
+    // Checkout Button
     Button(
         onClick = {
             Log.e("PaymentApp","OnClick")
@@ -81,7 +84,7 @@ fun PaymentApp(info: PickupInfo, onClickBack:()->Unit,onPaymentSheetResult:(Paym
     ) {
         Text("Checkout")
     }
-    */
+
 }
 
 private fun presentPaymentSheet(
@@ -101,17 +104,21 @@ private fun presentPaymentSheet(
 
 
 
-/*/Following examples from https://github.com/aws-amplify/docs/pull/2141/files to create custom query
-private fun getPaymentSheetQueryOptions() : GraphQLRequest<com.amplifyframework.datastore.generated.model.PaymentSheet> {
+//Following examples from https://github.com/aws-amplify/docs/pull/2141/files to create custom query
+private fun getPaymentSheetQueryOptions() : GraphQLRequest<MyPaymentSheet> {
     val document = "query MyQuery {\n" +
-            "  getPaymentSheet {\n" +
-            "    paymentIntent\n" +
-            "    publishableKey\n" +
-            "    ephemeralKey\n" +
-            "    customer\n" +
-            "  }\n" +
+            "  helloworld(msg: \"Time\")\n" +
             "}"
     return SimpleGraphQLRequest(document,
-        com.amplifyframework.datastore.generated.model.PaymentSheet::class.java,
-        GsonVariablesSerializer())
-}*/
+        MyPaymentSheet::class.java,
+        GsonVariablesSerializer()
+    )
+}
+
+class MyPaymentSheet( val paymentIntent:String,
+    val customer:String,
+    val ephemeralKey:String,
+    val publishableKey:String
+): Model {
+
+}

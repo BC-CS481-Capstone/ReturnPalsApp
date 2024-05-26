@@ -1,6 +1,7 @@
 package com.example.returnpals.mainMenu
 
 import SettingsViewModel
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -47,6 +48,7 @@ import com.example.returnpals.viewmodel.ContactViewModel
 import com.example.returnpals.viewmodel.MainMenuScreenViewModel
 import com.example.returnpals.viewmodel.OrderViewModel
 import com.example.returnpals.viewmodel.RegisterViewModel
+import com.stripe.android.paymentsheet.PaymentSheetResult
 
 @Composable
 fun AppNavigation(navController: NavController) {
@@ -282,23 +284,23 @@ fun AppNavigation(navController: NavController) {
                 if (/*createLabelsSuccessful ==*/ true) {
                     PaymentApp( //TODO change signature to accept 1 view model
                         info = pickupVM.info,
-                        onPaymentSheetResult = {// paymentSheetResult: PaymentSheetResult ->
-                            //when (paymentSheetResult) {
-                                //is PaymentSheetResult.Canceled -> {
-                                 //   Log.e("PaymentApp", "Canceled")
-                                 //   print("Canceled")
-                               // }
+                        onPaymentSheetResult = { paymentSheetResult: PaymentSheetResult ->
+                            when (paymentSheetResult) {
+                                is PaymentSheetResult.Canceled -> {
+                                    Log.e("PaymentApp", "Canceled")
+                                    print("Canceled")
+                                }
 
-                               // is PaymentSheetResult.Failed -> {
-                               //     Log.e("PaymentApp", "Error")
-                               //     print("Error: ${paymentSheetResult.error}")
-                              //  }
+                                is PaymentSheetResult.Failed -> {
+                                    Log.e("PaymentApp", "Error")
+                                    print("Error: ${paymentSheetResult.error}")
+                                }
 
-                               // is PaymentSheetResult.Completed -> {
-                               //     Log.e("PaymentApp", "Completed")
+                                is PaymentSheetResult.Completed -> {
+                                    Log.e("PaymentApp", "Completed")
                                     navController.navigate("thanks")  //TODO move navigate logic
-                               // }
-                           // }
+                                }
+                            }
                         },
                         onClickBack = { navController.navigate("add_labels") },
                         //onClickPromoButton = {}
