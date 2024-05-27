@@ -42,6 +42,7 @@ open class PickupViewModel(
     val method = mutableStateOf(method)
     val plan = mutableStateOf(pricing)
     val packages = mutableStateMapOf(*_packageRowIdManager.allot(packages).toTypedArray())
+    var packageList:List<PackageInfo>? = null
 
     /**
      * Constructs a PickupInfo object from mutable state.
@@ -52,7 +53,7 @@ open class PickupViewModel(
             address = address.value,
             method = method.value,
             plan = plan.value,
-            packages = packages.values.toList(),
+            packages = packageList!!,
         )
 
     val isValid get() =
@@ -83,6 +84,7 @@ open class PickupViewModel(
     fun onAddLabel(value: PackageInfo) {
         val rowId = _packageRowIdManager.allot()
         packages[rowId] = value
+        packageList = packages.values.toList()
         Log.println(Log.INFO, "PickupViewModel::onAddLabel", "Inserted key-value pair: { $rowId , ${packages[rowId]} }")
     }
 

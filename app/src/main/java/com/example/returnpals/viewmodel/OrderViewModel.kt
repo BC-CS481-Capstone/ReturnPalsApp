@@ -9,6 +9,7 @@ import com.amplifyframework.core.Amplify
 import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.Labels
 import com.amplifyframework.datastore.generated.model.PickupStatus
+import com.example.returnpals.PackageInfo
 import com.example.returnpals.PickupInfo
 import com.example.returnpals.dataRepository.Backend
 import com.example.returnpals.dataRepository.OrderRepository
@@ -56,12 +57,12 @@ class OrderViewModel(
         val uris = mutableListOf<String>()
         _pickupInfo.value?.packages?.forEach { thing -> uris.add(thing.label) }
         val hasImage = _pickupInfo.value?.packages?.isNotEmpty() == true
-
+        val addressTemp = "{\"formatted\": "+_pickupInfo.value?.address.toString()+ "}"
         val order = OrderRepository(
             Backend.Profile.getID(),
             email,
             Temporal.Date(_pickupInfo.value?.date.toString()),
-            _pickupInfo.value?.address.toString(),
+            addressTemp,//_pickupInfo.value?.address.toString(),
             listOf(1, 2, 3),
             PickupStatus.ON_THE_WAY,
             hasImage,
@@ -124,8 +125,10 @@ class OrderViewModel(
         })
     }
 
-    fun updatePickupAddress(address: String?) {
-        _pickupInfo.value = _pickupInfo.value?.copy(address = address)
+    fun updatePickupAddress(address: String?,packageList:List<PackageInfo>) {
+        packageList
+        _pickupInfo.value = _pickupInfo.value?.copy(address = address,
+            packages = packageList)
     }
 }
 
