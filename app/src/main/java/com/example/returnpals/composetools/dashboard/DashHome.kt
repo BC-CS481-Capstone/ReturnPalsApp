@@ -38,7 +38,7 @@ import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.core.Amplify
 import com.example.returnpals.R
 import com.example.returnpals.navigation.MenuRoutes
-import com.example.returnpals.navigation.go2
+import com.example.returnpals.navigation.goBack
 import com.example.returnpals.services.LoginViewModel
 
 val vm = DashHomeViewModel()
@@ -52,7 +52,9 @@ fun HomeDash(navController: NavController, loginVM: LoginViewModel) {
             HomeDashContent(navController = navController, firstName = vm.getFirstName())
         }
     } else if (hasName == false) {
-        go2(navController, MenuRoutes.Register)
+        goBack(navController, MenuRoutes.Register)
+    } else if (isLoggedIn.value == false) {
+        goBack(navController,"MainMenu")
     }
 
 }

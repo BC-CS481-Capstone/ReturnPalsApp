@@ -19,11 +19,11 @@ fun NavController.goto(route: String) {
     }
 }
 
-fun go2(
+fun goBack(
     controller: NavController,
     route: String,
 ) {
-    Log.i("go2", "Going to $route screen.")
+    Log.i("goBack", "Going to $route screen.")
     controller.navigate(route) {
         // Clear all the back stack up to the start destination and save state
         popUpTo(controller.graph.findStartDestination().id) {
