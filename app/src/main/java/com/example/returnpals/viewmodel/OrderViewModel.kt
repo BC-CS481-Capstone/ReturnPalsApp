@@ -122,8 +122,8 @@ class OrderViewModel(
                             { error -> Log.e("Backend", "Upload failed", error) }
                         )
                     }
-                    _createReturnSuccessful.postValue(true)
                 }
+                _createReturnSuccessful.postValue(true)
             } else {
                 Log.e("Backend", it.errors.first().message)
             }
@@ -132,8 +132,7 @@ class OrderViewModel(
     }
 
     fun updatePickupAddress(address: String?,packageList:List<PackageInfo>) {
-        packageList
-        _pickupInfo.value = _pickupInfo.value?.copy(address = address,
+        _pickupInfo.value = _pickupInfo.value?.copy(address = "{\"Address\":"+address+"}",
             packages = packageList)
     }
 }
