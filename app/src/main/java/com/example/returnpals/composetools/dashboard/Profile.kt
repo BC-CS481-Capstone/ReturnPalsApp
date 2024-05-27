@@ -29,10 +29,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.amplifyframework.api.graphql.model.ModelQuery
+import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.generated.model.PricingPlan
-import com.amplifyframework.datastore.generated.model.User
 import com.example.returnpals.R
 import com.example.returnpals.composetools.pickup.PricingPlanText
 import com.example.returnpals.services.LoginViewModel
@@ -40,7 +39,7 @@ import com.example.returnpals.services.LoginViewModel
 val profileVM = ProfileViewModel()
 @Composable
 fun Profile(navController: NavController, loginVM: LoginViewModel) {
-    DashboardMenuScaffold(navController, loginVM.isLoggedIn ?: false, loginVM::logOut) {
+    DashboardMenuScaffold(navController, loginVM::logOut) {
         val hasUserInfo by profileVM.hasUserInfo.observeAsState()
         profileVM.init()
         if (hasUserInfo == true) {
@@ -185,6 +184,14 @@ class ProfileViewModel(): ViewModel() {
         return userPlan.value.toString()
     }
     fun init() {
+        Amplify.Auth.fetchUserAttributes({
+            it.iterator().forEach {
+                if (it.key == AuthUserAttributeKey.givenName()) userNameFirst.value =(it.value)
+                if (it.key == AuthUserAttributeKey.familyName()) userNameLast.value =(it.value)
+                //TODO get user planif (it.key == AuthUserAttributeKey.givenName()) userPlan.value =(it.value)
+            }
+            _hasUserInfo.postValue(true)
+        }){}/*
         Amplify.API.query(
             ModelQuery.list(User::class.java), {
                 if (it.hasData()) {
@@ -199,7 +206,7 @@ class ProfileViewModel(): ViewModel() {
             },
             {
             }
-        );
+        );*/
     }
 }
 

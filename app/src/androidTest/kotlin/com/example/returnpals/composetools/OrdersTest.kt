@@ -3,13 +3,7 @@ package com.example.returnpals.composetools
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import androidx.lifecycle.Lifecycle
-import androidx.test.core.app.launchActivity
-import com.amplifyframework.core.Amplify
-import com.example.returnpals.MainActivity
 import com.example.returnpals.composetools.dashboard.OrdersContent
-import com.example.returnpals.services.Backend
-import com.example.returnpals.services.LoginViewModel
 import org.junit.Rule
 import org.junit.Test
 

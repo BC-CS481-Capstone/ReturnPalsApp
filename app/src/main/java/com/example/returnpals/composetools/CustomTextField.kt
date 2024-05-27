@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -23,11 +24,62 @@ fun CustomTextField(label: String, text: String, onValueChange: (String) -> Unit
     val borderColor = if (isFocused) selectedBlue else Color.LightGray
 
     TextField(
+        maxLines = 1,
         value = text,
         onValueChange = onValueChange,
         label = { Text(label) },
         modifier = Modifier
             .fillMaxWidth()
+            .border(1.dp, borderColor, RoundedCornerShape(corner = CornerSize(4.dp))),
+        interactionSource = interactionSource,
+        colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = Color.White,
+            textColor = Color.Black,
+            cursorColor = Color.Black,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent
+        )
+    )
+}
+@Composable
+fun CustomTextRowFields(label: String, text: String, onValueChange: (String) -> Unit, modifier:Modifier= Modifier) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val selectedBlue = Color(0xFF008BE7)
+    val isFocused = interactionSource.collectIsFocusedAsState().value
+    val borderColor = if (isFocused) selectedBlue else Color.LightGray
+
+    TextField(
+        maxLines = 1,
+        value = text,
+        onValueChange = onValueChange,
+        label = { Text(label) },
+        modifier = modifier
+            .border(1.dp, borderColor, RoundedCornerShape(corner = CornerSize(4.dp))),
+        interactionSource = interactionSource,
+        colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = Color.White,
+            textColor = Color.Black,
+            cursorColor = Color.Black,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent
+        )
+    )
+}
+
+@Composable
+fun CustomTextPasswordFields(label: String, text: String, onValueChange: (String) -> Unit, modifier:Modifier= Modifier) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val selectedBlue = Color(0xFF008BE7)
+    val isFocused = interactionSource.collectIsFocusedAsState().value
+    val borderColor = if (isFocused) selectedBlue else Color.LightGray
+
+    TextField(
+        visualTransformation = PasswordVisualTransformation(),
+        maxLines = 1,
+        value = text,
+        onValueChange = onValueChange,
+        label = { Text(label) },
+        modifier = modifier
             .border(1.dp, borderColor, RoundedCornerShape(corner = CornerSize(4.dp))),
         interactionSource = interactionSource,
         colors = TextFieldDefaults.textFieldColors(

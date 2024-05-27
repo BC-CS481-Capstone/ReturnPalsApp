@@ -5,7 +5,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
 import com.example.returnpals.mainMenu.AppNavigation
-import com.example.returnpals.mainMenu.MenuRoutes
+import com.example.returnpals.navigation.MenuRoutes
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -28,7 +28,7 @@ class NavigationTest {
 
     @Test
     fun appNavHost_verifyStartDestination() {
-        assertEquals(MenuRoutes.Home, navController.currentDestination?.route)
+        assertEquals("MainMenu", navController.currentDestination?.route)
     }
 
     @Test
@@ -153,7 +153,7 @@ class NavigationTest {
         }
 
         // Verify back navigation to Home
-        assertEquals(MenuRoutes.Home, navController.currentDestination?.route)
+        assertEquals("MainMenu", navController.currentDestination?.route)
     }
 }
 

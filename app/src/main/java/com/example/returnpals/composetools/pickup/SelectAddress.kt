@@ -31,11 +31,10 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose.ReturnPalTheme
-import com.example.returnpals.composetools.ScheduleReturnScaffold
+import com.example.returnpals.composetools.AWSJSONtoString
 
 // A view model is necessary here to remember which address option was selected across screens.
 
@@ -102,7 +101,7 @@ fun SelectAddressContent(
         LazyColumn {
             items(userAddresses) { address ->
                 AddressItem(
-                    address = address.address,
+                    address = AWSJSONtoString(address.address),
                     isSelected = selected == address.id,
                     onSelect = { onSelectAddress(address.id) }
                 )

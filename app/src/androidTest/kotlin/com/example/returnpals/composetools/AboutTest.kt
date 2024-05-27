@@ -4,10 +4,10 @@ package com.example.returnpals.composetools
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.example.returnpals.mainMenu.ChooseRP
-import com.example.returnpals.mainMenu.GTA
-import com.example.returnpals.mainMenu.MissionStatement
-import com.example.returnpals.mainMenu.SocialImpact
+import com.example.returnpals.composetools.mainMenu.ChooseRP
+import com.example.returnpals.composetools.mainMenu.GTA
+import com.example.returnpals.composetools.mainMenu.MissionStatement
+import com.example.returnpals.composetools.mainMenu.SocialImpact
 import org.junit.Rule
 import org.junit.Test
 

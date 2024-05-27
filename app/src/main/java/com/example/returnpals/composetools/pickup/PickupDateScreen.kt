@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose.ReturnPalTheme
 import com.example.returnpals.composetools.ButtonManager.DateSelector
-import com.example.returnpals.composetools.ScheduleReturnScaffold
 import java.time.LocalDate
 
 // TODO: set position so that date selector doesn't move when month changes
