@@ -74,15 +74,20 @@ class OrderViewModel(
     }
 
     fun submitLabels() {
+        Log.i("Backend", "Start SubmitLabels")
         var uploaded = true
         _pickupInfo.value?.packages?.forEach {
             val record = Labels.builder().type(it.labelType).returnsId("").image(it.label).build()
             Amplify.API.mutate(ModelMutation.create(record), {
-                Log.i("backend", it.toString())
+                Log.i("Backend", "We have \"it\"")
                 if (it.hasData() && !it.hasErrors()) {
+                    Log.i("Backend", "${it.data}")
                     uploaded = false
+                } else {
+                    Log.i("Backend", "HasErrors${it.errors}")
                 }
             }, {
+                Log.e("Backend", "Exception:${it.message}",it)
                 uploaded = false
             })
         }
