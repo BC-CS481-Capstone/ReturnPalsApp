@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.returnpals.R
+import com.example.returnpals.composetools.AWSJSONtoString
 import com.example.returnpals.services.LoginViewModel
 
 @Composable
@@ -283,7 +284,7 @@ fun AddressesDialog(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = address.address,
+                                text = AWSJSONtoString(address.address),
                                 modifier = Modifier
                                     .weight(1f)
                                     .padding(end = 8.dp),
