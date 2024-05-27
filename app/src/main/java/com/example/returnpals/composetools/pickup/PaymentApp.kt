@@ -105,7 +105,7 @@ private fun presentPaymentSheet(
 //Following examples from https://github.com/aws-amplify/docs/pull/2141/files to create custom query
 private fun getPaymentSheetQueryOptions() : GraphQLRequest<MyPaymentSheet> {//TODO move to repository
     val document = "query MyQuery {\n" +
-            "  stripepaymentsheet {\n" +
+            "  paymentsheetstripe {\n" +
             "    customer\n" +
             "    ephemeralKey\n" +
             "    paymentIntent\n" +
