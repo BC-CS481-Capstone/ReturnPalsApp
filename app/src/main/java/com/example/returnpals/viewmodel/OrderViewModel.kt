@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.core.model.temporal.Temporal
+import com.amplifyframework.datastore.generated.model.LabelType
 import com.amplifyframework.datastore.generated.model.Labels
 import com.amplifyframework.datastore.generated.model.PickupStatus
 import com.example.returnpals.PackageInfo
@@ -104,7 +105,7 @@ class OrderViewModel(
             Log.i("backend", it.toString())
             if (!it.hasErrors()) {
                 returnId = it.data.id
-                _createReturnSuccessful.postValue(true)
+
                 Backend.orderList.add(returns)
                 if (returns.getHasImage()) {
                     Log.i("Backend", "True checked")
@@ -112,16 +113,21 @@ class OrderViewModel(
                         val file = File(uri)
                         Amplify.Storage.uploadFile(
                             uri, file,
-                            { Log.i("Backend", "Successfully uploaded: $uri") },
+                            {
+                                Amplify.API.mutate(ModelMutation.create(Labels.builder().type(LabelType.DIGITAL).returnsId(returnId).image(uri).build()),{
+
+                                }){}
+                                Log.i("Backend", "Successfully uploaded: $uri")
+                            },
                             { error -> Log.e("Backend", "Upload failed", error) }
                         )
                     }
+                    _createReturnSuccessful.postValue(true)
                 }
             } else {
                 Log.e("Backend", it.errors.first().message)
             }
         }, {
-            _createReturnSuccessful.postValue(false)
         })
     }
 
