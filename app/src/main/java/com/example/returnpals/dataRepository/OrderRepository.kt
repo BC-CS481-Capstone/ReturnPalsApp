@@ -72,7 +72,7 @@ data class OrderRepository(private val customerId: String,
             .address(address)
             .confrimationNumber(confirmation)
             .date(date)
-            .labelIds(labels)
+            //.labelIds(labels)
             .method(method)
 
             .status(PickupStatus.ON_THE_WAY)
