@@ -19,7 +19,7 @@ import com.example.returnpals.composetools.ConfirmNumber
 import com.example.returnpals.composetools.ConfirmNumberViewModel
 import com.example.returnpals.composetools.LoginScreen
 import com.example.returnpals.composetools.dashboard.HomeDash
-import com.example.returnpals.composetools.dashboard.Orders
+import com.example.returnpals.composetools.dashboard.History
 import com.example.returnpals.composetools.dashboard.Profile
 import com.example.returnpals.composetools.dashboard.Settings
 import com.example.returnpals.composetools.pickup.AddPackagesScreen
@@ -31,7 +31,7 @@ import com.example.returnpals.composetools.pickup.SelectAddressScreen
 import com.example.returnpals.composetools.pickup.ThankYouScreen
 import com.example.returnpals.composetools.pickup.ThankYouViewModel
 import com.example.returnpals.services.LoginViewModel
-import com.example.returnpals.services.OrderViewModel
+import com.example.returnpals.services.ReturnViewModel
 
 @Composable
 fun AppNavigation(navController: NavController) {
@@ -61,7 +61,7 @@ fun AppNavigation(navController: NavController) {
             composable(MenuRoutes.HomeDash) { HomeDash(navController) }
             composable(MenuRoutes.Profile) { Profile(navController) }
             composable(MenuRoutes.Settings) { Settings(navController) }
-            composable(MenuRoutes.Orders) { Orders(navController) }
+            composable(MenuRoutes.History) { History(navController) }
             // composable(MenuRoutes.SelectAddress) { SelectAddress(navController) }
             // composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }
             //  composable(MenuRoutes.Label) { Label(navController) }
@@ -75,7 +75,7 @@ fun AppNavigation(navController: NavController) {
             route = MenuRoutes.PickupProcess
         ) {
             composable("select_date") { entry ->
-                val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
+                val pickupVM = entry.sharedViewModel<ReturnViewModel>(navController)
                 PickupDateScreen(
                     date = pickupVM.date.value,
                     onChangeDate = pickupVM::onChangeDate,
@@ -89,7 +89,7 @@ fun AppNavigation(navController: NavController) {
                 )
             }
             composable("select_address") { entry ->
-//                val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
+//                val pickupVM = entry.sharedViewModel<ReturnViewModel>(navController)
 //                val addressesVM = entry.sharedViewModel<AddressesViewModel>(navController)
                 // TODO: retrieve addresses from user account
                 // TODO: send added addresses to user account
@@ -104,7 +104,7 @@ fun AppNavigation(navController: NavController) {
                 )
             }
             composable("select_method") { entry ->
-                val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
+                val pickupVM = entry.sharedViewModel<ReturnViewModel>(navController)
                 PickupMethodScreen(
                     method = pickupVM.method.value,
                     onChangeMethod = pickupVM::onChangeMethod,
@@ -113,7 +113,7 @@ fun AppNavigation(navController: NavController) {
                 )
             }
             composable("select_pricing") { entry ->
-                val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
+                val pickupVM = entry.sharedViewModel<ReturnViewModel>(navController)
                 PricingScreen(
                     plan = pickupVM.plan.value,
                     onChangePlan = pickupVM::onChangePlan,
@@ -122,7 +122,7 @@ fun AppNavigation(navController: NavController) {
                 )
             }
             composable("add_labels") { entry ->
-                val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
+                val pickupVM = entry.sharedViewModel<ReturnViewModel>(navController)
                 AddPackagesScreen(
                     packages = pickupVM.packages.toMap(),
                     onAddLabel = pickupVM::onAddLabel,
@@ -133,7 +133,7 @@ fun AppNavigation(navController: NavController) {
                 )
             }
             composable("confirm") { entry ->
-                val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
+                val pickupVM = entry.sharedViewModel<ReturnViewModel>(navController)
                 val thankyouVM = ThankYouViewModel()
                 val hasUserName by thankyouVM.hasUserNames.observeAsState()
                 val createReturnSuccessful by pickupVM.createReturnSuccessful.observeAsState()
@@ -161,7 +161,7 @@ fun AppNavigation(navController: NavController) {
                 }
             }
             composable("thanks") { entry ->
-                val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
+                val pickupVM = entry.sharedViewModel<ReturnViewModel>(navController)
                 ThankYouScreen(
                     dashBoardButton = {
                         navController.navigate("dashboard home") {

@@ -10,7 +10,7 @@ import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.Labels
 import com.amplifyframework.datastore.generated.model.PickupStatus
 import com.example.returnpals.PickupInfo
-import com.example.returnpals.composetools.OrderRepository
+import com.example.returnpals.composetools.ReturnRepository
 import java.io.File
 import java.time.LocalDate
 
@@ -27,7 +27,7 @@ import java.time.LocalDate
  * https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-apis
  */
 
-class OrderViewModel(
+class ReturnViewModel(
     pickup: PickupInfo = PickupInfo(),
     val navController: NavController? = null,
     private val minDate: LocalDate = LocalDate.now().minusDays(1),
@@ -58,7 +58,7 @@ class OrderViewModel(
         }
         val hasImage = info.packages.isNotEmpty()
 
-        val order = OrderRepository(
+        val order = ReturnRepository(
             Backend.Profile.getID(),
             email,
             Temporal.Date(info.date.toString()),
@@ -69,7 +69,7 @@ class OrderViewModel(
             uris,
             method = info.method
         )
-        createOrder(order)
+        createReturn(order)
 
         Log.println(Log.INFO, "ScheduleReturnViewModel::onSubmit", info.toString())
     }
@@ -95,13 +95,13 @@ class OrderViewModel(
             _createLabelsSuccessful.postValue(false)
         }
     }
-    private fun createOrder(returns: OrderRepository){
+    private fun createReturn(returns: ReturnRepository){
         Amplify.API.mutate(ModelMutation.create(returns.order),{
             Log.i("backend",it.toString())
             if (!it.hasErrors()) {
                 returnId = it.data.id
                 _createReturnSuccessful.postValue(true)
-                Backend.orderList.add(returns)
+                Backend.returnList.add(returns)
                 if(returns.getHasImage()) {
                     Log.i("Backend", "True checked")
                     returns.getImages().forEach { uri ->

@@ -1,7 +1,6 @@
 package com.example.returnpals.composetools
 
 
-import android.net.Uri
 import android.util.Log
 import com.amplifyframework.core.Amplify
 
@@ -11,21 +10,20 @@ import com.amplifyframework.datastore.generated.model.PickupStatus
 import com.amplifyframework.datastore.generated.model.Returns
 import com.example.returnpals.services.Backend.getEmail
 import java.io.File
-import java.net.URI
 
 
 //Data Class for everything needed in the repository
-data class OrderRepository(private val customerId: String,
-                           private val email: String,
+data class ReturnRepository(private val customerId: String,
+                            private val email: String,
 
-                           private var date: Temporal.Date,
-                           private var address: String = "123 basic ave",
-                           private var labels: List<Int>,
-                           private var status: PickupStatus = PickupStatus.ON_THE_WAY,
-                           private var hasImage: Boolean = false,
-                           private var images: List<String>? = listOf(),
-                           private var confirmation: String = "0",
-                           private var method: PickupMethod?
+                            private var date: Temporal.Date,
+                            private var address: String = "123 basic ave",
+                            private var labels: List<Int>,
+                            private var status: PickupStatus = PickupStatus.ON_THE_WAY,
+                            private var hasImage: Boolean = false,
+                            private var images: List<String>? = listOf(),
+                            private var confirmation: String = "0",
+                            private var method: PickupMethod?
 
 )  {
     //Sets selected date
@@ -54,7 +52,12 @@ data class OrderRepository(private val customerId: String,
     }
     //Gets Status
     fun getStatus() : String{
-        return status.toString()
+        return when(status){
+            PickupStatus.PICKED_UP -> "Picked Up"
+            PickupStatus.ON_THE_WAY -> "On The Way"
+            PickupStatus.CANCELLED -> "Cancelled"
+            PickupStatus.COMPLETE -> "Complete"
+        }
     }
     fun setMethod(input: PickupMethod ){
       method = input

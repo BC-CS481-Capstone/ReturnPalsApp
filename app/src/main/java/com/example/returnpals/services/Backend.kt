@@ -1,17 +1,15 @@
 package com.example.returnpals.services
 import android.content.Context
 import android.util.Log
-import androidx.core.net.toFile
 import com.amplifyframework.AmplifyException
 import com.amplifyframework.api.aws.AWSApiPlugin
-import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.api.graphql.model.ModelQuery
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.AWSDataStorePlugin
 import com.amplifyframework.datastore.generated.model.Returns
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin
-import com.example.returnpals.composetools.OrderRepository
+import com.example.returnpals.composetools.ReturnRepository
 import com.example.returnpals.composetools.ProfileRepository
 import java.io.File
 import java.io.FileOutputStream
@@ -24,7 +22,7 @@ object Backend {
     private const val TAG = "Backend"
     private var email = "";
     var Profile = ProfileRepository()
-    var orderList = mutableSetOf <OrderRepository>()
+    var returnList = mutableSetOf <ReturnRepository>()
 
 
     fun initialize(applicationContext: Context) : Backend {
@@ -84,7 +82,7 @@ object Backend {
 
                             val list = listOf(1, 2, 3)
 
-                            val order = OrderRepository(
+                            val order = ReturnRepository(
                                 orderData.userId,
                                 email,
                                 status = orderData.status,
@@ -94,7 +92,7 @@ object Backend {
                                 address = orderData.address,
                                 confirmation = orderData.id
                                                             )
-                            orderList.add(order)
+                            returnList.add(order)
 
 
 

@@ -13,7 +13,7 @@ object MenuRoutes {
     const val HomeDash = "dashboard"
     const val Profile = "profile"
     const val Settings = "settings"
-    const val Orders = "orders"
+    const val History = "orders"
 
     const val PickupProcess = "pickup"
     const val SelectAddress = "address"

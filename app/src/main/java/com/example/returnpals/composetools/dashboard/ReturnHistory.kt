@@ -1,7 +1,6 @@
 package com.example.returnpals.composetools.dashboard
 
 import DashboardMenuScaffold
-import android.graphics.Paint.Style
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -39,22 +38,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
-import com.example.returnpals.composetools.OrderRepository
+import com.example.returnpals.composetools.ReturnRepository
 import com.example.returnpals.services.Backend
 
 @Composable
 //Deviates from needing to pass NavController.
-fun Orders(navController: NavController) {
+fun History(navController: NavController) {
     DashboardMenuScaffold(navController = navController) {
-        OrdersContent()
+        HistoryContent()
     }
 }
 
 @Preview
 //Gets the content
 @Composable
-fun OrdersContent(){
-    OrderTable()
+fun HistoryContent(){
+    HistoryTable()
 
 }
 
@@ -96,20 +95,20 @@ fun RowScope.ClickableTableCell(
 }
 
 @Composable
-//This function creates the OrderTable that will be displayed, listing the information of the order. Ideally, there will be a click option to show the uploaded image.
-fun OrderTable(){
+//This function creates the history that will be displayed, listing the information of the order. Ideally, there will be a click option to show the uploaded image.
+fun HistoryTable(){
     val openDialog = remember {mutableIntStateOf(-1)}
-    val orderList = Backend.orderList
+    val returnList = Backend.returnList
     val column1Weight = .10f
     val column2Weight = .25f
     val column3Weight = .35f
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
     when {
         openDialog.intValue >= 0 ->{
-            OrderDialog({ openDialog.intValue = -1 }, orderList, openDialog.intValue)
+            InfoDialog({ openDialog.intValue = -1 }, returnList, openDialog.intValue)
         }
     }
-    //This column contains the 
+    //This column contains the list of the orders.
     LazyColumn(
         Modifier
             .fillMaxSize()
@@ -118,7 +117,7 @@ fun OrderTable(){
     ){
         item{
             Text(
-                text = "Order History:",
+                text = "Return History:",
                 style = TextStyle(
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
@@ -140,9 +139,9 @@ fun OrderTable(){
 
 
         items(1) {
-            Log.i("Order", orderList.toString())
+            Log.i("Order", returnList.toString())
             var i = 0
-            orderList.forEach{
+            returnList.forEach{
                 Log.i("Order", "Loading Item")
                 Row(){
                     ClickableTableCell(text = i, column1Weight, openDialog)
@@ -158,8 +157,8 @@ fun OrderTable(){
 }
 //This controls the dialog box that holds and displays the user data.
 @Composable
-fun OrderDialog(onDismissRequest: ()->Unit, orderList : MutableSet<OrderRepository>, index : Int) {
-    val order = orderList.elementAt(index)
+fun InfoDialog(onDismissRequest: ()->Unit, returnList : MutableSet<ReturnRepository>, index : Int) {
+    val returnItem = returnList.elementAt(index)
     Dialog(onDismissRequest = {onDismissRequest()}){
         Card(
             modifier = Modifier
@@ -180,19 +179,19 @@ fun OrderDialog(onDismissRequest: ()->Unit, orderList : MutableSet<OrderReposito
                 Spacer(Modifier.height(5.dp))
                 Row {
                     Text("Address: ")
-                    Text(order.getAddress())
+                    Text(returnItem.getAddress())
 
                 }
                 Row{
                     Text("Date: ")
-                    Text(order.getDate().format())
+                    Text(returnItem.getDate().format())
                 }
                 Row{
                     Text("Method: ")
-                    Text(order.getMethod())
+                    Text(returnItem.getMethod())
                 }
                 Text("Confirmation Number: ")
-                Text(order.getConfirmation())
+                Text(returnItem.getConfirmation())
                 Spacer(modifier = Modifier.weight(1f))
                 TextButton(onClick = onDismissRequest ) {Text("Cancel")
 
