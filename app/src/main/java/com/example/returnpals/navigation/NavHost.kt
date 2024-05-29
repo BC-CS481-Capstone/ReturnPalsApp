@@ -15,8 +15,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.returnpals.composetools.dashboard.HomeDash
 import com.example.returnpals.composetools.dashboard.History
+import com.example.returnpals.composetools.dashboard.HomeDash
 import com.example.returnpals.composetools.dashboard.Profile
 import com.example.returnpals.composetools.dashboard.Settings
 import com.example.returnpals.composetools.login.ConfirmEmailScreen
@@ -40,12 +40,13 @@ import com.example.returnpals.dataRepository.CognitoMainMenuScreenRepository
 import com.example.returnpals.dataRepository.RegisterRepositoryAmplify
 import com.example.returnpals.navigation.MenuRoutes
 import com.example.returnpals.navigation.Register
+import com.example.returnpals.navigation.goBack
 import com.example.returnpals.navigation.goto
 import com.example.returnpals.services.ConfirmEmailViewModel
 import com.example.returnpals.services.LoginViewModel
 import com.example.returnpals.viewmodel.MainMenuScreenViewModel
-import com.example.returnpals.viewmodel.ReturnViewModel
 import com.example.returnpals.viewmodel.RegisterViewModel
+import com.example.returnpals.viewmodel.ReturnViewModel
 import com.stripe.android.paymentsheet.PaymentSheetResult
 
 @Composable
@@ -61,6 +62,10 @@ fun AppNavigation(navController: NavController) {
         navController = navController as NavHostController,
         startDestination = "MainMenu"
     ) {
+        val isLoggedIn = loginVM.isLoggedIn
+        if (isLoggedIn.value == false) {
+            goBack(navController,"MainMenu")
+        }
         //Start at main menu.
         composable("MainMenu"){
             val mainMenuVM = remember {MainMenuScreenViewModel(CognitoMainMenuScreenRepository())}
@@ -85,7 +90,10 @@ fun AppNavigation(navController: NavController) {
                  * @String navigate to the specific destination*/
                 //TODO use navigate logic>if (navigate != null) navController.goto(navigate!!)
                 //Call Content
-                HomeDash(navController, loginVM)
+                HomeDash(navController, {
+                    loginVM.logOut()
+                    navController.goto("MainMenu")
+                })
             }
             composable(MenuRoutes.Profile) {
                 //TODO get navigate logic from view model>val navigate by profileVM.readyToNav.observeAsState()
@@ -94,7 +102,10 @@ fun AppNavigation(navController: NavController) {
                  * @String navigate to the specific destination*/
                 //TODO use navigate logic>if (navigate != null) navController.goto(navigate!!)
                 //Call Content
-                Profile(navController, loginVM)
+                Profile(navController, {
+                    loginVM.logOut()
+                    navController.goto("MainMenu")
+                })
             }
             composable(MenuRoutes.Settings) {
                 //TODO get navigate logic from view model>val navigate by settingsVM.readyToNav.observeAsState()
@@ -103,7 +114,10 @@ fun AppNavigation(navController: NavController) {
                  * @String navigate to the specific destination*/
                 //TODO use navigate logic>if (navigate != null) navController.goto(navigate!!)
                 //Call Content
-                Settings(navController, loginVM)
+                Settings(navController, {
+                    loginVM.logOut()
+                    navController.goto("MainMenu")
+                })
             }
             composable(MenuRoutes.History) {
                 //TODO get navigate logic from view model>val navigate by ordersVM.readyToNav.observeAsState()
@@ -112,7 +126,10 @@ fun AppNavigation(navController: NavController) {
                  * @String navigate to the specific destination*/
                 //TODO use navigate logic>if (navigate != null) navController.goto(navigate!!)
                 //Call Content
-                History(navController, loginVM)
+                History(navController, {
+                    loginVM.logOut()
+                    navController.goto("MainMenu")
+                })
             }
             // composable(MenuRoutes.SelectAddress) { SelectAddress(navController) }
             // composable(MenuRoutes.PickupDetails) { PickupDetails(navController) }

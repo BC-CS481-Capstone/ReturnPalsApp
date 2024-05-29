@@ -17,6 +17,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -38,25 +39,20 @@ import com.amplifyframework.auth.AuthUserAttributeKey
 import com.amplifyframework.core.Amplify
 import com.example.returnpals.R
 import com.example.returnpals.navigation.MenuRoutes
-import com.example.returnpals.navigation.goBack
-import com.example.returnpals.services.LoginViewModel
+import kotlinx.coroutines.Dispatchers
 
 val vm = DashHomeViewModel()
 @Composable
-fun HomeDash(navController: NavController, loginVM: LoginViewModel) {
+fun HomeDash(navController: NavController, onLogOut: ()->Unit) {
     val hasName by vm.hasUserName.observeAsState()
-    val isLoggedIn = loginVM.isLoggedIn.observeAsState()
-    vm.init()
-    if (hasName == true && isLoggedIn.value != false) { // check for not signed in to Avoid null probelm with login view model
-        DashboardMenuScaffold(navController, loginVM::logOut) {
+    LaunchedEffect(Dispatchers.IO) {
+        vm.init()
+    }
+    if (hasName == true) { // check for not signed in to Avoid null probelm with login view model
+        DashboardMenuScaffold(navController, onLogOut) {
             HomeDashContent(navController = navController, firstName = vm.getFirstName())
         }
-    } else if (hasName == false) {
-        goBack(navController, MenuRoutes.Register)
-    } else if (isLoggedIn.value == false) {
-        goBack(navController,"MainMenu")
     }
-
 }
 @Composable
 fun HomeDashContent(navController: NavController,firstName: String) {
