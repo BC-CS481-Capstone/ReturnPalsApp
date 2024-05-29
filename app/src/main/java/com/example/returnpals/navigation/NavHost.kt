@@ -213,6 +213,8 @@ fun AppNavigation(navController: NavController) {
                     onClickNext = { navController.navigate("select_pricing") },
                     onClickBack = { navController.navigate("select_address") },
                 )
+                Log.i("Println", "Method post:" + pickupVM.method.value.toString())
+
             }
             composable("select_pricing") { entry ->
                 val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
@@ -258,8 +260,11 @@ fun AppNavigation(navController: NavController) {
                 val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
                 //val pickupVM = ReturnViewModel()
                 val selectedAddress = settingsVM.getSelectedAddress()
-                pickupVM.updatePickupAddress(selectedAddress,pickupVM.packageList!!)
-
+                val selectedMethod = pickupVM.method.value!!
+                val selectedDate = pickupVM.date.value
+                Log.i("Println", "No do :(" + pickupVM.method.value.toString())
+                pickupVM.updatePickupAddress(selectedAddress, selectedMethod, selectedDate, pickupVM.packageList!!)
+                Log.i("Println", "Is do?" + pickupVM.method.value.toString())
                 val thankyouVM = ThankYouViewModel()
                 val hasUserName by thankyouVM.hasUserNames.observeAsState()
                 val createReturnSuccessful by pickupVM.createReturnSuccessful.observeAsState()

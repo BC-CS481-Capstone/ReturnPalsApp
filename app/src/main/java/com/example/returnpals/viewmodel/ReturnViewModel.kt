@@ -9,6 +9,7 @@ import com.amplifyframework.core.Amplify
 import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.LabelType
 import com.amplifyframework.datastore.generated.model.Labels
+import com.amplifyframework.datastore.generated.model.PickupMethod
 import com.amplifyframework.datastore.generated.model.PickupStatus
 import com.example.returnpals.PackageInfo
 import com.example.returnpals.PickupInfo
@@ -136,9 +137,13 @@ class ReturnViewModel(
         })
     }
 
-    fun updatePickupAddress(address: String?,packageList:List<PackageInfo>) {
-        _pickupInfo.value = _pickupInfo.value?.copy(address = "{\"Address\":"+address+"}",
+
+    fun updatePickupAddress(address: String?, method: PickupMethod, date: LocalDate, packageList:List<PackageInfo>) {
+        Log.i("Println", "Joe" + pickupInfo.value?.method.toString())
+        Log.i("Println", "Bi" + _pickupInfo.value?.method.toString())
+        _pickupInfo.value = _pickupInfo.value?.copy(address = "{\"Address\":"+address+"}", method = method, date = date,
             packages = packageList)
+        Log.i("Println", "Den" + _pickupInfo.value?.method.toString())
     }
 }
 
