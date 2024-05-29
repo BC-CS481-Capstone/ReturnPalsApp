@@ -22,7 +22,7 @@ object Backend {
     private const val TAG = "Backend"
     private var email = "";
     var Profile = ProfileRepository()
-    var orderList = mutableSetOf <OrderRepository>()
+    var returnList = mutableSetOf <ReturnRepository>()
 
 
     fun initialize(applicationContext: Context) : Backend {
@@ -62,13 +62,12 @@ object Backend {
                 { Log.e("AuthDemo", "Failed to fetch user attributes", it) }
             )
         }
+
     }
     fun getEmail(): String{
         Log.i(TAG, "Email Retrieved $email")
         return email
     }
-
-
     private val _proccessingReturns = MutableLiveData(false)
     val proccessingReturns: LiveData<Boolean> = _proccessingReturns
     fun orderRetrieval() { // TODO Rename to or move logic to repository
@@ -79,13 +78,13 @@ object Backend {
             { response ->
                 Log.i(TAG, response.toString())
                 if (response.hasData()) {
-                    orderList.clear()
+                    returnList.clear()
                     response.data.forEach() { orderData ->
 
 
                             val list = listOf(1, 2, 3)
 
-                            val order = OrderRepository(
+                            val order = ReturnRepository(
                                 customerId = "",//TODO id and email removed from model
                                 email = email,
                                 status = orderData.status,
@@ -94,11 +93,13 @@ object Backend {
                                 labels = list,
                                 address = orderData.address
                                                             )
-                            orderList.add(order)
+                            returnList.add(order)
+
+
+
                     }
                 }
                 _proccessingReturns.postValue(false)
-
             },
             { Log.e(TAG, "Query failed", it) }
         )

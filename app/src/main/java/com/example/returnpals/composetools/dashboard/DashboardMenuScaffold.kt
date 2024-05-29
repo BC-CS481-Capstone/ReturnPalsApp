@@ -106,9 +106,9 @@ fun DrawerContent1(navController: NavController, scaffoldState: ScaffoldState, o
             selectedItem = "Profile"
             navigateToScreen(navController, MenuRoutes.Profile, scaffoldState, scope)
         })
-        DrawerItem1(title = "Orders", isSelected = selectedItem == "Orders", onClick = {
-            selectedItem = "Orders"
-            navigateToScreen(navController, MenuRoutes.Orders, scaffoldState, scope)
+        DrawerItem1(title = "History", isSelected = selectedItem == "History", onClick = {
+            selectedItem = "History"
+            navigateToScreen(navController, MenuRoutes.History, scaffoldState, scope)
         })
         DrawerItem1(title = "Settings", isSelected = selectedItem == "Settings", onClick = {
             selectedItem = "Settings"

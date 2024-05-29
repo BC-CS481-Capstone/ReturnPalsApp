@@ -3,7 +3,7 @@ package com.example.returnpals.composetools
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.example.returnpals.composetools.dashboard.OrdersContent
+import com.example.returnpals.composetools.dashboard.HistoryContent
 import org.junit.Rule
 import org.junit.Test
 
@@ -13,13 +13,13 @@ class OrdersTest {
 
     @Test
     fun testYourOrders() {
-        rule.setContent { OrdersContent() }
+        rule.setContent { HistoryContent() }
         rule.onNodeWithText("Order History:").assertIsDisplayed()
     }
 
     @Test
     fun testHeaders() {
-        rule.setContent { OrdersContent() }
+        rule.setContent { HistoryContent() }
         rule.onNodeWithText("Status").assertIsDisplayed()
         rule.onNodeWithText("Date").assertIsDisplayed()
     }
@@ -29,7 +29,7 @@ class OrdersTest {
     fun orderUploadTest() {
         launchActivity<MainActivity>().use { scenario ->
             scenario.moveToState(Lifecycle.State.CREATED)
-            var order = OrderRepository("Fred@email.com")
+            var order = ReturnRepository("Fred@email.com")
             Backend.createOrder(order)
             scenario.moveToState(Lifecycle.State.DESTROYED)
         }

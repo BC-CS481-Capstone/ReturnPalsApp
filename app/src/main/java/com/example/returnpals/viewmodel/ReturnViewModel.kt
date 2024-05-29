@@ -7,11 +7,16 @@ import androidx.navigation.NavController
 import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.core.model.temporal.Temporal
+import com.amplifyframework.datastore.generated.model.LabelType
 import com.amplifyframework.datastore.generated.model.Labels
+import com.amplifyframework.datastore.generated.model.PickupMethod
 import com.amplifyframework.datastore.generated.model.PickupStatus
+import com.example.returnpals.PackageInfo
 import com.example.returnpals.PickupInfo
+
 import com.example.returnpals.dataRepository.Backend
-import com.example.returnpals.dataRepository.OrderRepository
+import com.example.returnpals.dataRepository.ReturnRepository
+
 import java.io.File
 import java.time.LocalDate
 
@@ -27,7 +32,9 @@ import java.time.LocalDate
  * https://developer.android.com/topic/libraries/architecture/viewmodel#best-practices
  * https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-apis
  */
-class OrderViewModel(
+
+
+class ReturnViewModel(
     pickup: PickupInfo = PickupInfo(),
     val navController: NavController? = null,
     private val minDate: LocalDate = LocalDate.now().minusDays(1),
@@ -56,19 +63,19 @@ class OrderViewModel(
         val uris = mutableListOf<String>()
         _pickupInfo.value?.packages?.forEach { thing -> uris.add(thing.label) }
         val hasImage = _pickupInfo.value?.packages?.isNotEmpty() == true
-
-        val order = OrderRepository(
+        val addressTemp = "{\"formatted\": "+_pickupInfo.value?.address.toString()+ "}"
+        val order = ReturnRepository(
             Backend.Profile.getID(),
             email,
             Temporal.Date(_pickupInfo.value?.date.toString()),
-            _pickupInfo.value?.address.toString(),
+            addressTemp,//_pickupInfo.value?.address.toString(),
             listOf(1, 2, 3),
             PickupStatus.ON_THE_WAY,
             hasImage,
             uris,
             method = _pickupInfo.value?.method
         )
-        createOrder(order)
+        createReturn(order)
 
         Log.println(Log.INFO, "OrderViewModel::onSubmit", _pickupInfo.value.toString())
     }
@@ -97,35 +104,46 @@ class OrderViewModel(
             _createLabelsSuccessful.postValue(false)
         }
     }
-
-    private fun createOrder(returns: OrderRepository) {
-        Amplify.API.mutate(ModelMutation.create(returns.order), {
-            Log.i("backend", it.toString())
+    private fun createReturn(returns: ReturnRepository){
+        Amplify.API.mutate(ModelMutation.create(returns.order),{
+            Log.i("backend",it.toString())
             if (!it.hasErrors()) {
                 returnId = it.data.id
-                _createReturnSuccessful.postValue(true)
-                Backend.orderList.add(returns)
-                if (returns.getHasImage()) {
+
+                Backend.returnList.add(returns)
+                if(returns.getHasImage()) {
                     Log.i("Backend", "True checked")
+                    var i = 1
                     returns.getImages().forEach { uri ->
                         val file = File(uri)
                         Amplify.Storage.uploadFile(
-                            uri, file,
-                            { Log.i("Backend", "Successfully uploaded: $uri") },
+                            "$returnId\\$i", file,
+                            {
+                                Amplify.API.mutate(ModelMutation.create(Labels.builder().type(LabelType.DIGITAL).returnsId(returnId).image(uri).build()),{
+
+                                }){}
+                                Log.i("Backend", "Successfully uploaded: $uri")
+                            },
                             { error -> Log.e("Backend", "Upload failed", error) }
                         )
+                        i++
                     }
                 }
+                _createReturnSuccessful.postValue(true)
             } else {
                 Log.e("Backend", it.errors.first().message)
             }
         }, {
-            _createReturnSuccessful.postValue(false)
         })
     }
 
-    fun updatePickupAddress(address: String?) {
-        _pickupInfo.value = _pickupInfo.value?.copy(address = address)
+
+    fun updatePickupAddress(address: String?, method: PickupMethod, date: LocalDate, packageList:List<PackageInfo>) {
+        Log.i("Println", "Joe" + pickupInfo.value?.method.toString())
+        Log.i("Println", "Bi" + _pickupInfo.value?.method.toString())
+        _pickupInfo.value = _pickupInfo.value?.copy(address = "{\"Address\":"+address+"}", method = method, date = date,
+            packages = packageList)
+        Log.i("Println", "Den" + _pickupInfo.value?.method.toString())
     }
 }
 
