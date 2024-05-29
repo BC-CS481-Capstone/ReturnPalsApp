@@ -43,11 +43,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.amplifyframework.datastore.generated.model.Address
 import com.example.returnpals.R
+import com.example.returnpals.composetools.AWSJSONtoString
+import com.example.returnpals.services.LoginViewModel
 
 @Composable
-fun Settings(navController: NavController) {
+fun Settings(navController: NavController, loginVM: LoginViewModel) {
     val settingsViewModel: SettingsViewModel = viewModel()
     val operationStatus by settingsViewModel.operationStatus.collectAsState()
     val userAddresses by settingsViewModel.userAddresses.collectAsState()
@@ -61,7 +62,7 @@ fun Settings(navController: NavController) {
         settingsViewModel.fetchAddresses()
     }
 
-    DashboardMenuScaffold(navController = navController) {
+    DashboardMenuScaffold(navController, loginVM::logOut) {
         if (showResetPasswordDialog) {
             ResetPasswordDialog(
                 onDismiss = { showResetPasswordDialog = false },
@@ -73,7 +74,6 @@ fun Settings(navController: NavController) {
                 }
             )
         }
-
         if (showConfirmResetPasswordDialog) {
             ConfirmResetPasswordDialog(
                 onDismiss = { showConfirmResetPasswordDialog = false },
@@ -83,7 +83,6 @@ fun Settings(navController: NavController) {
                 }
             )
         }
-
         if (showAddressesDialog) {
             AddressesDialog(
                 addresses = userAddresses,
@@ -92,28 +91,22 @@ fun Settings(navController: NavController) {
                 onDeleteAddress = { address -> settingsViewModel.deleteAddress(address) } // Callback for address deletion
             )
         }
-
         if (showAddAddressDialog) {
             AddAddressDialog(
                 settingsViewModel = settingsViewModel,
                 onDismiss = { showAddAddressDialog = false }
             )
         }
-
-
         PasswordField(
             onResetPasswordClick = { showResetPasswordDialog = true },
             onAddRemoveAddressesClick = { showAddressesDialog = true },
             onBillingInfoClick = { /* Logic for billing information */ }
         )
-
         operationStatus?.let { status ->
             if (status.isNotEmpty()) {
                 Text(text = status)
             }
         }
-
-
     }
 }
 
@@ -276,7 +269,6 @@ fun AddressesDialog(
         onDismissRequest = { onDismiss() },
         title = { Text("Manage Addresses") },
         text = {
-
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -292,8 +284,10 @@ fun AddressesDialog(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = address.address,
-                                modifier = Modifier.weight(1f).padding(end = 8.dp),
+                                text = AWSJSONtoString(address.address),
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(end = 8.dp),
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )

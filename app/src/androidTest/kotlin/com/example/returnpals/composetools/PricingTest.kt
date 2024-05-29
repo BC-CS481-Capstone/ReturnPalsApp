@@ -33,6 +33,7 @@ class PricingTest {
                 onChangePlan = { plan.value = it },
                 onClickBack = { isClicked = true },
                 onClickNext = { isClicked = true },
+                onClickSignUp = {}
             )
         }
 
@@ -65,6 +66,7 @@ class PricingTest {
                 onChangePlan = { },
                 onClickBack = { isClicked = true },
                 onClickNext = { isClicked = true },
+                onClickSignUp = {}
             )
         }
 
@@ -90,6 +92,7 @@ class PricingTest {
                 onChangePlan = { plan.value = it },
                 onClickBack = { },
                 onClickNext = { },
+                onClickSignUp = {}
             )
         }
 
@@ -115,6 +118,7 @@ class PricingTest {
                 onChangePlan = { plan.value = it },
                 onClickBack = { },
                 onClickNext = { },
+                onClickSignUp = {}
             )
         }
 
@@ -140,6 +144,7 @@ class PricingTest {
                 onChangePlan = { plan.value = it },
                 onClickBack = { },
                 onClickNext = { },
+                onClickSignUp = {}
             )
         }
 
@@ -165,6 +170,7 @@ class PricingTest {
                 onChangePlan = { plan.value = it },
                 onClickBack = { },
                 onClickNext = { },
+                onClickSignUp = {}
             )
         }
 

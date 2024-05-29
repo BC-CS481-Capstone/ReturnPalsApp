@@ -7,6 +7,7 @@ import androidx.compose.ui.test.onNodeWithText
 import com.amplifyframework.datastore.generated.model.PricingPlan
 import com.example.returnpals.composetools.dashboard.ProfileContent
 import com.example.returnpals.composetools.dashboard.ProfileViewModel
+import com.example.returnpals.dataRepository.ProfileRepository
 import junit.framework.TestCase.assertEquals
 import org.junit.Rule
 import org.junit.Test

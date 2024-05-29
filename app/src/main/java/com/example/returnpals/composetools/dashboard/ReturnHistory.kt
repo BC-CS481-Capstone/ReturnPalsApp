@@ -21,6 +21,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -38,14 +40,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
-import com.example.returnpals.composetools.ReturnRepository
-import com.example.returnpals.services.Backend
+import com.example.returnpals.dataRepository.ReturnRepository
+import com.example.returnpals.dataRepository.Backend
+import com.example.returnpals.services.LoginViewModel
 
 @Composable
-//Deviates from needing to pass NavController.
-fun History(navController: NavController) {
-    DashboardMenuScaffold(navController = navController) {
-        HistoryContent()
+fun History(navController: NavController, loginVM: LoginViewModel) {
+    Backend.orderRetrieval()
+    DashboardMenuScaffold(navController, loginVM::logOut) {
+        OrdersContent()
     }
 }
 
@@ -103,55 +106,59 @@ fun HistoryTable(){
     val column2Weight = .25f
     val column3Weight = .35f
     val gradientColors = listOf(Color(0xFFE1F6FF), Color.White)
-    when {
-        openDialog.intValue >= 0 ->{
-            InfoDialog({ openDialog.intValue = -1 }, returnList, openDialog.intValue)
+    val proccessingReturns by Backend.proccessingReturns.observeAsState()
+    if (proccessingReturns != true) {
+        when {
+            openDialog.intValue >= 0 -> {
+                InfoDialog({ openDialog.intValue = -1 }, returnList, openDialog.intValue)
+            }
         }
-    }
-    //This column contains the list of the orders.
-    LazyColumn(
-        Modifier
-            .fillMaxSize()
-            .background(Brush.verticalGradient(colors = gradientColors))
-            .padding(16.dp),
-    ){
-        item{
-            Text(
-                text = "Return History:",
-                style = TextStyle(
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
+        //This column contains the list of the orders.
+        LazyColumn(
+            Modifier
+                .fillMaxSize()
+                .background(Brush.verticalGradient(colors = gradientColors))
+                .padding(16.dp),
+        ) {
+            item {
+                Text(
+                    text = "Return History:",
+                    style = TextStyle(
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
                     )
-            )
-        }
-        item {
-            Row(
-                Modifier
-                    .clip(shape = RoundedCornerShape(topStart = 15.dp))
-                    .clip(shape = RoundedCornerShape(topEnd = 15.dp))
-                    .background(Color(0xFF084066))) {
-                TableCell(text = "#", weight = column1Weight)
-                TableCell(text = "Date", weight = column2Weight)
-                TableCell(text = "Status", weight = column3Weight)
+                )
             }
-            }
-
-
-        items(1) {
-            Log.i("Order", returnList.toString())
-            var i = 0
-            returnList.forEach{
-                Log.i("Order", "Loading Item")
-                Row(){
-                    ClickableTableCell(text = i, column1Weight, openDialog)
-                    TableCell(text = it.getDate().format(), column2Weight)
-                    TableCell(text = it.getStatus(), column3Weight)
+            item {
+                Row(
+                    Modifier
+                        .clip(shape = RoundedCornerShape(topStart = 15.dp))
+                        .clip(shape = RoundedCornerShape(topEnd = 15.dp))
+                        .background(Color(0xFF084066))
+                ) {
+                    TableCell(text = "#", weight = column1Weight)
+                    TableCell(text = "Date", weight = column2Weight)
+                    TableCell(text = "Status", weight = column3Weight)
                 }
-                i++
-
             }
 
+
+            items(1) {
+                Log.i("Order", returnList.toString())
+                var i = 0
+                returnList.forEach {
+                    Log.i("Order", "Loading Item")
+                    Row() {
+                        ClickableTableCell(text = i, column1Weight, openDialog)
+                        TableCell(text = it.getDate().format(), column2Weight)
+                        TableCell(text = it.getStatus(), column3Weight)
+                    }
+                    i++
+
+                }
+
+            }
         }
     }
 }

@@ -14,8 +14,17 @@
 /captures
 .externalNativeBuild
 
+/app/src/main/java/com/amplifyframework/datastore/generated/model/Address.java
+/app/src/main/java/com/amplifyframework/datastore/generated/model/AmplifyModelProvider.java
+/app/src/main/java/com/amplifyframework/datastore/generated/model/Labels.java
+/app/src/main/java/com/amplifyframework/datastore/generated/model/LabelType.java
+/app/src/main/java/com/amplifyframework/datastore/generated/model/MailingList.java
+/app/src/main/java/com/amplifyframework/datastore/generated/model/PickupMethod.java
+/app/src/main/java/com/amplifyframework/datastore/generated/model/PickupStatus.java
+/app/src/main/java/com/amplifyframework/datastore/generated/model/PricingPlan.java
+/app/src/main/java/com/amplifyframework/datastore/generated/model/Returns.java
+
 #amplify-do-not-edit-begin
-amplify/
 amplify/\#current-cloud-backend
 amplify/.config/local-*
 amplify/logs

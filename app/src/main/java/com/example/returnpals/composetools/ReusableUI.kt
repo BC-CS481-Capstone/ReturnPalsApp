@@ -7,14 +7,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose.ReturnPalTheme
 import com.example.returnpals.R
+import org.json.JSONObject
 
 /////////////////////////////////////////////////////////////////////////////
 // PUBLIC API
@@ -55,7 +56,10 @@ fun getBackGroundColor():Color {
 fun getConfig(): Configuration {
     return LocalConfiguration.current
 }
-
+fun AWSJSONtoString(message:String):String {
+    val json = JSONObject(message)
+    return json.getString("address")
+}
 //Adding Font Families as described here https://developer.android.com/jetpack/compose/text/fonts
 val cairoFontFamily = FontFamily(
     Font(R.font.cairo_light, FontWeight.Light),

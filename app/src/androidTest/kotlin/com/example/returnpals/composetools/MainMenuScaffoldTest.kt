@@ -10,11 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.navigation.compose.rememberNavController
-import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 
@@ -26,8 +25,8 @@ class MainMenuScaffoldTest {
     @Test
     fun appTopBarTest() {
         rule.setContent {
-            val navController = rememberNavController()
-            MainMenuScaffold(navController = navController) {
+
+            MainMenuScaffold() {
 
             }
         }
@@ -41,7 +40,6 @@ class MainMenuScaffoldTest {
         rule.setContent {
             TestDrawerContent()
         }
-
         // Check if the "Home" item is displayed in the drawer
         rule.onNodeWithText("Home").assertIsDisplayed().assertHasClickAction()
         rule.onNodeWithText("About").assertIsDisplayed().assertHasClickAction()
@@ -49,7 +47,6 @@ class MainMenuScaffoldTest {
         rule.onNodeWithText("Contact").assertIsDisplayed().assertHasClickAction()
         rule.onNodeWithText("Sign In").assertIsDisplayed().assertHasClickAction()
         rule.onNodeWithText("FAQ").assertIsDisplayed().assertHasClickAction()
-
     }
 
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -61,7 +58,7 @@ class MainMenuScaffoldTest {
 
         // Scaffold to provide the necessary environment for DrawerContent
         Scaffold(scaffoldState = scaffoldState) {
-            DrawerContent(navController = navController, scaffoldState = scaffoldState)
+            DrawerContent()
         }
     }
 
