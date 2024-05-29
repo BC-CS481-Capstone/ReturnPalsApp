@@ -7,8 +7,10 @@ import androidx.navigation.NavController
 import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.core.model.temporal.Temporal
+import com.amplifyframework.datastore.generated.model.LabelType
 import com.amplifyframework.datastore.generated.model.Labels
 import com.amplifyframework.datastore.generated.model.PickupStatus
+import com.example.returnpals.PackageInfo
 import com.example.returnpals.PickupInfo
 
 import com.example.returnpals.dataRepository.Backend
@@ -60,12 +62,12 @@ class ReturnViewModel(
         val uris = mutableListOf<String>()
         _pickupInfo.value?.packages?.forEach { thing -> uris.add(thing.label) }
         val hasImage = _pickupInfo.value?.packages?.isNotEmpty() == true
-
+        val addressTemp = "{\"formatted\": "+_pickupInfo.value?.address.toString()+ "}"
         val order = ReturnRepository(
             Backend.Profile.getID(),
             email,
             Temporal.Date(_pickupInfo.value?.date.toString()),
-            _pickupInfo.value?.address.toString(),
+            addressTemp,//_pickupInfo.value?.address.toString(),
             listOf(1, 2, 3),
             PickupStatus.ON_THE_WAY,
             hasImage,
@@ -106,29 +108,37 @@ class ReturnViewModel(
             Log.i("backend",it.toString())
             if (!it.hasErrors()) {
                 returnId = it.data.id
-                _createReturnSuccessful.postValue(true)
+
                 Backend.returnList.add(returns)
                 if(returns.getHasImage()) {
                     Log.i("Backend", "True checked")
+                    var i = 1
                     returns.getImages().forEach { uri ->
                         val file = File(uri)
                         Amplify.Storage.uploadFile(
-                            returnId, file,
-                            { Log.i("Backend", "Successfully uploaded: $returnId") },
+                            "$returnId\\$i", file,
+                            {
+                                Amplify.API.mutate(ModelMutation.create(Labels.builder().type(LabelType.DIGITAL).returnsId(returnId).image(uri).build()),{
+
+                                }){}
+                                Log.i("Backend", "Successfully uploaded: $uri")
+                            },
                             { error -> Log.e("Backend", "Upload failed", error) }
                         )
+                        i++
                     }
                 }
+                _createReturnSuccessful.postValue(true)
             } else {
                 Log.e("Backend", it.errors.first().message)
             }
         }, {
-            _createReturnSuccessful.postValue(false)
         })
     }
 
-    fun updatePickupAddress(address: String?) {
-        _pickupInfo.value = _pickupInfo.value?.copy(address = address)
+    fun updatePickupAddress(address: String?,packageList:List<PackageInfo>) {
+        _pickupInfo.value = _pickupInfo.value?.copy(address = "{\"Address\":"+address+"}",
+            packages = packageList)
     }
 }
 

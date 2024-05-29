@@ -161,9 +161,10 @@ fun AppNavigation(navController: NavController) {
             startDestination = "select_date",
             route = MenuRoutes.PickupProcess
         ) {
+            val pickupVM =  ReturnViewModel()
             /**START of the Pickup Process Navigation*/
             composable("select_date") { entry ->
-                val pickupVM = entry.sharedViewModel<ReturnViewModel>(navController)
+                //val pickupVM = entry.sharedViewModel<ReturnViewModel>(navController)
                 //TODO get navigate logic from view model>val navigate by pickupVM.readyToNav.observeAsState()
                 /**$navigate is a nullable string.
                  * @Null do not navigate
@@ -197,9 +198,9 @@ fun AppNavigation(navController: NavController) {
             }
             composable("select_method") { entry ->
                 val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
-                val pickupVM = entry.sharedViewModel<ReturnViewModel>(navController)
+                //val pickupVM = entry.sharedViewModel<OrderViewModel>(navController)
                 val selectedAddress = settingsVM.getSelectedAddress()
-                pickupVM.updatePickupAddress(selectedAddress)
+                //pickupVM.updatePickupAddress(selectedAddress,pickupVM.packageList!!)
                 //TODO get navigate logic from view model>val navigate by pickupVM.readyToNav.observeAsState()
                 /**$navigate is a nullable string.
                  * @Null do not navigate
@@ -215,9 +216,9 @@ fun AppNavigation(navController: NavController) {
             }
             composable("select_pricing") { entry ->
                 val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
-                val pickupVM = entry.sharedViewModel<ReturnViewModel>(navController)
+                //val pickupVM = entry.sharedViewModel<ReturnViewModel>(navController)
                 val selectedAddress = settingsVM.getSelectedAddress()
-                pickupVM.updatePickupAddress(selectedAddress)
+                //pickupVM.updatePickupAddress(selectedAddress,pickupVM.packageList!!)
                 //TODO get navigate logic from view model>val navigate by pickupVM.readyToNav.observeAsState()
                 /**$navigate is a nullable string.
                  * @Null do not navigate
@@ -235,9 +236,9 @@ fun AppNavigation(navController: NavController) {
             }
             composable("add_labels") { entry ->
                 val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
-                val pickupVM = entry.sharedViewModel<ReturnViewModel>(navController)
+                //val pickupVM = entry.sharedViewModel<ReturnViewModel>(navController)
                 val selectedAddress = settingsVM.getSelectedAddress()
-                pickupVM.updatePickupAddress(selectedAddress)
+                //pickupVM.updatePickupAddress(selectedAddress,pickupVM.packageList!!)
                 //TODO get navigate logic from view model>val navigate by pickupVM.readyToNav.observeAsState()
                 /**$navigate is a nullable string.
                  * @Null do not navigate
@@ -255,9 +256,9 @@ fun AppNavigation(navController: NavController) {
             }
             composable("confirm") { entry ->
                 val settingsVM = entry.sharedViewModel<SettingsViewModel>(navController)
-                val pickupVM = entry.sharedViewModel<ReturnViewModel>(navController)
+                //val pickupVM = ReturnViewModel()
                 val selectedAddress = settingsVM.getSelectedAddress()
-                pickupVM.updatePickupAddress(selectedAddress)
+                pickupVM.updatePickupAddress(selectedAddress,pickupVM.packageList!!)
 
                 val thankyouVM = ThankYouViewModel()
                 val hasUserName by thankyouVM.hasUserNames.observeAsState()
