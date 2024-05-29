@@ -45,10 +45,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.returnpals.R
 import com.example.returnpals.composetools.AWSJSONtoString
-import com.example.returnpals.services.LoginViewModel
 
 @Composable
-fun Settings(navController: NavController, loginVM: LoginViewModel) {
+fun Settings(navController: NavController, onLogOut: ()->Unit) {
     val settingsViewModel: SettingsViewModel = viewModel()
     val operationStatus by settingsViewModel.operationStatus.collectAsState()
     val userAddresses by settingsViewModel.userAddresses.collectAsState()
@@ -62,7 +61,7 @@ fun Settings(navController: NavController, loginVM: LoginViewModel) {
         settingsViewModel.fetchAddresses()
     }
 
-    DashboardMenuScaffold(navController, loginVM::logOut) {
+    DashboardMenuScaffold(navController, onLogOut) {
         if (showResetPasswordDialog) {
             ResetPasswordDialog(
                 onDismiss = { showResetPasswordDialog = false },

@@ -68,7 +68,7 @@ fun LoginScreen(
         if (isGuestMode) {
             GuestLoginContent(
                 email = loginVM.email,
-                onSignIn = { loginVM.logInAsGuest() },
+                onSignIn = { isGuestMode = false  },//TODO add guest login loginVM.logInAsGuest() },
                 onSignUp =onSignUp,
                 onChangeEmail = { loginVM.email = it },
                 onToggleGuest = { isGuestMode = false }

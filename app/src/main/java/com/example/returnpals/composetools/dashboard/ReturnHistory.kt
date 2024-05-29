@@ -45,9 +45,9 @@ import com.example.returnpals.dataRepository.Backend
 import com.example.returnpals.services.LoginViewModel
 
 @Composable
-fun History(navController: NavController, loginVM: LoginViewModel) {
+fun History(navController: NavController,onLogOut: ()->Unit) {
     Backend.orderRetrieval()
-    DashboardMenuScaffold(navController, loginVM::logOut) {
+    DashboardMenuScaffold(navController, onLogOut) {
         HistoryContent()
     }
 }
