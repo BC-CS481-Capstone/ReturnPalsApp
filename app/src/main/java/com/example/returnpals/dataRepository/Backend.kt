@@ -1,18 +1,16 @@
-package com.example.returnpals.services
+package com.example.returnpals.dataRepository
 import android.content.Context
 import android.util.Log
-import androidx.core.net.toFile
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.amplifyframework.AmplifyException
 import com.amplifyframework.api.aws.AWSApiPlugin
-import com.amplifyframework.api.graphql.model.ModelMutation
 import com.amplifyframework.api.graphql.model.ModelQuery
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin
 import com.amplifyframework.core.Amplify
 import com.amplifyframework.datastore.AWSDataStorePlugin
 import com.amplifyframework.datastore.generated.model.Returns
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin
-import com.example.returnpals.dataRepository.ReturnRepository
-import com.example.returnpals.dataRepository.ProfileRepository
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -24,7 +22,7 @@ object Backend {
     private const val TAG = "Backend"
     private var email = "";
     var Profile = ProfileRepository()
-    var orderList = mutableSetOf <ReturnRepository>()
+    var returnList = mutableSetOf <ReturnRepository>()
 
 
     fun initialize(applicationContext: Context) : Backend {
@@ -70,36 +68,38 @@ object Backend {
         Log.i(TAG, "Email Retrieved $email")
         return email
     }
-    private fun orderRetrieval() {
+    private val _proccessingReturns = MutableLiveData(false)
+    val proccessingReturns: LiveData<Boolean> = _proccessingReturns
+    fun orderRetrieval() { // TODO Rename to or move logic to repository
+        _proccessingReturns.postValue(true)
         Log.i(TAG, "Order Retrieval Called")
         Amplify.API.query(
-
-            ModelQuery.list(Returns::class.java, Returns.EMAIL.contains(email)),
-
+            ModelQuery.list(Returns::class.java),
             { response ->
                 Log.i(TAG, response.toString())
                 if (response.hasData()) {
+                    returnList.clear()
                     response.data.forEach() { orderData ->
 
 
                             val list = listOf(1, 2, 3)
 
-                            val order = OrderRepository(
-                                orderData.userId,
-                                email,
+                            val order = ReturnRepository(
+                                customerId = "",//TODO id and email removed from model
+                                email = email,
                                 status = orderData.status,
                                 date =  orderData.date,
                                 method = orderData.method,
                                 labels = list,
                                 address = orderData.address
                                                             )
-                            orderList.add(order)
+                            returnList.add(order)
 
 
 
                     }
                 }
-
+                _proccessingReturns.postValue(false)
             },
             { Log.e(TAG, "Query failed", it) }
         )

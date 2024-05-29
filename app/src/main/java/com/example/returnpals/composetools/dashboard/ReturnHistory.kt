@@ -48,7 +48,7 @@ import com.example.returnpals.services.LoginViewModel
 fun History(navController: NavController, loginVM: LoginViewModel) {
     Backend.orderRetrieval()
     DashboardMenuScaffold(navController, loginVM::logOut) {
-        OrdersContent()
+        HistoryContent()
     }
 }
 

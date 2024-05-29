@@ -10,12 +10,10 @@ import com.amplifyframework.core.model.temporal.Temporal
 import com.amplifyframework.datastore.generated.model.Labels
 import com.amplifyframework.datastore.generated.model.PickupStatus
 import com.example.returnpals.PickupInfo
-<<<<<<<< HEAD:app/src/main/java/com/example/returnpals/viewmodel/ReturnViewModel.kt
-import com.example.returnpals.composetools.ReturnRepository
-========
+
 import com.example.returnpals.dataRepository.Backend
-import com.example.returnpals.dataRepository.OrderRepository
->>>>>>>> master:app/src/main/java/com/example/returnpals/viewmodel/OrderViewModel.kt
+import com.example.returnpals.dataRepository.ReturnRepository
+
 import java.io.File
 import java.time.LocalDate
 
@@ -31,12 +29,9 @@ import java.time.LocalDate
  * https://developer.android.com/topic/libraries/architecture/viewmodel#best-practices
  * https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-apis
  */
-<<<<<<<< HEAD:app/src/main/java/com/example/returnpals/viewmodel/ReturnViewModel.kt
+
 
 class ReturnViewModel(
-========
-class OrderViewModel(
->>>>>>>> master:app/src/main/java/com/example/returnpals/viewmodel/OrderViewModel.kt
     pickup: PickupInfo = PickupInfo(),
     val navController: NavController? = null,
     private val minDate: LocalDate = LocalDate.now().minusDays(1),
@@ -106,7 +101,6 @@ class OrderViewModel(
             _createLabelsSuccessful.postValue(false)
         }
     }
-<<<<<<<< HEAD:app/src/main/java/com/example/returnpals/viewmodel/ReturnViewModel.kt
     private fun createReturn(returns: ReturnRepository){
         Amplify.API.mutate(ModelMutation.create(returns.order),{
             Log.i("backend",it.toString())
@@ -115,17 +109,6 @@ class OrderViewModel(
                 _createReturnSuccessful.postValue(true)
                 Backend.returnList.add(returns)
                 if(returns.getHasImage()) {
-========
-
-    private fun createOrder(returns: OrderRepository) {
-        Amplify.API.mutate(ModelMutation.create(returns.order), {
-            Log.i("backend", it.toString())
-            if (!it.hasErrors()) {
-                returnId = it.data.id
-                _createReturnSuccessful.postValue(true)
-                Backend.orderList.add(returns)
-                if (returns.getHasImage()) {
->>>>>>>> master:app/src/main/java/com/example/returnpals/viewmodel/OrderViewModel.kt
                     Log.i("Backend", "True checked")
                     returns.getImages().forEach { uri ->
                         val file = File(uri)
